@@ -29,15 +29,15 @@ return new class extends Migration
             $table->string('pangkatgt')->nullable(); // Pangkat Golongan Terakhir
             $table->date('jadwalkenaikanpangkat')->nullable(); // Jadwal Kenaikan Pangkat
             $table->date('jadwalkenaikangaji')->nullable(); // Jadwal Kenaikan Gaji
-            $table->date('TMT')->nullable(); // Tanggal Mulai Tugas
+            // $table->date('TMT')->nullable(); // Tanggal Mulai Tugas
             $table->string('PendidikanAkhir')->nullable();
             $table->year('TahunTamat')->nullable();
             $table->string('Jurusan')->nullable();
             $table->string('TugasMengajar')->nullable();
-            $table->string('TugasTambahan')->nullable();
-            $table->integer('JamPerMinggu')->unsigned()->nullable(); // Jumlah jam mengajar
+            // $table->string('TugasTambahan')->nullable();
+            // $table->integer('JamPerMinggu')->unsigned()->nullable(); // Jumlah jam mengajar
             $table->year('TahunPensiun')->nullable(); // Tahun pensiun
-            $table->string('Berkala')->nullable(); // Status berkala
+            // $table->string('Berkala')->nullable(); // Status berkala
             $table->string('Pangkat')->nullable(); // Pangkat jabatan
             $table->string('Jabatan')->nullable();
             $table->string('NomorTelephone')->nullable();
