@@ -17,58 +17,176 @@ class InfoUserController extends Controller
     public function create()
     {
         $guru = Guru::all(); 
-        $role = auth()->user();
         $guru = auth()->user()->guru;
-        $availableRoles = explode(',', $role->getRawOriginal('Role'));
-      
-        // return view('editprofile.index', compact('guru', 'akunguru', 'availableRoles'));
+        $user = auth()->user();
+        $roles = explode(',', $user->Role);
+        
 
-        return view('laravel-examples/user-profile',compact('guru','role'));
+        return view('laravel-examples/user-profile',compact('guru','roles','user'));
     }
 
-     
-
-
-    
     public function store(Request $request)
-    {
-        $user = Auth::user();
-        $validator = Validator::make($request->all(), [
-            'Nama' => 'required|string|max:50',
-        ]);
-        if ($validator->fails()) {
-            session()->flash('error', 'Profil Gagal Diupdate');
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput(); 
+{
+    $user = Auth::user();
+    $validator = Validator::make($request->all(), [
+        'Nama' => 'required|string|max:50',
+        'username' => 'required|string|max:50|unique:users,username,' . $user->id, // Validasi username
+        'Role' => 'required|string|max:255', // Validasi role, harus sesuai dengan tipe data SET
+    ]);
+
+    if ($validator->fails()) {
+        session()->flash('error', 'Profil Gagal Diupdate');
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput(); 
+    }
+
+    try {
+        DB::beginTransaction();
+
+        // Update Nama, username, dan role
+        $user->username = $request->username; // Mengupdate username
+        $user->Role = $request->Role; // Mengupdate role
+
+        // Logika untuk menentukan hakakses berdasarkan role
+        if (str_contains($request->Role, 'SU')) {
+            $user->hakakses = 'SU';
+        } elseif (str_contains($request->Role, 'Admin')) {
+            $user->hakakses = 'Admin';
+        } elseif (str_contains($request->Role, 'KepalaSekolah')) {
+            $user->hakakses = 'KepalaSekolah';
+        }  elseif (str_contains($request->Role, 'Kurikulum')) {
+            $user->hakakses = 'Kurikulum';
+        } elseif (str_contains($request->Role, 'Guru')) {
+            $user->hakakses = 'Guru';
+        }elseif (str_contains($request->Role, 'Siswa')) {
+            $user->hakakses = 'Siswa';
+        }elseif (str_contains($request->Role, 'NonSiswa')) {
+            $user->hakakses = 'NonSiswa';
         }
-        try {
-            DB::beginTransaction();
-            if ($user->guru_id !== null) {
-                $guru = Guru::find($user->guru_id);
-                if ($guru) {
-                    $guru->Nama = $request->Nama;
-                    $guru->save();
-                }
-            } else {
-                $guru = new Guru();
+
+        $user->save(); // Simpan perubahan pada user
+
+        // Update Nama Guru jika ada
+        if ($user->guru_id !== null) {
+            $guru = Guru::find($user->guru_id);
+            if ($guru) {
                 $guru->Nama = $request->Nama;
                 $guru->save();
-                $user->guru_id = $guru->guru_id;
-                $user->save();
             }
-            DB::commit();
-            session()->flash('success', 'Profil berhasil diperbarui');
-            return redirect()->back();  
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal membuat atau memperbarui profil guru',
-                'error' => $e->getMessage()
-            ], 500);
+        } else {
+            $guru = new Guru();
+            $guru->Nama = $request->Nama;
+            $guru->save();
+            $user->guru_id = $guru->guru_id;
+            $user->save();
         }
+
+        DB::commit();
+        session()->flash('success', 'Profil berhasil diperbarui');
+        return redirect()->back();  
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'success' => false,
+            'message' => 'Gagal membuat atau memperbarui profil guru',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+//     public function store(Request $request)
+// {
+//     $user = Auth::user();
+//     $validator = Validator::make($request->all(), [
+//         'Nama' => 'required|string|max:50',
+//         'username' => 'required|string|max:50|unique:users,username,' . $user->id,  // Validasi username, kecuali jika username tidak berubah
+//         'hakakses' => 'required|in:SU,Admin,KepalaSekolah','Guru','Kurikulum','Siswa','NonSiswa',
+        
+//     ]);
+    
+//     if ($validator->fails()) {
+//         session()->flash('error', 'Profil Gagal Diupdate');
+//         return redirect()->back()
+//             ->withErrors($validator)
+//             ->withInput(); 
+//     }
+
+//     try {
+//         DB::beginTransaction();
+
+//         // Update Nama dan username
+//         $user->username = $request->username;  // Mengupdate username
+//         $user->hakakses = $request->hakakses;  // Mengupdate username
+//         $user->save();  // Simpan perubahan pada user
+
+//         if ($user->guru_id !== null) {
+//             $guru = Guru::find($user->guru_id);
+//             if ($guru) {
+//                 $guru->Nama = $request->Nama;
+//                 $guru->save();
+//             }
+//         } else {
+//             $guru = new Guru();
+//             $guru->Nama = $request->Nama;
+//             $guru->save();
+//             $user->guru_id = $guru->guru_id;
+//             $user->save();
+//         }
+
+//         DB::commit();
+//         session()->flash('success', 'Profil berhasil diperbarui');
+//         return redirect()->back();  
+//     } catch (\Exception $e) {
+//         DB::rollBack();
+//         return response()->json([
+//             'success' => false,
+//             'message' => 'Gagal membuat atau memperbarui profil guru',
+//             'error' => $e->getMessage()
+//         ], 500);
+//     }
+// }
+
+    // public function store(Request $request)
+    // {
+    //     $user = Auth::user();
+    //     $validator = Validator::make($request->all(), [
+    //         'Nama' => 'required|string|max:50',
+    //         'username' => 'required|string|max:50',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         session()->flash('error', 'Profil Gagal Diupdate');
+    //         return redirect()->back()
+    //             ->withErrors($validator)
+    //             ->withInput(); 
+    //     }
+    //     try {
+    //         DB::beginTransaction();
+    //         if ($user->guru_id !== null) {
+    //             $guru = Guru::find($user->guru_id);
+    //             if ($guru) {
+    //                 $guru->Nama = $request->Nama;
+    //                 $guru->save();
+    //             }
+    //         } else {
+    //             $guru = new Guru();
+    //             $guru->Nama = $request->Nama;
+    //             $guru->save();
+    //             $user->guru_id = $guru->guru_id;
+    //             $user->save();
+    //         }
+    //         DB::commit();
+    //         session()->flash('success', 'Profil berhasil diperbarui');
+    //         return redirect()->back();  
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Gagal membuat atau memperbarui profil guru',
+    //             'error' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
     // public function store(Request $request)
     // {
     //     $user = Auth::user();
