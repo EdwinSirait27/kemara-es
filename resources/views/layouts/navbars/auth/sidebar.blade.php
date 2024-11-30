@@ -59,10 +59,13 @@
           <div class="collapse" id="laravelExamples">
               <ul class="nav ms-4">
                   <li class="nav-item">
-                      <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }}" href="{{ url('user-profile') }}">
+                    @if(Gate::allows('isSU'))
+                      <a class="nav-link {{ (Request::is('user-profileSU') ? 'active' : '') }}" href="{{ url('user-profileSU') }}">
                           <span class="nav-link-text ms-1">Edit Profile</span>
                       </a>
+                      @endif
                   </li>
+                  
                   <li class="nav-item">
                       <a class="nav-link {{ (Request::is('user-management') ? 'active' : '') }}" href="{{ url('user-management') }}">
                           <span class="nav-link-text ms-1">User Management</span>
@@ -145,9 +148,11 @@
               <div class="collapse" id="laravelExamples">
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }}" href="{{ url('user-profile') }}">
+                        @if(Gate::allows('isSU'))
+                          <a class="nav-link {{ (Request::is('user-profileSU') ? 'active' : '') }}" href="{{ url('user-profileSU') }}">
                               <span class="nav-link-text ms-1">User Profile</span>
                           </a>
+                          @endif
                       </li>     
                         <a class="nav-link {{ (Request::is('dashboard') ? 'active' : '') }}" href="{{ url('dashboard') }}">i>
                       <li class="nav-item">
@@ -158,17 +163,16 @@
                   </ul>
               </div>
           </li>
-          @if(Gate::allows('isSU'))
+          {{-- @if(Gate::allows('isSU'))
           <li class="nav-item">
             <a class="nav-link {{ (Request::is('dashboard') ? 'active' : '') }}" href="{{ url('dashboard') }}">
              
              
-                 {{-- <a class="nav-link {{ Request::is('dashboardSU') ? 'active' : '' }}" href="{{ url('dashboardSU') }}"> --}}
-                  
+             
                  </a>
                 </li>
 
-         @endif
+         @endif --}}
              
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

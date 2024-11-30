@@ -54,10 +54,13 @@
                             <form role="form" method="POST" action="/session">
                                 @csrf
                                 <div class="mb-3">
-                                    <label>username</label>
+                                  <label>
+                                    <i class="fas fa-user"></i> Username
+                                </label>
+                                
                                     <div class="mb-3">
                                         <input type="username" class="form-control" name="username" id="username"
-                                            placeholder="username" aria-label="username" aria-describedby="username-addon">
+                                            placeholder="Username" aria-label="username" aria-describedby="username-addon">
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -66,9 +69,11 @@
 
 
                                     <div class="mb-3">
-                                        <label>password</label>
+                                      <label>
+                                        <i class="fas fa-key"></i> Password
+                                    </label>
                                         <div class="mb-3">
-                                            <input type="password" class="form-control" name="password" id="password"
+                                            <input type="Password" class="form-control" name="password" id="password"
                                                 placeholder="password"  aria-label="password"
                                                 aria-describedby="password-addon">
                                             @error('password')
