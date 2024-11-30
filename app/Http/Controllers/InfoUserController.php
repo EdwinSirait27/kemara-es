@@ -22,7 +22,7 @@ class InfoUserController extends Controller
         $roles = explode(',', $user->Role);
         
 
-        return view('laravel-examples/user-profile',compact('guru','roles','user'));
+        return view('laravel-examples/user-profileSU',compact('guru','roles','user'));
     }
 
     public function store(Request $request)
@@ -72,11 +72,62 @@ class InfoUserController extends Controller
             $guru = Guru::find($user->guru_id);
             if ($guru) {
                 $guru->Nama = $request->Nama;
+                $guru->TempatLahir = $request->TempatLahir;
+                $guru->TanggalLahir = $request->TanggalLahir;
+                $guru->Agama = $request->Agama;
+                $guru->JenisKelamin = $request->JenisKelamin;
+                $guru->StatusPegawai = $request->StatusPegawai;
+                $guru->NipNips = $request->NipNips;
+                $guru->Nuptk = $request->Nuptk;
+                $guru->Nik = $request->Nik;
+                $guru->Npwp = $request->Npwp;
+                $guru->NomorSertifikatPendidik = $request->NomorSertifikatPendidik;
+                $guru->TahunSertifikasi = $request->TahunSertifikasi;
+                $guru->jadwalkenaikangaji = $request->jadwalkenaikangaji;
+                $guru->PendidikanAkhir = $request->PendidikanAkhir;
+                $guru->TahunTamat = $request->TahunTamat;
+                $guru->Jurusan = $request->Jurusan;
+                $guru->TugasMengajar = $request->TugasMengajar;
+                $guru->TahunPensiun = $request->TahunPensiun;
+                $guru->Pangkat = $request->Pangkat;
+                $guru->jadwalkenaikanpangkat = $request->jadwalkenaikanpangkat;
+                $guru->Jabatan = $request->Jabatan;
+                $guru->NomorTelephone = $request->NomorTelephone;
+                $guru->Alamat = $request->Alamat;
+                $guru->Email = $request->Email;
+                $guru->status = $request->status;
+                
                 $guru->save();
             }
         } else {
             $guru = new Guru();
             $guru->Nama = $request->Nama;
+            $guru->TempatLahir = $request->TempatLahir;
+            $guru->TanggalLahir = $request->TanggalLahir;
+            $guru->Agama = $request->Agama;
+            $guru->JenisKelamin = $request->JenisKelamin;
+            $guru->StatusPegawai = $request->StatusPegawai;
+            $guru->NipNips = $request->NipNips;
+            $guru->Nuptk = $request->Nuptk;
+            $guru->Nik = $request->Nik;
+            $guru->Npwp = $request->Npwp;
+            $guru->NomorSertifikatPendidik = $request->NomorSertifikatPendidik;
+            $guru->TahunSertifikasi = $request->TahunSertifikasi;
+            $guru->jadwalkenaikangaji = $request->jadwalkenaikangaji;
+            $guru->PendidikanAkhir = $request->PendidikanAkhir;
+            $guru->TahunTamat = $request->TahunTamat;
+            $guru->Jurusan = $request->Jurusan;
+            $guru->TugasMengajar = $request->TugasMengajar;
+            $guru->TahunPensiun = $request->TahunPensiun;
+            $guru->Pangkat = $request->Pangkat;
+            $guru->jadwalkenaikanpangkat = $request->jadwalkenaikanpangkat;
+            $guru->Jabatan = $request->Jabatan;
+            $guru->NomorTelephone = $request->NomorTelephone;
+            $guru->Alamat = $request->Alamat;
+            $guru->Email = $request->Email;
+            $guru->status = $request->status;
+            
+            
             $guru->save();
             $user->guru_id = $guru->guru_id;
             $user->save();

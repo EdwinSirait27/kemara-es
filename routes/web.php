@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::group(['middleware' => 'auth'], function () {
 
-   
+
 
 // 	Route::get('billing', function () {
 // 		return view('billing');
@@ -64,7 +64,7 @@ use Illuminate\Support\Facades\Route;
 //         ->middleware('auth');
 // 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 // 	Route::post('/user-profile', [InfoUserController::class, 'store']);
-  
+
 // });
 
 
@@ -74,10 +74,10 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/register', [RegisterController::class, 'store']);
     Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
-	Route::get('/login/forgot-password', [ResetController::class, 'create']);
-	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    Route::get('/login/forgot-password', [ResetController::class, 'create']);
+    Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
+    Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
+    Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
 });
 
@@ -85,28 +85,63 @@ Route::group(['middleware' => 'guest'], function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'home']);
-    Route::get('dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-	    // Route::get('/logout', [SessionsController::class, 'destroy']);
-	  Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
+    // Route::get('dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+    // Route::get('/logout', [SessionsController::class, 'destroy']);
+    Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
         ->name('logout')
         ->middleware('auth');
 
-    
+// SU
     Route::get('dashboardSU', function () {
-        return view('dashboardSU');  // Halaman untuk SU
+        return view('dashboardSU'); 
     })->middleware('can:isSU');
-	Route::get('/user-profile', [InfoUserController::class, 'create'])->middleware('can:isSU');
-	Route::post('/user-profile', [InfoUserController::class, 'store'])->middleware('can:isSU');
+    Route::get('/user-profileSU', [InfoUserController::class, 'create'])->middleware('can:isSU');
+    Route::post('/user-profileSU', [InfoUserController::class, 'store'])->middleware('can:isSU');
 
-    Route::get('dashboard-guru', function () {
-        return view('dashboard-guru');  // Halaman untuk Guru
+// Kepala Sekolah
+    Route::get('dashboardKepalaSekolah', function () {
+        return view('dashboardKepalaSekolah');  // Halaman untuk Guru
+    })->middleware('can:isKepalaSekolah');
+    Route::get('/user-profileKepalaSekolah', [InfoUserController::class, 'create'])->middleware('can:isKepalaSekolah');
+    Route::post('/user-profileKepalaSekolah', [InfoUserController::class, 'store'])->middleware('can:isKepalaSekolah');
+
+// Admin
+    Route::get('dashboardAdmin', function () {
+        return view('dashboardAdmin');  // Halaman untuk Siswa
+    })->middleware('can:isAdmin');
+    Route::get('/user-profileAdmin', [InfoUserController::class, 'create'])->middleware('can:isAdmin');
+    Route::post('/user-profileAdmin', [InfoUserController::class, 'store'])->middleware('can:isAdmin');
+
+// Kurikulum
+    Route::get('dashboardKurikulum', function () {
+        return view('dashboardKurikulum');  // Halaman untuk Siswa
+    })->middleware('can:isKurikulum');
+    Route::get('/user-profileKurikulum', [InfoUserController::class, 'create'])->middleware('can:isKurikulum');
+    Route::post('/user-profileKurikulum', [InfoUserController::class, 'store'])->middleware('can:isKurikulum');
+
+// Guru
+    Route::get('dashboardGuru', function () {
+        return view('dashboardGuru');  // Halaman untuk Siswa
     })->middleware('can:isGuru');
+    Route::get('/user-profileGuru', [InfoUserController::class, 'create'])->middleware('can:isGuru');
+    Route::post('/user-profileGuru', [InfoUserController::class, 'store'])->middleware('can:isGuru');
 
-    Route::get('dashboard-siswa', function () {
-        return view('dashboard-siswa');  // Halaman untuk Siswa
+// Siswa
+    Route::get('dashboardSiswa', function () {
+        return view('dashboardSiswa');  // Halaman untuk Siswa
     })->middleware('can:isSiswa');
+    Route::get('/user-profileSiswa', [InfoUserController::class, 'create'])->middleware('can:isSiswa');
+    Route::post('/user-profileSiswa', [InfoUserController::class, 'store'])->middleware('can:isSiswa');
+
+// Calon Siswa
+    Route::get('dashboardNonSiswa', function () {
+        return view('dashboardNonSiswa');  // Halaman untuk Siswa
+    })->middleware('can:isNonSiswa');
+    Route::get('/user-profileNonSiswa', [InfoUserController::class, 'create'])->middleware('can:isNonSiswa');
+    Route::post('/user-profileNonSiswa', [InfoUserController::class, 'store'])->middleware('can:isNonSiswa');
+
 });
 
 // Halaman login hanya dapat diakses oleh pengguna yang belum login

@@ -32,11 +32,23 @@ class SessionsController extends Controller
             }
 
             if (Gate::allows('isGuru', $user)) {
-                return redirect('dashboard-guru')->with(['success' => 'You are logged in as Guru.']);
+                return redirect('dashboardGuru')->with(['success' => 'You are logged in as Guru.']);
             }
 
             if (Gate::allows('isSiswa', $user)) {
-                return redirect('dashboard-siswa')->with(['success' => 'You are logged in as Siswa.']);
+                return redirect('dashboardSiswa')->with(['success' => 'You are logged in as Siswa.']);
+            }
+            if (Gate::allows('isKepalaSekolah', $user)) {
+                return redirect('dashboardKepalaSekolah')->with(['success' => 'You are logged in as Kepala Sekolah.']);
+            }
+            if (Gate::allows('isNonSiswa', $user)) {
+                return redirect('dashboardNonSiswa')->with(['success' => 'You are logged in as Non Siswa.']);
+            }
+            if (Gate::allows('isKurikulum', $user)) {
+                return redirect('dashboardKurikulum')->with(['success' => 'You are logged in as Kurikulum.']);
+            }
+            if (Gate::allows('isAdmin', $user)) {
+                return redirect('dashboardAdmin')->with(['success' => 'You are logged in as Admin.']);
             }
 
             return redirect('dashboard')->with(['success' => 'You are logged in.']);

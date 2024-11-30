@@ -31,6 +31,12 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isSU', function (User $user) {
             return $user->hakakses === 'SU';
         });
+        Gate::define('isKepalaSekolah', function (User $user) {
+            return $user->hakakses === 'KepalaSekolah';
+        });
+        Gate::define('isAdmin', function (User $user) {
+            return $user->hakakses === 'Admin';
+        });
     
         Gate::define('isGuru', function (User $user) {
             return $user->hakakses === 'Guru';
@@ -38,6 +44,12 @@ class AuthServiceProvider extends ServiceProvider
     
         Gate::define('isSiswa', function (User $user) {
             return $user->hakakses === 'Siswa';
+        });
+        Gate::define('isKurikulum', function (User $user) {
+            return $user->hakakses === 'Kurikulum';
+        });
+        Gate::define('isNonSiswa', function (User $user) {
+            return $user->hakakses === 'NonSiswa';
         });
     }
 }

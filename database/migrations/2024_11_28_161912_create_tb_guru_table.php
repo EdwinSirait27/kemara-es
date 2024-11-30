@@ -17,28 +17,23 @@ return new class extends Migration
             $table->string('Nama')->nullable();
             $table->string('TempatLahir')->nullable();
             $table->date('TanggalLahir')->nullable();
-            $table->string('Agama')->nullable();
-            $table->string('JenisKelamin')->nullable();
-            $table->string('StatusPegawai')->nullable();
+            $table->enum('Agama', ['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
+            $table->enum('JenisKelamin', ['Laki-Laki','Perempuan'])->nullable();
+            $table->enum('StatusPegawai',['GT','PNS YDP','GTT','Honorer','PT','PTT'])->nullable();
             $table->string('NipNips')->nullable(); // Bisa null jika tidak ada
             $table->string('Nuptk')->nullable();
             $table->string('Nik')->nullable();
             $table->string('Npwp')->nullable();
             $table->string('NomorSertifikatPendidik')->nullable();
-            $table->year('TahunSertifikasi')->nullable(); // Tahun
-            $table->string('pangkatgt')->nullable(); // Pangkat Golongan Terakhir
-            $table->date('jadwalkenaikanpangkat')->nullable(); // Jadwal Kenaikan Pangkat
+            $table->date('TahunSertifikasi')->nullable(); // Tahun
             $table->date('jadwalkenaikangaji')->nullable(); // Jadwal Kenaikan Gaji
-            // $table->date('TMT')->nullable(); // Tanggal Mulai Tugas
             $table->string('PendidikanAkhir')->nullable();
-            $table->year('TahunTamat')->nullable();
+            $table->date('TahunTamat')->nullable();
             $table->string('Jurusan')->nullable();
             $table->string('TugasMengajar')->nullable();
-            // $table->string('TugasTambahan')->nullable();
-            // $table->integer('JamPerMinggu')->unsigned()->nullable(); // Jumlah jam mengajar
-            $table->year('TahunPensiun')->nullable(); // Tahun pensiun
-            // $table->string('Berkala')->nullable(); // Status berkala
+            $table->date('TahunPensiun')->nullable(); // Tahun pensiun
             $table->string('Pangkat')->nullable(); // Pangkat jabatan
+            $table->date('jadwalkenaikanpangkat')->nullable(); // Jadwal Kenaikan Pangkat
             $table->string('Jabatan')->nullable();
             $table->string('NomorTelephone')->nullable();
             $table->text('Alamat')->nullable(); // Alamat detail
