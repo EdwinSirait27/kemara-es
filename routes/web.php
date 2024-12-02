@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DashboardControllerSU;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -26,25 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-// 	Route::get('billing', function () {
-// 		return view('billing');
-// 	})->name('billing');
 
-// 	Route::get('profile', function () {
-// 		return view('profile');
-// 	})->name('profile');
-
-// 	Route::get('rtl', function () {
-// 		return view('rtl');
-// 	})->name('rtl');
-
-// 	Route::get('user-management', function () {
-// 		return view('laravel-examples/user-management');
-// 	})->name('user-management');
-
-// 	Route::get('tables', function () {
-// 		return view('tables');
-// 	})->name('tables');
 
 //     Route::get('virtual-reality', function () {
 // 		return view('virtual-reality');
@@ -64,11 +47,7 @@ use Illuminate\Support\Facades\Route;
 //         ->middleware('auth');
 // 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 // 	Route::post('/user-profile', [InfoUserController::class, 'store']);
-
 // });
-
-
-
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
@@ -80,23 +59,40 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
 });
-
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'home']);
-    // Route::get('dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
+    Route::get('dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
     // Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
         ->name('logout')
         ->middleware('auth');
+	Route::get('billing', function () {
+		return view('billing');
+	})->name('billing');
 
+	Route::get('profile', function () {
+		return view('profile');
+	})->name('profile');
+
+	Route::get('rtl', function () {
+		return view('rtl');
+	})->name('rtl');
+
+	Route::get('user-management', function () {
+		return view('laravel-examples/user-management');
+	})->name('user-management');
+
+	Route::get('tables', function () {
+		return view('tables');
+	})->name('tables');
 // SU
-    Route::get('dashboardSU', function () {
-        return view('dashboardSU'); 
-    })->middleware('can:isSU');
+
+    Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->middleware('can:isSU');
+    Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data')->middleware('can:isSU');
+    Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete')->middleware('can:isSU');
+
     Route::get('/user-profileSU', [InfoUserController::class, 'create'])->middleware('can:isSU');
     Route::post('/user-profileSU', [InfoUserController::class, 'store'])->middleware('can:isSU');
 

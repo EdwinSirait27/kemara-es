@@ -74,7 +74,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Editsdcsd user">
                                             <i class="fas fa-user-edit text-secondary"></i>
                                         </a>
                                         <span>
