@@ -21,6 +21,10 @@ class DashboardControllerSU extends Controller
     //     return DataTables::of($users)->make(true);
         
     // }
+    public function create()
+    {
+        return view('users.create');
+    }
     public function getUsers()
 {
     $users = User::select(['id', 'Username', 'Role', 'created_at'])
