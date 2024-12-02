@@ -151,7 +151,7 @@
                                         @enderror
                                     @else
                                         <input class="form-control" value="Tidak Ada Data" type="text" placeholder="Nama"
-                                            id="Nama" name="Nama">
+                                            id="Nama" name="Nama" required>
                                     @endif
 
                                     {{-- blok nomor koma oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"> --}}
@@ -194,7 +194,7 @@
                                         @enderror
                                     @else
                                         <input class="form-control" value="tidak ada data" type="text"
-                                            id="TempatLahir" name="TempatLahir">
+                                            id="TempatLahir" name="TempatLahir" required>
                                     @endif
 
 
@@ -217,7 +217,7 @@
                                         @enderror
                                     @else
                                         <input class="form-control" {{-- value="2000-12-27"  --}} type="date"
-                                            id="TanggalLahir" name="TanggalLahir">
+                                            id="TanggalLahir" name="TanggalLahir" required>
                                     @endif
                                 </div>
                             </div>
@@ -400,7 +400,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="0" type="text" id="NipNips"
-                                                name="NipNips">
+                                                name="NipNips"required>
                                         @endif
 
 
@@ -423,7 +423,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="0" type="text" id="Nuptk"
-                                                name="Nuptk">
+                                                name="Nuptk"required>
                                         @endif
 
 
@@ -448,7 +448,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="0" type="text" id="Nik"
-                                                name="Nik">
+                                                name="Nik"required>
                                         @endif
                                     </div>
                                 </div>
@@ -467,7 +467,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="0" type="text" id="Npwp"
-                                                name="Npwp">
+                                                name="Npwp"required>
                                         @endif
 
                                     </div>
@@ -494,7 +494,7 @@
                                         @else
                                             <input class="form-control" value="0" type="text"
                                                 placeholder="NomorSertifikatPendidik" id="NomorSertifikatPendidik"
-                                                name="NomorSertifikatPendidik">
+                                                name="NomorSertifikatPendidik"required>
                                         @endif
 
                                     </div>
@@ -517,7 +517,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" type="date" id="TahunSertifikasi"
-                                                name="TahunSertifikasi">
+                                                name="TahunSertifikasi" required>
                                         @endif
                                     </div>
                                 </div>
@@ -541,7 +541,7 @@
                                         @else
                                             <input class="form-control" value="tidak ada data" type="date"
                                                 placeholder="jadwalkenaikangaji" id="jadwalkenaikangaji"
-                                                name="jadwalkenaikangaji">
+                                                name="jadwalkenaikangaji" required>
                                         @endif
 
 
@@ -564,7 +564,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="text"
-                                                id="PendidikanAkhir" name="PendidikanAkhir">
+                                                id="PendidikanAkhir" name="PendidikanAkhir"required>
                                         @endif
                                     </div>
                                 </div>
@@ -585,7 +585,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="date"
-                                                placeholder="TahunTamat" id="TahunTamat" name="TahunTamat">
+                                                placeholder="TahunTamat" id="TahunTamat" name="TahunTamat"required>
                                         @endif
 
 
@@ -606,7 +606,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="text"
-                                                id="Jurusan" name="Jurusan">
+                                                id="Jurusan" name="Jurusan"required>
                                         @endif
 
                                     </div>
@@ -630,7 +630,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" type="text" id="TugasMengajar"
-                                                value="tidak ada data" name="TugasMengajar">
+                                                value="tidak ada data" name="TugasMengajar"required>
                                         @endif
 
 
@@ -652,7 +652,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="date"
-                                                placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun">
+                                                placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun" required>
                                         @endif
 
                                     </div>
@@ -674,7 +674,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" type="text" id="Pangkat"
-                                                value="tidak ada data"name="Pangkat">
+                                                value="tidak ada data"name="Pangkat"required>
                                         @endif
 
 
@@ -696,7 +696,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="date"
-                                                id="jadwalkenaikanpangkat" name="jadwalkenaikanpangkat">
+                                                id="jadwalkenaikanpangkat" name="jadwalkenaikanpangkat" required>
                                         @endif
                                     </div>
                                 </div>
@@ -717,7 +717,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="text"
-                                                id="Jabatan" name="Jabatan">
+                                                id="Jabatan" name="Jabatan"required>
                                         @endif
 
 
@@ -740,7 +740,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" type="phone" id="NomorTelephone"
-                                                value="0"name="NomorTelephone">
+                                                value="0"name="NomorTelephone"required>
                                         @endif
 
                                     </div>
@@ -762,7 +762,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" value="tidak ada data" type="text"
-                                                id="Alamat" name="Alamat">
+                                                id="Alamat" name="Alamat"required>
                                         @endif
 
 
@@ -782,7 +782,7 @@
                                             @enderror
                                         @else
                                             <input class="form-control" type="email" id="Email"
-                                                value="tidak ada data"name="Email">
+                                                value="tidak ada data"name="Email"required>
                                         @endif
 
 

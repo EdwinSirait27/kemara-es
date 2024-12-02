@@ -46,6 +46,9 @@
                             </thead>
                            
                         </table>
+                        <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
+                          Create New User
+                      </a>
                         <button type="button" id="delete-selected" class="btn btn-danger btn-sm">
                           Delete
                       </button> 
@@ -111,7 +114,7 @@
             Swal.fire({
                 icon: 'warning',
                 title: 'Tidak Ada User Yang Dipilih',
-                text: 'Tolong Pilih Salah.'
+                text: 'Tolong Pilih Salah Satu.'
             });
             return;
         }

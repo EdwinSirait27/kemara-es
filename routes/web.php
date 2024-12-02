@@ -89,12 +89,16 @@ Route::middleware('auth')->group(function () {
 	})->name('tables');
 // SU
 
-    Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->middleware('can:isSU');
+    Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->name('dashboardSU.index')->middleware('can:isSU');
     Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data')->middleware('can:isSU');
     Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete')->middleware('can:isSU');
     // Route::get('Das/create', [DashboardControllerSU::class, 'create'])->name('users.create');
     Route::get('/user-profileSU', [InfoUserController::class, 'create'])->middleware('can:isSU');
     Route::post('/user-profileSU', [InfoUserController::class, 'store'])->middleware('can:isSU');
+    // Route::get('dashboardSU/create', [InfoUserController::class, 'create'])->name('dashboardSU.create')->middleware('can:isSU');
+    Route::get('dashboardSU/create', [DashboardControllerSU::class, 'create'])->name('dashboardSU.create')->middleware('can:isSU');
+    Route::post('/dashboardSU', [DashboardControllerSU::class, 'store'])->name('dashboardSU.store');
+    
 
 // Kepala Sekolah
     Route::get('dashboardKepalaSekolah', function () {
