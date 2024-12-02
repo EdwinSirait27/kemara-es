@@ -11,7 +11,9 @@ class DashboardControllerSU extends Controller
 {
     public function index()
     {
-        return view('DashboardSU');
+        // return view('DashboardSU.DashboardSU');
+        return view('dashboardSU/dashboardSU');
+
     }
 
     // public function getUsers()
@@ -23,8 +25,9 @@ class DashboardControllerSU extends Controller
     // }
     public function create()
     {
-        return view('users.create');
+        return view('DashboardSU.create');
     }
+    
     public function getUsers()
 {
     $users = User::select(['id', 'Username', 'Role', 'created_at'])

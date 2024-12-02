@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->middleware('can:isSU');
     Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data')->middleware('can:isSU');
     Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete')->middleware('can:isSU');
-
+    // Route::get('Das/create', [DashboardControllerSU::class, 'create'])->name('users.create');
     Route::get('/user-profileSU', [InfoUserController::class, 'create'])->middleware('can:isSU');
     Route::post('/user-profileSU', [InfoUserController::class, 'store'])->middleware('can:isSU');
 

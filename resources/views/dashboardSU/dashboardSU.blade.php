@@ -21,25 +21,25 @@
                         <table class="table align-items-center mb-0"id="users-table">
                             <thead>
                                 <tr>
-                                  <th>
-                                    <button type="button" id="select-all" class="btn btn-primary btn-sm">
-                                        Select All
-                                    </button></th> 
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                  <th
+                                  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Username</th>
-                                    <th
+                                        <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Role</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Pembuatan Akun</th>
-                                    <th
+                                        <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
+                                        <th>
+                                          <button type="button" id="select-all" class="btn btn-primary btn-sm">
+                                              Select All
+                                          </button></th> 
                                         <!-- Checkbox untuk select all -->
                                     {{-- <th class="text-secondary opacity-7">Action</th> --}}
                                 </tr>
@@ -68,18 +68,8 @@
             [10, 25, 50, 100, "All"]
         ],
         columns: [
-            {
-                data: 'id',
-                name: 'checkbox',
-                orderable: false,
-                searchable: false,
-                className: 'text-center',
-                render: function(data, type, row) {
-                    return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
-                }
-            },
-            { data: 'id', name: 'id', className: 'text-center' },
-            { data: 'Username', name: 'Username', className: 'text-center' },
+          { data: 'id', name: 'id', className: 'text-center' },
+          { data: 'Username', name: 'Username', className: 'text-center' },
             { data: 'Role', name: 'Role', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
             {
@@ -88,7 +78,17 @@
                 orderable: false,
                 searchable: false,
                 className: 'text-center'
-            }
+              },
+              {
+                  data: 'id',
+                  name: 'checkbox',
+                  orderable: false,
+                  searchable: false,
+                  className: 'text-center',
+                  render: function(data, type, row) {
+                      return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
+                  }
+              }
         ]
     });
 
@@ -110,20 +110,20 @@
         if (selectedIds.length === 0) {
             Swal.fire({
                 icon: 'warning',
-                title: 'No Users Selected',
-                text: 'Please select at least one user to delete.'
+                title: 'Tidak Ada User Yang Dipilih',
+                text: 'Tolong Pilih Salah.'
             });
             return;
         }
 
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Apakah Anda Yakin?',
+            text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete them!'
+            confirmButtonText: 'Iya, Delete!'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
