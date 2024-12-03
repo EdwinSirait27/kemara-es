@@ -89,7 +89,9 @@
                 return meta.row + 1; 
             },
         },
-          { data: 'Guru.Nama', name: 'Guru.Nama', className: 'text-center' },
+          // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+          { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
+
           { data: 'username', name: 'username', className: 'text-center' },
             { data: 'hakakses', name: 'hakakses', className: 'text-center' },
             { data: 'Role', name: 'Role', className: 'text-center' },

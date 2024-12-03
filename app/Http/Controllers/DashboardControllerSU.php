@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\tes;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -21,41 +22,66 @@ class DashboardControllerSU extends Controller
 
     public function getUsers()
     {
-        // Ambil data user dengan relasi Guru
-        $users = User::with('Guru')  // Memuat relasi Guru
-            // ->select(['id', 'guru_id', 'username', 'hakakses', 'Role', 'created_at'])
-            ->get()
-            ->map(function ($user) {
-                // Format created_at menggunakan Carbon
-                $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        $users = User::with('Guru')  // Pastikan relasi Guru dimuat
+    ->select(['id', 'guru_id', 'username', 'hakakses', 'Role', 'created_at'])
+    ->get()
+    ->map(function ($user) {
+        $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        $user->Role = explode(',', $user->Role);
+        $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
+        $user->action = '
+            <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                <i class="fas fa-user-edit text-secondary"></i>
+            </a>';
+        
+        // Menambahkan kolom 'Guru.Nama' secara manual ke dalam data
+        $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
+
+        return $user;
+    });
+
+return DataTables::of($users)
+    ->addColumn('Role', function ($user) {
+        return implode(', ', $user->Role);
+    })
+    ->rawColumns(['checkbox', 'action'])
+    ->make(true);
+
+        // // Ambil data user dengan relasi Guru
+        // $users = tes::with('Guru')  // Memuat relasi Guru
+        //     // ->select(['id', 'guru_id', 'username', 'hakakses', 'Role', 'created_at'])
+        //     ->get()
+        //     ->map(function ($user) {
+        //         // Format created_at menggunakan Carbon
+        //         $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
                 
-                // Memisahkan Role menjadi array
-                $user->Role = explode(',', $user->Role);
+        //         // Memisahkan Role menjadi array
+        //         $user->Role = explode(',', $user->Role);
                 
-                // Menambahkan checkbox untuk setiap user
-                $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
+        //         // Menambahkan checkbox untuk setiap user
+        //         $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
                 
-                // Menambahkan action untuk edit
-                $user->action = '
-                    <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                        <i class="fas fa-user-edit text-secondary"></i>
-                    </a>';
+        //         // Menambahkan action untuk edit
+        //         $user->action = '
+        //             <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+        //                 <i class="fas fa-user-edit text-secondary"></i>
+        //             </a>';
     
-                return $user;
-            });
+        //         return $user;
+        //     });
     
-        // Log data users untuk debugging
-        Log::info('Data Users:', ['users' => $users]);
+        // // Log data users untuk debugging
+        // Log::info('Data Users:', ['users' => $users]);
     
-        // Menampilkan data dalam format DataTables
-        return DataTables::of($users)
-            ->addColumn('Role', function ($user) {
-                // Menampilkan Role yang dipisahkan dengan koma
-                return implode(', ', $user->Role);
-            })
+        // // Menampilkan data dalam format DataTables
+        // return DataTables::of($users)
+        //     ->addColumn('Role', function ($user) {
+        //         // Menampilkan Role yang dipisahkan dengan koma
+        //         return implode(', ', $user->Role);
+        //     })
             
-            ->rawColumns(['checkbox', 'action'])
-            ->make(true);
+        //     ->rawColumns(['checkbox', 'action'])
+        //     ->make(true);
     }
     
 //     public function getUsers()
