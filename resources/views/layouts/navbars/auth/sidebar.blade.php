@@ -16,9 +16,9 @@
   @endcan
 
             <div class="d-flex align-items-center">
-                <img src="../assets/img/tes.ico" class="navbar-brand-img h-100 me-2" alt="Logo">
+                <img src="../assets/img/50204458.jpg" class="navbar-brand-img h-100 me-2" alt="Logo">
                 <div>
-                  <h5 class="ms-3 font-weight-bold d-none d-md-inline">Kesuma-GO</h5>
+                  <h5 class="ms-3 font-weight-bold d-none d-md-inline">Kemara-ES</h5>
                    
                 </div>
             </div>

@@ -26,7 +26,17 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Guru</th>
+                                    {{-- <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Nama</th> --}}
+                                    
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Username</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Hak Akses</th>
                                         <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Role</th>
@@ -71,8 +81,17 @@
             [10, 25, 50, 100, "All"]
         ],
         columns: [
-          { data: 'id', name: 'id', className: 'text-center' },
-          { data: 'Username', name: 'Username', className: 'text-center' },
+          {
+            data: null, // Kolom indeks
+            name: 'id',
+            className: 'text-center',
+            render: function (data, type, row, meta) {
+                return meta.row + 1; 
+            },
+        },
+          { data: 'Guru.Nama', name: 'Guru.Nama', className: 'text-center' },
+          { data: 'username', name: 'username', className: 'text-center' },
+            { data: 'hakakses', name: 'hakakses', className: 'text-center' },
             { data: 'Role', name: 'Role', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
             {

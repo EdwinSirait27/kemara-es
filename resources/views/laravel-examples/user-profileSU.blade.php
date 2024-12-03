@@ -31,10 +31,16 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <form action="/user-profileSU" method="POST" role="form text-left">
+                            <form action="/user-profileSU" method="POST" role="form text-left" enctype="multipart/form-data">>
                                 @csrf
-                                <img src="../assets/img/bruce-mars.jpg" alt="..."
-                                    class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                                
+                                    {{-- <img src="{{ asset('storage/fotoguru/' . auth()->user()->guru->foto) }}" alt="..."
+                                    class="w-100 border-radius-lg shadow-sm" id="imagePopup"> --}}
+                                    <img src="{{ asset('storage/fotoguru/' . (auth()->user()->guru->foto ?? 'we.jpg')) }}" 
+     alt="Foto Guru"
+     class="w-100 border-radius-lg shadow-sm" 
+     id="imagePopup">
+
                                 <a href="javascript:;"
                                     class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
                                     id="uploadBtn">
@@ -42,16 +48,17 @@
                                         title="Upload Gambar"></i>
                                 </a>
                                 <!-- Input file yang tersembunyi -->
-                                <input type="file" id="fileInput" style="display: none;" accept="image/*">
+                                {{-- <label for="foto">Foto</label> --}}
+                                <input type="file" id="foto" name="foto" style="display: none;" class="form-control" accept="image/*">
                         </div>
                     </div>
                     <script>
                         document.getElementById('uploadBtn').addEventListener('click', function() {
                             // Trigger klik pada input file saat tombol diklik
-                            document.getElementById('fileInput').click();
+                            document.getElementById('foto').click();
                         });
 
-                        document.getElementById('fileInput').addEventListener('change', function(event) {
+                        document.getElementById('foto').addEventListener('change', function(event) {
                             // Ambil file yang dipilih
                             var file = event.target.files[0];
                             if (file) {
@@ -128,7 +135,7 @@
 
                                 <div class="@error('username')border border-danger rounded-3 @enderror">
                                     <input class="form-control" value="{{ auth()->user()->username }}" type="text"
-                                        placeholder="username" id="username" name="username"required>
+                                        placeholder="username" id="username" name="username"@readonly(true)>
                                     @error('username')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -822,12 +829,23 @@
                             </div>
                         </div>
 
+                        <div class="alert alert-secondary mx-4" role="alert">
+                              <span class="text-white">
+                                  <strong>Keterangan</strong> <br>
+                                </span>
+                                <span class="text-white">-
+                                <strong  class="fa fa-lock"></strong>
+                                <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
+                                <strong>- Upload Foto Ekstensi .JPEG</strong> <br>
+                                <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+
+                                </span>
+                            </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit"
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                         </div>
                         </form>
-
                     </div>
                 </div>
             </div>

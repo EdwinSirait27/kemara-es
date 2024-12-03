@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
-
+use Illuminate\Support\Str;
 class UsersImport implements ToModel
 {
      /**
@@ -23,22 +23,21 @@ class UsersImport implements ToModel
      */
     public function model(array $row)
     {
-        $guruId = is_numeric($row[0]) ? (int) $row[0] : null;
-        $siswaId = is_numeric($row[1]) ? (int) $row[1] : null;
-        // $tahun = is_numeric($row[7]) ? (int) $row[7] : null;
-        $hakakses = in_array($row[4], $this->validHakakses) ? $row[4] : null;
-        $role = in_array($row[5], $this->validRoles) ? $row[5] : null;
+        $guruId = is_numeric($row[1]) ? (int) $row[1] : null;
+        $siswaId = is_numeric($row[2]) ? (int) $row[2] : null;
+        $hakakses = in_array($row[5], $this->validHakakses) ? $row[5] : null;
+        $role = in_array($row[6], $this->validRoles) ? $row[6] : null;
 
         return new User([
+            // 'id' => $row[0] ?: Str::uuid(),
+            'id' => $row[0] ? $row[0] : Str::uuid(),
+
             'guru_id' => $guruId,
             'siswa_id' => $siswaId,
-            'Username' => $row[2], 
-            'Password' => Hash::make($row[3]), 
+            'Username' => $row[3], 
+            'Password' => Hash::make($row[4]), 
             'hakakses' => $hakakses, 
             'Role' => $role, 
-           
-            // 'no_pdf' => $row[6], 
-            // 'tahundaftar' => $tahun,
             'remember_token' => null, 
             'created_at' => now(),
             'updated_at' => now(),

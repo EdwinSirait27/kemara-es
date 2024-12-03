@@ -14,21 +14,13 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary(); 
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('hakakses', ['SU','Admin', 'Guru', 'Siswa','Kurikulum','NonSiswa','KepalaSekolah'])->nullable();
             $table->set('Role', ['SU', 'Admin', 'Guru','Kurikulum','KepalaSekolah','Siswa'])->nullable();
-            // $table->string('no_pdf')->nullable();
-            // $table->dateTime('tahundaftar');
-            // $table->dateTime()
             $table->rememberToken();
-            $table->timestamps(); // created_at dan updated_at otomatis dibuat
-            
-            // Tambahkan foreign key jika ada relasi
-        //     $table->foreign('guru_id')->references('guru_id')->on('tb_guru')->onDelete('cascade');
-        //     $table->foreign('siswa_id')->references('guru_id')->on('tb_siswa')->onDelete('cascade');
-        // 
+            $table->timestamps(); 
         });
     }
 

@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('Jabatan')->nullable();
             $table->string('NomorTelephone')->nullable();
             $table->text('Alamat')->nullable(); // Alamat detail
-            $table->string('Email')->unique()->nullable(); // Email harus unik
+            $table->string('Email')->nullable(); // Email harus unik
             $table->string('status')->nullable(); // Status aktif/nonaktif
             $table->timestamps();
         });

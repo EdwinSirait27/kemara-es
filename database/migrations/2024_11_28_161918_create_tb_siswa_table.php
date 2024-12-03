@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('KabKota')->nullable();
             $table->string('Provinsi')->nullable();
             $table->string('KodePos')->nullable();
-            $table->string('Email')->unique()->nullable();
+            $table->string('Email')->nullable();
             $table->string('NomorTelephone')->nullable();
             $table->string('Kewarganegaraan')->nullable();
             $table->string('NIK')->unique()->nullable();
