@@ -115,6 +115,7 @@
               }
         ]
     });
+    
 
     $('#select-all').on('click', function() {
               let checkboxes = $('.user-checkbox');
@@ -185,8 +186,34 @@
                 });
             }
         });
+        
     });
+    
 });
+$('#users-table').on('click', '.edit-user', function(e) {
+        e.preventDefault();
+        let userId = $(this).data('id'); // Ambil ID pengguna yang ingin diedit
+
+        // Panggil API untuk mendapatkan data pengguna
+        $.ajax({
+            url: `/users/${userId}/edit`, // URL untuk mendapatkan data pengguna
+            method: 'GET',
+            success: function(response) {
+                // Misalnya, kita ingin menampilkan data dalam modal
+                let user = response.user;
+
+                // Isi form atau modal dengan data pengguna
+                $('#editUserModal').find('input[name="username"]').val(user.username);
+                $('#editUserModal').find('input[name="hakakses"]').val(user.hakakses);
+                $('#editUserModal').find('textarea[name="Role"]').val(user.Role.join(', '));
+                $('#editUserModal').find('input[name="guru_id"]').val(user.guru_id);
+                $('#editUserModal').modal('show'); // Menampilkan modal edit
+            },
+            error: function(err) {
+                console.log('Error:', err);
+            }
+        });
+    });
 </script>
     {{-- <script>
       $(document).ready(function() {

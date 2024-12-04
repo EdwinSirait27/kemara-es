@@ -1,3 +1,7 @@
+@php
+    $username = optional(auth()->user())->username;
+    $hakakses = optional(auth()->user())->hakakses;
+@endphp
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-none border-radius-xl px-0 mx-4" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
@@ -23,7 +27,7 @@
                 </li>
                 <li class="nav-item dropdown pe-2">
                     <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>{{ auth()->user()->username }} | {{ auth()->user()->hakakses }}</span>
+                        <span> {{ $username ?? 'Tidak ada' }} |  {{ $hakakses ?? 'Tidak ada' }}</span>
                         <i class="fa fa-cog cursor-pointer"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
