@@ -115,7 +115,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboardAdmin', [DashboardControllerAdmin::class, 'index'])->name('dashboardAdmin.index')->middleware('can:isAdmin');
 
         Route::get('/user-profileAdmin', [InfoUserControllerAdmin::class, 'create'])->name('user-profileAdmin.create')->middleware('can:isAdmin');
-        Route::post('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->middleware('can:isAdmin');
+        Route::put('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->name('user-profileAdmin.store')->middleware('can:isAdmin');
 
 
     // Kepala Sekolah

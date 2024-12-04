@@ -17,10 +17,8 @@ class InfoUserController extends Controller
 {
     public function create()
     {
-       // Load user dengan relasi 'guru'
     $user = auth()->user()->load('Guru'); 
-    $agamaList = config('agama');
-    // Pecah Role menjadi array
+
     $roles = explode(',', $user->getRawOriginal('Role')); 
 
     // Validasi jika guru tidak ada
@@ -28,7 +26,7 @@ class InfoUserController extends Controller
         abort(404, 'Guru tidak ditemukan.');
     }
 
-    return view('laravel-examples/user-profileSU', compact('agamaList','user', 'roles'));
+    return view('laravel-examples/user-profileSU', compact('user', 'roles'));
     }
     
     public function store(Request $request)
@@ -70,8 +68,6 @@ class InfoUserController extends Controller
         ]);
 
         $filePath = null;
-
-        // Proses upload file sebelum transaksi database
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
