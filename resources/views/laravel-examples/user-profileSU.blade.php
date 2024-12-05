@@ -32,17 +32,21 @@
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
                             <form action={{ route('user-profileSU.store') }} method="POST" role="form text-left"
-                                enctype="multipart/form-data">>
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                   
-
-                                <img src="{{ asset('storage/' . str_replace('public/', '', auth()->user()->guru->foto)) }}" 
-                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                                <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto 
+                                ? asset('storage/' . str_replace('public/', '', auth()->user()->guru->foto)) 
+                                : asset('storage/fotoguru/we.jpg') }}"  
+                                alt="Foto Guru" 
+                                class="w-100 border-radius-lg shadow-sm" 
+                                id="imagePopup">
+                            
+                                {{-- <img src="{{ asset('storage/' . str_replace('public/', '', auth()->user()->guru->foto)) }}" 
+                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup"> --}}
                            
                            
-                                    {{-- <img src="{{ asset('storage/fotoguru/' . (auth()->user()->guru->foto ?? 'we.jpg')) }}"
-                                    alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup"> --}}
 
                                 <a href="javascript:;"
                                     class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
@@ -98,13 +102,16 @@
                         <div class="h-100">
                             @php
                                 $GuruNama = optional(auth()->user()->Guru)->Nama;
+                                $Gurutugas = optional(auth()->user()->Guru)->TugasMengajar;
                             @endphp
 
                             <h5 class="mb-1">
                                 {{ $GuruNama ?? 'Tidak ada Nama' }}
                             </h5>
+                            
                             <p class="mb-0 font-weight-bold text-sm">
-                                {{ __(' CEO / Co-Founder') }}
+                                Tugas Mengajar :{{ $Gurutugas ?? 'Tidak ada ' }}
+
                             </p>
                         </div>
                     </div>
@@ -146,12 +153,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="username" class="form-control-label">{{ __('Username') }}</label>
+                                {{-- <label for="username" class="form-control-label " >{{ __('Username') }}</label> --}}
+                                <label for="username" class="form-control-label">
+                                    <i class="fas fa-lock"></i> {{ __('Username') }}
+                                </label>
+                                
                                 <div>
                                     <input class="form-control" value="{{ e(optional(auth()->user())->username ?? '') }}"
                                         type="text" id="username" name="username" readonly
                                         aria-describedby="info-username">
-                                    <small id="info-username" class="text-muted">Username tidak dapat diubah.</small>
+                                    {{-- <small id="info-username" class="text-muted">Username tidak dapat diubah.</small> --}}
 
 
                                     {{-- <label for="username" class="form-control-label">{{ __('Username') }}</label>
@@ -178,10 +189,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Nama" class="form-control-label">{{ __('Nama Lengkap') }}</label>
+                                <label for="Nama" class="form-control-label">
+                                    <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
+                                </label>
                                 <div>
                                     <input class="form-control" value="{{ e(optional(auth()->user())->Guru->Nama ?? '') }}"
-                                        type="text" id="Nama" name="Nama" aria-describedby="info-Nama">
+                                        type="text" id="Nama" name="Nama" aria-describedby="info-Nama" readonly>
                                 </div>
                             </div>
                         </div>
@@ -211,12 +224,15 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="TempatLahir" class="form-control-label">{{ __('Tempat Lahir') }}</label>
+                                <label for="TempatLahir" class="form-control-label">
+                                    <i class="fas fa-lock"></i> {{ __('Tempat Lahir') }}
+                                </label>
+                                {{-- <label for="TempatLahir" class="form-control-label">{{ __('Tempat Lahir') }}</label> --}}
                                 <div class="@error('TempatLahir')border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ e(optional(auth()->user())->Guru->TempatLahir ?? '') }}" type="text"
                                         id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir"
-                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"maxlength="30" required>
+                                        oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"maxlength="30" readonly>
                                         @error('TempatLahir')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -228,12 +244,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="TanggalLahir" class="form-control-label">{{ __('Tanggal Lahir') }}</label>
+                                <label for="TanggalLahir" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Tanggal Lahir') }}</label>
+                                {{-- <label for="TanggalLahir" class="form-control-label">{{ __('Tanggal Lahir') }}</label> --}}
                                 <div class="@error('TanggalLahir') border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ old('TanggalLahir', optional(auth()->user()->Guru)->TanggalLahir) }}"
                                         type="date" placeholder="TanggalLahir" id="TanggalLahir" name="TanggalLahir"
-                                        required>
+                                        readonly>
                                     @error('TanggalLahir')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -244,9 +261,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Agama" class="form-control-label">{{ __('Agama') }}</label>
+                                <label for="Agama" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Agama') }}</label>
+                                
+                                {{-- <label for="Agama" class="form-control-label">{{ __('Agama') }}</label> --}}
                                 <div class="@error('Agama') border border-danger rounded-3 @enderror">
-                                    <select class="form-control" name="Agama" id="Agama" required>
+                                    <select class="form-control" name="Agama" id="Agama" readonly>
                                         <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                         @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
                                             <option value="{{ e($agama) }}"
@@ -267,9 +286,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="JenisKelamin" class="form-control-label">{{ __('Jenis Kelamin') }}</label>
+                                <label for="JenisKelamin" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Jenis Kelamin') }}</label>
+
+                                {{-- <label for="JenisKelamin" class="form-control-label">{{ __('Jenis Kelamin') }}</label> --}}
                                 <div class="@error('JenisKelamin') border border-danger rounded-3 @enderror">
-                                    <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
+                                    <select class="form-control" name="JenisKelamin" id="JenisKelamin" readonly>
                                         <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
                                         @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
                                             <option value="{{ e($jenis) }}"
@@ -286,9 +307,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="StatusPegawai" class="form-control-label">{{ __('Status Pegawai') }}</label>
+                                <label for="StatusPegawai" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Status Pegawai') }}</label>
+
+                                {{-- <label for="StatusPegawai" class="form-control-label">{{ __('Status Pegawai') }}</label> --}}
                                 <div class="@error('StatusPegawai') border border-danger rounded-3 @enderror">
-                                    <select class="form-control" name="StatusPegawai" id="StatusPegawai" required>
+                                    <select class="form-control" name="StatusPegawai" id="StatusPegawai" readonly>
                                         <option value="" disabled selected>{{ __('Pilih Status Pegawai') }}</option>
                                         @foreach (['GT', 'PNS YDP','GTT','Honorer','PT','PTT'] as $pegawai)
                                             <option value="{{ e($pegawai) }}"
@@ -498,12 +521,14 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="jadwalkenaikangaji" class="form-control-label">{{ __('Jadwal Kenaikan Gaji') }}</label>
+                                {{-- <label for="jadwalkenaikangaji" class="form-control-label">{{ __('Jadwal Kenaikan Gaji') }}</label> --}}
+                                <label for="jadwalkenaikangaji" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Jadwal Kenaikan Gaji') }}</label>
+
                                 <div class="@error('jadwalkenaikangaji') border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ old('jadwalkenaikangaji', optional(auth()->user()->Guru)->jadwalkenaikangaji) }}"
                                         type="date" placeholder="jadwalkenaikangaji" id="jadwalkenaikangaji" name="jadwalkenaikangaji"
-                                        required>
+                                        readonly>
                                     @error('jadwalkenaikangaji')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -637,7 +662,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="TahunPensiun" class="form-control-label">{{ __('Tahun Pensiun') }}</label>
+                                <label for="TahunPensiun" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Tahun Pensiun') }}</label>
+
+                                {{-- <label for="TahunPensiun" class="form-control-label">{{ __('Tahun Pensiun') }}</label> --}}
+                                
                                 <div class="@error('TahunPensiun') border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ old('TahunPensiun', optional(auth()->user()->Guru)->TahunPensiun) }}"
@@ -668,12 +696,14 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Pangkat" class="form-control-label">{{ __('Pangkat') }}</label>
+                                <label for="Pangkat" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Pangkat') }}</label>
+
+                                {{-- <label for="Pangkat" class="form-control-label">{{ __('Pangkat') }}</label> --}}
                                 <div class="@error('Pangkat')border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ e(optional(auth()->user())->Guru->Pangkat ?? '') }}" type="text"
                                         id="Pangkat" name="Pangkat" aria-describedby="info-Pangkat"
-                                        maxlength="50" required>
+                                        maxlength="50" readonly>
                                         @error('Pangkat')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -697,12 +727,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="jadwalkenaikanpangkat" class="form-control-label">{{ __('Jadwal Kenaikan Pangkat') }}</label>
+                                <label for="jadwalkenaikanpangkat" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Jadwal Kenaikan Pangkat') }}</label>
+
+                                {{-- <label for="jadwalkenaikanpangkat" class="form-control-label">{{ __('Jadwal Kenaikan Pangkat') }}</label> --}}
                                 <div class="@error('jadwalkenaikanpangkat') border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ old('jadwalkenaikanpangkat', optional(auth()->user()->Guru)->jadwalkenaikanpangkat) }}"
                                         type="date" placeholder="jadwalkenaikanpangkat" id="jadwalkenaikanpangkat" name="jadwalkenaikanpangkat"
-                                        required>
+                                        readonly>
                                     @error('jadwalkenaikanpangkat')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -729,12 +761,14 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Jabatan" class="form-control-label">{{ __('Jabatan') }}</label>
+                                <label for="Jabatan" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Jabatan') }}</label>
+
+                                {{-- <label for="Jabatan" class="form-control-label">{{ __('Jabatan') }}</label> --}}
                                 <div class="@error('Jabatan')border border-danger rounded-3 @enderror">
                                     <input class="form-control"
                                         value="{{ e(optional(auth()->user())->Guru->Jabatan ?? '') }}" type="text"
                                         id="Jabatan" name="Jabatan" aria-describedby="info-Jabatan"
-                                        maxlength="30" required>
+                                        maxlength="30" readonly>
                                         @error('Jabatan')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -851,10 +885,13 @@
                     <div class="row">
 
                         <div class="col-md-6">
+                            
                             <div class="form-group">
-                                <label for="status" class="form-control-label">{{ __('Status') }}</label>
+                                <label for="status" class="form-control-label"><i class="fas fa-lock"></i> {{ __('Status') }}</label>
+                            
+                                {{-- <label for="status" class="form-control-label">{{ __('Status') }}</label> --}}
                                 <div class="@error('status') border border-danger rounded-3 @enderror">
-                                    <select class="form-control" name="status" id="status" required>
+                                    <select class="form-control" name="status" id="status" readonly>
                                         <option value="" disabled selected>{{ __('Pilih status') }}</option>
                                         @foreach (['Aktif', 'Tidak Aktif'] as $status)
                                             <option value="{{ e($status) }}"

@@ -13,48 +13,43 @@ class SessionsController extends Controller
     {
         return view('session.login-session');
     }
-
-    public function store()
+    public function store(Request $request)
     {
-        $attributes = request()->validate([
-            'username' => 'required',
-            'password' => 'required',
+        // Validasi input
+        $attributes = $request->validate([
+            'username' => 'required|string|min:3|max:255',
+            'password' => 'required|string|min:8',
         ]);
-        
+
+        // Proses autentikasi
         if (Auth::attempt($attributes)) {
-            session()->regenerate();
+            $request->session()->regenerate();
 
             $user = Auth::user();
-            
-            // Pemeriksaan hak akses berdasarkan role pengguna
-            if (Gate::allows('isSU', $user)) {
-                return redirect('dashboardSU')->with(['success' => 'You are logged in as SU.']);
+
+            // Mapping role ke dashboard
+            $dashboards = [
+                'isSU' => 'dashboardSU',
+                'isGuru' => 'dashboardGuru',
+                'isSiswa' => 'dashboardSiswa',
+                'isKepalaSekolah' => 'dashboardKepalaSekolah',
+                'isNonSiswa' => 'dashboardNonSiswa',
+                'isKurikulum' => 'dashboardKurikulum',
+                'isAdmin' => 'dashboardAdmin',
+            ];
+
+            foreach ($dashboards as $gate => $dashboard) {
+                if (Gate::allows($gate, $user)) {
+                    return redirect($dashboard)->with(['success' => "You are logged in as $gate."]);
+                }
             }
 
-            if (Gate::allows('isGuru', $user)) {
-                return redirect('dashboardGuru')->with(['success' => 'You are logged in as Guru.']);
-            }
-
-            if (Gate::allows('isSiswa', $user)) {
-                return redirect('dashboardSiswa')->with(['success' => 'You are logged in as Siswa.']);
-            }
-            if (Gate::allows('isKepalaSekolah', $user)) {
-                return redirect('dashboardKepalaSekolah')->with(['success' => 'You are logged in as Kepala Sekolah.']);
-            }
-            if (Gate::allows('isNonSiswa', $user)) {
-                return redirect('dashboardNonSiswa')->with(['success' => 'You are logged in as Non Siswa.']);
-            }
-            if (Gate::allows('isKurikulum', $user)) {
-                return redirect('dashboardKurikulum')->with(['success' => 'You are logged in as Kurikulum.']);
-            }
-            if (Gate::allows('isAdmin', $user)) {
-                return redirect('dashboardAdmin')->with(['success' => 'You are logged in as Admin.']);
-            }
-
+            // Default dashboard jika tidak ada role yang cocok
             return redirect('dashboard')->with(['success' => 'You are logged in.']);
-        } else {
-            return back()->withErrors(['username' => 'Username or Password invalid.']);
         }
+
+        // Gagal login
+        return back()->withErrors(['login' => 'Username or Password invalid.']);
     }
     // public function store()
     // {
@@ -65,14 +60,40 @@ class SessionsController extends Controller
         
     //     if (Auth::attempt($attributes)) {
     //         session()->regenerate();
+
+    //         $user = Auth::user();
+            
+    //         // Pemeriksaan hak akses berdasarkan role pengguna
+    //         if (Gate::allows('isSU', $user)) {
+    //             return redirect('dashboardSU')->with(['success' => 'You are logged in as SU.']);
+    //         }
+
+    //         if (Gate::allows('isGuru', $user)) {
+    //             return redirect('dashboardGuru')->with(['success' => 'You are logged in as Guru.']);
+    //         }
+
+    //         if (Gate::allows('isSiswa', $user)) {
+    //             return redirect('dashboardSiswa')->with(['success' => 'You are logged in as Siswa.']);
+    //         }
+    //         if (Gate::allows('isKepalaSekolah', $user)) {
+    //             return redirect('dashboardKepalaSekolah')->with(['success' => 'You are logged in as Kepala Sekolah.']);
+    //         }
+    //         if (Gate::allows('isNonSiswa', $user)) {
+    //             return redirect('dashboardNonSiswa')->with(['success' => 'You are logged in as Non Siswa.']);
+    //         }
+    //         if (Gate::allows('isKurikulum', $user)) {
+    //             return redirect('dashboardKurikulum')->with(['success' => 'You are logged in as Kurikulum.']);
+    //         }
+    //         if (Gate::allows('isAdmin', $user)) {
+    //             return redirect('dashboardAdmin')->with(['success' => 'You are logged in as Admin.']);
+    //         }
+
     //         return redirect('dashboard')->with(['success' => 'You are logged in.']);
     //     } else {
     //         return back()->withErrors(['username' => 'Username or Password invalid.']);
     //     }
     // }
-  
-  
-  
+   
     public function destroy()
     {
 

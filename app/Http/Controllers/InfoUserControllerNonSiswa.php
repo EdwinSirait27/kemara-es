@@ -13,15 +13,12 @@ class InfoUserControllerNonSiswa extends Controller
 {
     public function create()
     {
-    $user = auth()->user()->load('Guru'); 
+    $user = auth()->user()->load('Siswa'); 
 
     $roles = explode(',', $user->getRawOriginal('Role')); 
 
     // Validasi jika guru tidak ada
-    if (!$user->guru) {
-        abort(404, 'Guru tidak ditemukan.');
-    }
-
+   
     return view('laravel-examples/user-profileNonSiswa', compact('user', 'roles'));
     }
 

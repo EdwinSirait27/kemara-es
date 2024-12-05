@@ -20,10 +20,7 @@ class InfoUserControllerAdmin extends Controller
 
     $roles = explode(',', $user->getRawOriginal('Role')); 
 
-    // Validasi jika guru tidak ada
-    if (!$user->guru) {
-        abort(404, 'Guru tidak ditemukan.');
-    }
+  
 
     return view('laravel-examples/user-profileAdmin', compact('user', 'roles'));
     }

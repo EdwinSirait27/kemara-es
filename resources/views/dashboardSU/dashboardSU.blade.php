@@ -56,9 +56,14 @@
                             </thead>
                            
                         </table>
-                        <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
+                        <button type="button" onclick="window.location='{{ route('dashboardSU.create') }}'" 
+    class="btn btn-primary btn-sm">
+    Tambah User
+</button>
+
+                        {{-- <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
                           Create New User
-                      </a>
+                      </a> --}}
                         <button type="button" id="delete-selected" class="btn btn-danger btn-sm">
                           Delete
                       </button> 

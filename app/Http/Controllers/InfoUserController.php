@@ -20,12 +20,6 @@ class InfoUserController extends Controller
     $user = auth()->user()->load('Guru'); 
 
     $roles = explode(',', $user->getRawOriginal('Role')); 
-
-    // Validasi jika guru tidak ada
-    if (!$user->guru) {
-        abort(404, 'Guru tidak ditemukan.');
-    }
-
     return view('laravel-examples/user-profileSU', compact('user', 'roles'));
     }
     
