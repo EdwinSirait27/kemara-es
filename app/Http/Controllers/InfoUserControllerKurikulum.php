@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-
 use Illuminate\Support\Facades\Auth;
 use App\Models\Guru;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class InfoUserControllerAdmin extends Controller
+class InfoUserControllerKurikulum extends Controller
 {
-   
     public function create()
     {
     $user = auth()->user()->load('Guru'); 
@@ -25,7 +22,7 @@ class InfoUserControllerAdmin extends Controller
         abort(404, 'Guru tidak ditemukan.');
     }
 
-    return view('laravel-examples/user-profileAdmin', compact('user', 'roles'));
+    return view('laravel-examples/user-profileKurikulum', compact('user', 'roles'));
     }
 
     public function store(Request $request)
