@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kesuma-GO | Dashboard SU')
+@section('title', 'Kemara-ES | Dashboard SU')
 
 @section('content')
 <style>

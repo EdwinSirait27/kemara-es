@@ -1,6 +1,12 @@
 @extends('layouts.user_type.auth')
+@section('title', 'Kemara-ES | Dashboard Admin')
 
 @section('content')
+<style>
+  .text-center {
+      text-align: center;
+  }
+</style>
 
   <div class="row">
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
