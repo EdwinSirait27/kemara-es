@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-use App\Models\tes;
+use App\Models\Guru;
+// use App\Models\tes;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+
 class DashboardControllerSU extends Controller
 {
+    public function __construct()
+{
+    $this->middleware('prevent.xss');
+}
     public function index()
     {
         return view('dashboardSU.dashboardSU');
@@ -25,95 +31,32 @@ class DashboardControllerSU extends Controller
         ->get()
         ->map(function ($user) {
             $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-            // Mengonversi Role menjadi array dan menampilkan dalam format yang mudah dibaca
             $user->Role = implode(', ', explode(',', $user->Role));
-
-            // Checkbox untuk setiap user
             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
-
-            // Tombol aksi Edit, arahkan ke halaman edit user
             $user->action = '
-                <a href="' . route('dashboardSU.edit', $user->id) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                <a href="' . route('dashboardSU.edit1', $user->id) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                     <i class="fas fa-user-edit text-secondary"></i>
                 </a>';
-
-            // Nama Guru, jika ada
             $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
 
             return $user;
         });
-
     return DataTables::of($users)
-        // Menambahkan kolom Role yang sudah diubah
         ->addColumn('Role', function ($user) {
             return $user->Role;
         })
-        // Menambahkan kolom dengan elemen HTML yang sudah diubah (checkbox dan action)
         ->rawColumns(['checkbox', 'action'])
         ->make(true);
 }
 
 
-//     public function getUsers()
-// {
-//     $users = User::with('Guru')
-//         ->select(['id', 'guru_id', 'username', 'hakakses', 'Role', 'created_at'])
-//         ->get()
-//         ->map(function ($user) {
-//             $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-//             $user->Role = explode(',', $user->Role);
-//             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
-//             $user->action = '
-//                 <a href="' . route('users.edit', $user->id) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-//                     <i class="fas fa-user-edit text-secondary"></i>
-//                 </a>';
-//             $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
-
-//             return $user;
-//         });
-
-//     return response()->json($users);
-    
-// }
-
-//     public function getUsers()
-//     {
-//         $users = User::with('Guru')
-//     ->select(['id', 'guru_id', 'username', 'hakakses', 'Role', 'created_at'])
-//     ->get()
-//     ->map(function ($user) {
-//         $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-//         $user->Role = explode(',', $user->Role);
-//         $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
-//         $user->action = '
-//             <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-//                 <i class="fas fa-user-edit text-secondary"></i>
-//             </a>';
-//         $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
-
-//         return $user;
-//     });
-
-// return DataTables::of($users)
-//     ->addColumn('Role', function ($user) {
-//         return implode(', ', $user->Role);
-//     })
-//     ->rawColumns(['checkbox', 'action'])
-//     ->make(true);
-//     }
-
 public function edit($id)
 {
-    // Ambil data user berdasarkan ID
     $user = User::with('Guru')->findOrFail($id);
-
-    
-    // Pastikan hanya user dengan peran yang benar yang dapat mengakses
-    $this->authorize('isSU', $user);
-
-    // Mengirim data user ke view edit
-    return view('dashboardSU.edit', compact('user'));
+    $gurus = Guru::all(); // Ambil semua data guru
+    return view('dashboardSU.edit', compact('user', 'gurus'));
 }
+
 
 // Mengupdate data user
 public function update(Request $request, $id)
@@ -156,8 +99,8 @@ public function update(Request $request, $id)
         User::create([
             'username' => $request->username,
             'password' => bcrypt($request->password),
-         'hakakses' => $request->hakakses, // Simpan enum langsung
-         'Role' => implode(',', $request->Role), // Simpan set sebagai JSON
+         'hakakses' => $request->hakakses, 
+         'Role' => implode(',', $request->Role),
         ]);
         return redirect()->route('dashboardSU.create')->with('success', 'User created successfully!');
     } catch (\Exception $e) {

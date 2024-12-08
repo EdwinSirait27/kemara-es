@@ -53,6 +53,12 @@
                         <div class="card-body">
                             <form role="form" method="POST" action="/session">
                                 @csrf
+                                @if ($errors->has('throttle'))
+    <div class="alert alert-danger">
+        {{ $errors->first('throttle') }}
+    </div>
+@endif
+
                                 <div class="mb-3">
                                   <label>
                                     <i class="fas fa-user"></i> Username
@@ -72,13 +78,41 @@
                                       <label>
                                         <i class="fas fa-key"></i> Password
                                     </label>
+                                    <div class="mb-3 position-relative">
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                                            aria-label="Password" aria-describedby="password-addon">
+                                        <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" 
+                                            id="togglePassword" style="cursor: pointer;"></i>
+                                        @error('password')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <script>
+                                        const togglePassword = document.getElementById('togglePassword');
+                                        const passwordInput = document.getElementById('password');
+                                    
+                                        togglePassword.addEventListener('click', function () {
+                                            // Toggle the password visibility
+                                            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                                            passwordInput.setAttribute('type', type);
+                                    
+                                            // Toggle the eye icon
+                                            this.classList.toggle('fa-eye');
+                                            this.classList.toggle('fa-eye-slash');
+                                        });
+                                    </script>
+                                    
+                                      {{-- <label>
+                                        <i class="fas fa-key"></i> Password
+                                    </label>
                                         <div class="mb-3">
                                             <input type="Password" class="form-control" name="password" id="password"
                                                 placeholder="password"  aria-label="password"
                                                 aria-describedby="password-addon">
                                             @error('password')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                            @enderror
+                                            @enderror --}}
 
                                         </div>
 

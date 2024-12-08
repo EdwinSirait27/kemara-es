@@ -13,6 +13,7 @@ class Siswa extends Model
     protected $primaryKey = 'siswa_id';
 
     protected $fillable = [
+        'foto',
         'NamaLengkap',
         'NomorInduk',
         'NamaPanggilan',
@@ -48,14 +49,12 @@ class Siswa extends Model
         'KabKotaSD',
         'ProvinsiSD',
         'NoIjasah',
-        'NoSKHUN',
         'DiterimaTanggal',
         'DiterimaDiKelas',
         'DiterimaSemester',
         'MutasiAsalSMP',
         'AlasanPindah',
-        // 'NoPesertaUNSD',
-        'TglIjasah',
+        'TglIjasahSD',
         'NamaOrangTuaPadaIjasah',
         'NamaAyah',
         'TahunLahirAyah',
@@ -83,18 +82,18 @@ class Siswa extends Model
         'WaliPenghasilan',
         'StatusHubunganWali',
         'MenerimaBeasiswaDari',
-        // 'TahunMeninggalkanSekolah',
-        // 'AlasanSebab',
+        'TahunMeninggalkanSekolah',
+        'AlasanSebab',
         'TamatBelajarTahun',
-        // 'TanggalNomorSTTB',
         'InformasiLain',
         'cita',
         'status',
         'sakit',
         'izin',
         'tk',
-        'catatan'
+        'catatan',
     ];
+    
     
     public function Guru()
     {

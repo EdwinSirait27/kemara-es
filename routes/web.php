@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardControllerSU;
 use App\Http\Controllers\DashboardControllerAdmin;
+use App\Http\Controllers\DashboardControllerSiswa;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\InfoUserControllerAdmin;
@@ -58,7 +59,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
     Route::post('/register', [RegisterController::class, 'store']);
-    Route::get('/login', [SessionsController::class, 'create']);
+    // Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
     Route::get('/login/forgot-password', [ResetController::class, 'create']);
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
@@ -66,7 +67,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
 });
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', function () {
         return view('dashboard');
@@ -96,72 +97,86 @@ Route::middleware('auth')->group(function () {
     })->name('tables');
     // SU
 
-    Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->name('dashboardSU.index')->middleware('can:isSU');
-    Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data')->middleware('can:isSU');
-    Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete')->middleware('can:isSU');
-    // Route::get('Das/create', [DashboardControllerSU::class, 'create'])->name('users.create');
-    Route::get('/user-profileSU', [InfoUserController::class, 'create'])->name('user-profileSU.create')->middleware('can:isSU');
-    Route::put('/user-profileSU', [InfoUserController::class, 'store'])->name('user-profileSU.store')->middleware('can:isSU');
-    
-    // Route::get('dashboardSU/create', [InfoUserController::class, 'create'])->name('dashboardSU.create')->middleware('can:isSU');
-    Route::get('dashboardSU/create', [DashboardControllerSU::class, 'create'])->name('dashboardSU.create')->middleware('can:isSU');
-    Route::post('/dashboardSU', [DashboardControllerSU::class, 'store'])->name('dashboardSU.store')->middleware('can:isSU');
-    // Route::get('/dashboardSU/{id}/edit', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit')->middleware('can:isSU');
-    Route::get('/dashboardSU/{id}/edit', [DashboardControllerSU::class, 'edit'])
-        ->name('dashboardSU.edit')
-        ->middleware('can:isSU');
-
-    // Rute untuk menyimpan perubahan pada data
+    Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->name('dashboardSU.index');
+    Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data');
+    Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete');
+    Route::get('/user-profileSU', [InfoUserController::class, 'create'])->name('user-profileSU.create');
+    Route::put('/user-profileSU', [InfoUserController::class, 'store'])->name('user-profileSU.store'); 
+    Route::get('dashboardSU/create', [DashboardControllerSU::class, 'create'])->name('dashboardSU.create');
+    Route::post('/dashboardSU', [DashboardControllerSU::class, 'store'])->name('dashboardSU.store');
+Route::get('/dashboardSU/edit1/{id}', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit1');
+Route::put('/dashboardSU/{id}', [DashboardControllerSU::class, 'update'])->name('dashboardSU.update');
     Route::put('/dashboardSU/{id}', [DashboardControllerSU::class, 'update'])
-        ->name('dashboardSU.update')
-        ->middleware('can:isSU');
+        ->name('dashboardSU.update');
 
-        // Admin
-        Route::get('/dashboardAdmin', [DashboardControllerAdmin::class, 'index'])->name('dashboardAdmin.index')->middleware('can:isAdmin');
+      
+   
+});
+Route::middleware(['auth','can:isAdmin','prevent.xss'])->group(function () {
+  // Admin
+  Route::get('/dashboardAdmin', [DashboardControllerAdmin::class, 'index'])->name('dashboardAdmin.index')->middleware('can:isAdmin');
 
-        Route::get('/user-profileAdmin', [InfoUserControllerAdmin::class, 'create'])->name('user-profileAdmin.create')->middleware('can:isAdmin');
-        Route::put('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->name('user-profileAdmin.store')->middleware('can:isAdmin');
+  Route::get('/user-profileAdmin', [InfoUserControllerAdmin::class, 'create'])->name('user-profileAdmin.create')->middleware('can:isAdmin');
+  Route::put('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->name('user-profileAdmin.store')->middleware('can:isAdmin');
+
+});
+Route::middleware(['auth','can:isKepalaSekolah','prevent.xss'])->group(function () {
+ // Kepala Sekolah
+ Route::get('dashboardKepalaSekolah', function () {
+    return view('dashboardKepalaSekolah');  // Halaman untuk Guru
+})->middleware('can:isKepalaSekolah');
+Route::get('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'create'])->name('user-profileKepalaSekolah.create')->middleware('can:isKepalaSekolah');
+    Route::put('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'store'])->name('user-profileKepalaSekolah.store')->middleware('can:isKepalaSekolah');
 
 
-    // Kepala Sekolah
-    Route::get('dashboardKepalaSekolah', function () {
-        return view('dashboardKepalaSekolah');  // Halaman untuk Guru
-    })->middleware('can:isKepalaSekolah');
-    Route::get('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'create'])->name('user-profileKepalaSekolah.create')->middleware('can:isKepalaSekolah');
-        Route::put('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'store'])->name('user-profileKepalaSekolah.store')->middleware('can:isKepalaSekolah');
+});
+Route::middleware(['auth','can:isKurikulum','prevent.xss'])->group(function () {
+// Kurikulum
+Route::get('dashboardKurikulum', function () {
+    return view('dashboardKurikulum');  // Halaman untuk Siswa
+})->middleware('can:isKurikulum');
+Route::get('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'create'])->name('user-profileKurikulum.create')->middleware('can:isKurikulum');
+Route::put('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'store'])->name('user-profileKurikulum.store')->middleware('can:isKurikulum');
 
-
-    // Kurikulum
-    Route::get('dashboardKurikulum', function () {
-        return view('dashboardKurikulum');  // Halaman untuk Siswa
-    })->middleware('can:isKurikulum');
-    Route::get('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'create'])->name('user-profileKurikulum.create')->middleware('can:isKurikulum');
-    Route::put('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'store'])->name('user-profileKurikulum.store')->middleware('can:isKurikulum');
-
-    // Guru
+});
+Route::middleware(['auth','can:isGuru','prevent.xss'])->group(function () {
     Route::get('dashboardGuru', function () {
         return view('dashboardGuru');  // Halaman untuk Siswa
     })->middleware('can:isGuru');
     Route::get('/user-profileGuru', [InfoUserControllerGuru::class, 'create'])->name('user-profileGuru.create')->middleware('can:isGuru');
         Route::put('/user-profileGuru', [InfoUserControllerGuru::class, 'store'])->name('user-profileGuru.store')->middleware('can:isGuru');
+    
+});
+Route::middleware(['auth','can:isSiswa','prevent.xss'])->group(function () {
+    Route::get('/dashboardSiswa', [DashboardControllerSiswa::class, 'index'])->name('dashboardSiswa.index')->middleware('can:isSiswa');
 
-    // Siswa
-    Route::get('dashboardSiswa', function () {
-        return view('dashboardSiswa');  // Halaman untuk Siswa
-    })->middleware('can:isSiswa');
-    Route::get('/user-profileSiswa', [InfoUserControllerSiswa::class, 'create'])->middleware('can:isSiswa');
-    Route::post('/user-profileSiswa', [InfoUserControllerSiswa::class, 'store'])->middleware('can:isSiswa');
-
-    // Calon Siswa
+    Route::get('/user-profileSiswa', [InfoUserControllerSiswa::class, 'create'])->name('user-profileSiswa.create')->middleware('can:isSiswa');
+    Route::put('/user-profileSiswa', [InfoUserControllerSiswa::class, 'store'])->name('user-profileSiswa.store')->middleware('can:isSiswa');
+    
+});
+Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
     Route::get('dashboardNonSiswa', function () {
         return view('dashboardNonSiswa');  // Halaman untuk Siswa
     })->middleware('can:isNonSiswa');
     Route::get('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'create'])->middleware('can:isNonSiswa');
     Route::post('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'store'])->middleware('can:isNonSiswa');
-
+    
 });
 
 // Halaman login hanya dapat diakses oleh pengguna yang belum login
-Route::middleware('guest')->get('/login', function () {
+Route::middleware(['guest','prevent.xss'])->get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
+
+
+
+
+// Guru
+
+// Siswa
+// Route::get('dashboardSiswa', function () {
+//     return view('dashboardSiswa');  // Halaman untuk Siswa
+// })->middleware('can:isSiswa');
+
+// Calon Siswa
