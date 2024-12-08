@@ -31,22 +31,156 @@
                         <i class="fa fa-cog cursor-pointer"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                        @if (Gate::allows('isSU'))
                         <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="/user-profile">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileSU.create') }}">
                                 <h6 class="text text-secondary mb-0">
                                     <i class="fa fa-male me-2"></i>
                                     Profile
                                 </h6>
                             </a>
                         </li>
+                    @endif
+                        @if (Gate::allows('isKepalaSekolah'))
                         <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileKepalaSekolah.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                        @if (Gate::allows('isAdmin'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileAdmin.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                        @if (Gate::allows('isKurikulum'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileKurikulum.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                        @if (Gate::allows('isGuru'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileGuru.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                        @if (Gate::allows('isSiswa'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileSiswa.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                        @if (Gate::allows('isNonSiswa'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('user-profileNonSiswa.create') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-male me-2"></i>
+                                    Profile
+                                </h6>
+                            </a>
+                        </li>
+                    @endif
+                       
+                    @if (Gate::allows('isSU'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardSU.index') }}">
                                 <h6 class="text text-secondary mb-0">
                                     <i class="fa fa-home me-2"></i>
                                     Dashboard
                                 </h6>
                             </a>
                         </li>
+                        @endif
+                   
+                    @if (Gate::allows('isKepalaSekolah'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardKepalaSekolah.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                    @if (Gate::allows('isAdmin'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardAdmin.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                    @if (Gate::allows('isKurikulum'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardKurikulum.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                    @if (Gate::allows('isGuru'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardGuru.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                    @if (Gate::allows('isSiswa'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardSiswa.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                    @if (Gate::allows('isNonSiswa'))
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="{{ route('dashboardNonSiswa.index') }}">
+                                <h6 class="text text-secondary mb-0">
+                                    <i class="fa fa-home me-2"></i>
+                                    Dashboard
+                                </h6>
+                            </a>
+                        </li>
+                        @endif
+                   
+                  
+                   
                         <form method="POST" action="{{ url('/logout') }}" class="d-inline">
                             @csrf
                             <li class="mb-2">
