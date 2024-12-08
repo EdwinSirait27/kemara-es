@@ -1,5 +1,6 @@
 @extends('layouts.user_type.auth')
 @section('content')
+@section('title', 'Kemara-ES | Edit Profile')
     <style>
         .avatar {
             position: relative;

@@ -24,7 +24,7 @@
     </style>
     <section class="min-vh-100 mb-8">
         <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg"
-            style="background-image: url('../assets/img/white-curved.jpg');">
+            style="background-image: url('{{ asset('assets/img/curved-images/white-curved.jpeg') }}');">
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container">
                 <div class="row justify-content-center">
@@ -45,7 +45,7 @@
                     <div class="card z-index-0">
                         <div class="card-header text-center pt-4">
                             <h5>Kemara-ES</h5>
-                            <img src="../assets/img/50204458.jpg" alt="Logo"
+                            <img src="{{ asset('assets/img/50204458.jpg')}}" alt="Logo"
                                 style="width: 100px; height: 125px; margin-right: 10px;">
                         </div>
                         <div class="row px-xl-5 px-sm-4 px-3">

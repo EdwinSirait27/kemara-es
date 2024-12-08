@@ -102,7 +102,7 @@ Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     Route::put('/user-profileSU', [InfoUserController::class, 'store'])->name('user-profileSU.store'); 
     Route::get('dashboardSU/create', [DashboardControllerSU::class, 'create'])->name('dashboardSU.create');
     Route::post('/dashboardSU', [DashboardControllerSU::class, 'store'])->name('dashboardSU.store');
-Route::get('/dashboardSU/edit1/{id}', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit1');
+Route::get('/dashboardSU/edit1/{uuid}', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit1');
 Route::put('/dashboardSU/{id}', [DashboardControllerSU::class, 'update'])->name('dashboardSU.update');
     Route::put('/dashboardSU/{id}', [DashboardControllerSU::class, 'update'])
         ->name('dashboardSU.update');

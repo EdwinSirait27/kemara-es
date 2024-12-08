@@ -6,6 +6,7 @@ use App\Models\Guru;
 // use App\Models\tes;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -33,10 +34,17 @@ class DashboardControllerSU extends Controller
             $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
             $user->Role = implode(', ', explode(',', $user->Role));
             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id . '">';
-            $user->action = '
-                <a href="' . route('dashboardSU.edit1', $user->id) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                    <i class="fas fa-user-edit text-secondary"></i>
-                </a>';
+        
+
+               
+        $user->action = '
+        <a href="' . route('dashboardSU.edit1', $user->id) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+            <i class="fas fa-user-edit text-secondary"></i>
+        </a>';
+            // $user->action = '
+            //     <a href="' . route('dashboardSU.edit1', $user->uuid) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+            //         <i class="fas fa-user-edit text-secondary"></i>
+            //     </a>';
             $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
 
             return $user;
@@ -48,14 +56,27 @@ class DashboardControllerSU extends Controller
         ->rawColumns(['checkbox', 'action'])
         ->make(true);
 }
+//     $user->action = '<a href="' . route('dashboardSU.edit1', $user->uuid) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+        //     <i class="fas fa-user-edit text-secondary"></i>
+        //   </a>';
 
 
-public function edit($id)
+
+
+public function edit($uuid)
 {
-    $user = User::with('Guru')->findOrFail($id);
-    $gurus = Guru::all(); // Ambil semua data guru
+   
+    // Temukan user berdasarkan UUID (pastikan UUID valid)
+    // $user = User::with('Guru')->findOrFail($uuid);
+    $user = User::where('id', $uuid)->with('Guru')->firstOrFail(); // Ambil user berdasarkan UUID
+
+    // Ambil semua data guru
+    $gurus = Guru::all();
+
+    // Return view dengan data yang diperlukan
     return view('dashboardSU.edit', compact('user', 'gurus'));
 }
+
 
 
 // Mengupdate data user
