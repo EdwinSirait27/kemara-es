@@ -15,12 +15,15 @@
                         </div>
                     @endif
 
-                    {{-- Tampilkan pesan error --}}
-                    @if (session('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                    @if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
                     {{-- Form untuk membuat user --}}
                     <form method="POST" id="create-user-form" action="{{ route('dashboardSU.store') }}">
@@ -46,13 +49,35 @@
                             <input id="password" type="password" 
                                    class="form-control @error('password') is-invalid @enderror" 
                                    name="password" required autocomplete="new-password">
-                            
+                                   <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" 
+                                   id="togglePassword" style="cursor: pointer;"></i>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
+
+
+                        
+                  
+                
+                <script>
+                    const togglePassword = document.getElementById('togglePassword');
+                    const passwordInput = document.getElementById('password');
+                
+                    togglePassword.addEventListener('click', function () {
+                        // Toggle the password visibility
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                
+                        // Toggle the eye icon
+                        this.classList.toggle('fa-eye');
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                </script>
+
+
 
                         {{-- Input Password Confirmation --}}
                         <div class="form-group mb-3">

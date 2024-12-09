@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Rules\NoXSSInput;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Guru;
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class InfoUserControllerAdmin extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('prevent.xss');
+    }
    
     public function create()
     {
@@ -31,7 +36,7 @@ class InfoUserControllerAdmin extends Controller
 
         $this->validate($request, [
             'Nama' => 'required|string|max:50',
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
+            // 'username' => 'required|string|max:50|unique:users,username,' . $user->id,
             'Role' => 'required|string|in:SU,KepalaSekolah,Admin',
             'current_password' => 'nullable|string', 
             'password' => 'nullable|string|min:8|confirmed',
@@ -61,6 +66,8 @@ class InfoUserControllerAdmin extends Controller
             'Alamat' => 'required|string|max:500',
             'Email' => 'required|string|email|max:255',
             'status' => 'required|string|max:255',
+            'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
+
         ]);
 
         $filePath = null;

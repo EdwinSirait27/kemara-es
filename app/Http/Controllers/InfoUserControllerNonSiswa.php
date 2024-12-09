@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\NoXSSInput;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Guru;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class InfoUserControllerNonSiswa extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('prevent.xss');
+    }
     public function create()
     {
         $user = auth()->user()->load('Siswa');
@@ -29,7 +36,7 @@ class InfoUserControllerNonSiswa extends Controller
         $user = Auth::user();
 
         $this->validate($request, [
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
+            // 'username' => 'required|string|max:50|unique:users,username,' . $user->id,
             'Role' => 'required|string|in:Siswa',
             'current_password' => 'nullable|string',
             'password' => 'nullable|string|min:8|confirmed',
@@ -48,6 +55,8 @@ class InfoUserControllerNonSiswa extends Controller
             'NomorTelephone' => 'nullable|numeric',
             'NIK' => 'nullable|numeric',
             'status' => 'nullable|string|max:255',
+            'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
+
 
         ]);
 

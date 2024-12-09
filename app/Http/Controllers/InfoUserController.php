@@ -9,6 +9,7 @@ use App\Models\Guru;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Rules\NoXSSInput;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class InfoUserController extends Controller
     
         $this->validate($request, [
             'Nama' => 'required|string|max:50',
-            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
+                
             'Role' => 'required|string|in:SU,KepalaSekolah,Admin',
             'current_password' => 'nullable|string', 
             'password' => 'nullable|string|min:8|confirmed',
@@ -67,6 +68,8 @@ class InfoUserController extends Controller
             'Alamat' => 'required|string|max:500',
             'Email' => 'required|string|email|max:255',
             'status' => 'required|string|max:255',
+            'username' => 'required|string|max:12|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
+
         ]);
     
         $filePath = null;
@@ -94,18 +97,14 @@ class InfoUserController extends Controller
                         ->withInput();
                 }
             }
-    
             $updateData = [
                 'username' => $request->username,
                 'hakakses' => $request->Role,
             ];
-    
             if (!empty($request->password)) {
                 $updateData['password'] = Hash::make($request->password);
             }
-    
             $user->update($updateData);
-    
             $guru = Guru::updateOrCreate(
                 ['guru_id' => $user->guru_id],
                 [

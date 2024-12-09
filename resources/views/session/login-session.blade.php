@@ -58,6 +58,15 @@
         {{ $errors->first('throttle') }}
     </div>
 @endif
+@if($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
                                 <div class="mb-3">
                                   <label>
@@ -79,8 +88,10 @@
                                         <i class="fas fa-key"></i> Password
                                     </label>
                                     <div class="mb-3 position-relative">
-                                        <input type="password" class="form-control" name="password" id="password" placeholder="Password"
-                                            aria-label="Password" aria-describedby="password-addon">
+                                      <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                                      aria-label="Password" aria-describedby="password-addon"
+                                      oninput="this.value = this.value.replace(/\s/g, '')">
+                               
                                         <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer" 
                                             id="togglePassword" style="cursor: pointer;"></i>
                                         @error('password')
