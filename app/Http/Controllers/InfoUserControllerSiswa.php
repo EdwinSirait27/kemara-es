@@ -52,7 +52,7 @@ class InfoUserControllerSiswa extends Controller
             'NomorTelephone' => 'nullable|numeric',
             'NIK' => 'nullable|numeric',
             'status' => 'nullable|string|max:255',
-            'siswa_id' => 'required|unique:tb_siswa',
+            // 'siswa_id' => 'required|unique:tb_siswa',
 
             'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
 

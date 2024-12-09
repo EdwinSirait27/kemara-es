@@ -12,7 +12,17 @@ class DashboardControllerAdmin extends Controller
 {
     public function index()
     {
-        return view('dashboardAdmin.dashboardAdmin');
+        $totaluser = User::count();
+        $totallaki = User::whereHas('Siswa', function ($query) {
+            $query->where('JenisKelamin', 'Laki-Laki');
+        })->count();
+        $totalperempuan = User::whereHas('Siswa', function ($query) {
+            $query->where('JenisKelamin', 'Perempuan');
+        })->count();
+        $totalguru = User::whereIn('hakakses', ['SU', 'Guru', 'Admin','KepalaSekolah','Kurikulum'])
+                ->count();
+
+        return view('dashboardAdmin.dashboardAdmin', compact('totaluser','totallaki','totalperempuan','totalguru'));
 
     }
 }
