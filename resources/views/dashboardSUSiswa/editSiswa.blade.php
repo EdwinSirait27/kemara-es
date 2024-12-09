@@ -1,45 +1,6 @@
-{{-- @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Update Data')
-
-@section('content')
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <h1>Edit User</h1>
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('dashboardSU.update', $hashedId) }}" method="POST">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="text" class="form-control" id="password" name="password" value="{{ old('password', $user->password) }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('dashboardSU.index') }}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
-@endsection
-
-@endsection --}}
 @extends('layouts.user_type.auth')
 @section('content')
-@section('title', 'Kemara-ES | Edit Profile')
+@section('title', 'Kemara-ES | Update')
 
 <style>
     .avatar {
@@ -75,7 +36,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboardSU.update', $hashedId) }}" method="POST">
+        <form action="{{ route('dashboardSUSiswa.updateSiswa', $hashedId) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="container-fluid py-4">
@@ -142,8 +103,8 @@
                                         <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
                                     </label>
                                     <div>
-                                        <input class="form-control" value="{{ old('Nama', $user->Guru->Nama ?? '') }}"
-                                            type="text" id="Nama" name="Nama" aria-describedby="info-Nama"
+                                        <input class="form-control" value="{{ old('Nama', $user->Siswa->NamaLengkap ?? '') }}"
+                                            type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-Nama"
                                              maxlength="255">
                                     </div>
                                 </div>
@@ -158,12 +119,9 @@
                                     <div class="@error('hakakses') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="hakakses" id="hakakses" required>
                                             <option value="" disabled {{ old('hakakses', $user->hakakses ?? '') == '' ? 'selected' : '' }}>Pilih Hak Akses</option>
-                                            <option value="SU" {{ old('hakakses', $user->hakakses ?? '') == 'SU' ? 'selected' : '' }}>SU</option>
-                                            <option value="KepalaSekolah" {{ old('hakakses', $user->hakakses ?? '') == 'KepalaSekolah' ? 'selected' : '' }}>KepalaSekolah</option>
-                                            <option value="Admin" {{ old('hakakses', $user->hakakses ?? '') == 'Admin' ? 'selected' : '' }}>Admin</option>
-                                            <option value="Guru" {{ old('hakakses', $user->hakakses ?? '') == 'Guru' ? 'selected' : '' }}>Guru</option>
                                             <option value="Siswa" {{ old('hakakses', $user->hakakses ?? '') == 'Siswa' ? 'selected' : '' }}>Siswa</option>
-                                            <option value="Kurikulum" {{ old('hakakses', $user->hakakses ?? '') == 'Kurikulum' ? 'selected' : '' }}>Kurikulum</option>
+                                            <option value="NonSiswa" {{ old('hakakses', $user->NonSiswa ?? '') == 'NonSiswa' ? 'selected' : '' }}>NonSiswa</option>
+                                            
                                         </select>
                                         @error('hakakses')
                                             <span class="invalid-feedback" role="alert">
@@ -179,7 +137,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @php
-                                    $roles = ['SU', 'KepalaSekolah', 'Admin', 'Guru', 'Kurikulum'];
+                                    $roles = ['Siswa','NonSiswa'];
                                     $selectedRoles = old('Role', explode(',', $user->Role ?? ''));
                                 @endphp
                                 
@@ -217,7 +175,7 @@
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
                                 {{ __('Update') }}
                             </button>
-                            <a href="{{ route('dashboardSU.index') }}" class="btn btn-secondary mt-4 mb-4">
+                            <a href="{{ route('dashboardSUSiswa.indexSiswa') }}" class="btn btn-secondary mt-4 mb-4">
                                 {{ __('Cancel') }}
                             </a>
                         </div>

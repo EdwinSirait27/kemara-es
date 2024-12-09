@@ -66,6 +66,8 @@ class InfoUserControllerAdmin extends Controller
             'Alamat' => 'required|string|max:500',
             'Email' => 'required|string|email|max:255',
             'status' => 'required|string|max:255',
+            'guru_id' => 'required|unique:tb_guru',
+
             'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
 
         ]);

@@ -929,14 +929,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                {{-- <label for="current_password"
-                                    class="form-control-label">{{ __('Password Lama') }}</label>
-                                <div class="@error('current_password')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="password" placeholder="Password Lama"
-                                        id="current_password" name="current_password" maxlength="8">
-                                    @error('current_password')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror --}}
+                              
                                     <label for="current_password" class="form-control-label">{{ __('Password Lama') }}</label>
 <div class="@error('current_password') border border-danger rounded-3 @enderror position-relative">
     <input 

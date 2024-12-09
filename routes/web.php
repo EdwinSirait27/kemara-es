@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardControllerSU;
+use App\Http\Controllers\DashboardControllerSUSiswa;
 use App\Http\Controllers\DashboardControllerAdmin;
 use App\Http\Controllers\DashboardControllerSiswa;
 use App\Http\Controllers\HomeController;
@@ -96,7 +97,7 @@ Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     // SU
 
     Route::get('/dashboardSU', [DashboardControllerSU::class, 'index'])->name('dashboardSU.index');
-    Route::get('/users/data', [DashboardControllerSU::class, 'getUsers'])->name('users.data');
+    Route::get('/users/dataguru', [DashboardControllerSU::class, 'getUsers'])->name('users.dataguru');
     Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete');
     Route::get('/user-profileSU', [InfoUserController::class, 'create'])->name('user-profileSU.create');
     Route::put('/user-profileSU', [InfoUserController::class, 'store'])->name('user-profileSU.store'); 
@@ -105,8 +106,15 @@ Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
 Route::get('/dashboardSU/edit1/{hashedId}', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit1');
 Route::put('/dashboardSU/{hashedId}', [DashboardControllerSU::class, 'update'])->name('dashboardSU.update');
 
-    // Route::put('/dashboardSU/{id}', [DashboardControllerSU::class, 'update'])
-    //     ->name('dashboardSU.update');
+//    SUSiswa
+Route::get('/dashboardSUSiswa', [DashboardControllerSUSiswa::class, 'indexSiswa'])->name('dashboardSUSiswa.indexSiswa');
+    Route::get('/users/data', [DashboardControllerSUSiswa::class, 'getUsersSiswa'])->name('users.data');
+    Route::delete('/users/delete', [DashboardControllerSUSiswa::class, 'deleteUsersSiswa'])->name('users.delete');
+   Route::get('dashboardSUSiswa/createSiswa', [DashboardControllerSUSiswa::class, 'createSiswa'])->name('dashboardSUSiswa.createSiswa');
+    Route::post('/dashboardSUSiswa', [DashboardControllerSUSiswa::class, 'storeSiswa'])->name('dashboardSUSiswa.storeSiswa');
+Route::get('/dashboardSUSiswa/editSiswa/{hashedId}', [DashboardControllerSUSiswa::class, 'editSiswa'])->name('dashboardSUSiswa.editSiswa');
+Route::put('/dashboardSUSiswa/{hashedId}', [DashboardControllerSUSiswa::class, 'updateSiswa'])->name('dashboardSUSiswa.updateSiswa');
+
 
       
    

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('hakakses', ['SU','Admin', 'Guru', 'Siswa','Kurikulum','NonSiswa','KepalaSekolah'])->nullable();
-            $table->set('Role', ['SU', 'Admin', 'Guru','Kurikulum','KepalaSekolah','Siswa'])->nullable();
+            $table->set('Role', ['SU', 'Admin', 'Guru','Kurikulum','KepalaSekolah','Siswa','NonSiswa'])->nullable();
             $table->rememberToken();
             $table->timestamps(); 
         });

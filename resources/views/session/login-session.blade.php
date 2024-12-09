@@ -74,11 +74,18 @@
                                 </label>
                                 
                                     <div class="mb-3">
-                                        <input type="username" class="form-control" name="username" id="username"
-                                            placeholder="Username" aria-label="username" aria-describedby="username-addon">
-                                        @error('username')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                      <input type="text" 
+                                      class="form-control" 
+                                      name="username" 
+                                      id="username" 
+                                      placeholder="Username" 
+                                      aria-label="username" 
+                                      aria-describedby="username-addon" 
+                                      oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')">
+                               @error('username')
+                                   <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                               @enderror
+                               
 
                                     </div>
 

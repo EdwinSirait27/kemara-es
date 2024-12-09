@@ -80,7 +80,7 @@
     let table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route('users.data') }}',
+        ajax: '{{ route('users.dataguru') }}',
         lengthMenu: [
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]

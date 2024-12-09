@@ -26,7 +26,7 @@
                         @endif
 
                         {{-- Form untuk membuat user --}}
-                        <form method="POST" id="create-user-form" action="{{ route('dashboardSU.store') }}">
+                        <form method="POST" id="create-user-form" action="{{ route('dashboardSUSiswa.storeSiswa') }}">
                             @csrf
 
                             {{-- Input Username --}}
@@ -118,12 +118,9 @@
                                 <div class="@error('hakakses') border border-danger rounded-3 @enderror">
                                     <select class="form-control" name="hakakses" id="hakakses" required>
                                         <option value="" disabled selected>Pilih Hak Akses</option>
-                                        <option value="SU">SU</option>
-                                        <option value="KepalaSekolah">KepalaSekolah</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Guru">Guru</option>
                                         <option value="Siswa">Siswa</option>
-                                        <option value="Kurikulum">Kurikulum</option>
+                                        <option value="NonSiswa">NonSiswa</option>
+                                        
                                     </select>
                                     @error('hakakses')
                                         <span class="invalid-feedback" role="alert">
@@ -134,12 +131,8 @@
                                 <div class="form-group mb-3">
                                     <label for="Role" class="form-label">{{ __('Role') }}</label> <br>
 
-                                    <input type="checkbox" name="Role[]" value="SU"> SU<br>
-                                    <input type="checkbox" name="Role[]" value="KepalaSekolah"> Kepala Sekolah<br>
-                                    <input type="checkbox" name="Role[]" value="Admin"> Admin<br>
-                                    <input type="checkbox" name="Role[]" value="Guru"> Guru<br>
-                                    <input type="checkbox" name="Role[]" value="Kurikulum"> Kurikulum<br>
-                                    <input type="checkbox" name="Role[]" value="Siswa"> Siswa<br>
+                                    <input type="checkbox" name="Role[]" value="Siswa">Siswa<br>
+                                    <input type="checkbox" name="Role[]" value="NonSiswa">NonSiswa<br>
 
                                     @error('Role')
                                         <span class="invalid-feedback" role="alert">
@@ -154,7 +147,7 @@
                                         {{ __('Create User') }}
                                     </button>
 
-                                    <a href="{{ route('dashboardSU.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('dashboardSUSiswa.indexSiswa') }}" class="btn btn-secondary">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>
