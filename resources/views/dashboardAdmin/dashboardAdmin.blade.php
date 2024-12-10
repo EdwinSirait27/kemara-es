@@ -434,6 +434,9 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Tanggal Dibuat</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Action</th>
                                     <th>
                                     <button type="button" id="select-all" class="btn btn-primary btn-sm">
                                         Select All
@@ -477,6 +480,7 @@
           { data: 'pengumuman', name: 'pengumuman', className: 'text-center' },
             { data: 'deskripsi', name: 'deskripsi', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
+            { data: 'action', name: 'action', orderable: false, searchable: false,  className: 'text-center' },
               {
                   data: 'id',
                   name: 'checkbox',

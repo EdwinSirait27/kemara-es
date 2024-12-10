@@ -51,5 +51,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isNonSiswa', function (User $user) {
             return $user->hakakses === 'NonSiswa';
         });
+        Gate::define('isSemua', function (User $user) {
+            $allowedRoles = ['KepalaSekolah', 'Admin', 'Guru', 'Kurikulum', 'Siswa', 'NonSiswa'];
+            return in_array($user->hakakses, $allowedRoles);
+        });
+        Gate::define('isAdminKepalaSekolah', function (User $user) {
+            $allowedRoles = ['KepalaSekolah', 'Admin'];
+            return in_array($user->hakakses, $allowedRoles);
+        });
+        
     }
 }
