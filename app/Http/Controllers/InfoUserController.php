@@ -8,16 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Guru;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use App\Rules\NoXSSInput;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\PreventXSS;
-
-
-
-
 class InfoUserController extends Controller
 {
     public function __construct()

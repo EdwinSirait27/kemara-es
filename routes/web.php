@@ -122,11 +122,34 @@ Route::put('/dashboardSUSiswa/{hashedId}', [DashboardControllerSUSiswa::class, '
 Route::middleware(['auth','can:isAdmin','prevent.xss'])->group(function () {
   // Admin
   Route::get('/dashboardAdmin', [DashboardControllerAdmin::class, 'index'])->name('dashboardAdmin.index');
-
+  Route::get('/pengumuman/data', [DashboardControllerAdmin::class, 'getPengumuman'])->name('pengumuman.data');
+  Route::post('/dashboardAdmin/store', [DashboardControllerAdmin::class, 'store'])->name('dashboardAdmin.store');
+  Route::delete('/pengumuman/delete', [DashboardControllerAdmin::class, 'deletePengumuman'])->name('pengumuman.delete');
+  
   Route::get('/user-profileAdmin', [InfoUserControllerAdmin::class, 'create'])->name('user-profileAdmin.create');
   Route::put('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->name('user-profileAdmin.store');
+  Route::get('billing', function () {
+    return view('billing');
+})->name('billing');
 
+Route::get('profile', function () {
+    return view('profile');
+})->name('profile');
+
+Route::get('rtl', function () {
+    return view('rtl');
+})->name('rtl');
+
+Route::get('user-management', function () {
+    return view('laravel-examples/user-management');
+})->name('user-management');
+
+Route::get('tables', function () {
+    return view('tables');
+})->name('tables');
 });
+
+
 Route::middleware(['auth','can:isKepalaSekolah','prevent.xss'])->group(function () {
  // Kepala Sekolah
  Route::get('dashboardKepalaSekolah', function () {
