@@ -8,7 +8,6 @@ use App\Models\Siswa;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -65,7 +64,7 @@ public function store(Request $request)
         return redirect()->route('dashboardAdmin.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx',
+            'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -80,125 +79,29 @@ public function store(Request $request)
 
     }
 }
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'pengumuman' => 'required|mimes:pdf,docx,xlsx|max:512',
-//         'deskripsi' => 'required|string|max:255', 
-//     ]);
 
-//     if ($request->hasFile('pengumuman')) {
-//         $file = $request->file('pengumuman');
-//         $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-//         $filePath = $file->storeAs('public/pengumuman', $fileName);
-
-//         Pengumuman::create([
-//             'pengumuman' => $filePath, // Menyimpan path
-//             'file_name' => $fileName, // Menyimpan nama file asli
-//             'deskripsi' => $request->deskripsi,
-//         ]);
-//     }
-
-//     return redirect()->route('dashboardAdmin.index')->with('success', 'Pengumuman created successfully!');
-// }
-
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'pengumuman' => 'required|mimes:pdf,docx,xlsx|max:5210',
-//         'deskripsi' => 'required|string|max:255', 
-//     ]);
-
-//     $filePath = null;
-
-//     // Proses penyimpanan file
-//     if ($request->hasFile('pengumuman')) {
-//         $file = $request->file('pengumuman');
-//         $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-//         $filePath = $file->storeAs('public/pengumuman', $fileName);
-//     }
-
-//     try {
-//         // Debug: Cek data sebelum menyimpan ke database
-//         \Log::info('Data to be saved: ', [
-//             'pengumuman' => $filePath,
-//             'deskripsi' => $request->deskripsi,
-//         ]);
-
-//         // Simpan data ke database
-//         $originalName = $file->getClientOriginalName();
-//         Pengumuman::create([
-//             'pengumuman' => $filePath,
-//             'original_name' => $originalName,
-//             'deskripsi' => $request->deskripsi,
-//         ]);
-
-//         return redirect()->route('dashboardAdmin.index')->with('success', 'Pengumuman created successfully!');
-//     } catch (\Exception $e) {
-//         return redirect()->back()->with('error', 'Failed to create pengumuman: ' . $e->getMessage());
-//     }
-// }
-
-    // public function store(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $request->validate([
-    //         'pengumuman' => 'required|mimes:pdf,docx,xlsx|max:512',
-    //         'deskripsi' => 'required|string|max:255', 
-    //     ]);
-    //     $filePath = null;
+    public function deletePengumuman(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+        ]);
     
-    //     if ($request->hasFile('pengumuman')) {
-    //         $file = $request->file('pengumuman');
-    //         $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-    //         $filePath = 'public/pengumuman/' . $fileName;
-    //         $file->storeAs('public/pengumuman', $fileName);
-    //     }
-    //     try {
-    //         Pengumuman::create([
-    //             'pengumuman' => $request->$filePath,
-    //             'deskripsi' => $request->hakakses,
-    //         ]);
-    //         return redirect()->route('dashboardAdmin.index')->with('success', 'Pengumuman created successfully!');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Failed to create pengumuman: ' . $e->getMessage());
-    //     }
-    // }
-    // public function deletePengumuman(Request $request)
-    // {
-    //     $request->validate([
-    //         'ids' => 'required|min:1',
-           
-    //     ]);
-    //     Pengumuman::whereIn('id', $request->ids)->delete();
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Selected users and their related data deleted successfully.'
-    //     ]);
-    // }
-
-public function deletePengumuman(Request $request)
-{
-    $request->validate([
-        'ids' => 'required|array|min:1', // Validasi bahwa 'ids' harus berupa array
-    ]);
-
-    $pengumumanList = Pengumuman::whereIn('id', $request->ids)->get();
-
-    foreach ($pengumumanList as $pengumuman) {
-        if ($pengumuman->pengumuman && Storage::exists($pengumuman->pengumuman)) {
-            Storage::delete($pengumuman->pengumuman);
+        $pengumumanList = Pengumuman::whereIn('id', $request->ids)->get();
+    
+        foreach ($pengumumanList as $pengumuman) {
+            if ($pengumuman->pengumuman && Storage::exists('public/pengumuman/' . $pengumuman->pengumuman)) {
+                Storage::delete('public/pengumuman/' . $pengumuman->pengumuman);
+            }
         }
+    
+        // Hapus data pengumuman dari database
+        Pengumuman::whereIn('id', $request->ids)->delete();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Selected pengumuman and their related files deleted successfully.',
+        ]);
     }
-
-    // Hapus data dari database
-    Pengumuman::whereIn('id', $request->ids)->delete();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Selected pengumuman and their related files deleted successfully.',
-    ]);
-}
-
+    
 
 }

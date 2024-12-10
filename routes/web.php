@@ -13,6 +13,7 @@ use App\Http\Controllers\InfoUserControllerKurikulum;
 use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
+use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
@@ -148,6 +149,16 @@ Route::get('tables', function () {
     return view('tables');
 })->name('tables');
 });
+
+// kurikulum
+Route::get('/Kurikulum', [KurikulumController::class, 'index'])->name('Kurikulum.index');
+    Route::get('/kurikulum/datakurikulum', [KurikulumController::class, 'getUsers'])->name('kurikulum.datakurikulum');
+    Route::delete('/kurikulum/delete', [KurikulumController::class, 'deleteUsers'])->name('kurikulum.delete');
+    Route::get('Kurikulum/create', [KurikulumController::class, 'create'])->name('Kurikulum.create');
+    Route::post('/Kurikulum', [KurikulumController::class, 'store'])->name('Kurikulum.store');
+Route::get('/Kurikulum/edit/{hashedId}', [KurikulumController::class, 'edit'])->name('Kurikulum.edit');
+Route::put('/Kurikulum/{hashedId}', [KurikulumController::class, 'update'])->name('Kurikulum.update');
+
 
 
 Route::middleware(['auth','can:isKepalaSekolah','prevent.xss'])->group(function () {

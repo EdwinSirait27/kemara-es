@@ -432,7 +432,7 @@
               <div class="collapse" id="laravelExamples1">
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('datakurikulum') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Kurikulum') ? 'active' : '' }}" href="{{ url('Kurikulum') }}">
                               <span class="nav-link-text ms-1">Data Kurikulum</span>
                           </a>
                       </li>

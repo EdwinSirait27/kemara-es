@@ -45,95 +45,115 @@
 
 
     <div class="row mt-4">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total User Akitf</p>
-                                <h5 class="font-weight-bolder mb-0">
-                                    {{ $totaluser }}
-                                    {{-- <span class="text-success text-sm font-weight-bolder">+55%</span> --}}
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Siswa Laki-Laki</p>
-                                <h5 class="font-weight-bolder mb-0">
-                                    {{ e($totallaki) }}
-                                    {{-- <span class="text-success text-sm font-weight-bolder">+3%</span> --}}
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Siswa Perempuan</p>
-                                <h5 class="font-weight-bolder mb-0">
-                                    {{ $totalperempuan }}
-                                    {{-- <span class="text-danger text-sm font-weight-bolder">-2%</span> --}}
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Guru</p>
-                                <h5 class="font-weight-bolder mb-0">
-                                    {{ $totalguru }}
-                                    {{-- <span class="text-success text-sm font-weight-bolder">+5%</span> --}}
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card shadow-lg border-0 rounded-lg">
+              <div class="card-body p-4">
+                  <div class="row">
+                      <div class="col-8">
+                          <div class="numbers">
+                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Total User Aktif</p>
+                              <h5 class="font-weight-bolder mb-0 text-primary">
+                                  {{ $totaluser }}
+                              </h5>
+                          </div>
+                      </div>
+                      <div class="col-4 text-center d-flex justify-content-center align-items-center">
+                          <div class="icon icon-shape bg-gradient-info shadow-sm text-center border-radius-md p-3">
+                              <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"style="position: relative; top: -20px;"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card shadow-lg border-0 rounded-lg">
+              <div class="card-body p-4">
+                  <div class="row">
+                      <div class="col-8">
+                          <div class="numbers">
+                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Siswa Laki-Laki</p>
+                              <h5 class="font-weight-bolder mb-0 text-success">
+                                  {{ e($totallaki) }}
+                              </h5>
+                          </div>
+                      </div>
+                      <div class="col-4 text-center d-flex justify-content-center align-items-center">
+                          <div class="icon icon-shape bg-gradient-warning shadow-sm text-center border-radius-md p-3">
+                              <i class="ni ni-world text-lg opacity-10" aria-hidden="true"style="position: relative; top: -20px;"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card shadow-lg border-0 rounded-lg">
+              <div class="card-body p-4">
+                  <div class="row">
+                      <div class="col-8">
+                          <div class="numbers">
+                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Siswa Perempuan</p>
+                              <h5 class="font-weight-bolder mb-0 text-danger">
+                                  {{ $totalperempuan }}
+                              </h5>
+                          </div>
+                      </div>
+                      <div class="col-4 text-center d-flex justify-content-center align-items-center">
+                          <div class="icon icon-shape bg-gradient-danger shadow-sm text-center border-radius-md p-3">
+                              <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true" style="position: relative; top: -20px;"></i>
+                            {{-- <i class="ni ni-circle-08 text-lg opacity-10" aria-hidden="true" style="position: relative; top: -20px;"></i> --}}
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-sm-6">
+          <div class="card shadow-lg border-0 rounded-lg">
+              <div class="card-body p-4">
+                  <div class="row">
+                      <div class="col-8">
+                          <div class="numbers">
+                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Guru</p>
+                              <h5 class="font-weight-bolder mb-0 text-info">
+                                  {{ $totalguru }}
+                              </h5>
+                          </div>
+                      </div>
+                      <div class="col-4 text-center d-flex justify-content-center align-items-center">
+                          <div class="icon icon-shape bg-gradient-secondary shadow-sm text-center border-radius-md p-3">
+                            <i class="ni ni-circle-08 text-lg opacity-10" aria-hidden="true" style="position: relative; top: -20px;"></i>
+  
+                            {{-- <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i> --}}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <style>
+      .card:hover {
+          transform: translateY(-10px);
+          transition: transform 0.3s ease;
+      }
+      .icon {
+          font-size: 32px;  /* Ukuran ikon lebih besar */
+          color: #fff;
+      }
+      .numbers h5 {
+          font-size: 1.5rem;
+      }
+      .col-4.text-center {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+      }
+  </style>
+  
+  
     <div class="row mt-4">
         <div class="col-lg-5 mb-lg-0 mb-4">
             <div class="card z-index-2">
@@ -174,7 +194,7 @@
                                 @error('pengumuman')
                                     <div style="color: red;">{{ $message }}</div>
                                 @enderror
-                                <small>File harus berekstensi doc, docx, pdf, xls, xlsx, ppt, pptx</small>
+                                <small>File upload max 5mb, dan harus berekstensi doc, docx, pdf, xls, xlsx, ppt, pptx, jpeg, dan png.</small>
                             </div>
                             {{-- <div class="mb-4">
                                 <label for="deskripsi" class="form-label">Deskripsi</label>
