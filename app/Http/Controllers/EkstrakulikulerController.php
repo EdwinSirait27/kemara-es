@@ -34,7 +34,6 @@ class EkstrakulikulerController extends Controller
             <a href="' . route('Ekstrakulikuler.edit', $ekstrakulikuler->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-                // $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
                 return $ekstrakulikuler;
             });
         return DataTables::of($ekstrakulikuler)
@@ -56,7 +55,8 @@ class EkstrakulikulerController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-           'namaekstra' => 'required|string|max:4|regex:/^[a-zA-Z]+$/',
+        //    'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z]+$/',
+'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
 
             'kapasitas' => 'required|string|max:2',
             'status' => 'required|string|in:Aktif,Tidak Aktif',
@@ -95,7 +95,8 @@ class EkstrakulikulerController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'namaekstra' => 'required|string|max:4|regex:/^[a-zA-Z]+$/',
+            // 'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z]+$/',
+'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
 
             'kapasitas' => 'required|string|max:2',
             'status' => 'required|string|in:Aktif,Tidak Aktif',

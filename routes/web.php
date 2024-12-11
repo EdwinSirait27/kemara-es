@@ -147,8 +147,8 @@ Route::get('/Ekstrakulikuler', [EkstrakulikulerController::class, 'index'])->nam
     Route::delete('/Ekstrakulikuler/delete', [EkstrakulikulerController::class, 'deleteekstrakulikuler'])->name('ekstrakulikuler.delete');
     Route::get('Ekstrakulikuler/create', [EkstrakulikulerController::class, 'create'])->name('Ekstrakulikuler.create');
     Route::post('/Ekstrakulikuler', [EkstrakulikulerController::class, 'store'])->name('Ekstrakulikuler.store');
-Route::get('/Ekstrakulikuler/edit/{hashedId}', [MatapelajaranController::class, 'edit'])->name('Ekstrakulikuler.edit');
-Route::put('/Ekstrakulikuler/{hashedId}', [MatapelajaranController::class, 'update'])->name('Ekstrakulikuler.update');
+Route::get('/Ekstrakulikuler/edit/{hashedId}', [EkstrakulikulerController::class, 'edit'])->name('Ekstrakulikuler.edit');
+Route::put('/Ekstrakulikuler/{hashedId}', [EkstrakulikulerController::class, 'update'])->name('Ekstrakulikuler.update');
 //organisasi
 Route::get('/Organisasi', [OrganisasiController::class, 'index'])->name('Organisasi.index');
     Route::get('/Organisasi/dataorganisasi', [OrganisasiController::class, 'getOrganisasi'])->name('organisasi.dataorganisasi');
