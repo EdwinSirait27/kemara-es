@@ -175,7 +175,7 @@
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
                                     title: 'Apakah Yakin?',
-                                    text: "Buat Kurikulum?",
+                                    text: "Buat Tahun Akademik?",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',

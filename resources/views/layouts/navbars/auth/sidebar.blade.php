@@ -459,7 +459,7 @@
                   </ul>
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('datamatapelajaran') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Matapelajaran') ? 'active' : '' }}" href="{{ url('Matapelajaran') }}">
                               <span class="nav-link-text ms-1">Data Mata Pelajaran</span>
                           </a>
                       </li>

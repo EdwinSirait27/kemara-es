@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardControllerKepalaSekolah;
 use App\Http\Controllers\DashboardControllerKurikulum;
 use App\Http\Controllers\DashboardControllerGuru;
 use App\Http\Controllers\DashboardControllerSiswa;
+use App\Http\Controllers\EkstrakulikulerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\InfoUserControllerAdmin;
@@ -18,6 +19,10 @@ use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
 use App\Http\Controllers\TahunakademikController;
+use App\Http\Controllers\MatapelajaranController;
+use App\Http\Controllers\KelasController;
+// use App\Http\Controllers\EkstrakulikulerController;
+use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\RegisterController;
@@ -120,6 +125,38 @@ Route::get('/Tahunakademik', [TahunakademikController::class, 'index'])->name('T
     Route::post('/Tahunakademik', [TahunakademikController::class, 'store'])->name('Tahunakademik.store');
 Route::get('/Tahunakademik/edit/{hashedId}', [TahunakademikController::class, 'edit'])->name('Tahunakademik.edit');
 Route::put('/Tahunakademik/{hashedId}', [TahunakademikController::class, 'update'])->name('Tahunakademik.update');
+//matapelajaran
+Route::get('/Matapelajaran', [MatapelajaranController::class, 'index'])->name('Matapelajaran.index');
+    Route::get('/Matapelajaran/datamatapelajaran', [MatapelajaranController::class, 'getMatapelajaran'])->name('matapelajaran.datamatapelajaran');
+    Route::delete('/Matapelajaran/delete', [MatapelajaranController::class, 'deleteMatapelajaran'])->name('matapelajaran.delete');
+    Route::get('Matapelajaran/create', [MatapelajaranController::class, 'create'])->name('Matapelajaran.create');
+    Route::post('/Matapelajaran', [MatapelajaranController::class, 'store'])->name('Matapelajaran.store');
+Route::get('/Matapelajaran/edit/{hashedId}', [MatapelajaranController::class, 'edit'])->name('Matapelajaran.edit');
+Route::put('/Matapelajaran/{hashedId}', [MatapelajaranController::class, 'update'])->name('Matapelajaran.update');
+//kelas
+Route::get('/Kelas', [KelasController::class, 'index'])->name('Kelas.index');
+    Route::get('/Kelas/datakelas', [KelasController::class, 'getKelas'])->name('kelas.datakelas');
+    Route::delete('/Kelas/delete', [KelasController::class, 'deleteKelas'])->name('kelas.delete');
+    Route::get('Kelas/create', [KelasController::class, 'create'])->name('Kelas.create');
+    Route::post('/Kelas', [KelasController::class, 'store'])->name('Kelas.store');
+Route::get('/Kelas/edit/{hashedId}', [KelasController::class, 'edit'])->name('Kelas.edit');
+Route::put('/Kelas/{hashedId}', [KelasController::class, 'update'])->name('Kelas.update');
+//ekstrakulikuler
+Route::get('/Ekstrakulikuler', [EkstrakulikulerController::class, 'index'])->name('Ekstrakulikuler.index');
+    Route::get('/Ekstrakulikuler/dataekstrakulikuler', [EkstrakulikulerController::class, 'getEkstrakulikuler'])->name('ekstrakulikuler.dataekstrakulikuler');
+    Route::delete('/Ekstrakulikuler/delete', [EkstrakulikulerController::class, 'deleteekstrakulikuler'])->name('ekstrakulikuler.delete');
+    Route::get('Ekstrakulikuler/create', [EkstrakulikulerController::class, 'create'])->name('Ekstrakulikuler.create');
+    Route::post('/Ekstrakulikuler', [EkstrakulikulerController::class, 'store'])->name('Ekstrakulikuler.store');
+Route::get('/Ekstrakulikuler/edit/{hashedId}', [MatapelajaranController::class, 'edit'])->name('Ekstrakulikuler.edit');
+Route::put('/Ekstrakulikuler/{hashedId}', [MatapelajaranController::class, 'update'])->name('Ekstrakulikuler.update');
+//organisasi
+Route::get('/Organisasi', [OrganisasiController::class, 'index'])->name('Organisasi.index');
+    Route::get('/Organisasi/dataorganisasi', [OrganisasiController::class, 'getOrganisasi'])->name('organisasi.dataorganisasi');
+    Route::delete('/Organisasi/delete', [OrganisasiController::class, 'deleteOrganisasi'])->name('organisasi.delete');
+    Route::get('Organisasi/create', [OrganisasiController::class, 'create'])->name('Organisasi.create');
+    Route::post('/Organisasi', [OrganisasiController::class, 'store'])->name('Organisasi.store');
+Route::get('/Organisasi/edit/{hashedId}', [OrganisasiController::class, 'edit'])->name('Organisasi.edit');
+Route::put('/Organisasi/{hashedId}', [OrganisasiController::class, 'update'])->name('Organisasi.update');
 
    
    });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Tahunakademik extends Model
 {
@@ -19,6 +20,14 @@ class Tahunakademik extends Model
         'status',
         'ket',
     ];
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('m-d-Y H:i');
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('m-d-Y H:i');
+    }
 }
 // <div class="row">
 //                             <div class="col-md-6">
