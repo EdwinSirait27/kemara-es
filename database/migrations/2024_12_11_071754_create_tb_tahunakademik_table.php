@@ -15,11 +15,14 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->nullable();
             $table->integer('tahunakademik')->nullable();
             $table->enum('semester',['Ganjil','Genap'])->nullable();
+            $table->date('tanggalmulai')->nullable();
+            $table->date('tanggalakhir')->nullable();
             $table->enum('status',['Aktif','Tidak Aktif'])->nullable();
             $table->string('ket')->nullable();
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */

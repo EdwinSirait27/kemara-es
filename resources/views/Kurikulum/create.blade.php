@@ -32,7 +32,9 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="kurikulum" class="form-control-label">{{ __('Kurikulum') }}</label>
+                                        <label for="kurikulum" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Kurikulum') }}
+                                        </label>
                                         <div class="@error('kurikulum')border border-danger rounded-3 @enderror">
                                             <input class="form-control"
                                             value="{{ e($kurikulum ?? '') }}"
@@ -42,6 +44,8 @@
                                                 @error('kurikulum')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
+                                            <p class="text-muted text-xs mt-2">Contoh : Kurikulum Merdeka</p>
+
                                         {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
                                         <div class="@error('Alamat')border border-danger rounded-3 @enderror">
                                             @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)

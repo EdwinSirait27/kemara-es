@@ -452,7 +452,7 @@
                   </ul>
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('datatahunakademik') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Tahunakademik') ? 'active' : '' }}" href="{{ url('Tahunakademik') }}">
                               <span class="nav-link-text ms-1">Data Tahun Akademik</span>
                           </a>
                       </li>

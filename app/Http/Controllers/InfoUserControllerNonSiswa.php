@@ -37,7 +37,7 @@ class InfoUserControllerNonSiswa extends Controller
 
         $this->validate($request, [
             // 'username' => 'required|string|max:50|unique:users,username,' . $user->id,
-            'Role' => 'required|string|in:Siswa',
+            'Role' => 'required|string|in:Siswa,NonSiswa',
             'current_password' => 'nullable|string',
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:512',

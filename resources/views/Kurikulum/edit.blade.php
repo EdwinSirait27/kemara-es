@@ -79,13 +79,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="password" class="form-control-label">
+                                    <label for="kurikulum" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Kurikulum') }}
                                     </label>
                                     <div>
                                         <input type="text" class="form-control" id="kurikulum" name="kurikulum"
                                         value="{{ old('kurikulum', $kurikulum->kurikulum) }}" required
                                         oninput="this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');" maxlength="50">
+                                        <p class="text-muted text-xs mt-2">Contoh : Kurikulum Merdeka</p>
                                  
                                  
                                     </div>
@@ -93,12 +94,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="status" class="form-control-label">{{ __('Status') }}</label>
+                                    <label for="status" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Status') }}
+                                    </label>
                                     <div class="@error('status') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="status" id="status" required>
                                             <option value="" disabled {{ old('status', $kurikulum->status ?? '') == '' ? 'selected' : '' }}>Pilih Status</option>
-                                            <option value="Aktif" {{ old('kurikulum', $kurikulum->status ?? '') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
-                                            <option value="Tidak Aktif" {{ old('kurikulum', $kurikulum->status ?? '') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                                            <option value="Aktif" {{ old('status', $kurikulum->status ?? '') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                            <option value="Tidak Aktif" {{ old('status', $kurikulum->status ?? '') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                                         </select>
                                         @error('status')
                                             <span class="invalid-feedback" role="alert">

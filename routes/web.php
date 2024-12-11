@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DashboardControllerNonSiswa;
 use App\Http\Controllers\DashboardControllerSU;
 use App\Http\Controllers\DashboardControllerSUSiswa;
 use App\Http\Controllers\DashboardControllerAdmin;
 use App\Http\Controllers\DashboardControllerKepalaSekolah;
+use App\Http\Controllers\DashboardControllerKurikulum;
+use App\Http\Controllers\DashboardControllerGuru;
 use App\Http\Controllers\DashboardControllerSiswa;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -14,6 +17,8 @@ use App\Http\Controllers\InfoUserControllerKurikulum;
 use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
+use App\Http\Controllers\TahunakademikController;
+use App\Http\Controllers\KGSNController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
@@ -72,18 +77,50 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
 });
-// routes semua
+// routes semua roles
 Route::middleware(['auth','can:isSemua','prevent.xss'])->group(function () {
     Route::get('/pengumuman/download/{id}', [PengumumanController::class, 'downloadPengumuman'])->name('download.pengumuman');
 
-   
+    
    });
+   // route kurikulum, guru, siswa, nonsiswa
+Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
+    
+    Route::get('/pengumumansemua/data', [KGSNController::class, 'getPengumumanKGSN'])->name('pengumumansemua.data');
+    
+    
+   });
+// Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
+//     Route::get('/pengumuman/data', [AdminKepalaSekolahController::class, 'getPengumuman'])->name('pengumuman.data');
+//     Route::post('/dashboardAdmin/store', [AdminKepalaSekolahController::class, 'store'])->name('dashboardAdmin.store');
+//     Route::post('/dashboardKepalaSekolah/store', [AdminKepalaSekolahController::class, 'storeKP'])->name('dashboardKepalaSekolah.store');
+//     Route::delete('/pengumuman/delete', [AdminKepalaSekolahController::class, 'deletePengumuman'])->name('pengumuman.delete');
+    
+   
+//    });
+//    adminkepalasekolah
 Route::middleware(['auth','can:isAdminKepalaSekolah','prevent.xss'])->group(function () {
     Route::get('/pengumuman/data', [AdminKepalaSekolahController::class, 'getPengumuman'])->name('pengumuman.data');
     Route::post('/dashboardAdmin/store', [AdminKepalaSekolahController::class, 'store'])->name('dashboardAdmin.store');
     Route::post('/dashboardKepalaSekolah/store', [AdminKepalaSekolahController::class, 'storeKP'])->name('dashboardKepalaSekolah.store');
     Route::delete('/pengumuman/delete', [AdminKepalaSekolahController::class, 'deletePengumuman'])->name('pengumuman.delete');
-    
+    //kurikulum
+    Route::get('/Kurikulum', [KurikulumController::class, 'index'])->name('Kurikulum.index');
+    Route::get('/kurikulum/datakurikulum', [KurikulumController::class, 'getUsers'])->name('kurikulum.datakurikulum');
+    Route::delete('/kurikulum/delete', [KurikulumController::class, 'deleteUsers'])->name('kurikulum.delete');
+    Route::get('Kurikulum/create', [KurikulumController::class, 'create'])->name('Kurikulum.create');
+    Route::post('/Kurikulum', [KurikulumController::class, 'store'])->name('Kurikulum.store');
+Route::get('/Kurikulum/edit/{hashedId}', [KurikulumController::class, 'edit'])->name('Kurikulum.edit');
+Route::put('/Kurikulum/{hashedId}', [KurikulumController::class, 'update'])->name('Kurikulum.update');
+// Tahunakademik
+Route::get('/Tahunakademik', [TahunakademikController::class, 'index'])->name('Tahunakademik.index');
+    Route::get('/Tahunakademik/datatahunakademik', [TahunakademikController::class, 'getTahunakademik'])->name('tahunakademik.datatahunakademik');
+    Route::delete('/Tahunakademik/delete', [TahunakademikController::class, 'deleteTahunakademik'])->name('tahunakademik.delete');
+    Route::get('Tahunakademik/create', [TahunakademikController::class, 'create'])->name('Tahunakademik.create');
+    Route::post('/Tahunakademik', [TahunakademikController::class, 'store'])->name('Tahunakademik.store');
+Route::get('/Tahunakademik/edit/{hashedId}', [TahunakademikController::class, 'edit'])->name('Tahunakademik.edit');
+Route::put('/Tahunakademik/{hashedId}', [TahunakademikController::class, 'update'])->name('Tahunakademik.update');
+
    
    });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
@@ -165,13 +202,6 @@ Route::get('tables', function () {
 });
 
 // kurikulum
-Route::get('/Kurikulum', [KurikulumController::class, 'index'])->name('Kurikulum.index');
-    Route::get('/kurikulum/datakurikulum', [KurikulumController::class, 'getUsers'])->name('kurikulum.datakurikulum');
-    Route::delete('/kurikulum/delete', [KurikulumController::class, 'deleteUsers'])->name('kurikulum.delete');
-    Route::get('Kurikulum/create', [KurikulumController::class, 'create'])->name('Kurikulum.create');
-    Route::post('/Kurikulum', [KurikulumController::class, 'store'])->name('Kurikulum.store');
-Route::get('/Kurikulum/edit/{hashedId}', [KurikulumController::class, 'edit'])->name('Kurikulum.edit');
-Route::put('/Kurikulum/{hashedId}', [KurikulumController::class, 'update'])->name('Kurikulum.update');
 
 
 
@@ -186,17 +216,15 @@ Route::get('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class
 });
 Route::middleware(['auth','can:isKurikulum','prevent.xss'])->group(function () {
 // Kurikulum
-Route::get('dashboardKurikulum', function () {
-    return view('dashboardKurikulum');  // Halaman untuk Siswa
-});
+Route::get('/dashboardKurikulum', [DashboardControllerKurikulum::class, 'index'])->name('dashboardKurikulum.index');
+
 Route::get('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'create'])->name('user-profileKurikulum.create');
 Route::put('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'store'])->name('user-profileKurikulum.store');
 
 });
 Route::middleware(['auth','can:isGuru','prevent.xss'])->group(function () {
-    Route::get('dashboardGuru', function () {
-        return view('dashboardGuru');  // Halaman untuk Siswa
-    })->middleware('can:isGuru');
+    Route::get('/dashboardGuru', [DashboardControllerGuru::class, 'index'])->name('dashboardGuru.index');
+
     Route::get('/user-profileGuru', [InfoUserControllerGuru::class, 'create'])->name('user-profileGuru.create');
         Route::put('/user-profileGuru', [InfoUserControllerGuru::class, 'store'])->name('user-profileGuru.store');
     
@@ -209,9 +237,8 @@ Route::middleware(['auth','can:isSiswa','prevent.xss'])->group(function () {
     
 });
 Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
-    Route::get('dashboardNonSiswa', function () {
-        return view('dashboardNonSiswa');  // Halaman untuk Siswa
-    })->middleware('can:isNonSiswa');
+    Route::get('/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'index'])->name('dashboardNonSiswa.index');
+
     Route::get('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'create']);
     Route::post('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'store']);
     

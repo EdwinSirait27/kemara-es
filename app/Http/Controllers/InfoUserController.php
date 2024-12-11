@@ -33,7 +33,7 @@ class InfoUserController extends Controller
         $this->validate($request, [
             'Nama' => 'required|string|max:50',
                 
-            'Role' => 'required|string|in:SU,KepalaSekolah,Admin',
+            'Role' => 'required|string|in:SU,KepalaSekolah,Admin,Kurikulum,Guru',
             'current_password' => 'nullable|string', 
             'password' => 'nullable|string|min:8|confirmed',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
