@@ -466,21 +466,21 @@
                   </ul>
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('datakelas') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Kelas') ? 'active' : '' }}" href="{{ url('Kelas') }}">
                               <span class="nav-link-text ms-1">Data Kelas</span>
                           </a>
                       </li>
                   </ul>
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('dataekstrakulikuler') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Ekstrakulikuler') ? 'active' : '' }}" href="{{ url('Ekstrakulikuler') }}">
                               <span class="nav-link-text ms-1">Data Ekstrakulikuler</span>
                           </a>
                       </li>
                   </ul>
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('dataorganisasi') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                          <a class="nav-link {{ Request::is('Organisasi') ? 'active' : '' }}" href="{{ url('Organisasi') }}">
                               <span class="nav-link-text ms-1">Data Organisasi</span>
                           </a>
                       </li>
