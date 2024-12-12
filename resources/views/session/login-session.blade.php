@@ -121,8 +121,16 @@
                             <div class="text-center">
                                 <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Masuk</button>
                             </div>
-                            <p class="text-sm mt-3 mb-0">Daftar PPDB? <a href="register"
-                                    class="text-info font-weight-bolder">Klik Disini</a></p>
+                           
+                            @if ($tombol && $tombol->url)
+                            <p class="text-sm mt-3 mb-0">Daftar PPDB? 
+                                    <a href="{{ $tombol->url }}" class="text-info font-weight-bolder">Klik Disini</a>
+                                @else
+                                    <span class="text-muted"></span>
+                                @endif
+                            </p>
+                            
+                                    
                         </form>
                     </div>
                 </div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Rules\NoXSSInput;
+use App\Models\Tombol;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Http\Middleware\PreventXSS;
 
@@ -18,10 +20,15 @@ class SessionsController extends Controller
         $this->middleware('prevent.xss');
     }
 
-    public function create()
-    {
-        return view('session.login-session');
-    }
+        public function create()
+        {
+            $currentDateTime = Carbon::now(); // Tanggal dan waktu saat ini
+            $tombol = Tombol::where('start_date', '<=', $currentDateTime)
+                            ->where('end_date', '>=', $currentDateTime)
+                            ->first(); // Ambil satu tombol yang aktif
+        
+            return view('session.login-session', compact('tombol'));
+        }
     public function store(Request $request)
     {
         $attributes = $request->validate([
@@ -76,7 +83,7 @@ class SessionsController extends Controller
                 }
         
                 Auth::logout();
-                return redirect('login')->with(['error' => 'Akses tidak diizinkan.']);
+                return redirect('Login.create')->with(['error' => 'Akses tidak diizinkan.']);
             }
         
             Log::warning("Failed login attempt for username: {$request->username}");

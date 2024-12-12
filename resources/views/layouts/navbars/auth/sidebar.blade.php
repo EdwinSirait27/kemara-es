@@ -501,8 +501,8 @@
               <div class="collapse" id="laravelExamples2">
                   <ul class="nav ms-4">
                       <li class="nav-item">
-                          <a class="nav-link {{ Request::is('tombolppdb') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
-                              <span class="nav-link-text ms-1">Tombol PPDB</span>
+                          <a class="nav-link {{ Request::is('Tombol') ? 'active' : '' }}" href="{{ url('Tombol') }}">
+                              <span class="nav-link-text ms-1">Tombol URL</span>
                           </a>
                       </li>
                   </ul>

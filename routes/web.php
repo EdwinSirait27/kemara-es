@@ -19,6 +19,7 @@ use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
 use App\Http\Controllers\TahunakademikController;
+use App\Http\Controllers\TombolController;
 use App\Http\Controllers\MatapelajaranController;
 use App\Http\Controllers\KelasController;
 // use App\Http\Controllers\EkstrakulikulerController;
@@ -157,6 +158,14 @@ Route::get('/Organisasi', [OrganisasiController::class, 'index'])->name('Organis
     Route::post('/Organisasi', [OrganisasiController::class, 'store'])->name('Organisasi.store');
 Route::get('/Organisasi/edit/{hashedId}', [OrganisasiController::class, 'edit'])->name('Organisasi.edit');
 Route::put('/Organisasi/{hashedId}', [OrganisasiController::class, 'update'])->name('Organisasi.update');
+//tombol
+Route::get('/Tombol', [TombolController::class, 'index'])->name('Tombol.index');
+    Route::get('/Tombol/datatombol', [TombolController::class, 'getTombol'])->name('tombol.datatombol');
+    Route::delete('/Tombol/delete', [TombolController::class, 'deleteTombol'])->name('tombol.delete');
+    Route::get('Tombol/create', [TombolController::class, 'create'])->name('Tombol.create');
+    Route::post('/Tombol', [TombolController::class, 'store'])->name('Tombol.store');
+Route::get('/Tombol/edit/{hashedId}', [TombolController::class, 'edit'])->name('Tombol.edit');
+Route::put('/Tombol/{hashedId}', [TombolController::class, 'update'])->name('Tombol.update');
 
    
    });
@@ -282,9 +291,22 @@ Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
 });
 
 // Halaman login hanya dapat diakses oleh pengguna yang belum login
-Route::middleware(['guest','prevent.xss'])->get('/login', function () {
-    return view('session/login-session');
-})->name('login');
+// Route::middleware(['guest','prevent.xss'])->group(function () {
+//     Route::get('/Login', [SessionsController::class, 'create'])->name('Login.create');
+//     // return view('session/login-session');
+// });
+
+Route::middleware('guest','prevent.xss')->group(function () {
+    // Registrasi
+    
+    Route::get('/login', [SessionsController::class, 'create'])->name('login');
+    
+});
+// Route::middleware(['guest','prevent.xss'])->get('/login', function () {
+//     Route::get('/session', [SessionsController::class, 'create'])->name('login');
+//     return view('session/login-session');
+
+// })->name('login');
 Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
         ->name('logout')
         ->middleware('auth');
