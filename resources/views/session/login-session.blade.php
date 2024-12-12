@@ -1,5 +1,5 @@
 @extends('layouts.user_type.guest')
-@section('title', 'Kesuma-GO | Login')
+@section('title', 'Kemara-ES | Login')
 @section('content')
 <style>
     .input-group .btn {
@@ -160,6 +160,16 @@
           this.classList.toggle('fa-eye-slash');
       });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  @if(session('warning'))
+      <script>
+          Swal.fire({
+              icon: 'warning',
+              title: 'Oops...',
+              text: '{{ session('warning') }}',
+          });
+      </script>
+  @endif
 </section>
 @endsection
 

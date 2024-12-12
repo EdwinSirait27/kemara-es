@@ -18,6 +18,7 @@ use App\Http\Controllers\InfoUserControllerKurikulum;
 use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
+use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\TahunakademikController;
 use App\Http\Controllers\TombolController;
 use App\Http\Controllers\MatapelajaranController;
@@ -305,17 +306,22 @@ Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
 //     // return view('session/login-session');
 // });
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'prevent.xss'])->group(function () {
     // Registrasi
-    
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
-    
+    Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
+    Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 });
-// Route::middleware(['guest','prevent.xss'])->get('/login', function () {
-//     Route::get('/session', [SessionsController::class, 'create'])->name('login');
-//     return view('session/login-session');
 
-// })->name('login');
+// Route::middleware('guest')->group(function () {
+//     // Registrasi
+    
+//     Route::get('/login', [SessionsController::class, 'create'])->name('login');
+//     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
+//     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
+    
+// });
+
 Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
         ->name('logout')
         ->middleware('auth');
