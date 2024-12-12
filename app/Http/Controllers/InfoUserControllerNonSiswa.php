@@ -64,7 +64,6 @@ class InfoUserControllerNonSiswa extends Controller
 
 
         $filePath = null;
-
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
@@ -77,6 +76,7 @@ class InfoUserControllerNonSiswa extends Controller
 
             $file->storeAs('public/fotosiswa', $fileName);
         }
+
 
         try {
             DB::beginTransaction();

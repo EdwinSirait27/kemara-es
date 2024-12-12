@@ -506,7 +506,7 @@
                           </a>
                       </li>
                   </ul>
-                  <ul class="nav ms-4">
+                  {{-- <ul class="nav ms-4">
                       <li class="nav-item">
                           <a class="nav-link {{ Request::is('tombolosis') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
                               <span class="nav-link-text ms-1">Tombol Osis</span>
@@ -533,7 +533,7 @@
                               <span class="nav-link-text ms-1">Tombol Nilai Kurikulum</span>
                           </a>
                       </li>
-                  </ul>
+                  </ul> --}}
               </div>
           </li>
           @endif
@@ -550,7 +550,7 @@
             <div class="collapse" id="laravelExamples3">
                 <ul class="nav ms-4">
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('penambahan') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                        <a class="nav-link {{ Request::is('Osis') ? 'active' : '' }}" href="{{ url('Osis') }}">
                             <span class="nav-link-text ms-1">Penambahan Calon</span>
                         </a>
                     </li>

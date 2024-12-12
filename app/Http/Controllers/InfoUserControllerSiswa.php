@@ -32,9 +32,7 @@ class InfoUserControllerSiswa extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-    
         $this->validate($request, [
-            // 'username' => 'required|string|max:50|unique:users,username,' . $user->id,
             'Role' => 'required|string|in:Siswa,NonSiswa',
             'current_password' => 'nullable|string', 
             'password' => 'nullable|string|min:8|confirmed',
@@ -43,7 +41,6 @@ class InfoUserControllerSiswa extends Controller
             'NomorInduk' => 'required|numeric',
             'NamaPanggilan' => 'nullable|string|max:100',
             'JenisKelamin' => 'required|string|in:Laki-Laki,Perempuan',
-
             'NISN' => 'nullable|numeric',
             'TempatLahir' => 'nullable|string|max:255',
             'TanggalLahir' => 'nullable|date',
@@ -52,10 +49,7 @@ class InfoUserControllerSiswa extends Controller
             'NomorTelephone' => 'nullable|numeric',
             'NIK' => 'nullable|numeric',
             'status' => 'nullable|string|max:255',
-            // 'siswa_id' => 'required|unique:tb_siswa',
-
             'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
-
             
         ]);
         
@@ -65,15 +59,18 @@ class InfoUserControllerSiswa extends Controller
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-            $filePath = 'public/fotosiswa/' . $fileName;
-    
-            // Hapus foto lama jika ada
-            if ($user->siswa && $user->siswa->foto && Storage::exists($user->siswa->foto)) {
-                Storage::delete($user->siswa->foto);
+            $file->storeAs('public/fotosiswa', $fileName); // Simpan file ke folder public/fotosiswa
+        
+            // Simpan hanya nama file ke database
+            $filePath = $fileName;
+        
+            // Hapus file lama jika ada
+            if ($user->siswa && $user->siswa->foto && Storage::exists('public/fotosiswa/' . $user->siswa->foto)) {
+                Storage::delete('public/fotosiswa/' . $user->siswa->foto);
             }
-    
-            $file->storeAs('public/fotosiswa', $fileName);
         }
+        
+        
     
         try {
             DB::beginTransaction();

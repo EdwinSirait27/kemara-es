@@ -26,7 +26,7 @@
     <div>
         <div class="container-fluid">
             <div class="page-header min-height-100 border-radius-xl mt-4"
-                style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
+            style="background-image: url('{{ asset('assets/img/curved-images/curved0.jpg') }}'); background-position-y: 50%;">
                 <span class="mask bg-gradient-primary opacity-8"></span>
             </div>
             <div class="card card-body blur shadow-blur mx-4 mt-n6">
@@ -37,10 +37,11 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                  
-                                <img src="{{ auth()->check() && optional(auth()->user()->siswa)->foto 
-                                ? asset('storage/' . str_replace('public/', '', auth()->user()->siswa->foto)) 
-                                : asset('storage/fotosiswa/we.jpg') }}"  
+                                 {{-- alt="Foto Siswa"> --}}
+                    
+                                 <img src="{{ auth()->check() && optional(auth()->user()->siswa)->foto 
+                                 ? asset('storage/fotosiswa/' . auth()->user()->siswa->foto) 
+                                 : asset('storage/fotosiswa/we.jpg') }}"
                                 alt="Foto Guru" 
                                 class="w-100 border-radius-lg shadow-sm" 
                                 id="imagePopup">

@@ -76,9 +76,14 @@ class InfoUserControllerKurikulum extends Controller
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
             $filePath = 'public/fotoguru/' . $fileName;
-            $file->storeAs('public/fotoguru', $fileName); // Unggah file ke storage
-        }
 
+            // Hapus foto lama jika ada
+            if ($user->guru && $user->guru->foto && Storage::exists($user->guru->foto)) {
+                Storage::delete($user->guru->foto);
+            }
+
+            $file->storeAs('public/fotoguru', $fileName);
+        }
         try {
             DB::beginTransaction();
 
