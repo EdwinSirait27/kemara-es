@@ -122,13 +122,26 @@
                                 <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Masuk</button>
                             </div>
                            
-                            @if ($tombol && $tombol->url)
-                            <p class="text-sm mt-3 mb-0">Daftar PPDB? 
-                                    <a href="{{ $tombol->url }}" class="text-info font-weight-bolder">Klik Disini</a>
+                            @if($tombol->isNotEmpty())
+                            @foreach($tombol as $link)
+                                @if(now()->between($link->start_date, $link->end_date))
+                                    <p class="text-sm mt-3 mb-0">
+                                        Daftar PPDB? 
+                                        <a href="{{ $link->url }}" class="text-info font-weight-bolder">Klik Disini</a>
+                                    </p>
                                 @else
-                                    <span class="text-muted"></span>
+                                    <p class="text-sm mt-3 mb-0">
+                                        <span class="text-muted">Saat ini tidak ada pendaftaran yang tersedia.</span>
+                                    </p>
                                 @endif
+                            @endforeach
+                        @else
+                            <p class="text-sm mt-3 mb-0">
+                                {{-- <span class="text-muted">Tidak ada data tombol yang tersedia.</span> --}}
                             </p>
+                        @endif
+                        
+                        
                             
                                     
                         </form>

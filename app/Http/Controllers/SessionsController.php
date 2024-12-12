@@ -20,16 +20,17 @@ class SessionsController extends Controller
         $this->middleware('prevent.xss');
     }
 
-        public function create()
-        {
-            $currentDateTime = Carbon::now(); // Tanggal dan waktu saat ini
-            $tombol = Tombol::where('start_date', '<=', $currentDateTime)
-                            ->where('end_date', '>=', $currentDateTime)
-                            ->first(); // Ambil satu tombol yang aktif
+    public function create()
+    {
+        $currentDateTime = Carbon::now();
+    
+        $tombol = Tombol::where('start_date', '<=', $currentDateTime->toDateTimeString())
+                        ->where('end_date', '>=', $currentDateTime->toDateTimeString())
+                        ->get(); 
         
-            return view('session.login-session', compact('tombol'));
-        }
-    public function store(Request $request)
+        return view('session.login-session', compact('tombol'));
+    }
+        public function store(Request $request)
     {
         $attributes = $request->validate([
             'username' => [
