@@ -44,12 +44,8 @@ public function getOsis()
 
             $osis->Siswa_Nama = $osis->Siswa ? $osis->Siswa->NamaLengkap : '-';
             $osis->Siswa_Foto = $osis->Siswa ? $osis->Siswa->foto : '-';
-            
-           
-
             return $osis;
         });
-
     return DataTables::of($siswa)
         ->addColumn('NamaLengkap', function ($osis) {
             return $osis->Siswa->NamaLengkap;
@@ -94,17 +90,34 @@ public function getOsis()
 
     // }
     public function edit($hashedId)
-    {
-        $siswa = Osis::with('Siswa')->get()->first(function ($u) use ($hashedId) {
-            $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-            return $expectedHash === $hashedId;
-        });
-        $siswas = explode(',', $siswa->Siswa->getRawOriginal('NamaLengkap'));
-        if (!$siswa) {
-            abort(404, 'Siswa not found.');
-        }
-        return view('Osis.edit', compact('siswa', 'hashedId', 'siswas'));
+{
+    $siswa = Osis::with('Siswa')->get()->first(function ($u) use ($hashedId) {
+        $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+        return $expectedHash === $hashedId;
+    });
+
+    if (!$siswa) {
+        abort(404, 'Siswa not found.');
     }
+
+    // Ambil semua data siswa untuk dropdown
+    $siswas = Siswa::all();
+
+    return view('Osis.edit', compact('siswa', 'hashedId', 'siswas'));
+}
+
+    // public function edit($hashedId)
+    // {
+    //     $siswa = Osis::with('Siswa')->get()->first(function ($u) use ($hashedId) {
+    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+    //         return $expectedHash === $hashedId;
+    //     });
+    //     $siswas = explode(',', $siswa->Siswa->getRawOriginal('NamaLengkap'));
+    //     if (!$siswa) {
+    //         abort(404, 'Siswa not found.');
+    //     }
+    //     return view('Osis.edit', compact('siswa', 'hashedId', 'siswas'));
+    // }
     public function store(Request $request)
     {
         $request->validate([
