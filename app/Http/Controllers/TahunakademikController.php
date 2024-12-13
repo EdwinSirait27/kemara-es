@@ -7,6 +7,8 @@ use App\Models\Tahunakademik;
 // use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 
 class TahunakademikController extends Controller
@@ -37,7 +39,6 @@ class TahunakademikController extends Controller
             <a href="' . route('Tahunakademik.edit', $tahunakademik->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-                // $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
                 return $tahunakademik;
             });
         return DataTables::of($tahunakademik)
@@ -59,13 +60,12 @@ class TahunakademikController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            // 'tahunakademik' => 'required|string|max:4|regex:/^[a-zA-Z0-9_-]+$/',
-            'tahunakademik' => 'required|string|max:4|regex:/^[0-9]+$/',
-            'semester' => 'required|string|in:Ganjil,Genap',
-            'tanggalmulai' => 'required',
-            'tanggalakhir' => 'required',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/',
+            'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput()],  
+            'semeter' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
+            'tanggalmulai' => ['required','date', new NoXSSInput()],  
+            'tanggalakhir' => ['required','date', new NoXSSInput()],  
+            'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput()],  
+            'ket' => ['required','string','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],  
         ]);
         $tahunakademik = Tahunakademik::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -89,8 +89,7 @@ class TahunakademikController extends Controller
     public function deleteTahunakademik(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            // 'ids.*' => 'uuid',
+            'ids' => ['required','array','min:1', new NoXSSInput()],  
         ]);
         Tahunakademik::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -102,13 +101,12 @@ class TahunakademikController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'tahunakademik' => 'required|string|max:4|regex:/^[0-9]+$/',
-            'semester' => 'required|string|in:Ganjil,Genap',
-            'tanggalmulai' => 'required',
-            'tanggalakhir' => 'required',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/',
-            // 'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+            'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput()],  
+            'semeter' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
+            'tanggalmulai' => ['required','date', new NoXSSInput()],  
+            'tanggalakhir' => ['required','date', new NoXSSInput()],  
+            'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput()],  
+            'ket' => ['required','string','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],  
         ]);
         try {
             Tahunakademik::create([

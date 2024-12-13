@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
 
 class DashboardControllerSU extends Controller
 {
@@ -62,11 +63,12 @@ class DashboardControllerSU extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'username' => 'required|string|max:12|min:7|regex:/^[a-zA-Z0-9_-]+$/',
-            'password' => 'nullable|string|max:12|min:7',
-            'hakakses' => 'required|string|in:SU,KepalaSekolah,Admin,Guru,Kurikulum',
-            'Role' => 'required|array|min:1|in:SU,KepalaSekolah,Admin,Guru,Kurikulum',
-            'Nama' => 'required|string|max:255',
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+            'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
+            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],      
+            'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],      
+            
         ]);
         $user = User::with('Guru')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -96,8 +98,10 @@ class DashboardControllerSU extends Controller
     public function deleteUsers(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            'ids.*' => 'uuid',
+            
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],  
+            'ids.*' => ['uuid', new NoXSSInput()],  
+           
         ]);
         User::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -109,11 +113,11 @@ class DashboardControllerSU extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'username' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/|max:12|min:7|unique:users,username',
-            'password' => 'required|string|min:7|max:12|confirmed',
-            'hakakses' => 'required|string|in:SU,KepalaSekolah,Admin,Guru,Kurikulum',
-            'Role' => 'required|array',
-            'Role.*' => 'required|string|in:SU,KepalaSekolah,Admin,Guru,Kurikulum',
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+            'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
+            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],      
+            'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],  
         ]);
 
         try {

@@ -9,6 +9,8 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Rules\NoXSSInput;
+
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 class DashboardControllerAdmin extends Controller
@@ -39,7 +41,9 @@ class DashboardControllerAdmin extends Controller
         return redirect()->route('dashboardAdmin.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
+
+          
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -60,7 +64,8 @@ class DashboardControllerAdmin extends Controller
     public function deletePengumuman(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            'ids' => ['required', 'arrau', 'min:1', new NoXSSInput()],
+            
         ]);
     
         $pengumumanList = Pengumuman::whereIn('id', $request->ids)->get();

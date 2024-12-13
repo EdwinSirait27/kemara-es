@@ -7,6 +7,8 @@ use App\Models\Ekstrakulikuler;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 class EkstrakulikulerController extends Controller
 {
     public function __construct()
@@ -55,12 +57,11 @@ class EkstrakulikulerController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-        //    'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z]+$/',
-'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
 
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
         ]);
         $ekstrakulikuler = Ekstrakulikuler::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -82,8 +83,8 @@ class EkstrakulikulerController extends Controller
     public function deleteEkstrakulikuler(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            // 'ids.*' => 'uuid',
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+         
         ]);
         Ekstrakulikuler::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -95,12 +96,11 @@ class EkstrakulikulerController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            // 'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z]+$/',
-'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
+            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
 
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
         ]);
         try {
             Ekstrakulikuler::create([

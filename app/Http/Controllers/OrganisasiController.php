@@ -8,6 +8,8 @@ use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 class OrganisasiController extends Controller
 {
@@ -57,12 +59,11 @@ class OrganisasiController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-        //   
-'namaorganisasi' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
-
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+            'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            
         ]);
         $organisasi = Organisasi::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -84,8 +85,11 @@ class OrganisasiController extends Controller
     public function deleteOrganisasi(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            // 'ids.*' => 'uuid',
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            
         ]);
         Organisasi::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -97,12 +101,11 @@ class OrganisasiController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            // 'namaekstra' => 'required|string|max:50|regex:/^[a-zA-Z]+$/',
-'namaorganisasi' => 'required|string|max:50|regex:/^[a-zA-Z ]+$/',
-
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+            'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            
         ]);
         try {
             Organisasi::create([

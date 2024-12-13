@@ -7,6 +7,8 @@ use App\Models\Siswa;
 use Yajra\DataTables\DataTables;
 // use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 // use Illuminate\Support\Facades\Log;
 // use Illuminate\Support\Facades\Crypt;
 class DashboardControllerSUSiswa extends Controller
@@ -68,11 +70,11 @@ class DashboardControllerSUSiswa extends Controller
     public function updateSiswa(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'username' => 'required|string|max:12|min:7|regex:/^[a-zA-Z0-9_-]+$/',
-            'password' => 'nullable|string|max:12|min:7',
-            'hakakses' => 'required|string|in:Siswa,NonSiswa',
-            'Role' => 'required|array|min:1|in:Siswa,NonSiswa',
-            'NamaLengkap' => 'nullable|string|max:255',
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+            'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
+            'Role' => ['required', 'array', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
+            'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()],    
         ]);
 
         $user = User::with('Siswa')->get()->first(function ($u) use ($hashedId) {
@@ -111,11 +113,11 @@ class DashboardControllerSUSiswa extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'username' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/|max:12|min:7|unique:users,username',
-            'password' => 'required|string|min:7|max:12|confirmed',
-            'hakakses' => 'required|string|in:Siswa,NonSiswa',
-            'Role' => 'required|array',
-            'Role.*' => 'required|string|in:Siswa,NonSiswa',
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+            'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
+            'Role' => ['required', 'array', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
+            'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()], 
         ]);
 
         try {
@@ -134,8 +136,8 @@ class DashboardControllerSUSiswa extends Controller
     {
         // Validasi UUID
         $request->validate([
-            'ids' => 'required|array|min:1',
-            'ids.*' => 'uuid',  // Pastikan ID yang dikirimkan adalah UUID
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],  
+            'ids.*' => ['uuid', new NoXSSInput()],  
         ]);
 
         // Hapus pengguna berdasarkan UUID

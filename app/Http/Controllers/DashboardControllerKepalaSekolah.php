@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 class DashboardControllerKepalaSekolah extends Controller
 {
@@ -68,7 +70,7 @@ public function store(Request $request)
         return redirect()->route('dashboardKepalaSekolah.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -89,7 +91,10 @@ public function store(Request $request)
     public function deletePengumuman(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+
+            
         ]);
     
         $pengumumanList = Pengumuman::whereIn('id', $request->ids)->get();

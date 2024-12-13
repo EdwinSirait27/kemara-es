@@ -7,6 +7,8 @@ use App\Models\Kurikulum;
 // use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 class KurikulumController extends Controller
 {
@@ -58,9 +60,10 @@ class KurikulumController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'kurikulum' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9_-]+$/',
+            'kurikulum' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],      
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
+            'ket' => ['required', 'string','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],      
+            
         ]);
         $kurikulum = Kurikulum::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -81,8 +84,8 @@ class KurikulumController extends Controller
     public function deleteUsers(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            // 'ids.*' => 'uuid',
+            'ids' => ['required','array','min:1', new NoXSSInput()],      
+            
         ]);
         Kurikulum::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -94,11 +97,10 @@ class KurikulumController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'kurikulum' => 'required|string|max:50|regex:/^[a-zA-Z0-9 ]+$/',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]*$/',
-
-            // 'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+          'kurikulum' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],      
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
+            'ket' => ['required', 'string','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],      
+            
         ]);
         try {
             Kurikulum::create([

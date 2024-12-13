@@ -33,23 +33,26 @@ class InfoUserControllerSiswa extends Controller
     {
         $user = Auth::user();
         $this->validate($request, [
-            'Role' => 'required|string|in:Siswa,NonSiswa',
-            'current_password' => 'nullable|string', 
-            'password' => 'nullable|string|min:8|confirmed',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
-            'NamaLengkap' => 'required|string|max:255',
-            'NomorInduk' => 'required|numeric',
-            'NamaPanggilan' => 'nullable|string|max:100',
-            'JenisKelamin' => 'required|string|in:Laki-Laki,Perempuan',
-            'NISN' => 'nullable|numeric',
-            'TempatLahir' => 'nullable|string|max:255',
-            'TanggalLahir' => 'nullable|date',
-            'Agama' => 'nullable|string|max:100',
-            'Alamat' => 'nullable|string|max:255','Email' => 'nullable|email|max:255',
-            'NomorTelephone' => 'nullable|numeric',
-            'NIK' => 'nullable|numeric',
-            'status' => 'nullable|string|max:255',
-            'username' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/|unique:users,username,' . $user->id, new NoXSSInput()
+            'hakakses' => ['nullable', 'string','in:NonSiswa','Siswa', new NoXSSInput()],
+            'Role' => ['nullable', 'string','in:NonSiswa','Siswa', new NoXSSInput()],
+            'current_password' => ['nullable', 'string','max:12', new NoXSSInput()],
+            'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput()],
+            'foto' => ['nullable', 'image','mimes:jpeg,png,jpg','max:512', new NoXSSInput()],
+            'NamaLengkap' => ['required', 'string','max:100', new NoXSSInput()],
+            'NomorInduk' => ['required', 'numeric','max:100', new NoXSSInput()],
+            'NamaPanggilan' => ['nullable', 'string','max:50', new NoXSSInput()],
+            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
+            'NISN' => ['nullable', 'numeric','max:16', new NoXSSInput()],
+            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
+            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
+            'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
+            'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
+            'Email' => ['nullable', 'string','max:100', new NoXSSInput()],
+            'NomorTelephone' => ['nullable', 'numeric','max:13', new NoXSSInput()],
+            'NIK' => ['nullable', 'numeric','max:16', new NoXSSInput()],
+            'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'username' => ['required', 'string','max:12','regex:/^[a-zA-Z0-9_-]+$/','unique:users,username'. $user->id, new NoXSSInput()],      
+
             
         ]);
         
