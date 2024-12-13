@@ -121,17 +121,11 @@
                             <div class="text-center">
                                 <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Masuk</button>
                             </div>
-                            {{-- @foreach($tombols as $link)
-                    @if(now()->between($link->start_date, $link->end_date))
-                        <a href="{{ $link->url }}" class="btn btn-dark btn-block mt-3">Daftar PPDB?</a>
-                    @endif
-                @endforeach --}}
-                @foreach($tombols as $link)
-                @if(now()->between($link->start_date, $link->end_date))
-                <p class="text-sm mt-3 mb-0">Daftar PPDB? <a href="{{ $link->url }}"
-                    class="text-dark font-weight-bolder">Klik Disini</a></p>
-                    @endif
-                    @endforeach
+                            @if ($ppdb)
+                            <a href="{{ url($ppdb->url) }}">Akses PPDB</a>
+                        @else
+                            <p>PPDB belum aktif.</p>
+                        @endif
                         </form>
                     </div>
                 </div>

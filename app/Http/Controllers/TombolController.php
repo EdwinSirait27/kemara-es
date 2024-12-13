@@ -7,6 +7,7 @@ use App\Models\Tombol;
 // use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
 
 class TombolController extends Controller
 {
@@ -56,10 +57,11 @@ class TombolController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'url' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'ket' => 'required',
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'start_date' => ['required', 'datetime', new NoXSSInput()],
+            'end_date' => ['required', 'datetime', new NoXSSInput()],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
+            
             
         ]);
         $tombol = Tombol::get()->first(function ($u) use ($hashedId) {
@@ -82,7 +84,9 @@ class TombolController extends Controller
     public function deleteTombol(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            // 'ids' => 'required|array|min:1',
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+
             // 'ids.*' => 'uuid',
         ]);
         Tombol::whereIn('id', $request->ids)->delete();
@@ -95,10 +99,10 @@ class TombolController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'url' => 'required|string|max:50|regex:/^[a-zA-Z0-9_-]+$/',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'ket' => 'required',
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'start_date' => ['required', 'datetime', new NoXSSInput()],
+            'end_date' => ['required', 'datetime', new NoXSSInput()],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
         ]);
         try {
             Tombol::create([

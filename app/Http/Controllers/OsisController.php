@@ -10,6 +10,8 @@ use App\Models\Siswa;
 // use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 class OsisController extends Controller
 {
@@ -121,9 +123,9 @@ public function getOsis()
     public function store(Request $request)
     {
         $request->validate([
-            'siswa_id' => 'required|exists:tb_siswa,siswa_id',
-            'visi' => 'required|string|max:255',
-            'misi' => 'required|string|max:255',
+            'siswa_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'visi' => ['required', 'string', 'max:50', new NoXSSInput()],
+            'misi' => ['required', 'string', 'max:50', new NoXSSInput()],
         ]);
         // dd($request->all());
         try {
@@ -141,9 +143,9 @@ public function getOsis()
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'siswa_id' => 'required|string||regex:/^[a-zA-Z0-9_-]+$/',
-            'visi' => 'required|string|max:50',
-            'misi' => 'required|string|max:50',
+            'siswa_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'visi' => ['required', 'string', 'max:50', new NoXSSInput()],
+            'misi' => ['required', 'string', 'max:50', new NoXSSInput()],
         ]);
         $osis = Osis::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -164,8 +166,7 @@ public function getOsis()
     public function deleteOsis(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
-            // 'ids.*' => 'uuid',
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
         ]);
         Osis::whereIn('id', $request->ids)->delete();
         return response()->json([

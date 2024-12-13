@@ -6,6 +6,8 @@ use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\Rules\NoXSSInput;
+
 
 class KelasController extends Controller
 {
@@ -56,11 +58,11 @@ class KelasController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-           'kelas' => 'required|string|max:4|regex:/^[a-zA-Z]+$/',
-
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+            'kelas' => ['required', 'string', 'max:4', 'regex:/^[a-zA-Z]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+    
         ]);
         $kelas = Kelas::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -82,7 +84,9 @@ class KelasController extends Controller
     public function deleteKelas(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            ,
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+
             // 'ids.*' => 'uuid',
         ]);
         Kelas::whereIn('id', $request->ids)->delete();
@@ -95,11 +99,11 @@ class KelasController extends Controller
     {
         // dd($request->all());
         $request->validate([
-           'kelas' => 'required|string|max:4|regex:/^[a-zA-Z]+$/',
-
-            'kapasitas' => 'required|string|max:2',
-            'status' => 'required|string|in:Aktif,Tidak Aktif',
-            'ket' => 'required|string|regex:/^[a-zA-Z0-9 ]+$/',
+         'kelas' => ['required', 'string', 'max:4', 'regex:/^[a-zA-Z]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+    
         ]);
         try {
             Kelas::create([
