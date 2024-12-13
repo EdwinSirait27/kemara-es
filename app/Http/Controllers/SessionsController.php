@@ -22,13 +22,11 @@ class SessionsController extends Controller
 
     public function create()
     {
-        $currentDateTime = Carbon::now();
+        $tombols = Tombol::where('start_date', '<=', now())
+            ->where('end_date', '>=', now())
+            ->get();
     
-        $tombol = Tombol::where('start_date', '<=', $currentDateTime->toDateTimeString())
-                        ->where('end_date', '>=', $currentDateTime->toDateTimeString())
-                        ->get(); 
-        
-        return view('session.login-session', compact('tombol'));
+        return view('session.login-session', compact('tombols'));
     }
         public function store(Request $request)
     {

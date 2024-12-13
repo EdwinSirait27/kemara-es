@@ -16,19 +16,43 @@ class PpdbController extends Controller
     }
     public function index()
     {
+        // Ambil data ppdb dari database
         $tombol = Tombol::first();
+
+        // Periksa apakah ada data ppdb
         if ($tombol) {
+            // Ambil rentang waktu dari data ppdb
             $start_date = Carbon::parse($tombol->start_date);
             $end_date = Carbon::parse($tombol->end_date);
+
+            // Periksa apakah waktu saat ini berada di dalam rentang waktu ppdb
             if (Carbon::now()->between($start_date, $end_date)) {
+                // Jika waktu saat ini berada di dalam rentang waktu ppdb, tampilkan halaman daftar.index
                 return view('Ppdb.Ppdb');
             } else {
+                // Jika waktu saat ini berada di luar rentang waktu ppdb, tampilkan pesan peringatan
                 return redirect()->back()->with('warning', 'PPDB masih tertutup.');
             }
         } else {
+            // Jika tidak ada data ppdb, tampilkan pesan peringatan
             return redirect()->back()->with('warning', 'Data PPDB tidak tersedia.');
         }
     }
+    // public function index()
+    // {
+    //     $tombol = Tombol::first();
+    //     if ($tombol) {
+    //         $start_date = Carbon::parse($tombol->start_date);
+    //         $end_date = Carbon::parse($tombol->end_date);
+    //         if (Carbon::now()->between($start_date, $end_date)) {
+    //             return view('Ppdb.Ppdb');
+    //         } else {
+    //             return redirect()->back()->with('warning', 'PPDB masih tertutup.');
+    //         }
+    //     } else {
+    //         return redirect()->back()->with('warning', 'Data PPDB tidak tersedia.');
+    //     }
+    // }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
