@@ -68,8 +68,7 @@
                         <h2 class="text-white mb-2 mt-5">Selamat Datang Calon Peserta Didik SMPK Kesuma Mataram </h2>
                         <p class="text-lead text-white">
                             Silahkan diisi format berikut dengan benar<br>
-                            Kalau calon peserta atau orang tua bingung dengan form ini bisa ditanyakan terlebih dahulu
-                            melalui whatsapp atau kunjungi situs Instagram dari SMPK Kesuma Mataram.
+                            jika belum paham, silahkan kunjungi Instagram dari SMPK Kesuma Mataram untuk melihat tuotrial pendaftaran siswa baru.
                         </p>
                     </div>
                 </div>
@@ -85,7 +84,7 @@
                                 style="width: 100px; height: 125px; margin-right: 10px; border-radius: 0.5rem;">
                         </div>
                         <div class="card-body">
-                            <form  id="ppdb-form" role="form" method="POST" action="{{ route('Ppdb.store') }}">
+                            <form id="ppdb-form" role="form" method="POST" action="{{ route('Ppdb.store') }}">
                                 @csrf
                                 @if ($errors->has('throttle'))
                                     <div class="alert alert-danger">
@@ -102,14 +101,21 @@
                                     </div>
                                 @endif
 
-                                <!-- Nama Lengkap -->
+                                {{-- <!-- Nama Lengkap --> tidak boleh angka dan simbol --}}
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nama Lengkap</label>
-                                        <input type="text" class="form-control form-control-sm" name="NamaLengkap"
-                                            id="NamaLengkap" placeholder="NamaLengkap" aria-label="NamaLengkap"
-                                            maxlength="100" required>
+                                        <label><i class="fas fa-user"></i> Nama Lengkap Siswa</label>
+                                        <input type="text" 
+       class="form-control form-control-sm" 
+       name="NamaLengkap" 
+       id="NamaLengkap" 
+       placeholder="Nama Lengkap" 
+       aria-label="NamaLengkap" 
+       maxlength="100" 
+       required 
+       oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
+
                                         @error('NamaLengkap')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -117,9 +123,9 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Nama Panggilan</label>
+                                        <label><i class="fas fa-envelope"></i> Nama Panggilan Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaPanggilan"
-                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20" required>
+                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                                         @error('NamaPanggilan')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -127,10 +133,10 @@
 
                                     <!-- Username -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tempat Lahir</label>
+                                        <label><i class="fas fa-user"></i> Tempat Lahir Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="TempatLahir"
                                             id="TempatLahir" placeholder="TempatLahir" aria-label="TempatLahir"
-                                            aria-describedby="TempatLahir-addon" required>
+                                            aria-describedby="TempatLahir-addon" maxlength="50" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                                         {{-- oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')" --}}
                                         @error('TempatLahir')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -140,7 +146,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tanggal Lahir</label>
+                                        <label><i class="fas fa-user"></i> Tanggal Lahir Siswa</label>
                                         <input type="date" class="form-control form-control-sm" name="TanggalLahir"
                                             id="TanggalLahir" aria-label="TanggalLahir" required>
                                         @error('TanggalLahir')
@@ -150,7 +156,7 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Jenis Kelamin</label>
+                                        <label><i class="fas fa-envelope"></i> Jenis Kelamin Siswa</label>
                                         <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
                                             <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
                                             </option>
@@ -166,7 +172,7 @@
 
                                     <!-- Username -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i>Agama</label>
+                                        <label><i class="fas fa-user"></i>Agama Siswa</label>
                                         <select class="form-control" name="Agama" id="Agama" required>
                                             <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                             @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
@@ -181,9 +187,9 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Alamat</label>
+                                        <label><i class="fas fa-user"></i> Alamat Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="Alamat"
-                                            id="Alamat" placeholder="Alamat" aria-label="Alamat"required>
+                                            id="Alamat" placeholder="Alamat" aria-label="Alamat"required maxlength="100" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')">
                                         @error('Alamat')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -193,7 +199,7 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Nomor Telephone Siswa</label>
                                         <input type="phone" class="form-control form-control-sm" name="NomorTelephone"
-                                            id="NomorTelephone" placeholder="NomorTelephone"required>
+                                            id="NomorTelephone" placeholder="NomorTelephone"required maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                         @error('NomorTelephone')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -205,7 +211,7 @@
                                         <input type="phone" class="form-control form-control-sm"
                                             name="NomorTelephoneAyah" id="NomorTelephoneAyah"
                                             placeholder="NomorTelephone" aria-label="NomorTelephoneAyah"
-                                            aria-describedby="NomorTelephoneAyah-addon" required>
+                                            aria-describedby="NomorTelephoneAyah-addon" required maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                         @error('NomorTelephoneAyah')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -214,11 +220,12 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Username</label>
+                                        <label><i class="fas fa-user"></i> Username Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="username"
                                             id="username"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
-                                            placeholder="username" aria-label="username" maxlength="12" required>
+                                            placeholder="Masukkan Username" aria-label="username" maxlength="12"
+                                            required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">>
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -229,8 +236,8 @@
                                         <label><i class="fas fa-envelope"></i> Password</label>
                                         <div
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
-                                            <input class="form-control" type="password" placeholder="Password Baru"
-                                                id="password" name="password" maxlength="12">
+                                            <input class="form-control" type="password" placeholder="Masukkan Password"
+                                                id="password" name="password" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')">
                                             <span
                                                 class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
                                                 onclick="togglePasswordVisibility('password')">
@@ -259,39 +266,48 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Konfirmasi Password</label>
                                         <div
-                                        class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
-                                <input class="form-control" type="password" placeholder="Konfirmasi Password Baru"
-                                    id="password_confirmation" name="password_confirmation" maxlength="8">
-                                <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
-                                    onclick="togglePasswordVisibility('password_confirmation')">
-                                    <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
-                                </span>
-                                @error('password_confirmation')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                                <script>
-                                    function togglePasswordVisibility(inputId) {
-                                        const input = document.getElementById(inputId);
-                                        const icon = document.getElementById(`eye-icon-${inputId}`);
-                                        if (input.type === "password") {
-                                            input.type = "text";
-                                            icon.classList.remove("fa-eye");
-                                            icon.classList.add("fa-eye-slash");
-                                        } else {
-                                            input.type = "password";
-                                            icon.classList.remove("fa-eye-slash");
-                                            icon.classList.add("fa-eye");
-                                        }
-                                    }
-                                </script>
+                                            class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
+                                            <input class="form-control" type="password"
+                                                placeholder="Konfirmasi Password Baru" id="password_confirmation"
+                                                name="password_confirmation" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')">
+                                            <span
+                                                class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                                onclick="togglePasswordVisibility('password_confirmation')">
+                                                <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
+                                            </span>
+                                            @error('password_confirmation')
+                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            @enderror
+                                            <script>
+                                                function togglePasswordVisibility(inputId) {
+                                                    const input = document.getElementById(inputId);
+                                                    const icon = document.getElementById(`eye-icon-${inputId}`);
+                                                    if (input.type === "password") {
+                                                        input.type = "text";
+                                                        icon.classList.remove("fa-eye");
+                                                        icon.classList.add("fa-eye-slash");
+                                                    } else {
+                                                        input.type = "password";
+                                                        icon.classList.remove("fa-eye-slash");
+                                                        icon.classList.add("fa-eye");
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
 
                                 <!-- Submit -->
                                 <div class="text-center">
-                                    <button type="submit"id="daftar-btn" class="btn bg-gradient-info w-100 mt-4 mb-0">Daftar</button>
+                                    <!-- Tombol Daftar -->
+                                    <button type="submit" id="daftar-btn"
+                                        class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
+
+                                    <!-- Tombol Cancel -->
+                                    <a href="/login" id="cancel-btn"
+                                        class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
                                 </div>
+
                             </form>
                         </div>
                         <div class="alert alert-secondary mx-4" role="alert">
@@ -301,10 +317,13 @@
                             <span class="text-white">-
                                 <strong class="fa fa-lock"></strong>
                                 <strong> Silahkan diisi semua formnya ya</strong> <br>
-                                <strong>- Untuk pengisian username itu bebas tetapi tidak boleh spasi dan simbol, minimal 7 karakter sampai 12 karakter, contoh username: edwin1234567</strong> <br>
-                                <strong>- untuk password huruf, angka, dan simbol, tetapi tidak boleh ada spasi, minimal 7 sampai 12 karakter contoh password : edwin12345@!. </strong> <br>
-                                <strong>- untuk konfirmasi password silahkan masukkan password yang baru saya dibuat dan harus sama dengan password yang baru dibuat.</strong> <br>
-            
+                                <strong>- Untuk pengisian username itu bebas tetapi tidak boleh spasi dan simbol, minimal 7
+                                    karakter sampai 12 karakter, contoh username: edwin1234567</strong> <br>
+                                <strong>- untuk password huruf, angka, dan simbol, tetapi tidak boleh ada spasi, minimal 7
+                                    sampai 12 karakter contoh password : edwin12345@!. </strong> <br>
+                                <strong>- untuk konfirmasi password silahkan masukkan password yang baru saya dibuat dan
+                                    harus sama dengan password yang baru dibuat.</strong> <br>
+
                             </span>
                         </div>
                     </div>
@@ -314,26 +333,26 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<script>
-    document.getElementById('daftar-btn').addEventListener('click', function (e) {
-        e.preventDefault(); // Mencegah pengiriman form langsung
-        Swal.fire({
-            title: 'Apakah Anda yakin?',
-            text: "Pastikan data yang Anda masukkan sudah benar!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Daftar!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika pengguna mengkonfirmasi, submit form
-                document.getElementById('ppdb-form').submit();
-            }
-        });
-    });
-</script>
+        <script>
+            document.getElementById('daftar-btn').addEventListener('click', function(e) {
+                e.preventDefault(); // Mencegah pengiriman form langsung
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Pastikan data yang Anda masukkan sudah benar!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Daftar!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Jika pengguna mengkonfirmasi, submit form
+                        document.getElementById('ppdb-form').submit();
+                    }
+                });
+            });
+        </script>
 
-        
-@endsection
+
+    @endsection
