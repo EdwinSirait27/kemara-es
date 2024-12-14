@@ -39,7 +39,7 @@
                                   
                                 <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto 
                                 ? asset('storage/fotoguru/' . auth()->user()->guru->foto) 
-                                : asset('storage/fotoguru/we.jpg') }}" 
+                                : asset('storage/fotoguru/we.jpg') }}"
                                 alt="Foto Guru" 
                                 class="w-100 border-radius-lg shadow-sm" 
                                 id="imagePopup">

@@ -26,6 +26,8 @@ use App\Http\Controllers\KelasController;
 // use App\Http\Controllers\EkstrakulikulerController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
+use App\Http\Controllers\DatasiswaController;
+use App\Http\Controllers\DataguruController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\OsisController;
 use App\Http\Controllers\VotingController;
@@ -89,6 +91,8 @@ Route::group(['middleware' => 'guest'], function () {
 // routes semua roles
 Route::middleware(['auth','can:isSemua','prevent.xss'])->group(function () {
     Route::get('/pengumuman/download/{id}', [PengumumanController::class, 'downloadPengumuman'])->name('download.pengumuman');
+    Route::get('/Dataguru', [DataguruController::class, 'index'])->name('Dataguru.index');
+    Route::get('/Datasiswa', [DatasiswaController::class, 'index'])->name('Datasiswa.index');
 
     
    });
@@ -99,14 +103,15 @@ Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
     
     
    });
-// Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
-//     Route::get('/pengumuman/data', [AdminKepalaSekolahController::class, 'getPengumuman'])->name('pengumuman.data');
-//     Route::post('/dashboardAdmin/store', [AdminKepalaSekolahController::class, 'store'])->name('dashboardAdmin.store');
-//     Route::post('/dashboardKepalaSekolah/store', [AdminKepalaSekolahController::class, 'storeKP'])->name('dashboardKepalaSekolah.store');
-//     Route::delete('/pengumuman/delete', [AdminKepalaSekolahController::class, 'deletePengumuman'])->name('pengumuman.delete');
+//    voting su kepsek siswa guru kur admin
+Route::middleware(['auth','can:isvoting','prevent.xss'])->group(function () {
     
-   
-//    });
+Route::get('/Voting', [VotingController::class, 'index'])->name('Voting.index');
+Route::post('/Voting', [VotingController::class, 'store'])->name('Voting.store');
+
+    
+   });
+
 //    adminkepalasekolah
 Route::middleware(['auth','can:isAdminKepalaSekolah','prevent.xss'])->group(function () {
     Route::get('/pengumuman/data', [AdminKepalaSekolahController::class, 'getPengumuman'])->name('pengumuman.data');
@@ -177,15 +182,10 @@ Route::get('/Osis', [OsisController::class, 'index'])->name('Osis.index');
     Route::post('/Osis', [OsisController::class, 'store'])->name('Osis.store');
 Route::get('/Osis/edit/{hashedId}', [OsisController::class, 'edit'])->name('Osis.edit');
 Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.update');
-//Voting
-Route::get('/Voting', [VotingController::class, 'index'])->name('Voting.index');
-Route::post('/Voting', [VotingController::class, 'store'])->name('Voting.store');
-//     Route::get('/Osis/dataosis', [OsisController::class, 'getOsis'])->name('osis.dataosis');
-//     Route::delete('/Osis/delete', [OsisController::class, 'deleteOsis'])->name('osis.delete');
-//     Route::get('Osis/create', [OsisController::class, 'create'])->name('Osis.create');
-//     Route::post('/Osis', [OsisController::class, 'store'])->name('Osis.store');
-// Route::get('/Osis/edit/{hashedId}', [OsisController::class, 'edit'])->name('Osis.edit');
-// Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.update');
+// dataguru
+Route::get('/dataguru/datadataguru', [DataguruController::class, 'getDataguru'])->name('dataguru.datadataguru');
+Route::get('/Dataguru/edit/{hashedId}', [DataguruController::class, 'edit'])->name('Dataguru.edit');
+Route::put('/Dataguru/{hashedId}', [DataguruController::class, 'update'])->name('Dataguru.update');
 
    
    });

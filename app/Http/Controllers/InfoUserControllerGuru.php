@@ -40,7 +40,9 @@ class InfoUserControllerGuru extends Controller
             'Role' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string', 'max:12', new NoXSSInput()],      
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
-            'foto' => ['nullable', 'image', 'miimes:jpeg,png,jpg','max:512', new NoXSSInput()],      
+            // 'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512', new NoXSSInput()],      
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
+            
             'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput()],      
             'TanggalLahir' => ['required', 'date', new NoXSSInput()],      
             'Agama' => ['required', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
@@ -76,19 +78,20 @@ class InfoUserControllerGuru extends Controller
         ]);
 
         $filePath = null;
+    
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-            $filePath = 'public/fotoguru/' . $fileName;
-
-            // Hapus foto lama jika ada
-            if ($user->guru && $user->guru->foto && Storage::exists($user->guru->foto)) {
-                Storage::delete($user->guru->foto);
+            $file->storeAs('public/fotoguru', $fileName); // Simpan file ke folder public/fotosiswa
+        
+            // Simpan hanya nama file ke database
+            $filePath = $fileName;
+        
+            // Hapus file lama jika ada
+            if ($user->guru && $user->guru->foto && Storage::exists('public/fotoguru/' . $user->guru->foto)) {
+                Storage::delete('public/fotoguru/' . $user->guru->foto);
             }
-
-            $file->storeAs('public/fotoguru', $fileName);
         }
-
         try {
             DB::beginTransaction();
 

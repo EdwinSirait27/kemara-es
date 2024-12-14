@@ -37,50 +37,18 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-
-                            <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto
-                                ? asset('storage/fotoguru/' . auth()->user()->guru->foto)
-                                : asset('storage/fotoguru/we.jpg') }}"
+                            <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto 
+                            ? asset('storage/fotoguru/' . auth()->user()->guru->foto) 
+                            : asset('storage/fotoguru/we.jpg') }}"
                                 alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-
-                            {{-- <img src="{{ asset('storage/' . str_replace('public/', '', auth()->user()->guru->foto)) }}" 
-                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup"> --}}
-
-
-
                             <a href="javascript:;"
                                 class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
                                 id="uploadBtn">
                                 <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Upload Gambar"></i>
                             </a>
-                            <!-- Input file yang tersembunyi -->
-                            {{-- <label for="foto">Foto</label> --}}
                             <input type="file" id="foto" name="foto" style="display: none;"
                                 class="form-control" accept="image/*">
-
-                            {{-- <img src="{{ asset('storage/fotoguru/' . (auth()->user()->guru->foto ?? 'we.jpg')) }}"
-                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-                            <a href="javascript:;"
-                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-                                id="uploadBtn">
-                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="Upload Gambar"></i>
-                            </a>
-                            <input type="file" id="foto" name="foto" style="display: none;"
-                                class="form-control" accept="image/*"> --}}
-
-                            {{-- <img src="{{ Storage::exists(Auth::user()->Guru->foto ?? '') ? Storage::url(Auth::user()->Guru->foto) : asset('we.jpg') }}"
-                                    alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-
-                                <a href="javascript:;"
-                                    class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-                                    id="uploadBtn">
-                                    <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Upload Gambar"></i>
-                                </a>
-                                <input type="file" id="foto" name="foto" style="display: none;"
-                                    class="form-control" accept="image/*"> --}}
                     </div>
                 </div>
                 <script>
@@ -162,27 +130,7 @@
                                 <input class="form-control" value="{{ e(optional(auth()->user())->username ?? '') }}"
                                     type="text" id="username" name="username" readonly
                                     aria-describedby="info-username">
-                                {{-- <small id="info-username" class="text-muted">Username tidak dapat diubah.</small> --}}
-
-
-                                {{-- <label for="username" class="form-control-label">{{ __('Username') }}</label>
-                                <div class="@error('username') border border-danger rounded-3 @enderror">
-                                    <input 
-                                        class="form-control" 
-                                        value="{{ old('username', optional(auth()->user())->username ?? '') }}" 
-                                        type="text" 
-                                        placeholder="Masukkan username Anda" 
-                                        id="username" 
-                                        name="username" 
-                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
-                                        maxlength="10" 
-                                        required 
-                                        aria-describedby="error-username">
-                                    @error('username')
-                                        <p id="error-username" class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror --}}
-
-
+                             
 
                             </div>
                         </div>
@@ -345,25 +293,6 @@
                                 @error('NipNips')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-
-                                {{-- <label for="NipNips" class="form-control-label">{{ __('NIP NIPS') }}</label>
-                                <div class="@error('NipNips')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->NipNips)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->NipNips }}"
-                                            type="text" placeholder="NipNips" id="NipNips" name="NipNips"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16"
-                                            required>
-                                        @error('NipNips')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="0" type="text" id="NipNips"
-                                            name="NipNips"required>
-                                    @endif --}}
-
-
-                                {{-- hanya angka oninput="this.value = this.value.replace(/[^0-9]/g, '');"  maxlength="16" --}}
-
                             </div>
                         </div>
                     </div>
@@ -378,24 +307,6 @@
                                 @error('Nuptk')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Nuptk" class="form-control-label">{{ __('NUPTK') }}</label>
-                                <div class="@error('Nuptk')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Nuptk)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Nuptk }}"
-                                            type="text" placeholder="Nuptk" id="Nuptk" name="Nuptk"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16"
-                                            required>
-                                        @error('Nuptk')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="0" type="text" id="Nuptk"
-                                            name="Nuptk"required>
-                                    @endif --}}
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -412,20 +323,6 @@
                                 @error('Nik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Nik" class="form-control-label">{{ __('NIK') }}</label>
-                                <div class="@error('Nik')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Nik)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Nik }}"
-                                            type="text" placeholder="Nik" id="Nik" name="Nik"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16"
-                                            required>
-                                        @error('Nik')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="0" type="text" id="Nik"
-                                            name="Nik"required>
-                                    @endif --}}
                             </div>
                         </div>
                     </div>
@@ -440,21 +337,6 @@
                                 @error('Npwp')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Npwp" class="form-control-label">{{ __('NPWP') }}</label>
-                                <div class="@error('Npwp')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Npwp)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Npwp }}"
-                                            type="text" placeholder="Npwp" id="Npwp"
-                                            name="Npwp"oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                            maxlength="16" required>
-                                        @error('Npwp')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="0" type="text" id="Npwp"
-                                            name="Npwp"required>
-                                    @endif --}}
-
                             </div>
                         </div>
                     </div>
@@ -473,24 +355,6 @@
                                 @error('NomorSertifikatPendidik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="NomorSertifikatPendidik"
-                                    class="form-control-label">{{ __('Nomor Sertifikat Pendidik') }}</label>
-                                <div class="@error('NomorSertifikatPendidik')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru)
-                                        <input class="form-control"
-                                            value="{{ auth()->user()->Guru->NomorSertifikatPendidik }}" type="text"
-                                            placeholder="NomorSertifikatPendidik" id="NomorSertifikatPendidik"
-                                            name="NomorSertifikatPendidik"oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                            maxlength="16" required>
-                                        @error('NomorSertifikatPendidik')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="0" type="text"
-                                            placeholder="NomorSertifikatPendidik" id="NomorSertifikatPendidik"
-                                            name="NomorSertifikatPendidik"required>
-                                    @endif --}}
-
                             </div>
                         </div>
                     </div>
@@ -507,20 +371,7 @@
                                 @error('TahunSertifikasi')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="TahunSertifikasi"
-                                    class="form-control-label">{{ __('Tahun Sertifikasi') }}</label>
-                                <div class="@error('TahunSertifikasi')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->TahunSertifikasi)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->TahunSertifikasi }}"
-                                            type="date" placeholder="Tahun Sertifikasi" id="TahunSertifikasi"
-                                            name="TahunSertifikasi" required>
-                                        @error('TahunSertifikasi')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" type="date" id="TahunSertifikasi"
-                                            name="TahunSertifikasi" required>
-                                    @endif --}}
+                             
                             </div>
                         </div>
                     </div>
@@ -529,7 +380,6 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            {{-- <label for="jadwalkenaikangaji" class="form-control-label">{{ __('Jadwal Kenaikan Gaji') }}</label> --}}
                             <label for="jadwalkenaikangaji" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Jadwal Kenaikan Gaji') }}</label>
 
@@ -559,20 +409,6 @@
                                 @error('PendidikanAkhir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="PendidikanAkhir"
-                                    class="form-control-label">{{ __('Pendidikan Akhir') }}</label>
-                                <div class="@error('PendidikanAkhir')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->PendidikanAkhir)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->PendidikanAkhir }}"
-                                            type="text" placeholder="PendidikanAkhir" id="PendidikanAkhir"
-                                            name="PendidikanAkhir"maxlength="50" required>
-                                        @error('PendidikanAkhir')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="text"
-                                            id="PendidikanAkhir" name="PendidikanAkhir"required>
-                                    @endif --}}
                             </div>
                         </div>
                     </div>
@@ -590,22 +426,6 @@
                                 @error('TahunTamat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="TahunTamat" class="form-control-label">{{ __('Tahun Tamat') }}</label>
-                                <div class="@error('TahunTamat')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->TahunTamat }}"
-                                            type="date" placeholder="TahunTamat" id="TahunTamat" name="TahunTamat"
-                                            required>
-                                        @error('TahunTamat')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="date"
-                                            placeholder="TahunTamat" id="TahunTamat" name="TahunTamat"required>
-                                    @endif --}}
-
-
-
                             </div>
                         </div>
                     </div>
@@ -620,20 +440,7 @@
                                 @error('Jurusan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Jurusan" class="form-control-label">{{ __('Jurusan') }}</label>
-                                <div class="@error('Jurusan')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Jurusan)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Jurusan }}"
-                                            type="text" placeholder="Jurusan" id="Jurusan" name="Jurusan"
-                                            maxlength="50" required>
-                                        @error('Jurusan')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="text" id="Jurusan"
-                                            name="Jurusan"required>
-                                    @endif --}}
-
+                                
                             </div>
                         </div>
                     </div>
@@ -650,23 +457,6 @@
                                 @error('TugasMengajar')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="TugasMengajar" class="form-control-label">{{ __('Tugas Mengajar') }}</label>
-                                <div class="@error('TugasMengajar')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->TugasMengajar)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->TugasMengajar }}"
-                                            type="text" placeholder="Tugas Mengajar" id="TugasMengajar"
-                                            name="TugasMengajar" maxlength="50"
-                                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');" required>
-                                        @error('TugasMengajar')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" type="text" id="TugasMengajar"
-                                            value="tidak ada data" name="TugasMengajar"required>
-                                    @endif --}}
-
-
-
                             </div>
                         </div>
                     </div>
@@ -674,9 +464,6 @@
                         <div class="form-group">
                             <label for="TahunPensiun" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Tahun Pensiun') }}</label>
-
-                            {{-- <label for="TahunPensiun" class="form-control-label">{{ __('Tahun Pensiun') }}</label> --}}
-
                             <div class="@error('TahunPensiun') border border-danger rounded-3 @enderror">
                                 <input class="form-control"
                                     value="{{ old('TahunPensiun', optional(auth()->user()->Guru)->TahunPensiun) }}"
@@ -685,20 +472,6 @@
                                 @error('TahunPensiun')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="TahunPensiun" class="form-control-label">{{ __('Tahun Pensiun') }}</label>
-                                <div class="@error('TahunPensiun')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->TahunPensiun }}"
-                                            type="date" placeholder="TahunPensiun" id="TahunPensiun"
-                                            name="TahunPensiun" required>
-                                        @error('TahunPensiun')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="date"
-                                            placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun" required>
-                                    @endif --}}
-
                             </div>
                         </div>
                     </div>
@@ -709,8 +482,6 @@
                         <div class="form-group">
                             <label for="Pangkat" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Pangkat') }}</label>
-
-                            {{-- <label for="Pangkat" class="form-control-label">{{ __('Pangkat') }}</label> --}}
                             <div class="@error('Pangkat')border border-danger rounded-3 @enderror">
                                 <input class="form-control"
                                     value="{{ e(optional(auth()->user())->Guru->Pangkat ?? '') }}" type="text"
@@ -719,21 +490,6 @@
                                 @error('Pangkat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Pangkat" class="form-control-label">{{ __('Pangkat') }}</label>
-                                <div class="@error('Pangkat')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Pangkat)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Pangkat }}"
-                                            type="text" placeholder="Pangkat" id="Pangkat" name="Pangkat"
-                                            maxlength="50" required>
-                                        @error('Pangkat')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" type="text" id="Pangkat"
-                                            value="tidak ada data"name="Pangkat" required>
-                                    @endif --}}
-
-
                             </div>
                         </div>
                     </div>
@@ -742,7 +498,6 @@
                             <label for="jadwalkenaikanpangkat" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Jadwal Kenaikan Pangkat') }}</label>
 
-                            {{-- <label for="jadwalkenaikanpangkat" class="form-control-label">{{ __('Jadwal Kenaikan Pangkat') }}</label> --}}
                             <div class="@error('jadwalkenaikanpangkat') border border-danger rounded-3 @enderror">
                                 <input class="form-control"
                                     value="{{ old('jadwalkenaikanpangkat', optional(auth()->user()->Guru)->jadwalkenaikanpangkat) }}"
@@ -751,21 +506,6 @@
                                 @error('jadwalkenaikanpangkat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="jadwalkenaikanpangkat"
-                                    class="form-control-label">{{ __('Jadwal Kenaikan Pangkat') }}</label>
-                                <div class="@error('jadwalkenaikanpangkat')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->jadwalkenaikanpangkat)
-                                        <input class="form-control"
-                                            value="{{ auth()->user()->Guru->jadwalkenaikanpangkat }}" type="date"
-                                            placeholder="jadwalkenaikanpangkat" id="jadwalkenaikanpangkat"
-                                            name="jadwalkenaikanpangkat" required>
-                                        @error('jadwalkenaikanpangkat')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="date"
-                                            id="jadwalkenaikanpangkat" name="jadwalkenaikanpangkat" required>
-                                    @endif --}}
                             </div>
                         </div>
                     </div>
@@ -777,7 +517,6 @@
                             <label for="Jabatan" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Jabatan') }}</label>
 
-                            {{-- <label for="Jabatan" class="form-control-label">{{ __('Jabatan') }}</label> --}}
                             <div class="@error('Jabatan')border border-danger rounded-3 @enderror">
                                 <input class="form-control"
                                     value="{{ e(optional(auth()->user())->Guru->Jabatan ?? '') }}" type="text"
@@ -786,20 +525,6 @@
                                 @error('Jabatan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Jabatan" class="form-control-label">{{ __('Jabatan') }}</label>
-                                <div class="@error('Jabatan')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Jabatan)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Jabatan }}"
-                                            type="text" placeholder="Jabatan" id="Jabatan" name="Jabatan"
-                                            maxlength="50" required>
-                                        @error('Jabatan')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="text" id="Jabatan"
-                                            name="Jabatan"required>
-                                    @endif --}}
-
 
                             </div>
                         </div>
@@ -817,22 +542,6 @@
                                 @error('NomorTelephone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="NomorTelephone"
-                                    class="form-control-label">{{ __('Nomor Telephone') }}</label>
-                                <div class="@error('NomorTelephone')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->NomorTelephone)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->NomorTelephone }}"
-                                            type="phone" placeholder="NomorTelephone" id="NomorTelephone"
-                                            name="NomorTelephone" maxlength="13"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-                                        @error('NomorTelephone')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" type="phone" id="NomorTelephone"
-                                            value="0"name="NomorTelephone" required>
-                                    @endif --}}
-
                             </div>
                         </div>
                     </div>
@@ -850,19 +559,6 @@
                                 @error('Alamat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
-                                <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Alamat }}"
-                                            type="text" placeholder="Alamat" id="Alamat" name="Alamat"
-                                            maxlength="50" required>
-                                        @error('Alamat')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" value="tidak ada data" type="text" id="Alamat"
-                                            name="Alamat"required>
-                                    @endif --}}
 
 
                             </div>
@@ -879,20 +575,6 @@
                                 @error('Email')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="Email" class="form-control-label">{{ __('Email') }}</label>
-                                <div class="@error('Email')border border-danger rounded-3 @enderror">
-                                    @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Email)
-                                        <input class="form-control" value="{{ auth()->user()->Guru->Email }}"
-                                            type="email" placeholder="Email" id="Email" name="Email"
-                                            maxlength="50" required>
-                                        @error('Email')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    @else
-                                        <input class="form-control" type="email" id="Email"
-                                            value="tidak ada data"name="Email" required>
-                                    @endif --}}
-
 
                             </div>
                         </div>
@@ -906,7 +588,6 @@
                             <label for="status" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Status') }}</label>
 
-                            {{-- <label for="status" class="form-control-label">{{ __('Status') }}</label> --}}
                             <div class="@error('status') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="status" id="status" readonly>
                                     <option value="" disabled selected>{{ __('Pilih status') }}</option>
@@ -920,25 +601,6 @@
                                 @error('status')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                {{-- <label for="status" class="form-control-label">{{ __('Status') }}</label>
-                                <div class="@error('status') border border-danger rounded-3 @enderror">
-                                    <select class="form-control" name="status" id="status" required>
-                                        <option value="" disabled selected>Pilih Status</option>
-                                        @if (auth()->check() && auth()->user()->Guru)
-                                            <option value="Aktif"
-                                                {{ auth()->user()->Guru->status == 'Aktif' ? 'selected' : '' }}>Aktif
-                                            </option>
-                                            <option value="Tidak Aktif"
-                                                {{ auth()->user()->Guru->status == 'Tidak Aktif' ? 'selected' : '' }}>
-                                                Tidak Aktif</option>
-                                        @else
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Tidak Aktif">Tidak Aktif</option>
-                                        @endif
-                                    </select>
-                                    @error('status')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror --}}
                             </div>
                         </div>
                     </div>
@@ -1007,14 +669,6 @@
                                         }
                                     }
                                 </script>
-
-                                {{-- <label for="password" class="form-control-label">{{ __('Password Baru') }}</label>
-                                <div class="@error('password')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="password" placeholder="Password Baru"
-                                        id="password" name="password" maxlength="8">
-                                    @error('password')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror --}}
                             </div>
                         </div>
                     </div>
@@ -1048,14 +702,6 @@
                                         }
                                     }
                                 </script>
-                                {{-- <label for="password_confirmation"
-                                    class="form-control-label">{{ __('Konfirmasi Password Baru') }}</label>
-                                <div class="@error('password_confirmation')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="password" placeholder="Konfirmasi Password Baru"
-                                        id="password_confirmation" name="password_confirmation" maxlength="8">
-                                    @error('password_confirmation')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror --}}
                             </div>
                         </div>
                     </div>

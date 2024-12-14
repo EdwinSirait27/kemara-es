@@ -36,7 +36,6 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                  
                                 <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto 
                                 ? asset('storage/fotoguru/' . auth()->user()->guru->foto) 
                                 : asset('storage/fotoguru/we.jpg') }}"

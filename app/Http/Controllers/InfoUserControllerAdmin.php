@@ -38,7 +38,9 @@ class InfoUserControllerAdmin extends Controller
             'Role' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string', 'max:12', new NoXSSInput()],      
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
-            'foto' => ['nullable', 'image', 'miimes:jpeg,png,jpg','max:512', new NoXSSInput()],      
+            // 'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
+            
             'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput()],      
             'TanggalLahir' => ['required', 'date', new NoXSSInput()],      
             'Agama' => ['required', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
@@ -59,7 +61,7 @@ class InfoUserControllerAdmin extends Controller
             'Pangkat' => ['required', 'string', 'max:50', new NoXSSInput()],      
             'jadwalkenaikanpangkat' => ['required', 'date', new NoXSSInput()],      
             'Jabatan' => ['required', 'string', 'max:50', new NoXSSInput()],      
-            'NomorTelephone' => ['required', 'numeric', 'max:13', new NoXSSInput()],      
+            'NomorTelephone' => ['required', 'string', 'max:13', new NoXSSInput()],      
             'Alamat' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
@@ -73,21 +75,21 @@ class InfoUserControllerAdmin extends Controller
             ],     
         ]);
 
-        // $filePath = null;
         $filePath = null;
+    
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-            $filePath = 'public/fotoguru/' . $fileName;
-
-            // Hapus foto lama jika ada
-            if ($user->guru && $user->guru->foto && Storage::exists($user->guru->foto)) {
-                Storage::delete($user->guru->foto);
+            $file->storeAs('public/fotoguru', $fileName); // Simpan file ke folder public/fotosiswa
+        
+            // Simpan hanya nama file ke database
+            $filePath = $fileName;
+        
+            // Hapus file lama jika ada
+            if ($user->guru && $user->guru->foto && Storage::exists('public/fotoguru/' . $user->guru->foto)) {
+                Storage::delete('public/fotoguru/' . $user->guru->foto);
             }
-
-            $file->storeAs('public/fotoguru', $fileName);
         }
-
 
         try {
             DB::beginTransaction();

@@ -42,7 +42,9 @@ class InfoUserControllerNonSiswa extends Controller
             'Role' => ['nullable', 'string','in:NonSiswa','Siswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string','max:12', new NoXSSInput()],
             'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput()],
-            'foto' => ['nullable', 'image','mimes:jpeg,png,jpg','max:512', new NoXSSInput()],
+            // 'foto' => ['nullable', 'image','mimes:jpeg,png,jpg','max:512', new NoXSSInput()],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
+            
             'NamaLengkap' => ['required', 'string','max:100', new NoXSSInput()],
             'NomorInduk' => ['required', 'numeric','max:100', new NoXSSInput()],
             'NamaPanggilan' => ['nullable', 'string','max:50', new NoXSSInput()],

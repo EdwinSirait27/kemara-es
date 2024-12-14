@@ -13,7 +13,6 @@ class NoXSSInput implements Rule
 {
     public function passes($attribute, $value)
     {
-        // Jika nilai adalah array, validasi setiap elemen
         if (is_array($value)) {
             foreach ($value as $item) {
                 if (!$this->isValidString($item)) {
@@ -23,7 +22,6 @@ class NoXSSInput implements Rule
             return true;
         }
     
-        // Jika nilai adalah string, validasi langsung
         return $this->isValidString($value);
     }
     
