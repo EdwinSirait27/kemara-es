@@ -220,6 +220,16 @@ $('#users-table').on('click', '.edit-user', function(e) {
         });
     });
 </script>
+
+@if(session('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '{{ session('warning') }}',
+        });
+    </script>
+@endif
     {{-- <script>
       $(document).ready(function() {
           let table = $('#users-table').DataTable({

@@ -61,36 +61,6 @@ public function getOsis()
         ->make(true);
 }
 
-    // public function getOsis()
-    // {
-    //     $siswa = Osis::with('Siswa')
-    //         ->select(['id', 'siswa_id', 'visi', 'misi'])->get()
-    //         ->map(function ($osis) {
-    //             $osis->id_hashed = substr(hash('sha256', $osis->id . env('APP_KEY')), 0, 8);
-    //             $osis->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $osis->id_hashed . '">';
-    //             $osis->action = '
-    //         <a href="' . route('Osis.edit', $osis->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-    //             <i class="fas fa-user-edit text-secondary"></i>
-    //         </a>';
-    //             $osis->Siswa_Nama = $osis->Siswa ? $osis->Siswa->NamaLengkap : '-';
-    //             $osis->Siswa_Foto = $osis->Siswa && $osis->Siswa->foto
-    //             ? asset('storage/fotosiswa/' . $osis->Siswa->foto)  // Path foto siswa
-    //             : '-';
-
-
-    //             return $osis;
-    //         });
-    //     return DataTables::of($siswa)
-    //         ->addColumn('NamaLengkap', function ($osis) {
-    //             return $osis->Siswa->NamaLengkap;
-    //         })
-    //         ->addColumn('foto', function ($osis) {
-    //             return $osis->Siswa_Foto;  // Menggunakan URL foto yang telah dibangun
-    //         })
-    //         ->rawColumns(['checkbox', 'action'])
-    //         ->make(true);
-
-    // }
     public function edit($hashedId)
 {
     $siswa = Osis::with('Siswa')->get()->first(function ($u) use ($hashedId) {
@@ -107,19 +77,6 @@ public function getOsis()
 
     return view('Osis.edit', compact('siswa', 'hashedId', 'siswas'));
 }
-
-    // public function edit($hashedId)
-    // {
-    //     $siswa = Osis::with('Siswa')->get()->first(function ($u) use ($hashedId) {
-    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-    //         return $expectedHash === $hashedId;
-    //     });
-    //     $siswas = explode(',', $siswa->Siswa->getRawOriginal('NamaLengkap'));
-    //     if (!$siswa) {
-    //         abort(404, 'Siswa not found.');
-    //     }
-    //     return view('Osis.edit', compact('siswa', 'hashedId', 'siswas'));
-    // }
     public function store(Request $request)
     {
         $request->validate([

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Rules\NoXSSInput;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+
 use App\Http\Middleware\PreventXSS;
 class InfoUserController extends Controller
 {
@@ -56,11 +58,18 @@ class InfoUserController extends Controller
             'Pangkat' => ['required', 'string', 'max:50', new NoXSSInput()],      
             'jadwalkenaikanpangkat' => ['required', 'date', new NoXSSInput()],      
             'Jabatan' => ['required', 'string', 'max:50', new NoXSSInput()],      
-            'NomorTelephone' => ['required', 'numeric', 'max:13', new NoXSSInput()],      
+            'NomorTelephone' => ['required', 'string', 'max:13', new NoXSSInput()],      
             'Alamat' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
-            'username' => ['required', 'string','max:12','regex:/^[a-zA-Z0-9_-]+$/','unique:users,username'. $user->id, new NoXSSInput()],      
+            'username' => [
+                'required', 
+                'string', 
+                'max:12', 
+                'regex:/^[a-zA-Z0-9_-]+$/', 
+                Rule::unique('users', 'username')->ignore($user->id), 
+                new NoXSSInput()
+            ],   
         ]);
         $filePath = null;
         if ($request->hasFile('foto')) {

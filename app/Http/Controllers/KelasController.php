@@ -84,10 +84,10 @@ class KelasController extends Controller
     public function deleteKelas(Request $request)
     {
         $request->validate([
-            ,
+            
             'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
 
-            // 'ids.*' => 'uuid',
+        
         ]);
         Kelas::whereIn('id', $request->ids)->delete();
         return response()->json([

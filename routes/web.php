@@ -28,6 +28,7 @@ use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\OsisController;
+use App\Http\Controllers\VotingController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\PengumumanController;
@@ -176,6 +177,15 @@ Route::get('/Osis', [OsisController::class, 'index'])->name('Osis.index');
     Route::post('/Osis', [OsisController::class, 'store'])->name('Osis.store');
 Route::get('/Osis/edit/{hashedId}', [OsisController::class, 'edit'])->name('Osis.edit');
 Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.update');
+//Voting
+Route::get('/Voting', [VotingController::class, 'index'])->name('Voting.index');
+Route::post('/Voting', [VotingController::class, 'store'])->name('Voting.store');
+//     Route::get('/Osis/dataosis', [OsisController::class, 'getOsis'])->name('osis.dataosis');
+//     Route::delete('/Osis/delete', [OsisController::class, 'deleteOsis'])->name('osis.delete');
+//     Route::get('Osis/create', [OsisController::class, 'create'])->name('Osis.create');
+//     Route::post('/Osis', [OsisController::class, 'store'])->name('Osis.store');
+// Route::get('/Osis/edit/{hashedId}', [OsisController::class, 'edit'])->name('Osis.edit');
+// Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.update');
 
    
    });
@@ -307,7 +317,6 @@ Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
 // });
 
 Route::middleware(['guest', 'prevent.xss'])->group(function () {
-    // Registrasi
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');

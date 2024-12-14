@@ -58,8 +58,8 @@ class TombolController extends Controller
     {
         $validatedData = $request->validate([
             'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
-            'start_date' => ['required', 'datetime', new NoXSSInput()],
-            'end_date' => ['required', 'datetime', new NoXSSInput()],
+            'start_date' => ['required', 'date', new NoXSSInput()],
+            'end_date' => ['required', 'date', new NoXSSInput()],
             'ket' => ['required', 'max:50', new NoXSSInput()],
             
             
@@ -100,8 +100,8 @@ class TombolController extends Controller
         // dd($request->all());
         $request->validate([
             'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
-            'start_date' => ['required', 'datetime', new NoXSSInput()],
-            'end_date' => ['required', 'datetime', new NoXSSInput()],
+            'start_date' => ['required', 'date', new NoXSSInput()],
+            'end_date' => ['required', 'date', new NoXSSInput()],
             'ket' => ['required', 'max:50', new NoXSSInput()],
         ]);
         try {

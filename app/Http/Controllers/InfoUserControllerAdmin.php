@@ -11,7 +11,7 @@ use App\Models\Guru;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Validation\Rule;
 class InfoUserControllerAdmin extends Controller
 {
     public function __construct()
@@ -29,8 +29,7 @@ class InfoUserControllerAdmin extends Controller
 
     return view('laravel-examples/user-profileAdmin', compact('user', 'roles'));
     }
-
-    public function store(Request $request)
+        public function store(Request $request)
     {
         $user = Auth::user();
 
@@ -64,7 +63,14 @@ class InfoUserControllerAdmin extends Controller
             'Alamat' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],      
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
-            'username' => ['required', 'string','max:12','regex:/^[a-zA-Z0-9_-]+$/','unique:users,username'. $user->id, new NoXSSInput()],   
+           'username' => [
+                'required', 
+                'string', 
+                'max:12', 
+                'regex:/^[a-zA-Z0-9_-]+$/', 
+                Rule::unique('users', 'username')->ignore($user->id), 
+                new NoXSSInput()
+            ],     
         ]);
 
         // $filePath = null;
@@ -175,3 +181,4 @@ class InfoUserControllerAdmin extends Controller
         }
     }
 }
+

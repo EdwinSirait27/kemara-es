@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+
 
 class InfoUserControllerNonSiswa extends Controller
 {
@@ -51,11 +53,17 @@ class InfoUserControllerNonSiswa extends Controller
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
             'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
             'Email' => ['nullable', 'string','max:100', new NoXSSInput()],
-            'NomorTelephone' => ['nullable', 'numeric','max:13', new NoXSSInput()],
+            'NomorTelephone' => ['nullable', 'string','max:13', new NoXSSInput()],
             'NIK' => ['nullable', 'numeric','max:16', new NoXSSInput()],
             'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'username' => ['required', 'string','max:12','regex:/^[a-zA-Z0-9_-]+$/','unique:users,username'. $user->id, new NoXSSInput()],      
-
+           'username' => [
+                'required', 
+                'string', 
+                'max:12', 
+                'regex:/^[a-zA-Z0-9_-]+$/', 
+                Rule::unique('users', 'username')->ignore($user->id), 
+                new NoXSSInput()
+            ],   
             
 
 

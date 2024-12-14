@@ -557,7 +557,7 @@
                 </ul>
                 <ul class="nav ms-4">
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('pemilihan') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                        <a class="nav-link {{ Request::is('Voting') ? 'active' : '' }}" href="{{ url('Voting') }}">
                             <span class="nav-link-text ms-1">Pemilihan Ketua Osis</span>
                         </a>
                     </li>

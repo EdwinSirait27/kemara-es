@@ -33,7 +33,7 @@ class DashboardControllerSUSiswa extends Controller
             ->get()
             ->map(function ($user) {
                 $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8); // 8 karakter pertama dari hash SHA-256
-                $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+                // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
                 $user->Role = implode(', ', explode(',', $user->Role));
                 $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
                 $user->action = '
@@ -44,7 +44,10 @@ class DashboardControllerSUSiswa extends Controller
                 return $user;
             });
         return DataTables::of($users)
-            ->addColumn('Role', function ($user) {
+        ->addColumn('created_at', function ($user) {
+            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        })    
+        ->addColumn('Role', function ($user) {
                 return $user->Role;
             })
             ->rawColumns(['checkbox', 'action'])
@@ -73,7 +76,7 @@ class DashboardControllerSUSiswa extends Controller
             'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
-            'Role' => ['required', 'array', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
+            'Role' => ['required', 'string', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
             'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()],    
         ]);
 
@@ -94,7 +97,6 @@ class DashboardControllerSUSiswa extends Controller
             'hakakses' => $validatedData['hakakses'],
             'Role' => $roles, // Simpan sebagai string
         ];
-
         if (!empty($validatedData['password'])) {
             $userData['password'] = bcrypt($validatedData['password']);
         }
@@ -117,7 +119,7 @@ class DashboardControllerSUSiswa extends Controller
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
             'Role' => ['required', 'array', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
-            'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()], 
+            // 'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()], 
         ]);
 
         try {

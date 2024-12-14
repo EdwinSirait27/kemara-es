@@ -7,3 +7,13 @@
       text-align: center;
   }
 </style>
+@if(session('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '{{ session('warning') }}',
+        });
+    </script>
+@endif
+

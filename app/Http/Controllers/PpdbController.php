@@ -15,20 +15,36 @@ class PpdbController extends Controller
         $this->middleware('prevent.xss');
     }
     public function index()
-    {
-        $ppdb = Tombol::first();
-        if ($ppdb) {
-            $start_date = Carbon::parse($ppdb->start_date);
-            $end_date = Carbon::parse($ppdb->end_date);
-            if (Carbon::now()->between($start_date, $end_date)) {
-                return view('Ppdb.Ppdb');
-            } else {
-                return redirect()->back()->with('warning', 'PPDB masih tertutup.');
-            }
-        } else {
-            return redirect()->back()->with('warning', 'Data PPDB tidak tersedia.');
-        }
+{
+    $ppdb = Tombol::where('url', 'Ppdb')->first();
+    if (!$ppdb) {
+        return redirect()->back()->with('warning', 'Data PPDB tidak tersedia.');
     }
+    $start_date = Carbon::parse($ppdb->start_date);
+    $end_date = Carbon::parse($ppdb->end_date);
+    if (Carbon::now()->between($start_date, $end_date)) {
+        return view('Ppdb.Ppdb');
+    }
+    return redirect()->back()->with('warning', 'PPDB masih tertutup.');
+}
+
+    // public function index()
+    // {
+    //     $ppdb = Tombol::where('url', 'Ppdb')->first();
+    
+    //        if ($ppdb) {
+    //         $start_date = Carbon::parse($ppdb->start_date);
+    //         $end_date = Carbon::parse($ppdb->end_date);
+    //         if (Carbon::now()->between($start_date, $end_date)) {
+    //             return view('Ppdb.Ppdb');
+    //         } else {
+    //             return redirect()->back()->with('warning', 'PPDB masih tertutup.');
+    //         }
+    //     } else {
+    //         return redirect()->back()->with('warning', 'Data PPDB tidak tersedia.');
+    //     }
+    // }
+   
 
     public function store(Request $request)
     {

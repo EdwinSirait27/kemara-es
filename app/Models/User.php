@@ -87,10 +87,10 @@ class User extends Authenticatable
     {
         return $this->where('username', $username)->first();
     }
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('m-d-Y H:i');
-    }
+    // public function getCreatedAtAttribute($value)
+    // {
+    //     return Carbon::parse($value)->format('m-d-Y H:i');
+    // }
     public function Guru()
     {
         return $this->belongsTo(Guru::class, 'guru_id', 'guru_id');

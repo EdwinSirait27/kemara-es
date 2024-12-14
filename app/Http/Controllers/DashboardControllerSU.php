@@ -30,8 +30,7 @@ class DashboardControllerSU extends Controller
             ->get()
             ->map(function ($user) {
                 $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-                $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-                $user->Role = implode(', ', explode(',', $user->Role));
+                // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y'); $user->Role = implode(', ', explode(',', $user->Role));
                 $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
                 $user->action = '
             <a href="' . route('dashboardSU.edit1', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
@@ -41,6 +40,9 @@ class DashboardControllerSU extends Controller
                 return $user;
             });
         return DataTables::of($users)
+        ->addColumn('created_at', function ($user) {
+            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        })
             ->addColumn('Role', function ($user) {
                 return $user->Role;
             })
@@ -117,7 +119,7 @@ class DashboardControllerSU extends Controller
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
             'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],      
-            'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],  
+            // 'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],  
         ]);
 
         try {
