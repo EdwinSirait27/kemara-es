@@ -56,6 +56,10 @@
                             </thead>
 
                         </table>
+                        <button type="button" onclick="window.location='{{ route('Dataguruall.index') }}'" 
+                        class="btn btn-primary btn-sm">
+                        Lihat Detail
+                    </button>
 
                     </div>
                 </div>

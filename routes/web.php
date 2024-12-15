@@ -190,6 +190,8 @@ Route::put('/Dataguru/{hashedId}', [DataguruController::class, 'update'])->name(
 Route::get('/datasiswa/datadatasiswa', [DatasiswaController::class, 'getDatasiswa'])->name('datasiswa.datadatasiswa');
 Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->name('Datasiswa.edit');
 Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
+Route::get('/Dataguruall', [DataguruController::class, 'indexGuruall'])->name('Dataguruall.index');
+Route::get('/dataguruall/datadataguruall', [DataguruController::class, 'getDataguruall'])->name('dataguruall.datadataguruall');
 
    
    });

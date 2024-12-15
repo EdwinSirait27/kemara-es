@@ -22,6 +22,22 @@ class DataguruController extends Controller
         return view('Dataguru.Dataguru');
 
     }
+    public function indexGuruall()
+    {
+        return view('Dataguruall.index');
+
+    }
+    public function getDataguruall()
+    {
+        $guru = Guru::all()->makeHidden(['foto'])
+
+            ->map(function ($guru) {
+                $guru->id_hashed = substr(hash('sha256', $guru->guru_id . env('APP_KEY')), 0, 8);
+                return $guru;
+            });
+        return DataTables::of($guru)
+            ->make(true);
+    }
     public function getDataguru()
     {
         $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
