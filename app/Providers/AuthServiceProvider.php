@@ -67,6 +67,10 @@ class AuthServiceProvider extends ServiceProvider
             $allowedRoles = ['Guru', 'Kurikulum','Siswa','KepalaSekolah','SU','Admin'];
             return in_array($user->hakakses, $allowedRoles);
         });
+        Gate::define('isKGS', function (User $user) {
+            $allowedRoles = ['Guru', 'Kurikulum','Siswa'];
+            return in_array($user->hakakses, $allowedRoles);
+        });
         
     }
 }

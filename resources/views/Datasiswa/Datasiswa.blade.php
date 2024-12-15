@@ -68,8 +68,12 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+
+    {{-- <script>
         $(document).ready(function() {
             let table = $('#users-table').DataTable({
                 processing: true,
@@ -87,7 +91,6 @@
                             return meta.row + 1;
                         },
                     },
-                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
                     {
                         data: 'foto',
                         name: 'foto',
@@ -98,8 +101,7 @@
                                     '" width="100" />';
                             } else {
                                 return '<span>Foto tidak tersedia</span>';
-                                // return '<img src="' + '{{ asset('storage/fotoguru/we.jpg') }}' + '" width="100" />';
-                            }
+                   }
                         },
 
 
@@ -139,7 +141,75 @@
                     }
                 ]
             });
-        });
+        }); --}}
+        <script>
+            $(document).ready(function() {
+                let table = $('#users-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: '{{ route('datasiswa.datadatasiswa') }}',
+                    lengthMenu: [
+                        [10, 25, 50, 100, -1],
+                        [10, 25, 50, 100, "All"]
+                    ],
+                    columns: [
+                        {
+                            data: 'siswa_id',
+                            name: 'siswa_id',
+                            className: 'text-center',
+                            render: function(data, type, row, meta) {
+                                return meta.row + 1;
+                            },
+                        },
+                        {
+                            data: 'foto',
+                            name: 'foto',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/fotosiswa') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                        {
+                            data: 'NamaLengkap',
+                            name: 'NamaLengkap',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'Agama',
+                            name: 'Agama',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'NomorTelephone',
+                            name: 'NomorTelephone',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'Alamat',
+                            name: 'Alamat',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'Email',
+                            name: 'Email',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center'
+                        }
+                    ]
+                });
+            });
+        
         $('#users-table').on('click', '.edit-datasiswa', function(e) {
             e.preventDefault();
 

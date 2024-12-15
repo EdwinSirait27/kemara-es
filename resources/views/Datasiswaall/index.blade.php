@@ -272,6 +272,9 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
@@ -282,6 +285,18 @@
                 lengthMenu: [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
+                ],
+                dom: 'Bfrtip', // Tambahkan ini untuk mengaktifkan tombol
+                buttons: [
+                    {
+                        extend: 'excelHtml5', // Tombol untuk ekspor ke Excel
+                        text: 'Export to Excel', // Teks tombol
+                        className: 'btn btn-success', // Tambahkan kelas untuk styling
+                        title: 'Data Siswa', // Nama file Excel
+                        exportOptions: {
+                            columns: ':visible' // Tentukan kolom yang akan diekspor
+                        }
+                    }
                 ],
                 columns: [{
                         data: 'siswa_id', 
@@ -681,14 +696,9 @@
     name: 'catatan',
     className: 'text-center'
 }
-
-
-
-
                 ]
             });
         });
-    </script>
-
+</script>
 
 @endsection

@@ -103,6 +103,12 @@ Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
     
     
    });
+//    kurikulum guru siswa
+Route::middleware(['auth','can:isKGS','prevent.xss'])->group(function () {
+    
+    
+    
+   });
 //    voting su kepsek siswa guru kur admin
 Route::middleware(['auth','can:isvoting','prevent.xss'])->group(function () {
     
