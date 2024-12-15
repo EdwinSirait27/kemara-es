@@ -192,6 +192,8 @@ Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->
 Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
 Route::get('/Dataguruall', [DataguruController::class, 'indexGuruall'])->name('Dataguruall.index');
 Route::get('/dataguruall/datadataguruall', [DataguruController::class, 'getDataguruall'])->name('dataguruall.datadataguruall');
+Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
+Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
 
    
    });

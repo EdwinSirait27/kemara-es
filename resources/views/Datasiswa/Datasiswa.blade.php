@@ -56,6 +56,10 @@
                             </thead>
 
                         </table>
+                        <button type="button" onclick="window.location='{{ route('Datasiswaall.index') }}'" 
+                        class="btn btn-primary btn-sm">
+                        Lihat Detail
+                    </button>
 
                     </div>
                 </div>
