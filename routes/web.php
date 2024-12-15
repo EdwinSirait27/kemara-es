@@ -26,6 +26,7 @@ use App\Http\Controllers\KelasController;
 // use App\Http\Controllers\EkstrakulikulerController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
+use App\Http\Controllers\KGSController;
 use App\Http\Controllers\DatasiswaController;
 use App\Http\Controllers\DataguruController;
 use App\Http\Controllers\KurikulumController;
@@ -91,9 +92,7 @@ Route::group(['middleware' => 'guest'], function () {
 // routes semua roles
 Route::middleware(['auth','can:isSemua','prevent.xss'])->group(function () {
     Route::get('/pengumuman/download/{id}', [PengumumanController::class, 'downloadPengumuman'])->name('download.pengumuman');
-    Route::get('/Dataguru', [DataguruController::class, 'index'])->name('Dataguru.index');
-    Route::get('/Datasiswa', [DatasiswaController::class, 'index'])->name('Datasiswa.index');
-
+   
     
    });
    // route kurikulum, guru, siswa, nonsiswa
@@ -105,7 +104,11 @@ Route::middleware(['auth','can:isKGSN','prevent.xss'])->group(function () {
    });
 //    kurikulum guru siswa
 Route::middleware(['auth','can:isKGS','prevent.xss'])->group(function () {
-    
+    Route::get('/DatasiswaKGS', [KGSController::class, 'indexSiswa'])->name('DatasiswaKGS.index');
+Route::get('/datasiswaKGS/datadatasiswaKGS', [KGSController::class, 'getDatasiswaKGS'])->name('datasiswaKGS.datadatasiswaKGS');
+    Route::get('/DataguruKGS', [KGSController::class, 'indexGuru'])->name('DataguruKGS.index');
+Route::get('/dataguruKGS/datadatasiswaKGS', [KGSController::class, 'getDataguruKGS'])->name('dataguruKGS.datadataguruKGS');
+
     
     
    });
@@ -189,15 +192,17 @@ Route::get('/Osis', [OsisController::class, 'index'])->name('Osis.index');
 Route::get('/Osis/edit/{hashedId}', [OsisController::class, 'edit'])->name('Osis.edit');
 Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.update');
 // dataguru
+Route::get('/Dataguru', [DataguruController::class, 'index'])->name('Dataguru.index');
 Route::get('/dataguru/datadataguru', [DataguruController::class, 'getDataguru'])->name('dataguru.datadataguru');
 Route::get('/Dataguru/edit/{hashedId}', [DataguruController::class, 'edit'])->name('Dataguru.edit');
 Route::put('/Dataguru/{hashedId}', [DataguruController::class, 'update'])->name('Dataguru.update');
+Route::get('/Dataguruall', [DataguruController::class, 'indexGuruall'])->name('Dataguruall.index');
+Route::get('/dataguruall/datadataguruall', [DataguruController::class, 'getDataguruall'])->name('dataguruall.datadataguruall');
 // datasiswa
+Route::get('/Datasiswa', [DatasiswaController::class, 'index'])->name('Datasiswa.index');
 Route::get('/datasiswa/datadatasiswa', [DatasiswaController::class, 'getDatasiswa'])->name('datasiswa.datadatasiswa');
 Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->name('Datasiswa.edit');
 Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
-Route::get('/Dataguruall', [DataguruController::class, 'indexGuruall'])->name('Dataguruall.index');
-Route::get('/dataguruall/datadataguruall', [DataguruController::class, 'getDataguruall'])->name('dataguruall.datadataguruall');
 Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
 Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
 

@@ -12,9 +12,20 @@ class KGSController extends Controller
     {
         $this->middleware('prevent.xss');
     }
-    
-    public function getDatasiswa()
+    public function indexSiswa()
     {
+        return view('DatasiswaKGS.index');
+
+    }
+    public function indexGuru()
+    {
+        return view('DataGuruKGS.index');
+
+    }
+    
+    public function getDatasiswaKGS()
+    {
+        
         $siswa = Siswa::select(['siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email'])
             ->get()
             ->map(function ($siswa) {
@@ -27,7 +38,7 @@ class KGSController extends Controller
             })
             ->make(true);
     }
-    public function getDataguru()
+    public function getDataguruKGS()
     {
         $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
             ->get()
