@@ -258,6 +258,9 @@
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Catatan
                                         </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tahun Daftar
+                                        </th>
 
                                 </tr>
                             </thead>
@@ -695,7 +698,8 @@
     data: 'catatan',
     name: 'catatan',
     className: 'text-center'
-}
+},
+{ data: 'created_at', name: 'created_at' },
                 ]
             });
         });

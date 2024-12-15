@@ -22,13 +22,20 @@ class DatasiswaController extends Controller
     }
     public function getDatasiswaall()
     {
-        $siswa = Siswa::all()->makeHidden(['foto'])
+        $siswa = Siswa::all()->load('user')->makeHidden(['foto'])
+
 
             ->map(function ($siswa) {
                 $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
+                $siswa->user->created_at = $siswa->user ? $siswa->user->created_at : 'N/A';
+
                 return $siswa;
             });
         return DataTables::of($siswa)
+        ->addColumn('created_at', function ($siswa) {
+            // Format tanggal jika ada, jika tidak tampilkan 'N/A'
+            return $siswa->user->created_at ? \Carbon\Carbon::parse($siswa->user->created_at)->format('Y') : 'N/A';
+        })
             ->make(true);
     }
     public function getDatasiswa()

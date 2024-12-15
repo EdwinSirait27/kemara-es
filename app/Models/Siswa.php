@@ -113,4 +113,9 @@ class Siswa extends Model
     {
         return Carbon::parse($value)->format('m-d-Y H:i');
     }
+    // ini cara nampilin tb user kepunyaan dari siswa contoh siswa_id primary key di tbsiswa terus foreign keynya ada di user
+    public function user()
+    {
+        return $this->hasOne(User::class, 'siswa_id', 'siswa_id');
+    }
 }
