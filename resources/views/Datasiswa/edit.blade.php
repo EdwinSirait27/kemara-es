@@ -84,7 +84,7 @@
                 <div class="col-auto my-auto">
                     <div class="h-100">
                         @php
-                            $siswaNama = $siswa->NamaLengkap;
+                            $siswaNama = $siswa->Nama;
                             $siswatugas = $siswa->TugasMengajar;
                         @endphp
 
@@ -141,7 +141,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaLengkap ?? ''}}"
-                                    type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" >
+                                    type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" required>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorInduk ?? ''}}"
-                                    type="text" id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" >
+                                    type="text" id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" required>
                             </div>
                         </div>
                     </div>
@@ -165,7 +165,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaPanggilan ?? ''}}"
-                                    type="text" id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan" >
+                                    type="text" id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan" required>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                                 {{ __('Jenis Kelamin') }}</label>
 
                             <div class="@error('JenisKelamin') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="JenisKelamin" id="JenisKelamin" >
+                                <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
                                     <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
                                     @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
                                         <option value="{{ e($jenis) }}"
@@ -199,7 +199,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NISN ?? ''}}"
-                                    type="text" id="NISN" name="NISN" aria-describedby="info-NISN" >
+                                    type="text" id="NISN" name="NISN" aria-describedby="info-NISN" required>
                             </div>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TempatLahir ?? ''}}"
-                                    type="text" id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" >
+                                    type="text" id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" required>
                             </div>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TanggalLahir ?? ''}}"
-                                    type="date" id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir" >
+                                    type="date" id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir" required>
                             </div>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                                 {{ __('Agama') }}</label>
 
                             <div class="@error('Agama') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="Agama" id="Agama" >
+                                <select class="form-control" name="Agama" id="Agama" required>
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
                                         <option value="{{ e($agama) }}"
@@ -257,7 +257,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Alamat ?? ''}}"
-                                    type="text" id="Alamat" name="Alamat" aria-describedby="info-Alamat" >
+                                    type="text" id="Alamat" name="Alamat" aria-describedby="info-Alamat" required>
                             </div>
                         </div>
                     </div>
@@ -268,7 +268,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->RT ?? ''}}"
-                                    type="text" id="RT" name="RT" aria-describedby="info-RT" >
+                                    type="text" id="RT" name="RT" aria-describedby="info-RT" required>
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->RW ?? ''}}"
-                                    type="text" id="RW" name="RW" aria-describedby="info-RW" >
+                                    type="text" id="RW" name="RW" aria-describedby="info-RW" required>
                             </div>
                         </div>
                     </div>
@@ -292,7 +292,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Kelurahan ?? ''}}"
-                                    type="text" id="Kelurahan" name="Kelurahan" aria-describedby="info-Kelurahan" >
+                                    type="text" id="Kelurahan" name="Kelurahan" aria-describedby="info-Kelurahan" required>
                             </div>
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Kecamatan ?? ''}}"
-                                    type="text" id="Kecamatan" name="Kecamatan" aria-describedby="info-Kecamatan" >
+                                    type="text" id="Kecamatan" name="Kecamatan" aria-describedby="info-Kecamatan" required>
                             </div>
                         </div>
                     </div>
@@ -316,7 +316,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->KabKota ?? ''}}"
-                                    type="text" id="KabKota" name="KabKota" aria-describedby="info-KabKota" >
+                                    type="text" id="KabKota" name="KabKota" aria-describedby="info-KabKota" required>
                             </div>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Provinsi ?? '' }}"
-                                    type="text" id="Provinsi" name="Provinsi" aria-describedby="info-Provinsi" >
+                                    type="text" id="Provinsi" name="Provinsi" aria-describedby="info-Provinsi" required>
                             </div>
                         </div>
                     </div>
@@ -341,7 +341,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->KodePos ?? '' }}"
-                                    type="text" id="KodePos" name="KodePos" aria-describedby="info-KodePos" >
+                                    type="text" id="KodePos" name="KodePos" aria-describedby="info-KodePos" required>
                             </div>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Email ?? '' }}"
-                                    type="email" id="Email" name="Email" aria-describedby="info-Email" >
+                                    type="email" id="Email" name="Email" aria-describedby="info-Email" required>
                             </div>
                         </div>
                     </div>
@@ -365,7 +365,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephone ?? '' }}"
-                                    type="phone" id="NomorTelephone" name="NomorTelephone" aria-describedby="info-NomorTelephone" >
+                                    type="phone" id="NomorTelephone" name="NomorTelephone" aria-describedby="info-NomorTelephone" required>
                             </div>
                         </div>
                     </div>
@@ -378,7 +378,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Kewarganegaraan ?? '' }}"
-                                    type="text" id="Kewarganegaraan" name="Kewarganegaraan" aria-describedby="info-Kewarganegaraan" >
+                                    type="text" id="Kewarganegaraan" name="Kewarganegaraan" aria-describedby="info-Kewarganegaraan" required>
                             </div>
                         </div>
                     </div>
@@ -389,7 +389,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NIK ?? '' }}"
-                                    type="text" id="NIK" name="NIK" aria-describedby="info-NIK" >
+                                    type="text" id="NIK" name="NIK" aria-describedby="info-NIK" required>
                             </div>
                         </div>
                     </div>
@@ -397,12 +397,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="GolDarah" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Gol Darah') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->GolDarah ?? '' }}"
-                                    type="text" id="GolDarah" name="GolDarah" aria-describedby="info-GolDarah" >
+                             <label for="GolDarah" class="form-control-label"><i class="fas fa-lock"></i>
+                                {{ __('Gol Darah') }}</label>
+
+                            <div class="@error('GolDarah') border border-danger rounded-3 @enderror">
+                                <select class="form-control" name="GolDarah" id="GolDarah" required>
+                                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                    @foreach (['A+', 'A-', 'A', 'B+', 'B-', 'B','AB+','AB-','AB','O+','O-','O'] as $GolDarah)
+                                        <option value="{{ e($GolDarah) }}"
+                                            {{ $siswa->GolDarah == $GolDarah ? 'selected' : '' }}>
+                                            {{ e($GolDarah) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('GolDarah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
+
                             </div>
                         </div>
                     </div>
@@ -413,7 +424,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TinggalDengan ?? '' }}"
-                                    type="text" id="TinggalDengan" name="TinggalDengan" aria-describedby="info-TinggalDengan" >
+                                    type="text" id="TinggalDengan" name="TinggalDengan" aria-describedby="info-TinggalDengan" required>
                             </div>
                         </div>
                     </div>
@@ -425,7 +436,7 @@
                                 {{ __('Status Siswa') }}</label>
 
                             <div class="@error('StatusSiswa') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="StatusSiswa" id="StatusSiswa" >
+                                <select class="form-control" name="StatusSiswa" id="StatusSiswa" required>
                                     <option value="" disabled selected>{{ __('Pilih Status Siswa') }}</option>
                                     @foreach (['Lengkap', 'Yatim', 'Piatu', 'Yatim Piatu'] as $StatusSiswa)
                                         <option value="{{ e($StatusSiswa) }}"
@@ -447,7 +458,7 @@
                                 {{ __('Anak Ke') }}</label>
 
                             <div class="@error('AnakKe') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AnakKe" id="AnakKe" >
+                                <select class="form-control" name="AnakKe" id="AnakKe" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
                                     @foreach (['1', '2', '3', '4','5'] as $AnakKe)
                                         <option value="{{ e($AnakKe) }}"
@@ -470,7 +481,7 @@
                                 {{ __('Saudara Kandung') }}</label>
 
                             <div class="@error('SaudaraKandung') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="SaudaraKandung" id="SaudaraKandung" >
+                                <select class="form-control" name="SaudaraKandung" id="SaudaraKandung" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
                                     @foreach (['1', '2', '3', '4','5'] as $SaudaraKandung)
                                         <option value="{{ e($SaudaraKandung) }}"
@@ -491,7 +502,7 @@
                                 {{ __('Saudara Tiri') }}</label>
 
                             <div class="@error('SaudaraTiri') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="SaudaraTiri" id="SaudaraTiri" >
+                                <select class="form-control" name="SaudaraTiri" id="SaudaraTiri" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
                                     @foreach (['1', '2', '3', '4','5'] as $SaudaraTiri)
                                         <option value="{{ e($SaudaraTiri) }}"
@@ -515,7 +526,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Tinggicm ?? '' }}"
-                                    type="text" id="Tinggicm" name="Tinggicm" aria-describedby="info-Tinggicm" >
+                                    type="text" id="Tinggicm" name="Tinggicm" aria-describedby="info-Tinggicm" required>
                             </div>
                         </div>
                     </div>
@@ -526,7 +537,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Beratkg ?? '' }}"
-                                    type="text" id="Beratkg" name="Beratkg" aria-describedby="info-Beratkg" >
+                                    type="text" id="Beratkg" name="Beratkg" aria-describedby="info-Beratkg" required>
                             </div>
                         </div>
                     </div>
@@ -539,7 +550,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->RiwayatPenyakit ?? ''}}"
-                                    type="text" id="RiwayatPenyakit" name="RiwayatPenyakit" aria-describedby="info-RiwayatPenyakit" >
+                                    type="text" id="RiwayatPenyakit" name="RiwayatPenyakit" aria-describedby="info-RiwayatPenyakit" required>
                             </div>
                         </div>
                     </div>
@@ -550,7 +561,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AsalSD ?? ''}}"
-                                    type="text" id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" >
+                                    type="text" id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" required>
                             </div>
                         </div>
                     </div>
@@ -563,7 +574,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AlamatSD ?? ''}}"
-                                    type="text" id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" >
+                                    type="text" id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" required>
                             </div>
                         </div>
                     </div>
@@ -574,7 +585,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NPSNSD ?? ''}}"
-                                    type="text" id="NPSNSD" name="NPSNSD" aria-describedby="info-NPSNSD" >
+                                    type="text" id="NPSNSD" name="NPSNSD" aria-describedby="info-NPSNSD" required>
                             </div>
                         </div>
                     </div>
@@ -587,7 +598,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->KabKotaSD ?? ''}}"
-                                    type="text" id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" >
+                                    type="text" id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" required>
                             </div>
                         </div>
                     </div>
@@ -598,7 +609,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->ProvinsiSD ?? ''}}"
-                                    type="text" id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" >
+                                    type="text" id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" required>
                             </div>
                         </div>
                     </div>
@@ -611,7 +622,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NoIjasah ?? ''}}"
-                                    type="text" id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" >
+                                    type="text" id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" required>
                             </div>
                         </div>
                     </div>
@@ -622,7 +633,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->DiterimaTanggal ?? ''}}"
-                                    type="date" id="DiterimaTanggal" name="DiterimaTanggal" aria-describedby="info-DiterimaTanggal" >
+                                    type="date" id="DiterimaTanggal" name="DiterimaTanggal" aria-describedby="info-DiterimaTanggal" required>
                             </div>
                         </div>
                     </div>
@@ -634,7 +645,7 @@
                                 {{ __('Diterima Di Kelas') }}</label>
 
                             <div class="@error('DiterimaDiKelas') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="DiterimaDiKelas" id="DiterimaDiKelas" >
+                                <select class="form-control" name="DiterimaDiKelas" id="DiterimaDiKelas" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
                                     @foreach (['X', 'XI', 'XII'] as $DiterimaDiKelas)
                                         <option value="{{ e($DiterimaDiKelas) }}"
@@ -656,7 +667,7 @@
                                 {{ __('Diterima Semester') }}</label>
 
                             <div class="@error('DiterimaSemester') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="DiterimaSemester" id="DiterimaSemester" >
+                                <select class="form-control" name="DiterimaSemester" id="DiterimaSemester" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
                                     @foreach (['Ganjil', 'Genap'] as $DiterimaSemester)
                                         <option value="{{ e($DiterimaSemester) }}"
@@ -680,7 +691,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->MutasiAsalSMP ?? ''}}"
-                                    type="text" id="MutasiAsalSMP" name="MutasiAsalSMP" aria-describedby="info-MutasiAsalSMP" >
+                                    type="text" id="MutasiAsalSMP" name="MutasiAsalSMP" aria-describedby="info-MutasiAsalSMP" required>
                             </div>
                         </div>
                     </div>
@@ -691,7 +702,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AlasanPindah ?? ''}}"
-                                    type="text" id="AlasanPindah" name="AlasanPindah" aria-describedby="info-AlasanPindah" >
+                                    type="text" id="AlasanPindah" name="AlasanPindah" aria-describedby="info-AlasanPindah" required>
                             </div>
                         </div>
                     </div>
@@ -704,7 +715,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TglIjasahSD ?? ''}}"
-                                    type="date" id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" >
+                                    type="date" id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" required>
                             </div>
                         </div>
                     </div>
@@ -715,7 +726,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaOrangTuaPadaIjasah ?? ''}}"
-                                    type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah" aria-describedby="info-NamaOrangTuaPadaIjasah" >
+                                    type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah" aria-describedby="info-NamaOrangTuaPadaIjasah" required>
                             </div>
                         </div>
                     </div>
@@ -728,7 +739,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaAyah ?? '' }}"
-                                    type="text" id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" >
+                                    type="text" id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" required>
                             </div>
                         </div>
                     </div>
@@ -739,7 +750,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunLahirAyah ?? '' }}"
-                                    type="number" id="TahunLahirAyah" name="TahunLahirAyah" aria-describedby="info-TahunLahirAyah" >
+                                    type="number" id="TahunLahirAyah" name="TahunLahirAyah" aria-describedby="info-TahunLahirAyah" required>
                             </div>
                         </div>
                     </div>
@@ -752,7 +763,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AlamatAyah ?? '' }}"
-                                    type="text" id="AlamatAyah" name="AlamatAyah" aria-describedby="info-AlamatAyah" >
+                                    type="text" id="AlamatAyah" name="AlamatAyah" aria-describedby="info-AlamatAyah" required>
                             </div>
                         </div>
                     </div>
@@ -763,7 +774,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneAyah ?? '' }}"
-                                    type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah" aria-describedby="info-NomorTelephoneAyah" >
+                                    type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah" aria-describedby="info-NomorTelephoneAyah" required>
                             </div>
                         </div>
                     </div>
@@ -775,7 +786,7 @@
                                 {{ __('Agama Ayah') }}</label>
 
                             <div class="@error('AgamaAyah') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AgamaAyah" id="AgamaAyah" >
+                                <select class="form-control" name="AgamaAyah" id="AgamaAyah" required>
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaAyah)
                                         <option value="{{ e($AgamaAyah) }}"
@@ -798,7 +809,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PendidikanTerakhirAyah ?? '' }}"
-                                    type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah" aria-describedby="info-PendidikanTerakhirAyah" >
+                                    type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah" aria-describedby="info-PendidikanTerakhirAyah" required>
                             </div>
                         </div>
                     </div>
@@ -811,7 +822,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PekerjaanAyah ?? '' }}"
-                                    type="text" id="PekerjaanAyah" name="PekerjaanAyah" aria-describedby="info-PekerjaanAyah" >
+                                    type="text" id="PekerjaanAyah" name="PekerjaanAyah" aria-describedby="info-PekerjaanAyah" required>
                             </div>
                         </div>
                     </div>
@@ -822,7 +833,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PenghasilanAyah ?? '' }}"
-                                    type="text" id="PenghasilanAyah" name="PenghasilanAyah" aria-describedby="info-PenghasilanAyah" >
+                                    type="text" id="PenghasilanAyah" name="PenghasilanAyah" aria-describedby="info-PenghasilanAyah" required>
                             </div>
                         </div>
                     </div>
@@ -835,7 +846,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaIbu ?? '' }}"
-                                    type="text" id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" >
+                                    type="text" id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
                             </div>
                         </div>
                     </div>
@@ -846,7 +857,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunLahirIbu ?? '' }}"
-                                    type="number" id="TahunLahirIbu" name="TahunLahirIbu" aria-describedby="info-TahunLahirIbu" >
+                                    type="number" id="TahunLahirIbu" name="TahunLahirIbu" aria-describedby="info-TahunLahirIbu" required>
                             </div>
                         </div>
                     </div>
@@ -859,7 +870,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AlamatIbu ?? '' }}"
-                                    type="text" id="AlamatIbu" name="AlamatIbu" aria-describedby="info-AlamatIbu" >
+                                    type="text" id="AlamatIbu" name="AlamatIbu" aria-describedby="info-AlamatIbu" required>
                             </div>
                         </div>
                     </div>
@@ -870,7 +881,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneIbu ?? '' }}"
-                                    type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu" aria-describedby="info-NomorTelephoneIbu" >
+                                    type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu" aria-describedby="info-NomorTelephoneIbu" required>
                             </div>
                         </div>
                     </div>
@@ -882,7 +893,7 @@
                                 {{ __('Agama Ibu') }}</label>
 
                             <div class="@error('AgamaIbu') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AgamaIbu" id="AgamaIbu" >
+                                <select class="form-control" name="AgamaIbu" id="AgamaIbu" required>
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaIbu)
                                         <option value="{{ e($AgamaIbu) }}"
@@ -904,7 +915,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? ''}}"
-                                    type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu" aria-describedby="info-PendidikanTerakhirIbu" >
+                                    type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu" aria-describedby="info-PendidikanTerakhirIbu" required>
                             </div>
                         </div>
                     </div>
@@ -917,7 +928,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PekerjaanIbu ?? ''}}"
-                                    type="text" id="PekerjaanIbu" name="PekerjaanIbu" aria-describedby="info-PekerjaanIbu" >
+                                    type="text" id="PekerjaanIbu" name="PekerjaanIbu" aria-describedby="info-PekerjaanIbu" required>
                             </div>
                         </div>
                     </div>
@@ -928,7 +939,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PenghasilanIbu ?? ''}}"
-                                    type="text" id="PenghasilanIbu" name="PenghasilanIbu" aria-describedby="info-PenghasilanIbu" >
+                                    type="text" id="PenghasilanIbu" name="PenghasilanIbu" aria-describedby="info-PenghasilanIbu" required>
                             </div>
                         </div>
                     </div>
@@ -941,7 +952,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaWali ?? ''}}"
-                                    type="text" id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" >
+                                    type="text" id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
                             </div>
                         </div>
                     </div>
@@ -952,7 +963,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunLahirWali ?? ''}}"
-                                    type="numeric" id="TahunLahirWali" name="TahunLahirWali" aria-describedby="info-TahunLahirWali" >
+                                    type="number" id="TahunLahirWali" name="TahunLahirWali" aria-describedby="info-TahunLahirWali" required>
                             </div>
                         </div>
                     </div>
@@ -965,7 +976,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->AlamatWali ?? ''}}"
-                                    type="text" id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" >
+                                    type="text" id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
                             </div>
                         </div>
                     </div>
@@ -976,7 +987,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneWali ?? ''}}"
-                                    type="phone" id="NomorTelephoneWali" name="NomorTelephoneWali" aria-describedby="info-NomorTelephoneWali" >
+                                    type="phone" id="NomorTelephoneWali" name="NomorTelephoneWali" aria-describedby="info-NomorTelephoneWali" required>
                             </div>
                         </div>
                     </div>
@@ -988,7 +999,7 @@
                                 {{ __('Agama Wali') }}</label>
 
                             <div class="@error('AgamaWali') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AgamaWali" id="AgamaWali" >
+                                <select class="form-control" name="AgamaWali" id="AgamaWali" required>
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaWali)
                                         <option value="{{ e($AgamaWali) }}"
@@ -1010,7 +1021,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PendidikanTerakhirWali ?? ''}}"
-                                    type="text" id="PendidikanTerakhirWali" name="PendidikanTerakhirWali" aria-describedby="info-PendidikanTerakhirWali" >
+                                    type="text" id="PendidikanTerakhirWali" name="PendidikanTerakhirWali" aria-describedby="info-PendidikanTerakhirWali" required>
                             </div>
                         </div>
                     </div>
@@ -1023,7 +1034,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PekerjaanWali ?? ''}}"
-                                    type="text" id="PekerjaanWali" name="PekerjaanWali" aria-describedby="info-PekerjaanWali" >
+                                    type="text" id="PekerjaanWali" name="PekerjaanWali" aria-describedby="info-PekerjaanWali" required>
                             </div>
                         </div>
                     </div>
@@ -1034,7 +1045,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->WaliPenghasilan ?? ''}}"
-                                    type="text" id="WaliPenghasilan" name="WaliPenghasilan" aria-describedby="info-WaliPenghasilan" >
+                                    type="text" id="WaliPenghasilan" name="WaliPenghasilan" aria-describedby="info-WaliPenghasilan" required>
                             </div>
                         </div>
                     </div>
@@ -1071,7 +1082,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunMeninggalkanSekolah ?? '' }}"
-                                    type="numeric" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah" aria-describedby="info-TahunMeninggalkanSekolah">
+                                    type="number" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah" aria-describedby="info-TahunMeninggalkanSekolah">
                             </div>
                         </div>
                     </div>
@@ -1095,7 +1106,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TamatBelajarTahun ?? '' }}"
-                                    type="numeric" id="TamatBelajarTahun" name="TamatBelajarTahun" aria-describedby="info-TamatBelajarTahun">
+                                    type="number" id="TamatBelajarTahun" name="TamatBelajarTahun" aria-describedby="info-TamatBelajarTahun">
                             </div>
                         </div>
                     </div>
@@ -1129,7 +1140,7 @@
                                 {{ __('Status') }}</label>
 
                             <div class="@error('status') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="status" id="status" >
+                                <select class="form-control" name="status" id="status" required>
                                     <option value="" disabled selected>{{ __('Pilih Status') }}</option>
                                     @foreach (['Aktif', 'Nonaktif'] as $status)
                                         <option value="{{ e($status) }}"
@@ -1154,7 +1165,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->sakit ?? '' }}"
-                                    type="numeric" id="sakit" name="sakit" aria-describedby="info-sakit">
+                                    type="number" id="sakit" name="sakit" aria-describedby="info-sakit">
                             </div>
                         </div>
                     </div>
@@ -1165,7 +1176,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->izin ?? '' }}"
-                                    type="numeric" id="izin" name="izin" aria-describedby="info-izin">
+                                    type="number" id="izin" name="izin" aria-describedby="info-izin">
                             </div>
                         </div>
                     </div>
@@ -1178,7 +1189,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->tk ?? '' }}"
-                                    type="numeric" id="tk" name="tk" aria-describedby="info-tk">
+                                    type="number" id="tk" name="tk" aria-describedby="info-tk">
                             </div>
                         </div>
                     </div>

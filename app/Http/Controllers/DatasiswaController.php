@@ -70,9 +70,9 @@ class DatasiswaController extends Controller
             'KodePos' => ['required', 'string', 'max:6', new NoXSSInput()],
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],
             'NomorTelephone' => ['required', 'string', 'max:13', new NoXSSInput()],
-            'Kewarganegaraan' => ['required', 'string', 'in:Indonesia,Luar Negri', new NoXSSInput()],
+            'Kewarganegaraan' => ['required', 'string', 'max:50', new NoXSSInput()],
             'NIK' => ['required', 'string', 'max:16', new NoXSSInput()],
-            'GolDarah' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'GolDarah' => ['required', 'string', 'in:A+,A-.A,B+,B-,B,AB+,AB-,AB,O+,O-,O', new NoXSSInput()],
             'TinggalDengan' => ['required', 'string', 'max:30', new NoXSSInput()],
             'StatusSiswa' => ['required', 'string', 'in:Lengkap,Yatim,Piatu,Yatim Piatu', new NoXSSInput()],
             'AnakKe' => ['required', 'string', 'in:1,2,3,4,5', new NoXSSInput()],
@@ -236,7 +236,7 @@ class DatasiswaController extends Controller
         if ($filePath && Storage::exists($filePath)) {
             Storage::delete($filePath);
         }
-        return redirect()->route('Datasiswa.index')->with('success', 'Guru Berhasil Diupdate.');
+        return redirect()->route('Datasiswa.index')->with('success', 'Siswa Berhasil Diupdate.');
     }
     // public function update(Request $request, $hashedId)
     // {
