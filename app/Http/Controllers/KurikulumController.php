@@ -31,8 +31,6 @@ class KurikulumController extends Controller
             ->get()
             ->map(function ($kurikulum) {
                 $kurikulum->id_hashed = substr(hash('sha256', $kurikulum->id . env('APP_KEY')), 0, 8);
-                $kurikulum->created_at = Carbon::parse($kurikulum->created_at)->format('d-m-Y H:i:s');
-                $kurikulum->updated_at = Carbon::parse($kurikulum->updated_at)->format('d-m-Y H:i:s');
                 $kurikulum->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kurikulum->id_hashed . '">';
                 $kurikulum->action = '
             <a href="' . route('Kurikulum.edit', $kurikulum->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -42,7 +40,13 @@ class KurikulumController extends Controller
                 return $kurikulum;
             });
         return DataTables::of($kurikulum)
-                        ->rawColumns(['checkbox', 'action'])
+        ->addColumn('created_at', function ($user) {
+            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        })
+        ->addColumn('updated_at', function ($user) {
+            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        })           
+        ->rawColumns(['checkbox', 'action'])
             ->make(true);
 
     }

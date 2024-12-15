@@ -17,13 +17,6 @@ class Matapelajaran extends Model
         'status',
         'ket',
     ];
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('m-d-Y H:i');
-    }
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('m-d-Y H:i');
-    }
+   
     
 }

@@ -95,7 +95,6 @@ class Siswa extends Model
         'catatan',
     ];
     
-    
     public function Guru()
     {
         return $this->belongsTo(Guru::class, 'guru_id');

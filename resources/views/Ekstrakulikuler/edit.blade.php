@@ -100,7 +100,7 @@
                                     <div>
                                         <input type="text" class="form-control" id="kapasitas" name="kapasitas"
                                         value="{{ old('kapasitas', $ekstrakulikuler->kapasitas) }}" required
-                                         maxlength="2">
+                                         maxlength="2"oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         <p class="text-muted text-xs mt-2">Contoh : 2</p>
                                  
                                     </div>

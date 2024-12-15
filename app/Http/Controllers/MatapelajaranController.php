@@ -30,7 +30,6 @@ class MatapelajaranController extends Controller
             ->get()
             ->map(function ($matapelajaran) {
                 $matapelajaran->id_hashed = substr(hash('sha256', $matapelajaran->id . env('APP_KEY')), 0, 8);
-                $matapelajaran->created_at = Carbon::parse($matapelajaran->created_at)->format('d-m-Y H:i:s');
                 $matapelajaran->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $matapelajaran->id_hashed . '">';
                 $matapelajaran->action = '
             <a href="' . route('Matapelajaran.edit', $matapelajaran->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -40,6 +39,9 @@ class MatapelajaranController extends Controller
                 return $matapelajaran;
             });
         return DataTables::of($matapelajaran)
+        ->addColumn('created_at', function ($matapelajaran) {
+            return Carbon::parse($matapelajaran->created_at)->format('d-m-Y H:i:s');
+        })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
 

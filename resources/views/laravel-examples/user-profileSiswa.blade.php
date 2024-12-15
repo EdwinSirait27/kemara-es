@@ -80,7 +80,7 @@
                             @endphp
 
                             <h5 class="mb-1">
-                                {{ $SiswaNama ?? 'Tidak ada Nama' }}
+                                Nama Siswa :{{ $SiswaNama ?? 'Tidak ada Nama' }}
                             </h5>
                             
                             <p class="mb-0 font-weight-bold text-sm">

@@ -32,7 +32,6 @@ class OrganisasiController extends Controller
             ->get()
             ->map(function ($organisasi) {
                 $organisasi->id_hashed = substr(hash('sha256', $organisasi->id . env('APP_KEY')), 0, 8);
-                $organisasi->created_at = Carbon::parse($organisasi->created_at)->format('d-m-Y H:i:s');
                 $organisasi->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $organisasi->id_hashed . '">';
                 $organisasi->action = '
             <a href="' . route('Organisasi.edit', $organisasi->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -41,6 +40,9 @@ class OrganisasiController extends Controller
                 return $organisasi;
             });
         return DataTables::of($organisasi)
+        ->addColumn('created_at', function ($organisasi) {
+            return Carbon::parse($organisasi->created_at)->format('d-m-Y H:i:s');
+        })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
 
@@ -58,9 +60,11 @@ class OrganisasiController extends Controller
     }
     public function update(Request $request, $hashedId)
     {
+        dd($request->all());
+
         $validatedData = $request->validate([
             'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
             'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
             'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
             
@@ -86,8 +90,8 @@ class OrganisasiController extends Controller
     {
         $request->validate([
             'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+                        'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
             'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
             
         ]);
@@ -99,7 +103,6 @@ class OrganisasiController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
             'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],

@@ -99,7 +99,7 @@
                                     </label>
                                     <div>
                                         <input type="text" class="form-control" id="kkm" name="kkm"
-                                        value="{{ old('kkm', $matapelajaran->kkm) }}" required
+                                        value="{{ old('kkm', $matapelajaran->kkm) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required
                                          maxlength="4">
                                         <p class="text-muted text-xs mt-2">Contoh : 100</p>
                                  

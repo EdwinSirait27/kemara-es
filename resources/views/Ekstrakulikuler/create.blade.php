@@ -71,7 +71,7 @@
                                             value="{{ e($kapasitas ?? '') }}"
                                             type="text"
                                                 id="kapasitas" name="kapasitas" aria-describedby="info-kapasitas"
-                                                maxlength="2" required>
+                                                maxlength="2" required oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                                 @error('kapasitas')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror

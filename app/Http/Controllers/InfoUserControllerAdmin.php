@@ -81,10 +81,8 @@ class InfoUserControllerAdmin extends Controller
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
             $file->storeAs('public/fotoguru', $fileName); // Simpan file ke folder public/fotosiswa
-        
             // Simpan hanya nama file ke database
             $filePath = $fileName;
-        
             // Hapus file lama jika ada
             if ($user->guru && $user->guru->foto && Storage::exists('public/fotoguru/' . $user->guru->foto)) {
                 Storage::delete('public/fotoguru/' . $user->guru->foto);

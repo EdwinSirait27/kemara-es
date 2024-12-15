@@ -186,6 +186,10 @@ Route::put('/Osis/{hashedId}', [OsisController::class, 'update'])->name('Osis.up
 Route::get('/dataguru/datadataguru', [DataguruController::class, 'getDataguru'])->name('dataguru.datadataguru');
 Route::get('/Dataguru/edit/{hashedId}', [DataguruController::class, 'edit'])->name('Dataguru.edit');
 Route::put('/Dataguru/{hashedId}', [DataguruController::class, 'update'])->name('Dataguru.update');
+// datasiswa
+Route::get('/datasiswa/datadatasiswa', [DatasiswaController::class, 'getDatasiswa'])->name('datasiswa.datadatasiswa');
+Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->name('Datasiswa.edit');
+Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
 
    
    });

@@ -37,19 +37,33 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <img src="{{ isset($guru) && $guru->foto 
-                            ? asset('storage/fotoguru/' . $guru->foto) 
-                            : asset('storage/fotoguru/we.jpg') }}" 
-                        
-                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-                            <a href="javascript:;"
-                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-                                id="uploadBtn">
-                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="Upload Gambar"></i>
-                            </a>
-                            <input type="file" id="foto" name="foto" style="display: none;"
-                                class="form-control" accept="image/*">
+                            @if ($guru->foto)
+    <img src="{{ $guru->foto ? asset('storage/fotoguru/' . $guru->foto) : '' }}" 
+         alt="Foto Guru" width="100" height="100"
+         class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+@endif
+<a href="javascript:;"
+   class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
+   id="uploadBtn">
+    <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
+       title="Upload Gambar"></i>
+</a>
+<input type="file" id="foto" name="foto" style="display: none;"
+       class="form-control" accept="image/*">
+
+                            {{-- // @if ($guru->foto) --}}
+                            
+                            {{-- // <img src="{{ $guru->foto ? asset('storage/fotoguru/'. $guru->foto" alt="Foto Guru" width="100" height="100"
+                            // alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            // @endif
+                            // <a href="javascript:;"
+                            //     class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
+                            //     id="uploadBtn">
+                            //     <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
+                            //         title="Upload Gambar"></i>
+                            // </a>
+                            // <input type="file"  value="{{ $guru->foto }}"id="foto" name="foto" style="display: none;"
+                            //     class="form-control" accept="image/*"> --}}
                     </div>
                 </div>
                 <script>

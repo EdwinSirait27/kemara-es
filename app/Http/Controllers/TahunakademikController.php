@@ -32,8 +32,6 @@ class TahunakademikController extends Controller
             ->get()
             ->map(function ($tahunakademik) {
                 $tahunakademik->id_hashed = substr(hash('sha256', $tahunakademik->id . env('APP_KEY')), 0, 8);
-                $tahunakademik->created_at = Carbon::parse($tahunakademik->created_at)->format('d-m-Y H:i:s');
-                $tahunakademik->updated_at = Carbon::parse($tahunakademik->updated_at)->format('d-m-Y H:i:s');
                 $tahunakademik->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $tahunakademik->id_hashed . '">';
                 $tahunakademik->action = '
             <a href="' . route('Tahunakademik.edit', $tahunakademik->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -42,6 +40,12 @@ class TahunakademikController extends Controller
                 return $tahunakademik;
             });
         return DataTables::of($tahunakademik)
+        ->addColumn('tanggalmulai', function ($tahunakademik) {
+            return Carbon::parse($tahunakademik->tanggalmulai)->format('d-m-Y');
+        })
+        ->addColumn('tanggalakhir', function ($tahunakademik) {
+            return Carbon::parse($tahunakademik->tanggalakhir)->format('d-m-Y');
+        })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
 
@@ -61,7 +65,7 @@ class TahunakademikController extends Controller
     {
         $validatedData = $request->validate([
             'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput()],  
-            'semeter' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
+            'semester' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
             'tanggalmulai' => ['required','date', new NoXSSInput()],  
             'tanggalakhir' => ['required','date', new NoXSSInput()],  
             'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput()],  
@@ -102,7 +106,7 @@ class TahunakademikController extends Controller
         // dd($request->all());
         $request->validate([
             'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput()],  
-            'semeter' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
+            'semester' => ['required','string','in:Ganjil,Genap', new NoXSSInput()],  
             'tanggalmulai' => ['required','date', new NoXSSInput()],  
             'tanggalakhir' => ['required','date', new NoXSSInput()],  
             'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput()],  

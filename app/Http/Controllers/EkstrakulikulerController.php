@@ -30,7 +30,6 @@ class EkstrakulikulerController extends Controller
             ->get()
             ->map(function ($ekstrakulikuler) {
                 $ekstrakulikuler->id_hashed = substr(hash('sha256', $ekstrakulikuler->id . env('APP_KEY')), 0, 8);
-                $ekstrakulikuler->created_at = Carbon::parse($ekstrakulikuler->created_at)->format('d-m-Y H:i:s');
                 $ekstrakulikuler->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $ekstrakulikuler->id_hashed . '">';
                 $ekstrakulikuler->action = '
             <a href="' . route('Ekstrakulikuler.edit', $ekstrakulikuler->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -39,6 +38,10 @@ class EkstrakulikulerController extends Controller
                 return $ekstrakulikuler;
             });
         return DataTables::of($ekstrakulikuler)
+        ->addColumn('created_at', function ($ekstrakulikuler) {
+            return Carbon::parse($ekstrakulikuler->created_at)->format('d-m-Y H:i:s');
+        })
+        
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
 

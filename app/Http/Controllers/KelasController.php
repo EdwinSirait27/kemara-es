@@ -30,7 +30,6 @@ class KelasController extends Controller
             ->get()
             ->map(function ($kelas) {
                 $kelas->id_hashed = substr(hash('sha256', $kelas->id . env('APP_KEY')), 0, 8);
-                $kelas->created_at = Carbon::parse($kelas->created_at)->format('d-m-Y H:i:s');
                 $kelas->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelas->id_hashed . '">';
                 $kelas->action = '
             <a href="' . route('Kelas.edit', $kelas->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
@@ -40,6 +39,9 @@ class KelasController extends Controller
                 return $kelas;
             });
         return DataTables::of($kelas)
+        ->addColumn('created_at', function ($kelas) {
+            return Carbon::parse($kelas->created_at)->format('d-m-Y H:i:s');
+        })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
 

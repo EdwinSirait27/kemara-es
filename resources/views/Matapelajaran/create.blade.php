@@ -71,7 +71,7 @@
                                             value="{{ e($kkm ?? '') }}"
                                             type="text"
                                                 id="kkm" name="kkm" aria-describedby="info-kkm"
-                                                maxlength="4" required>
+                                                maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');"required>
                                                 @error('kkm')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror

@@ -55,17 +55,11 @@ class DataguruController extends Controller
     }
     public function update(Request $request, $hashedId)
     {
-        $guru = Guru::get()->first(function ($u) use ($hashedId) {
-            $expectedHash = substr(hash('sha256', $u->guru_id . env('APP_KEY')), 0, 8);
-            return $expectedHash === $hashedId;
-        });
-        if (!$guru) {
-            return redirect()->route('Dataguru.index')->with('error', 'ID tidak valid.');
-        }
-        // $guru = Guru::get();
+        // dd($request->all());
+
         $validatedData = $request->validate([
             'Nama' => ['required', 'string', 'max:50', new NoXSSInput()],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:512', new NoXSSInput()],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:512'],
             'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput()],
             'TanggalLahir' => ['required', 'date', new NoXSSInput()],
             'Agama' => ['required', 'string', 'in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
@@ -91,20 +85,22 @@ class DataguruController extends Controller
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
         ]);
-        $filePath = null;
+        $guru = Guru::get()->first(function ($u) use ($hashedId) {
+            $expectedHash = substr(hash('sha256', $u->guru_id . env('APP_KEY')), 0, 8);
+            return $expectedHash === $hashedId;
+        });
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-            $filePath = 'public/fotoguru/' . $fileName;
-            if ($guru && $guru->foto && Storage::exists($guru->foto)) {
-                Storage::delete($guru->foto);
-            }
-            $file->storeAs('public/fotoguru', $fileName);
+            $file->storeAs('public/fotoguru', $fileName); // Simpan file ke folder public/fotoguru
+            $filePath = $fileName;
+        } else {
+            // Jika tidak ada file baru yang diunggah, gunakan nilai foto yang lama
+            $filePath = $guru->foto ?? null; // Ambil foto lama atau null jika tidak ada
         }
-        $guru = Guru::get()->first(function ($u) use ($hashedId) {
-            $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-            return $expectedHash === $hashedId;
-        });
+        if ($guru && $guru->foto && Storage::exists('public/fotoguru/' . $guru->foto)) {
+            Storage::delete('public/fotoguru/' . $guru->foto);
+        }
         if (!$guru) {
             return redirect()->route('Dataguru.index')->with('error', 'ID tidak valid.');
         }
@@ -137,11 +133,12 @@ class DataguruController extends Controller
             'status' => $validatedData['status'],
 
         ];
+        
         $guru->update($guruData);
         if ($filePath && Storage::exists($filePath)) {
             Storage::delete($filePath);
         }
-        return redirect()->route('Dataguru.index')->with('success', 'Data guru Berhasil Diupdate.');
+        return redirect()->route('Dataguru.index')->with('success', 'Guru Berhasil Diupdate.');
     }
-
+    
 }
