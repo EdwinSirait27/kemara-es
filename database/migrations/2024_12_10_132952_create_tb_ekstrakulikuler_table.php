@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tb_ekstrakulikuler', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('guru_id')->nullable();
+            $table->foreign('guru_id')->references('guru_id')->on('tb_guru')->onDelete('set null');
             $table->string('namaekstra')->nullable();
             $table->integer('kapasitas')->nullable();
             $table->enum('status',['Aktif','Tidak Aktif'])->nullable();
@@ -20,7 +22,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

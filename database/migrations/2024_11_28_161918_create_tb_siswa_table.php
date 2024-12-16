@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tb_siswa', function (Blueprint $table) {
             $table->unsignedBigInteger('siswa_id', true)->nullable();
             $table->string('foto')->nullable();
-            // $table->string('NOPDF')->unique()->nullable();
             $table->string('NamaLengkap')->nullable();
             $table->string('NomorInduk')->unique()->nullable();
             $table->string('NamaPanggilan')->nullable();
@@ -50,13 +49,11 @@ return new class extends Migration
             $table->string('KabKotaSD')->nullable();
             $table->string('ProvinsiSD')->nullable();
             $table->string('NoIjasah')->nullable();
-            // $table->string('NoSKHUN')->nullable();
             $table->date('DiterimaTanggal')->nullable();
             $table->enum('DiterimaDiKelas',['X','XI','XII'])->nullable();
             $table->enum('DiterimaSemester',['Ganjil','Genap'])->nullable();
             $table->string('MutasiAsalSMP')->nullable();
             $table->text('AlasanPindah')->nullable();
-            // $table->string('NoPesertaUNSMP')->nullable();
             $table->date('TglIjasahSD')->nullable();
             $table->string('NamaOrangTuaPadaIjasah')->nullable();
             $table->string('NamaAyah')->nullable();
@@ -88,17 +85,14 @@ return new class extends Migration
             $table->integer('TahunMeninggalkanSekolah')->nullable();
             $table->text('AlasanSebab')->nullable();
             $table->integer('TamatBelajarTahun')->nullable();
-            // $table->text('TanggalNomorSTTB')->nullable();
             $table->text('InformasiLain')->nullable();
-            $table->string('cita')->nullable();
-            $table->enum('status', ['Aktif', 'Nonaktif'])->nullable();
-            // $table->unsignedBigInteger('kelas_id')->nullable();
-            $table->integer('sakit')->default(0)->nullable();
-            $table->integer('izin')->default(0)->nullable();
-            $table->integer('tk')->default(0)->nullable();
-            $table->text('catatan')->nullable()->nullable();
-            // $table->string('no_pdf')->unique()->nullable();
-
+            // $table->string('cita')->nullable();
+            $table->enum('status', ['Aktif', 'Tidak Aktif','Lulus','Alumni'])->nullable();
+            // $table->integer('sakit')->default(0)->nullable();
+            // $table->integer('izin')->default(0)->nullable();
+            // $table->integer('tk')->default(0)->nullable();
+            // $table->text('catatan')->nullable()->nullable();
+            
             $table->timestamps();
         });
     }

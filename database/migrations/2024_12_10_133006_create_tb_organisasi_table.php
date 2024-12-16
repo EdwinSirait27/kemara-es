@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tb_organisasi', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('guru_id')->nullable();
+            $table->foreign('guru_id')->references('guru_id')->on('tb_guru')->onDelete('set null');
             $table->string('namaorganisasi')->nullable();
             $table->integer('kapasitas')->nullable();
             $table->enum('status',['Aktif','Tidak Aktif'])->nullable();
