@@ -25,7 +25,6 @@ class DashboardControllerAdmin extends Controller
         ->get()
         ->map(function ($item) {
             $item->pengumuman = basename($item->pengumuman);
-            $item->created_at = Carbon::parse($item->created_at)->format('d-m-Y H:i:s');        
             $item->action = '<a href="' . route('download.pengumuman', ['id' => $item->id]) . '" class="btn btn-sm btn-primary">Download</a>';
             $item->checkbox = '<input type="checkbox" class="pengumuman-checkbox" value="' . $item->id . '">';
             return $item;
