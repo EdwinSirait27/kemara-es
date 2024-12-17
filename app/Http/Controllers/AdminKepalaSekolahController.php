@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengumuman;
 use App\Models\User;
 use App\Models\Siswa;
+use App\Rules\NoXSSInput;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +41,13 @@ class AdminKepalaSekolahController extends Controller
             return redirect()->route('dashboardAdmin.index');
         } else {
             $this->validate($request, [
-                'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',
+                'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',  new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
+                }
             ]);
             $pengumuman = $request->file('pengumuman');
             $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -62,7 +69,13 @@ class AdminKepalaSekolahController extends Controller
             return redirect()->route('dashboardKepalaSekolah.index');
         } else {
             $this->validate($request, [
-                'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120',
+                'pengumuman' => 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg|max:5120', new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
+                }
             ]);
             $pengumuman = $request->file('pengumuman');
             $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -83,7 +96,13 @@ class AdminKepalaSekolahController extends Controller
     public function deletePengumuman(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array|min:1',
+            'ids' => 'required|array|min:1',  new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }
         ]);
 
         $pengumumanList = Pengumuman::whereIn('id', $request->ids)->get();

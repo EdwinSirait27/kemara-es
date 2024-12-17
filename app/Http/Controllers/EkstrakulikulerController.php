@@ -60,10 +60,34 @@ class EkstrakulikulerController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'ket' => ['required', 'string', 'max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'ket' => ['required', 'string', 'max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
 
         ]);
         $ekstrakulikuler = Ekstrakulikuler::get()->first(function ($u) use ($hashedId) {
@@ -86,7 +110,13 @@ class EkstrakulikulerController extends Controller
     public function deleteEkstrakulikuler(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
          
         ]);
         Ekstrakulikuler::whereIn('id', $request->ids)->delete();
@@ -99,10 +129,34 @@ class EkstrakulikulerController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'ket' => ['required', 'string', 'max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'ket' => ['required', 'string', 'max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
 
         ]);
         try {

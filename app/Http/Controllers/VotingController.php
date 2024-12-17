@@ -45,8 +45,20 @@ class VotingController extends Controller
 {
     // dd($request->all());
     $request->validate([
-        'osis_id' => ['required', 'array', 'min:1', new NoXSSInput()],
-        'osis_id.*' => ['exists:tb_osis,id', new NoXSSInput()], 
+        'osis_id' => ['required', 'array', 'min:1', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }],
+        'osis_id.*' => ['exists:tb_osis,id', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }], 
     ]);
     $user = Auth::user();
     $user_id = $user->id;

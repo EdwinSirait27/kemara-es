@@ -60,10 +60,34 @@ class MatapelajaranController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'matapelajaran' => ['required','string','max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],  
-            'kkm' => ['required','string','max:4',new NoXSSInput()],  
-            'status' => ['required','string','in:Aktif,Tidak Aktif',new NoXSSInput()],  
-            'ket' => ['required','string','regex:/^[a-zA-Z0-9 ]+$/',new NoXSSInput()],  
+            'matapelajaran' => ['required','string','max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'kkm' => ['required','string','max:4',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'status' => ['required','string','in:Aktif,Tidak Aktif',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'ket' => ['required','string',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
             
         ]);
         $matapelajaran = Matapelajaran::get()->first(function ($u) use ($hashedId) {
@@ -86,7 +110,13 @@ class MatapelajaranController extends Controller
     public function deleteMatapelajaran(Request $request)
     {
         $request->validate([
-            'ids' => ['required','array','min:1',new NoXSSInput()],  
+            'ids' => ['required','array','min:1',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
         ]);
         Matapelajaran::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -98,10 +128,34 @@ class MatapelajaranController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'matapelajaran' => ['required','string','max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],  
-            'kkm' => ['required','string','max:4',new NoXSSInput()],  
-            'status' => ['required','string','in:Aktif,Tidak Aktif',new NoXSSInput()],  
-            'ket' => ['required','string','regex:/^[a-zA-Z0-9 ]+$/',new NoXSSInput()],  
+            'matapelajaran' => ['required','string','max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'kkm' => ['required','string','max:4',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'status' => ['required','string','in:Aktif,Tidak Aktif',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
+            'ket' => ['required','string',new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],  
             
         ]);
         try {

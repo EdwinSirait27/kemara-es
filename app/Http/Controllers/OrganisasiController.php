@@ -63,10 +63,34 @@ class OrganisasiController extends Controller
         dd($request->all());
 
         $validatedData = $request->validate([
-            'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
+            'namaorganisasi' => ['required', 'string', 'max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
             
         ]);
         $organisasi = Organisasi::get()->first(function ($u) use ($hashedId) {
@@ -89,11 +113,14 @@ class OrganisasiController extends Controller
     public function deleteOrganisasi(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
-                        'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
-'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
-            
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+                    
         ]);
         Organisasi::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -101,25 +128,54 @@ class OrganisasiController extends Controller
             'message' => 'Selected Organisasi and their related data deleted successfully.'
         ]);
     }
+    
     public function store(Request $request)
-    {
-        $request->validate([
-            'namaorganisasi' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'kapasitas' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput()],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
-            
-        ]);
-        try {
-            Organisasi::create([
-                'namaorganisasi' => $request->namaorganisasi,
-                'kapasitas' => $request->kapasitas,
-                'status' => $request->status,
-                'ket' => $request->ket,
-            ]);
-            return redirect()->route('Organisasi.index')->with('success', 'Organisasi created successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to create Organisasi: ' . $e->getMessage());
-        }
-    }
+{
+    // Validasi dengan sanitasi ketat
+    $validatedData = $request->validate([
+        'namaorganisasi' => [
+            'required', 
+            'string', 
+            'max:50', 
+            new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }
+        ],
+        'kapasitas' => ['required', 'numeric', 'max:50', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }],
+        'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }],
+        'ket' => ['required', 'string', 'max:255', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }],
+    ]);
+
+    // Sanitasi ulang sebelum create
+    $sanitizedData = array_map(function($value) {
+        return is_string($value) ? strip_tags($value) : $value;
+    }, $validatedData);
+
+    // Proses create dengan data yang sudah disanitasi
+    Organisasi::create($sanitizedData);
+
+    return redirect()->route('Organisasi.index')->with('success', 'Organisasi created successfully!');
+}
 }

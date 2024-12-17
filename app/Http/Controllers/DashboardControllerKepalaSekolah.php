@@ -70,7 +70,13 @@ public function store(Request $request)
         return redirect()->route('dashboardKepalaSekolah.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -92,7 +98,13 @@ public function store(Request $request)
     {
         $request->validate([
             
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
 
             
         ]);

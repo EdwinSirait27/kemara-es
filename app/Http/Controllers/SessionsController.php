@@ -38,14 +38,26 @@ class SessionsController extends Controller
                 'min:7',
                 'max:12',
                 'regex:/^[a-zA-Z0-9_-]+$/',
-                new NoXSSInput()
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
+                }
             ],
             'password' => [
                 'required',
                 'string',
                 'min:7',
                 'max:12',
-                new NoXSSInput()
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
+                }
             ],
         ]);
     
