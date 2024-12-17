@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_pengumuman', function (Blueprint $table) {
-            $table->unsignedBigInteger('id', true);
+            $table->unsignedBigInteger('id', true)->nullable()->primary();
             $table->string('pengumuman')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();

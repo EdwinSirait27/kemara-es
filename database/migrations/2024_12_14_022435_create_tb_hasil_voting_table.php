@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_hasil_voting', function (Blueprint $table) {
-            $table->BigInteger('id', true)->nullable();
-            $table->BigInteger('osis_id')->nullable(); 
+            $table->unsignedBigInteger('id', true)->nullable()->primary();
+            $table->unsignedBigInteger('osis_id')->nullable(); 
             $table->foreign('osis_id')->references('id')->on('tb_osis')->onDelete('set null'); 
             $table->string('jumlahsuara')->nullable(); 
             $table->timestamps();

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_organisasi', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('id',true)->nullable()->primary();
             $table->unsignedBigInteger('guru_id')->nullable();
             $table->foreign('guru_id')->references('guru_id')->on('tb_guru')->onDelete('set null');
             $table->string('namaorganisasi')->nullable();

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_tahunakademik', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('id',true)->nullable()->primary();
             $table->integer('tahunakademik')->nullable();
             $table->enum('semester',['Ganjil','Genap'])->nullable();
             $table->date('tanggalmulai')->nullable();

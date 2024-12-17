@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_tombol', function (Blueprint $table) {
-            $table->unsignedBigInteger('id', true)->nullable();
+            $table->unsignedBigInteger('id', true)->nullable()->primary();
             $table->string('url')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();

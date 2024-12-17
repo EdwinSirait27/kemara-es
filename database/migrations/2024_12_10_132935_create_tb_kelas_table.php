@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_kelas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('id',true)->nullable()->primary();
+            $table->unsignedBigInteger('guru_id')->nullable();
+            $table->foreign('guru_id')->references('guru_id')->on('tb_guru')->onDelete('set null'); 
             $table->string('kelas')->nullable();
             $table->integer('kapasitas')->nullable();
             $table->enum('status',['Aktif','Tidak Aktif'])->nullable();

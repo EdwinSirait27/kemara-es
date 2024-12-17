@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_matapelajaran', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->nullable();
+            $table->unsignedBigInteger('id',true)->nullable()->primary();
             $table->string('matapelajaran')->nullable();
             $table->string('kkm')->nullable();
             $table->enum('status',['Aktif','Tidak Aktif'])->nullable();

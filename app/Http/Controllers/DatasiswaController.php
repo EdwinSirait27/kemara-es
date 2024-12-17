@@ -592,7 +592,7 @@ class DatasiswaController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'status' => ['required', 'in:Aktif,Nonaktif', new NoXSSInput(),
+            'status' => ['required', 'in:Aktif,Tidak Aktif,Alumni,Lulus', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {

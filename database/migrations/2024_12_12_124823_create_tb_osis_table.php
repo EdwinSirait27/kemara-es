@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tb_osis', function (Blueprint $table) {
-            $table->BigInteger('id', true)->nullable();
+            $table->unsignedBigInteger('id', true)->nullable()->primary();
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->foreign('siswa_id')->references('siswa_id')->on('tb_siswa')->onDelete('set null'); 
             $table->string('visi')->nullable();
