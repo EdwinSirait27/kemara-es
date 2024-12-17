@@ -63,13 +63,12 @@ class InfoUserControllerAdmin extends Controller
                 }
             }],      
             // 'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512', new NoXSSInput()],      
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+           'foto' => [
+    'nullable', 
+    'image', 
+    'mimes:jpeg,png,jpg', 
+    'max:512'
+],
            
             'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput(),
             function ($attribute, $value, $fail) {

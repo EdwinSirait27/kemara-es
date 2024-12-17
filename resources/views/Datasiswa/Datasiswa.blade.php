@@ -295,12 +295,7 @@ $('#editUserModal').find('input[name="TahunMeninggalkanSekolah"]').val(datasiswa
 $('#editUserModal').find('input[name="AlasanSebab"]').val(datasiswa.AlasanSebab);
 $('#editUserModal').find('input[name="TamatBelajarTahun"]').val(datasiswa.TamatBelajarTahun);
 $('#editUserModal').find('input[name="InformasiLain"]').val(datasiswa.InformasiLain);
-$('#editUserModal').find('input[name="cita"]').val(datasiswa.cita);
 $('#editUserModal').find('input[name="status"]').val(datasiswa.status);
-$('#editUserModal').find('input[name="sakit"]').val(datasiswa.sakit);
-$('#editUserModal').find('input[name="izin"]').val(datasiswa.izin);
-$('#editUserModal').find('input[name="tk"]').val(datasiswa.tk);
-$('#editUserModal').find('input[name="catatan"]').val(datasiswa.catatan);
 
                         $('#editUserModal').modal('show');
                     } else {

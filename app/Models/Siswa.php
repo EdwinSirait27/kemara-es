@@ -87,12 +87,7 @@ class Siswa extends Model
         'AlasanSebab',
         'TamatBelajarTahun',
         'InformasiLain',
-        'cita',
         'status',
-        'sakit',
-        'izin',
-        'tk',
-        'catatan',
     ];
     
     public function Guru()

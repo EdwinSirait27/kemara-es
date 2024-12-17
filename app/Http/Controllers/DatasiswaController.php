@@ -585,13 +585,7 @@ class DatasiswaController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'cita' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            
             'status' => ['required', 'in:Aktif,Tidak Aktif,Alumni,Lulus', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
@@ -599,34 +593,7 @@ class DatasiswaController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'sakit' => ['required', 'string', 'max:3', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'izin' => ['required', 'string', 'max:3', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'tk' => ['required', 'string', 'max:3', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'catatan' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            
         ]);
         $siswa = Siswa::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->siswa_id . env('APP_KEY')), 0, 8);
@@ -721,12 +688,8 @@ class DatasiswaController extends Controller
             'AlasanSebab' => $validatedData['AlasanSebab'],
             'TamatBelajarTahun' => $validatedData['TamatBelajarTahun'],
             'InformasiLain' => $validatedData['InformasiLain'],
-            'cita' => $validatedData['cita'],
             'status' => $validatedData['status'],
-            'sakit' => $validatedData['sakit'],
-            'izin' => $validatedData['izin'],
-            'tk' => $validatedData['tk'],
-            'catatan' => $validatedData['catatan'],
+            
         ];
         
         $siswa->update($siswaData);

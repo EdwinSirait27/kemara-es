@@ -1125,17 +1125,6 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="cita" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Cita') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->cita ?? '' }}"
-                                    type="text" id="cita" name="cita" aria-describedby="info-cita">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
                             <label for="status" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Status') }}</label>
 
@@ -1152,66 +1141,9 @@
                                 @error('status')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="sakit" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Sakit') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->sakit ?? '' }}"
-                                    type="number" id="sakit" name="sakit" aria-describedby="info-sakit">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="izin" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Izin') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->izin ?? '' }}"
-                                    type="number" id="izin" name="izin" aria-describedby="info-izin">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="tk" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('TK') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->tk ?? '' }}"
-                                    type="number" id="tk" name="tk" aria-describedby="info-tk">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="catatan" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Catatan') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->catatan ?? '' }}"
-                                    type="text" id="catatan" name="catatan" aria-describedby="info-catatan">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
-                
-                    
-                   
-
             </div>
 
             <div class="alert alert-secondary mx-4" role="alert">
