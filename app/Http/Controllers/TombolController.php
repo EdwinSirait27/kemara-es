@@ -57,7 +57,7 @@ class TombolController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', 'unique:tb_tombol,url', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -129,7 +129,7 @@ class TombolController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/','unique:tb_tombol,url', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {

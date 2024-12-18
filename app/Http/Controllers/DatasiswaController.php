@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Rules\NoXSSInput;
+use Carbon\Carbon;
 class DatasiswaController extends Controller
 {
     public function __construct()
@@ -27,14 +28,13 @@ class DatasiswaController extends Controller
 
             ->map(function ($siswa) {
                 $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
-                $siswa->user->created_at = $siswa->user ? $siswa->user->created_at : 'N/A';
 
                 return $siswa;
             });
+            // $siswa->created_at = $siswa->User ? $siswa->User->created_at : '-';
         return DataTables::of($siswa)
         ->addColumn('created_at', function ($siswa) {
-            // Format tanggal jika ada, jika tidak tampilkan 'N/A'
-            return $siswa->user->created_at ? \Carbon\Carbon::parse($siswa->user->created_at)->format('Y') : 'N/A';
+            return Carbon::parse($siswa->User->created_at)->format('Y');
         })
             ->make(true);
     }

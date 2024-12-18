@@ -73,7 +73,7 @@ class DashboardControllerSUSiswa extends Controller
     public function updateSiswa(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username', new NoXSSInput()],
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
             'Role' => ['required', 'string', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
@@ -115,7 +115,7 @@ class DashboardControllerSUSiswa extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username', new NoXSSInput()],
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
             'Role' => ['required', 'array', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      

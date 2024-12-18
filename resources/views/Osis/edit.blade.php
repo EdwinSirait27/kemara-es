@@ -165,6 +165,17 @@
 
                         </div> --}}
         </form>
+        <div class="alert alert-secondary mx-4" role="alert">
+            <span class="text-white">
+                <strong>Keterangan</strong> <br>
+            </span>
+            <span class="text-white">-
+                <strong> Jika sudah ada Calon Ketua Osis yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
+               
+                    <br>
+
+            </span>
+        </div>
     </div>
 </div>
 </div>

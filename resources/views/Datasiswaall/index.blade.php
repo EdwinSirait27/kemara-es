@@ -240,24 +240,11 @@
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Informasi Lain
                                         </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Cita-cita
-                                        </th>
+                                       
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Status
                                         </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Sakit
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Izin
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tanpa Keterangan
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Catatan
-                                        </th>
+                                       
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tahun Daftar
                                         </th>
@@ -669,36 +656,13 @@
     name: 'InformasiLain',
     className: 'text-center'
 },
-{
-    data: 'cita',
-    name: 'cita',
-    className: 'text-center'
-},
+
 {
     data: 'status',
     name: 'status',
     className: 'text-center'
 },
-{
-    data: 'sakit',
-    name: 'sakit',
-    className: 'text-center'
-},
-{
-    data: 'izin',
-    name: 'izin',
-    className: 'text-center'
-},
-{
-    data: 'tk',
-    name: 'tk',
-    className: 'text-center'
-},
-{
-    data: 'catatan',
-    name: 'catatan',
-    className: 'text-center'
-},
+
 { data: 'created_at', name: 'created_at' },
                 ]
             });
