@@ -599,7 +599,7 @@
           </ul>
           <ul class="nav ms-4">
               <li class="nav-item">
-                  <a class="nav-link {{ Request::is('daftarsiswalulus') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                  <a class="nav-link {{ Request::is('Siswalulus') ? 'active' : '' }}" href="{{ url('Siswalulus') }}">
                       <span class="nav-link-text ms-1">Daftar Siswa Lulus</span>
                   </a>
               </li>

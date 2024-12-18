@@ -98,6 +98,7 @@
             { data: 'Siswa_Email', name: 'Siswa_Email', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
             { data: 'Siswa_TamatBelajarTahun', name: 'Siswa_TamatBelajarTahun', className: 'text-center' },
+            { data: 'hakakses', name: 'hakakses', className: 'text-center' },
             {
                 data: 'action',
                 name: 'action',

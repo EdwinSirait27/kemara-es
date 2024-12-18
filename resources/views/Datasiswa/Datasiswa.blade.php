@@ -48,7 +48,14 @@
                                         Email</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Status</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
+                                        <th>
+                                            <button type="button" id="select-all" class="btn btn-primary btn-sm">
+                                                Select All
+                                            </button></th>
 
                                     <!-- Checkbox untuk select all -->
                                     {{-- <th class="text-secondary opacity-7">Action</th> --}}
@@ -60,6 +67,9 @@
                         class="btn btn-primary btn-sm">
                         Lihat Detail
                     </button>
+                    <button id="update-status" class="btn btn-primary">Update Status</button>
+
+                    
 
                     </div>
                 </div>
@@ -200,12 +210,27 @@
                             className: 'text-center'
                         },
                         {
+                            data: 'status',
+                            name: 'status',
+                            className: 'text-center'
+                        },
+                        {
                             data: 'action',
                             name: 'action',
                             orderable: false,
                             searchable: false,
                             className: 'text-center'
-                        }
+                        },
+                        {
+                  data: 'siswa_id',
+                  name: 'checkbox',
+                  orderable: false,
+                  searchable: false,
+                  className: 'text-center',
+                  render: function(data, type, row) {
+                      return `<input type="checkbox" class="user-checkbox" value="${row.siswa_id}">`;
+                  }
+              }
                     ]
                 });
             });
@@ -308,6 +333,8 @@ $('#editUserModal').find('input[name="status"]').val(datasiswa.status);
                 }
             });
         });
+        
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('warning'))
@@ -339,5 +366,7 @@ $('#editUserModal').find('input[name="status"]').val(datasiswa.status);
             });
         </script>
     @endif
+    
+    
 
 @endsection

@@ -27,9 +27,17 @@ class SiswalulusController extends Controller
     public function getSiswalulus()
     {
         $users = User::with('Siswa')
-            ->select(['id', 'siswa_id', 'hakakses','created_at'])
-            ->whereIn('hakakses', ['Siswa'])
-            ->get()
+    ->select(['id', 'siswa_id', 'hakakses', 'created_at'])
+    ->whereIn('hakakses', ['Siswa'])
+    ->whereHas('Siswa', function ($query) {
+        $query->whereIn('status', ['lulus']);
+    })
+    ->get()
+
+        // $users = User::with('Siswa')
+        //     ->select(['id', 'siswa_id', 'hakakses','created_at'])
+        //     ->whereIn('hakakses', ['Siswa'])
+        //     ->get()
             ->map(function ($user) {
                 $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
                 // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y'); $user->Role = implode(', ', explode(',', $user->Role));

@@ -4,6 +4,7 @@ use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\Rules\NoXSSInput;
 use Carbon\Carbon;
 class DatasiswaController extends Controller
@@ -40,10 +41,12 @@ class DatasiswaController extends Controller
     }
     public function getDatasiswa()
     {
-        $siswa = Siswa::select(['siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email'])
+        $siswa = Siswa::select(['siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email','status'])
             ->get()
             ->map(function ($siswa) {
                 $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
+                $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->id_hashed . '">';
+               
                 $siswa->action = '
             <a href="' . route('Datasiswa.edit', $siswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
@@ -55,9 +58,10 @@ class DatasiswaController extends Controller
             ->addColumn('foto', function ($siswa) {
                 return $siswa->foto;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','checkbox'])
             ->make(true);
     }
+    
     public function edit($hashedId)
     {
         $siswa = Siswa::get()->first(function ($u) use ($hashedId) {
@@ -698,5 +702,7 @@ class DatasiswaController extends Controller
         }
         return redirect()->route('Datasiswa.index')->with('success', 'Siswa Berhasil Diupdate.');
     }
-  
+    
+
+    
 }

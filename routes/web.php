@@ -34,6 +34,7 @@ use App\Http\Controllers\OsisController;
 use App\Http\Controllers\VotingController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
+use App\Http\Controllers\SiswalulusController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AdminKepalaSekolahController;
 use App\Http\Controllers\SessionsController;
@@ -205,6 +206,13 @@ Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->
 Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
 Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
 Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
+// Route::post('/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
+// Route::post('/siswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('siswa.updateStatus');
+
+//siswa lulus
+Route::get('/Siswalulus', [SiswalulusController::class, 'index'])->name('Siswalulus.index');
+    Route::get('/siswalulus/datasiswalulus', [SiswalulusController::class, 'getSiswalulus'])->name('siswalulus.datasiswalulus');
+    Route::get('/siswalulus/edit/{hashedId}', [SiswalulusController::class, 'edit'])->name('Siswalulus.edit');
 
    
    });
