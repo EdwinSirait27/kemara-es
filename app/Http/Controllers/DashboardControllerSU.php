@@ -86,13 +86,7 @@ class DashboardControllerSU extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],      
-            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
             'Nama' => ['required', 'string', 'max:255', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
@@ -178,13 +172,8 @@ class DashboardControllerSU extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],      
-            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()
+           ],      
             // 'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],  
         ]);
 

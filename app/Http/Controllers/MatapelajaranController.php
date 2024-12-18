@@ -60,7 +60,7 @@ class MatapelajaranController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'matapelajaran' => ['required','string','max:50', new NoXSSInput(),
+            'matapelajaran' => ['required','string','max:50', 'unique:tb_matapelajaran,matapelajaran', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -128,7 +128,7 @@ class MatapelajaranController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'matapelajaran' => ['required','string','max:50','regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
+            'matapelajaran' => ['required','string','max:50', 'unique:tb_matapelajaran,matapelajaran',new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {

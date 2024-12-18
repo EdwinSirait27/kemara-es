@@ -64,49 +64,88 @@ class TahunakademikController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            'tahunakademik' => [
+                'required', 
+                'string', 
+                'max:4', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) use ($request) {
+                    // Cek jumlah entri tahunakademik dan semester di database
+                    $count = Tahunakademik::where('tahunakademik', $value)
+                        ->whereIn('semester', ['Ganjil', 'Genap'])
+                        ->count();
+        
+                    // Jika lebih dari dua entri, tolak input
+                    if ($count >= 2) {
+                        $fail("Tahun Akademik $value sudah memiliki maksimal 2 semester (Ganjil dan Genap).");
+                    }
+                },
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'semester' => ['required','string','in:Ganjil,Genap', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'semester' => [
+                'required',
+                'string',
+                'in:Ganjil,Genap',
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'tanggalmulai' => ['required','date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'tanggalmulai' => [
+                'required', 
+                'date', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'tanggalakhir' => ['required','date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'tanggalakhir' => [
+                'required', 
+                'date', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'status' => [
+                'required', 
+                'string', 
+                'in:Aktif,Tidak Aktif', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'ket' => ['required','string', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'ket' => [
+                'required', 
+                'string', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
+            ],
         ]);
+        
         $tahunakademik = Tahunakademik::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
@@ -147,48 +186,86 @@ class TahunakademikController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'tahunakademik' => ['required','string','max:4','regex:/^[0-9]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            'tahunakademik' => [
+                'required', 
+                'string', 
+                'max:4', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) use ($request) {
+                    // Cek jumlah entri tahunakademik dan semester di database
+                    $count = Tahunakademik::where('tahunakademik', $value)
+                        ->whereIn('semester', ['Ganjil', 'Genap'])
+                        ->count();
+        
+                    // Jika lebih dari dua entri, tolak input
+                    if ($count >= 2) {
+                        $fail("Tahun Akademik $value sudah memiliki maksimal 2 semester (Ganjil dan Genap).");
+                    }
+                },
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'semester' => ['required','string','in:Ganjil,Genap', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'semester' => [
+                'required',
+                'string',
+                'in:Ganjil,Genap',
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'tanggalmulai' => ['required','date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'tanggalmulai' => [
+                'required', 
+                'date', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'tanggalakhir' => ['required','date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'tanggalakhir' => [
+                'required', 
+                'date', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'status' => ['required','string','in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'status' => [
+                'required', 
+                'string', 
+                'in:Aktif,Tidak Aktif', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
-            'ket' => ['required','string', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            ],
+            'ket' => [
+                'required', 
+                'string', 
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
                 }
-            }],  
+            ],  
         ]);
         try {
             Tahunakademik::create([

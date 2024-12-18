@@ -64,7 +64,7 @@ class KurikulumController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'kurikulum' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
+            'kurikulum' => ['required', 'string', 'max:50','unique:tb_kurikulum,kurikulum', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -78,7 +78,7 @@ class KurikulumController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],      
-            'ket' => ['required', 'string','regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
+            'ket' => ['required', 'string', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -125,7 +125,7 @@ class KurikulumController extends Controller
     {
         // dd($request->all());
         $request->validate([
-          'kurikulum' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
+          'kurikulum' => ['required', 'string', 'max:50','unique:tb_kurikulum,kurikulum', new NoXSSInput(),
           function ($attribute, $value, $fail) {
               $sanitizedValue = strip_tags($value);
               if ($sanitizedValue !== $value) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Ekstrakulikuler;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -22,11 +23,13 @@ class EkstrakulikulerController extends Controller
     }
     public function create()
     {
-        return view('Ekstrakulikuler.create');
+        $gurus = Guru::select('guru_id','Nama')->get();
+
+        return view('Ekstrakulikuler.create',compact('gurus'));
     }
     public function getEkstrakulikuler()
     {
-        $ekstrakulikuler = Ekstrakulikuler::select(['id', 'namaekstra','kapasitas', 'status', 'ket','created_at'])
+        $ekstrakulikuler = Ekstrakulikuler::with('guru')->select(['id', 'guru_id','namaekstra','kapasitas', 'status', 'ket','created_at'])
             ->get()
             ->map(function ($ekstrakulikuler) {
                 $ekstrakulikuler->id_hashed = substr(hash('sha256', $ekstrakulikuler->id . env('APP_KEY')), 0, 8);
@@ -35,9 +38,14 @@ class EkstrakulikulerController extends Controller
             <a href="' . route('Ekstrakulikuler.edit', $ekstrakulikuler->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
+            $ekstrakulikuler->Guru_Nama = $ekstrakulikuler->guru ? $ekstrakulikuler->guru->Nama : '-';
+
                 return $ekstrakulikuler;
             });
         return DataTables::of($ekstrakulikuler)
+        ->addColumn('Nama', function ($ekstrakulikuler) {
+            return $ekstrakulikuler->guru->Nama;
+        })
         ->addColumn('created_at', function ($ekstrakulikuler) {
             return Carbon::parse($ekstrakulikuler->created_at)->format('d-m-Y H:i:s');
         })
@@ -48,19 +56,28 @@ class EkstrakulikulerController extends Controller
     }
     public function edit($hashedId)
     {
-        $ekstrakulikuler = Ekstrakulikuler::get()->first(function ($u) use ($hashedId) {
+        $ekstrakulikuler = Ekstrakulikuler::with('guru')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
         if (!$ekstrakulikuler) {
             abort(404, 'ekstrakulikuler not found.');
         }
-        return view('Ekstrakulikuler.edit', compact('ekstrakulikuler', 'hashedId'));
+        $gurus = Guru::select('guru_id','Nama')->get();
+
+        return view('Ekstrakulikuler.edit', compact('ekstrakulikuler', 'hashedId','gurus'));
     }
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput(),
+            'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'namaekstra' => ['required', 'string', 'max:50', 'unique:tb_ekstrakulikuler,namaekstra', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -98,6 +115,7 @@ class EkstrakulikulerController extends Controller
             return redirect()->route('Ekstrakulikuler.index')->with('error', 'ID tidak valid.');
         }
         $ekstrakulikulerData = [
+            'guru_id' => $validatedData['guru_id'],
             'namaekstra' => $validatedData['namaekstra'],
             'kapasitas' => $validatedData['kapasitas'],
             'status' => $validatedData['status'],
@@ -129,7 +147,14 @@ class EkstrakulikulerController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'namaekstra' => ['required', 'string', 'max:50','regex:/^[a-zA-Z ]+$/', new NoXSSInput(),
+            'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'namaekstra' => ['required', 'string', 'max:50','unique:tb_ekstrakulikuler,namaekstra', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -161,6 +186,7 @@ class EkstrakulikulerController extends Controller
         ]);
         try {
             Ekstrakulikuler::create([
+                'guru_id' => $request->guru_id,
                 'namaekstra' => $request->namaekstra,
                 'kapasitas' => $request->kapasitas,
                 'status' => $request->status,

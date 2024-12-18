@@ -79,6 +79,31 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="guru_id" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Wali Kelas') }}
+                                    </label>
+                                    <div>
+                                        <select name="guru_id" id="guru_id" class="form-select">
+                                            <option value="" selected disabled>Pilih Guru</option>
+                                            @foreach ($gurus as $optionGuru)
+                                                <option value="{{ $optionGuru->guru_id }}" 
+                                                    {{ old('guru_id', $guru->guru_id ?? '') == $optionGuru->guru_id ? 'selected' : '' }}>
+                                                    {{ $optionGuru->Nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('guru_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
+                                        
+                                   
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="namaorganisasi" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Organisasi') }}
                                     </label>
@@ -88,10 +113,13 @@
                                          maxlength="50">
                                         <p class="text-muted text-xs mt-2">Contoh : Osis</p>
                                  
-                                 
+                                   
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="kapasitas" class="form-control-label">
@@ -103,12 +131,10 @@
                                          maxlength="2"oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                         <p class="text-muted text-xs mt-2">Contoh : 2</p>
                                  
+                                    
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="status" class="form-control-label">
@@ -125,9 +151,13 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                   
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ket" class="form-control-label">
@@ -137,18 +167,13 @@
                                         <input type="text" class="form-control" id="ket" name="ket"
                                         value="{{ old('ket', $organisasi->ket) }}" required
                                         oninput="this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');" maxlength="50">
+            
+            
+                                    
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                      
-
-{{-- @php
-                                $oldRoles = old('hakakses', $hakakses); 
-                            @endphp --}}
-                          
-
+                       
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4 me-2">
@@ -177,6 +202,17 @@
 
                         </div> --}}
         </form>
+        <div class="alert alert-secondary mx-4" role="alert">
+            <span class="text-white">
+                <strong>Keterangan</strong> <br>
+            </span>
+            <span class="text-white">-
+                <strong> Jika sudah ada Organisasi yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
+               
+                    <br>
+
+            </span>
+        </div>
     </div>
 </div>
 </div>

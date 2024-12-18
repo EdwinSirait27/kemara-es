@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth')
+{{-- @extends('layouts.user_type.auth')
 @section('content')
 @section('title', 'Kemara-ES | Edit Profile')
 
@@ -463,8 +463,8 @@
             });
         @endif
     </script>
-@endsection
-{{-- @extends('layouts.user_type.auth')
+@endsection --}}
+@extends('layouts.user_type.auth')
 @section('content')
 @section('title', 'Kemara-ES | Edit Profile')
 
@@ -861,6 +861,109 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="current_password"
+                                    class="form-control-label">{{ __('Password Lama') }}</label>
+                                <div
+                                    class="@error('current_password') border border-danger rounded-3 @enderror position-relative">
+                                    <input class="form-control" type="password" placeholder="Password Lama"
+                                        id="current_password" name="current_password" maxlength="8">
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                        onclick="togglePasswordVisibility('current_password')">
+                                        <i id="eye-icon-current_password" class="fas fa-eye"></i>
+                                    </span>
+                                    @error('current_password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                    <script>
+                                        function togglePasswordVisibility(inputId) {
+                                            const input = document.getElementById(inputId);
+                                            const icon = document.getElementById(`eye-icon-${inputId}`);
+                                            if (input.type === "password") {
+                                                input.type = "text";
+                                                icon.classList.remove("fa-eye");
+                                                icon.classList.add("fa-eye-slash");
+                                            } else {
+                                                input.type = "password";
+                                                icon.classList.remove("fa-eye-slash");
+                                                icon.classList.add("fa-eye");
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password" class="form-control-label">{{ __('Password Baru') }}</label>
+                                <div
+                                    class="@error('password') border border-danger rounded-3 @enderror position-relative">
+                                    <input class="form-control" type="password" placeholder="Password Baru"
+                                        id="password" name="password" maxlength="8">
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                        onclick="togglePasswordVisibility('password')">
+                                        <i id="eye-icon-password" class="fas fa-eye"></i>
+                                    </span>
+                                    @error('password')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                    <script>
+                                        function togglePasswordVisibility(inputId) {
+                                            const input = document.getElementById(inputId);
+                                            const icon = document.getElementById(`eye-icon-${inputId}`);
+                                            if (input.type === "password") {
+                                                input.type = "text";
+                                                icon.classList.remove("fa-eye");
+                                                icon.classList.add("fa-eye-slash");
+                                            } else {
+                                                input.type = "password";
+                                                icon.classList.remove("fa-eye-slash");
+                                                icon.classList.add("fa-eye");
+                                            }
+                                        }
+                                    </script>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password_confirmation"
+                                    class="form-control-label">{{ __('Konfirmasi Password Baru') }}</label>
+                                <div
+                                    class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
+                                    <input class="form-control" type="password" placeholder="Konfirmasi Password Baru"
+                                        id="password_confirmation" name="password_confirmation" maxlength="8">
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                        onclick="togglePasswordVisibility('password_confirmation')">
+                                        <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
+                                    </span>
+                                    @error('password_confirmation')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                    <script>
+                                        function togglePasswordVisibility(inputId) {
+                                            const input = document.getElementById(inputId);
+                                            const icon = document.getElementById(`eye-icon-${inputId}`);
+                                            if (input.type === "password") {
+                                                input.type = "text";
+                                                icon.classList.remove("fa-eye");
+                                                icon.classList.add("fa-eye-slash");
+                                            } else {
+                                                input.type = "password";
+                                                icon.classList.remove("fa-eye-slash");
+                                                icon.classList.add("fa-eye");
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 
                 </div>
 
@@ -872,7 +975,11 @@
                         <strong class="fa fa-lock"></strong>
                         <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
                         <strong>- Upload Foto Ekstensi .JPEG</strong> <br>
-                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> 
+                        <strong>- Jika ingin mengubah password, silahkan input password anda yang sekarang di kolom Password
+                            Lama, setelah itu baru input password baru anda dan password baru harus sama dengan password
+                            konfirmasi.</strong>
+                            <br>
 
                     </span>
                 </div>
@@ -929,4 +1036,4 @@
             });
         @endif
     </script>
-@endsection --}}
+@endsection

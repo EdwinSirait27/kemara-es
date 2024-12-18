@@ -32,6 +32,28 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="guru_id" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Wali Kelas') }}
+                                        </label>
+                                        <div class="@error('guru_id')border border-danger rounded-3 @enderror">
+                                            <select name="guru_id" id="guru_id" class="form-select">
+                                                <option value="" selected disabled>Pilih Guru</option>
+                                                @foreach ($gurus as $guru)
+                                                    <option value="{{ $guru->guru_id }}">{{ $guru->Nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('guru_id')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
+
+                                      
+        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="namaorganisasi" class="form-control-label">
                                             <i class="fas fa-lock"></i> {{ __('Organisasi') }}
                                         </label>
@@ -45,25 +67,13 @@
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : Osis </p>
-
-                                        {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
-                                        <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                            @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)
-                                                <input class="form-control" value="{{ auth()->user()->Guru->Alamat }}"
-                                                    type="text" placeholder="Alamat" id="Alamat" name="Alamat"
-                                                    maxlength="50" required>
-                                                @error('Alamat')
-                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                                @enderror
-                                            @else
-                                                <input class="form-control" value="tidak ada data" type="text" id="Alamat"
-                                                    name="Alamat"required>
-                                            @endif --}}
-        
-        
+  
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="kapasitas" class="form-control-label">{{ __('Kapasitas') }}</label>
@@ -77,17 +87,10 @@
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : 2</p>
-
-
-
-
-                                        
+                                       
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status" class="form-control-label">{{ __('Status') }}</label>
@@ -104,38 +107,7 @@
                                                 </span>
                                             @enderror
 
-
-                                       
-                                        {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
-                                        <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                            @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)
-                                                <input class="form-control" value="{{ auth()->user()->Guru->Alamat }}"
-                                                    type="text" placeholder="Alamat" id="Alamat" name="Alamat"
-                                                    maxlength="50" required>
-                                                @error('Alamat')
-                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                                @enderror
-                                            @else
-                                                <input class="form-control" value="tidak ada data" type="text" id="Alamat"
-                                                    name="Alamat"required>
-                                            @endif --}}
-        
-        
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="ket" class="form-control-label">{{ __('Deskripsi') }}</label>
-                                <div class="@error('ket')border border-danger rounded-3 @enderror">
-                                    <input class="form-control"
-                                    value="{{ e($ket ?? '') }}"
-                                    type="text"
-                                        id="ket" name="ket" aria-describedby="info-ket"
-                                        maxlength="50" required>
-                                        @error('ket')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
+                                     
 
 
 
@@ -144,7 +116,24 @@
                                     </div>
                                 </div>
                             </div>
-                               
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ket" class="form-control-label">{{ __('Deskripsi') }}</label>
+                            <div class="@error('ket')border border-danger rounded-3 @enderror">
+                                <input class="form-control"
+                                value="{{ e($ket ?? '') }}"
+                                type="text"
+                                    id="ket" name="ket" aria-describedby="info-ket"
+                                    maxlength="50" required>
+                                    @error('ket')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                           
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
                                         {{ __('Buat Organisasi') }}
@@ -155,6 +144,17 @@
                                     </a>
                                 </div>
                         </form>
+                        <div class="alert alert-secondary mx-4" role="alert">
+                            <span class="text-white">
+                                <strong>Keterangan</strong> <br>
+                            </span>
+                            <span class="text-white">-
+                                <strong> Jika sudah ada Organisasi yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
+                               
+                                    <br>
+                
+                            </span>
+                        </div>
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                         <script>
                             document.getElementById('submit-btn').addEventListener('click', function(e) {

@@ -34,33 +34,141 @@ class InfoUserControllerSiswa extends Controller
     {
         $user = Auth::user();
         $this->validate($request, [
-            'hakakses' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput()],
-            'Role' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput()],
-            'current_password' => ['nullable', 'string','max:12', new NoXSSInput()],
-            'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput()],
+            'hakakses' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'Role' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'current_password' => ['nullable', 'string','max:12', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
             // 'foto' => ['nullable', 'image','mimes:jpeg,png,jpg','max:512', new NoXSSInput()],
             'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
             
-            'NamaLengkap' => ['required', 'string','max:100','min:10', new NoXSSInput()],
-            'NomorInduk' => ['required', 'string','max:16', new NoXSSInput()],
-            'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
-            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
-            'NISN' => ['nullable', 'string','max:16', new NoXSSInput()],
-            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
-            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
-            'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
-            'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
-            'Email' => ['nullable', 'string','max:100', new NoXSSInput()],
-            'NomorTelephone' => ['nullable', 'string','max:13', new NoXSSInput()],
-            'NIK' => ['nullable', 'string','max:16', new NoXSSInput()],
-            'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'NamaLengkap' => ['required', 'string','max:100','min:10', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'NomorInduk' => ['required', 'string','max:16', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'NISN' => ['nullable', 'string','max:16', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'TanggalLahir' => ['nullable', 'date', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'Alamat' => ['nullable', 'string','max:100', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'Email' => ['nullable', 'string','max:100', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'NomorTelephone' => ['nullable', 'string','max:13', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'NIK' => ['nullable', 'string','max:16', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
            'username' => [
                 'required', 
                 'string', 
                 'max:12', 
                 'regex:/^[a-zA-Z0-9_-]+$/', 
                 Rule::unique('users', 'username')->ignore($user->id), 
-                new NoXSSInput()
+                new NoXSSInput(),
+                function ($attribute, $value, $fail) {
+                    $sanitizedValue = strip_tags($value);
+                    if ($sanitizedValue !== $value) {
+                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                    }
+                }
             ],   
             
         ]);

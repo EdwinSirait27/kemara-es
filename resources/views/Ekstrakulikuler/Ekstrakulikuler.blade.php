@@ -26,6 +26,9 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Guru Pembina</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Ekstrakulikuler</th>
                                     {{-- <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -95,6 +98,7 @@
             },
         },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+          { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
           { data: 'namaekstra', name: 'namaekstra', className: 'text-center' },
           { data: 'kapasitas', name: 'kapasitas', className: 'text-center' },
 
@@ -204,6 +208,7 @@ $('#users-table').on('click', '.edit-ekstrakulikuler', function(e) {
             method: 'GET',
             success: function(response) {
                 let ekstrakulikuler = response.ekstrakulikuler;
+                $('#editUserModal').find('input[name="guru_id"]').val(ekstrakulikuler.guru_id);
                 $('#editUserModal').find('input[name="namaekstra"]').val(ekstrakulikuler.namaekstra);
                 $('#editUserModal').find('input[name="kapasitas"]').val(ekstrakulikuler.kapasitas);
                 $('#editUserModal').find('input[name="status"]').val(ekstrakulikuler.status);

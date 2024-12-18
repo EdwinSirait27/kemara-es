@@ -26,6 +26,9 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Wali Kelas</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Kelas</th>
                                     {{-- <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -94,6 +97,11 @@
                 return meta.row + 1; 
             },
         },
+        {
+                        data: 'Guru_Nama',
+                        name: 'Guru_Nama',
+                        className: 'text-center'
+                    },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'kelas', name: 'kelas', className: 'text-center' },
           { data: 'kapasitas', name: 'kapasitas', className: 'text-center' },
@@ -204,6 +212,7 @@ $('#users-table').on('click', '.edit-matapelajaran', function(e) {
             method: 'GET',
             success: function(response) {
                 let kelas = response.kelas;
+                $('#editUserModal').find('input[name="guru_id"]').val(kelas.guru_id);
                 $('#editUserModal').find('input[name="kelas"]').val(kelas.kelas);
                 $('#editUserModal').find('input[name="kapasitas"]').val(kelas.kapasitas);
                 $('#editUserModal').find('input[name="status"]').val(kelas.status);

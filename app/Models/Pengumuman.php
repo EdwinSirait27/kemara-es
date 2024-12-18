@@ -19,8 +19,11 @@ class Pengumuman extends Model
     ];
     public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('m-d-Y H:i');
+        return Carbon::parse($value)
+            ->setTimezone('Asia/Makassar')
+            ->format('Y-m-d H:i:s'); // Format sesuai kebutuhan
     }
+    
     public function getUpdatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('m-d-Y H:i');

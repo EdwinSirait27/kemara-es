@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
@@ -22,11 +23,13 @@ class KelasController extends Controller
     }
     public function create()
     {
-        return view('Kelas.create');
+        $gurus = Guru::select('guru_id','Nama')->get();
+
+        return view('Kelas.create',compact('gurus'));
     }
     public function getKelas()
     {
-        $kelas = Kelas::select(['id', 'kelas','kapasitas', 'status', 'ket','created_at'])
+        $kelas = Kelas::with('guru')->select(['id','guru_id', 'kelas','kapasitas', 'status', 'ket','created_at'])
             ->get()
             ->map(function ($kelas) {
                 $kelas->id_hashed = substr(hash('sha256', $kelas->id . env('APP_KEY')), 0, 8);
@@ -35,10 +38,14 @@ class KelasController extends Controller
             <a href="' . route('Kelas.edit', $kelas->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-                // $user->Guru_Nama = $user->Guru ? $user->Guru->Nama : '-';
-                return $kelas;
+            $kelas->Guru_Nama = $kelas->guru ? $kelas->guru->Nama : '-';
+               
+            return $kelas;
             });
         return DataTables::of($kelas)
+        ->addColumn('Nama', function ($kelas) {
+            return $kelas->guru->Nama;
+        })
         ->addColumn('created_at', function ($kelas) {
             return Carbon::parse($kelas->created_at)->format('d-m-Y H:i:s');
         })
@@ -48,19 +55,29 @@ class KelasController extends Controller
     }
     public function edit($hashedId)
     {
-        $kelas = Kelas::get()->first(function ($u) use ($hashedId) {
+        $kelas = Kelas::with('guru')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
         if (!$kelas) {
             abort(404, 'Kelas not found.');
         }
-        return view('Kelas.edit', compact('kelas', 'hashedId'));
+        $gurus = Guru::select('guru_id','Nama')->get();
+
+
+        return view('Kelas.edit', compact('kelas', 'hashedId','gurus'));
     }
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'kelas' => ['required', 'string', 'max:4', 'regex:/^[a-zA-Z]+$/', new NoXSSInput(),
+            'guru_id' => ['required', 'string','unique:tb_kelas,guru_id', new NoXSSInput(),
+            function ($attribute, $value, $fail) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+            }],
+            'kelas' => ['required', 'string', 'max:4' ,'unique:tb_kelas,kelas',new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -81,7 +98,7 @@ class KelasController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
+            'ket' => ['required', 'string', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -98,6 +115,7 @@ class KelasController extends Controller
             return redirect()->route('Kelas.index')->with('error', 'ID tidak valid.');
         }
         $kelasData = [
+            'guru_id' => $validatedData['guru_id'],
             'kelas' => $validatedData['kelas'],
             'kapasitas' => $validatedData['kapasitas'],
             'status' => $validatedData['status'],
@@ -131,7 +149,14 @@ class KelasController extends Controller
     {
         // dd($request->all());
         $request->validate([
-         'kelas' => ['required', 'string', 'max:4', 'regex:/^[a-zA-Z]+$/', new NoXSSInput(),
+         'guru_id' => ['required', 'string','unique:tb_kelas,guru_id',new NoXSSInput(),
+         function ($attribute, $value, $fail) {
+             $sanitizedValue = strip_tags($value);
+             if ($sanitizedValue !== $value) {
+                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+             }
+         }],
+         'kelas' => ['required', 'string', 'max:4','unique:tb_kelas,kelas',new NoXSSInput(),
          function ($attribute, $value, $fail) {
              $sanitizedValue = strip_tags($value);
              if ($sanitizedValue !== $value) {
@@ -152,7 +177,7 @@ class KelasController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
+            'ket' => ['required', 'string',  new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -163,6 +188,7 @@ class KelasController extends Controller
         ]);
         try {
             Kelas::create([
+                'guru_id' => $request->guru_id,
                 'kelas' => $request->kelas,
                 'kapasitas' => $request->kapasitas,
                 'status' => $request->status,

@@ -129,8 +129,8 @@
                                 <input class="form-control" value="{{ e(optional(auth()->user())->username ?? '') }}"
                                     type="text" id="username" name="username" required
                                     aria-describedby="info-username">
+                                    {{-- <p class="text-muted text-xs mt-2">.</p> --}}
                              
-
                             </div>
                         </div>
                     </div>
@@ -287,6 +287,8 @@
                                 @error('NipNips')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan NIP anda, hanya diperbolehkan angka saja, jika tidak ada silahkan isi dengan 0.</p>
+
                             </div>
                         </div>
                     </div>
@@ -301,6 +303,8 @@
                                 @error('Nuptk')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan NUPTK anda, hanya diperbolehkan angka saja, jika tidak ada silahkan isi dengan 0.</p>
+
                             </div>
                         </div>
                     </div>
@@ -317,6 +321,8 @@
                                 @error('Nik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan Nik anda, hanya diperbolehkan angka saja, jika tidak ada silahkan isi dengan 0.</p>
+
                             </div>
                         </div>
                     </div>
@@ -331,6 +337,8 @@
                                 @error('Npwp')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan NPWP anda, hanya diperbolehkan angka saja, jika tidak ada silahkan isi dengan 0.</p>
+
                             </div>
                         </div>
                     </div>
@@ -349,6 +357,8 @@
                                 @error('NomorSertifikatPendidik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan NSP anda, hanya diperbolehkan angka saja, jika tidak ada silahkan isi dengan 0.</p>
+
                             </div>
                         </div>
                     </div>
@@ -403,6 +413,8 @@
                                 @error('PendidikanAkhir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan PA anda, Contoh : S.Kom.</p>
+
                             </div>
                         </div>
                     </div>
@@ -434,6 +446,7 @@
                                 @error('Jurusan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan Jurusan anda, contoh : Teknologi Informasi.</p>
                                 
                             </div>
                         </div>
@@ -536,6 +549,8 @@
                                 @error('NomorTelephone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                                <p class="text-muted text-xs mt-2">Masukkan NT anda, hanya diperbolehkan angka saja, contoh : 08234723742.</p>
+
                             </div>
                         </div>
                     </div>
@@ -712,6 +727,7 @@
                     <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
                     <strong>- Upload file type JPEG</strong> <br>
                     <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+                    <strong>- Jika ingin mengubah password, silahkan input password anda yang sekarang di kolom Password Lama, setelah itu baru input password baru anda dan password baru harus sama dengan password konfirmasi.</strong> <br>
 
                 </span>
             </div>
