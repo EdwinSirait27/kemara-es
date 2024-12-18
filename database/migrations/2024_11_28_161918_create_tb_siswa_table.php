@@ -84,14 +84,9 @@ return new class extends Migration
             $table->text('MenerimaBeasiswaDari')->nullable();
             $table->integer('TahunMeninggalkanSekolah')->nullable();
             $table->text('AlasanSebab')->nullable();
-            $table->integer('TamatBelajarTahun')->nullable();
+            $table->date('TamatBelajarTahun')->nullable();
             $table->text('InformasiLain')->nullable();
-            // $table->string('cita')->nullable();
             $table->enum('status', ['Aktif', 'Tidak Aktif','Lulus','Alumni'])->nullable();
-            // $table->integer('sakit')->default(0)->nullable();
-            // $table->integer('izin')->default(0)->nullable();
-            // $table->integer('tk')->default(0)->nullable();
-            // $table->text('catatan')->nullable()->nullable();
             
             $table->timestamps();
         });

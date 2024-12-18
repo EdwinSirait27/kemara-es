@@ -1106,7 +1106,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TamatBelajarTahun ?? '' }}"
-                                    type="number" id="TamatBelajarTahun" name="TamatBelajarTahun" aria-describedby="info-TamatBelajarTahun">
+                                    type="date" id="TamatBelajarTahun" name="TamatBelajarTahun" aria-describedby="info-TamatBelajarTahun">
                             </div>
                         </div>
                     </div>

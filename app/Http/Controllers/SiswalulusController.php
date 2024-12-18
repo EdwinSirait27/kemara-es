@@ -41,10 +41,10 @@ class SiswalulusController extends Controller
                 $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
                 $user->Siswa_NomorTelephone = $user->Siswa ? $user->Siswa->NomorTelephone : '-';
                 $user->Siswa_NomorTelephoneAyah = $user->Siswa ? $user->Siswa->NomorTelephoneAyah : '-';
-                $user->Siswa_NomorTelephoneAyah = $user->Siswa ? $user->Siswa->NomorTelephoneAyah : '-';
                 $user->Siswa_Alamat = $user->Siswa ? $user->Siswa->Alamat : '-';
                 $user->Siswa_Email = $user->Siswa ? $user->Siswa->Email : '-';
-                $user->Siswa_Email = $user->Siswa ? $user->Siswa->Email : '-';
+                $user->Siswa_TamatBelajarTahun = $user->Siswa ? $user->Siswa->TamatBelajarTahun : '-';
+                $user->Siswa_Status = $user->Siswa ? $user->Siswa->status : '-';
                 return $user;
             });
         return DataTables::of($users)

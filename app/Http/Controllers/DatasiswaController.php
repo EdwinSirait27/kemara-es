@@ -571,7 +571,7 @@ class DatasiswaController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'TamatBelajarTahun' => ['required', 'string', 'max:4', new NoXSSInput(),
+            'TamatBelajarTahun' => ['required', 'date', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {

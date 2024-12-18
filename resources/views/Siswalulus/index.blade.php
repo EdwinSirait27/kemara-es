@@ -27,22 +27,27 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Nama Siswa</th>
-                                    {{-- <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Nama</th> --}}
-                                    
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Username</th>
+                                        Nomor Telephone</th>
                                         <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Nomor Telephone Ortu</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Alamat</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Email</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Tahun Daftar</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Tamat</th>
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Hak Akses</th>
-                                        <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Role</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Pembuatan Akun</th>
                                         <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
@@ -50,23 +55,13 @@
                                           <button type="button" id="select-all" class="btn btn-primary btn-sm">
                                               Select All
                                           </button></th> 
-                                        <!-- Checkbox untuk select all -->
-                                    {{-- <th class="text-secondary opacity-7">Action</th> --}}
+                                       
                                 </tr>
                             </thead>
                            
                         </table>
-                        <button type="button" onclick="window.location='{{ route('dashboardSU.create') }}'" 
-    class="btn btn-primary btn-sm">
-    Tambah User
-</button>
+                     
 
-                        {{-- <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
-                          Create New User
-                      </a> --}}
-                        <button type="button" id="delete-selected" class="btn btn-danger btn-sm">
-                          Delete
-                      </button> 
                       </div>
                     </div>
                   </div>
@@ -80,7 +75,7 @@
     let table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route('users.dataguru') }}',
+        ajax: '{{ route('siswalulus.datasiswalulus') }}',
         lengthMenu: [
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
@@ -95,12 +90,14 @@
             },
         },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
-          { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
+          { data: 'Siswa_Nama', name: 'Siswa_Nama', className: 'text-center' },
 
-          { data: 'username', name: 'username', className: 'text-center' },
-            { data: 'hakakses', name: 'hakakses', className: 'text-center' },
-            { data: 'Role', name: 'Role', className: 'text-center' },
+          { data: 'Siswa_NomorTelephone', name: 'Siswa_NomorTelephone', className: 'text-center' },
+            { data: 'Siswa_NomorTelephoneAyah', name: 'Siswa_NomorTelephoneAyah', className: 'text-center' },
+            { data: 'Siswa_Alamat', name: 'Siswa_Alamat', className: 'text-center' },
+            { data: 'Siswa_Email', name: 'Siswa_Email', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
+            { data: 'Siswa_TamatBelajarTahun', name: 'Siswa_TamatBelajarTahun', className: 'text-center' },
             {
                 data: 'action',
                 name: 'action',
@@ -131,77 +128,16 @@
               $(this).tooltip();
           });
 
-    // Delete Selected Users
-    $('#delete-selected').on('click', function() {
-        let selectedIds = $('.user-checkbox:checked').map(function() {
-            return $(this).val();
-        }).get();
-
-        if (selectedIds.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Tidak Ada User Yang Dipilih',
-                text: 'Tolong Pilih Salah Satu.'
-            });
-            return;
-        }
-
-        Swal.fire({
-            title: 'Apakah Anda Yakin?',
-            text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Iya, Delete!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '{{ route('users.delete') }}',
-                    method: 'POST',
-                    data: {
-                        ids: selectedIds,
-                        _method: 'DELETE',
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            Swal.fire(
-                                'Deleted!',
-                                response.message,
-                                'success'
-                            );
-                            table.ajax.reload();
-                        } else {
-                            Swal.fire(
-                                'Failed!',
-                                'Failed to delete users.',
-                                'error'
-                            );
-                        }
-                    },
-                    error: function(xhr) {
-                        Swal.fire(
-                            'Error!',
-                            'An error occurred while deleting users.',
-                            'error'
-                        );
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
-        
-    });
+   
     
 });
-$('#users-table').on('click', '.edit-user', function(e) {
+$('#users-table').on('click', '.edit-siswalulus', function(e) {
         e.preventDefault();
         let userId = $(this).data('id'); // Ambil ID pengguna yang ingin diedit
 
         // Panggil API untuk mendapatkan data pengguna
         $.ajax({
-            url: `/users/${userId}/edit`, // URL untuk mendapatkan data pengguna
+            url: `/siswalulus/${userId}/edit`, // URL untuk mendapatkan data pengguna
             method: 'GET',
             success: function(response) {
                 // Misalnya, kita ingin menampilkan data dalam modal
