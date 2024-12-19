@@ -61,14 +61,12 @@
                                     {{-- <th class="text-secondary opacity-7">Action</th> --}}
                                 </tr>
                             </thead>
-
                         </table>
                         <button type="button" onclick="window.location='{{ route('Datasiswaall.index') }}'" 
                         class="btn btn-primary btn-sm">
                         Lihat Detail
                     </button>
-                    <button id="update-status" class="btn btn-primary">Update Status</button>
-
+                    <button id="update-status-btn" class="btn btn-success">Update Status Lulus</button>
                     
 
                     </div>
@@ -83,75 +81,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            let table = $('#users-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('datasiswa.datadatasiswa') }}',
-                lengthMenu: [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "All"]
-                ],
-                columns: [{
-                        data: 'siswa_id', // Kolom indeks
-                        name: 'siswa_id',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return meta.row + 1;
-                        },
-                    },
-                    {
-                        data: 'foto',
-                        name: 'foto',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/fotosiswa') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                   }
-                        },
-
-
-                    },
-                    {
-                        data: 'NamaLengkap',
-                        name: 'NamaLengkap',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'Agama',
-                        name: 'Agama',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'NomorTelephone',
-                        name: 'NomorTelephone',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Alamat',
-                        name: 'Alamat',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Email',
-                        name: 'Email',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'text-center'
-                    }
-                ]
-            });
-        }); --}}
         <script>
             $(document).ready(function() {
                 let table = $('#users-table').DataTable({
@@ -221,16 +150,7 @@
                             searchable: false,
                             className: 'text-center'
                         },
-                        {
-                  data: 'siswa_id',
-                  name: 'checkbox',
-                  orderable: false,
-                  searchable: false,
-                  className: 'text-center',
-                  render: function(data, type, row) {
-                      return `<input type="checkbox" class="user-checkbox" value="${row.siswa_id}">`;
-                  }
-              }
+                        { data: 'checkbox', orderable: false, searchable: false }
                     ]
                 });
             });
@@ -333,7 +253,65 @@ $('#editUserModal').find('input[name="status"]').val(datasiswa.status);
                 }
             });
         });
-        
+        $('#select-all').on('click', function() {
+              let checkboxes = $('.user-checkbox');
+              let allChecked = checkboxes.filter(':checked').length === checkboxes.length; 
+              checkboxes.prop('checked', !allChecked);
+          });
+          $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function() {
+              $(this).tooltip();
+          });
+
+   
+$('#update-status-btn').on('click', function () {
+    let selectedIds = [];
+    $('.user-checkbox:checked').each(function () {
+        selectedIds.push($(this).val());
+    });
+
+    if (selectedIds.length === 0) {
+        alert('Pilih minimal satu siswa untuk diupdate!');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin memperbarui status siswa yang dipilih?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, perbarui!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{ route('Datasiswa.updateStatus') }}", // Ganti dengan route update status Anda
+                type: "POST",
+                data: {
+                    siswa_ids: selectedIds,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Status diperbarui',
+                        text: response.message
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi kesalahan',
+                        text: 'Terjadi kesalahan saat memperbarui status!'
+                    });
+                }
+            });
+        }
+    });
+});
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

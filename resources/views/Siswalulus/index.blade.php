@@ -27,6 +27,7 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Nama Siswa</th>
+                                   
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Nomor Telephone</th>
@@ -44,22 +45,23 @@
                                         Tahun Daftar</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Tamat</th>
+                                        Tahun Tamat</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Status</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Hak Akses</th>
-                                        <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Action</th>
-                                        <th>
-                                          <button type="button" id="select-all" class="btn btn-primary btn-sm">
-                                              Select All
-                                          </button></th> 
+                                       
                                        
                                 </tr>
                             </thead>
                            
                         </table>
+                        <button type="button" onclick="window.location='{{ route('Siswalulusall.index') }}'" 
+                        class="btn btn-primary btn-sm">
+                        Lihat Detail
+                    </button>
                      
 
                       </div>
@@ -91,31 +93,16 @@
         },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'Siswa_Nama', name: 'Siswa_Nama', className: 'text-center' },
-
+         
           { data: 'Siswa_NomorTelephone', name: 'Siswa_NomorTelephone', className: 'text-center' },
             { data: 'Siswa_NomorTelephoneAyah', name: 'Siswa_NomorTelephoneAyah', className: 'text-center' },
             { data: 'Siswa_Alamat', name: 'Siswa_Alamat', className: 'text-center' },
             { data: 'Siswa_Email', name: 'Siswa_Email', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
             { data: 'Siswa_TamatBelajarTahun', name: 'Siswa_TamatBelajarTahun', className: 'text-center' },
-            { data: 'hakakses', name: 'hakakses', className: 'text-center' },
-            {
-                data: 'action',
-                name: 'action',
-                orderable: false,
-                searchable: false,
-                className: 'text-center'
-              },
-              {
-                  data: 'id',
-                  name: 'checkbox',
-                  orderable: false,
-                  searchable: false,
-                  className: 'text-center',
-                  render: function(data, type, row) {
-                      return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
-                  }
-              }
+            { data: 'Siswa_Status', name: 'Siswa_Status', className: 'text-center' },
+            { data: 'hakakses', name: 'hakakses', className: 'text-center' }
+           
         ]
     });
     

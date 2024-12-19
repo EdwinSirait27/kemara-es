@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Models\Pengumuman;
 use App\Models\User;
 use App\Models\Siswa;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;

@@ -1131,7 +1131,7 @@
                             <div class="@error('status') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="status" id="status" required>
                                     <option value="" disabled selected>{{ __('Pilih Status') }}</option>
-                                    @foreach (['Aktif', 'Nonaktif'] as $status)
+                                    @foreach (['Aktif', 'Tidak Aktif','Lulus','Alumni'] as $status)
                                         <option value="{{ e($status) }}"
                                             {{ $siswa->status == $status ? 'selected' : '' }}>
                                             {{ e($status) }}

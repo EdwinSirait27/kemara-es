@@ -28,6 +28,7 @@ use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
 use App\Http\Controllers\KGSController;
 use App\Http\Controllers\DatasiswaController;
+use App\Http\Controllers\ArsipSiswaController;
 use App\Http\Controllers\DataguruController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\OsisController;
@@ -208,11 +209,20 @@ Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name
 Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
 // Route::post('/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
 // Route::post('/siswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('siswa.updateStatus');
+Route::post('/datasiswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
 
 //siswa lulus
 Route::get('/Siswalulus', [SiswalulusController::class, 'index'])->name('Siswalulus.index');
+Route::get('/Siswalulusall', [SiswalulusController::class, 'indexSiswalulusall'])->name('Siswalulusall.index');
     Route::get('/siswalulus/datasiswalulus', [SiswalulusController::class, 'getSiswalulus'])->name('siswalulus.datasiswalulus');
+    Route::get('/siswalulusall/datasiswalulusall', [SiswalulusController::class, 'getSiswalulusall'])->name('siswalulusall.datasiswalulusall');
     Route::get('/siswalulus/edit/{hashedId}', [SiswalulusController::class, 'edit'])->name('Siswalulus.edit');
+
+//Arsip
+Route::get('/Siswaarsip', [ArsipSiswaController::class, 'index'])->name('Siswaarsip.index');
+Route::get('/Uploadarsip', [ArsipSiswaController::class, 'indexUpload'])->name('Uploadarsip.index');
+Route::post('/Uploadarsip/store', [ArsipSiswaController::class, 'store'])->name('Uploadarsip.store');
+Route::get('/Siswaarsip/dataarsipsiswa', [ArsipSiswaController::class, 'getArsipsiswa'])->name('arsipsiswa.dataarsipsiswa');
 
    
    });

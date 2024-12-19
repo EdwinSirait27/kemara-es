@@ -606,7 +606,7 @@
           </ul>
           <ul class="nav ms-4">
               <li class="nav-item">
-                  <a class="nav-link {{ Request::is('dataarsip') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
+                  <a class="nav-link {{ Request::is('Siswaarsip') ? 'active' : '' }}" href="{{ url('Siswaarsip') }}">
                       <span class="nav-link-text ms-1">Data Arsip</span>
                   </a>
               </li>

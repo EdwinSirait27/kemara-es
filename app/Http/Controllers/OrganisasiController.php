@@ -69,7 +69,7 @@ class OrganisasiController extends Controller
     }
     public function update(Request $request, $hashedId)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $validatedData = $request->validate([
             'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),

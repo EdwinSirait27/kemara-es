@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth')
+sis@extends('layouts.user_type.auth')
 @section('title', 'Kemara-ES | Data Siswa')
 
 @section('content')

@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Data siswa Arsip')
+@section('title', 'Kemara-ES | Data siswa lulus')
 
 @section('content')
     <style>
@@ -13,7 +13,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     {{-- <h6>Role & Hak Akses</h6> --}}
-                    <h6><i class="fas fa-user-shield"></i>Data siswa Arsip</h6>
+                    <h6><i class="fas fa-user-shield"></i>Data Siswa Lulus</h6>
 
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -25,25 +25,25 @@
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Lengkap
+                                            NamaLengkap
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nomor Induk
+                                            NomorInduk
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Panggilan
+                                            NamaPanggilan
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Jenis Kelamin
+                                            JenisKelamin
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             NISN
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tempat Lahir
+                                            TempatLahir
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tanggal Lahir
+                                            TanggalLahir
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Agama
@@ -76,7 +76,7 @@
                                             Email
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nomor Telephone
+                                            NomorTelephone
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Kewarganegaraan
@@ -85,179 +85,174 @@
                                             NIK
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Golongan Darah
+                                            GolDarah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tinggal Dengan
+                                            TinggalDengan
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Status Siswa
+                                            StatusSiswa
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Anak Ke
+                                            AnakKe
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Saudara Kandung
+                                            SaudaraKandung
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Saudara Tiri
+                                            SaudaraTiri
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tinggi CM
+                                            Tinggicm
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Berat KG
+                                            Beratkg
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Riwayat Penyakit
+                                            RiwayatPenyakit
+                                        </th>
+                                        
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            AsalSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Asal SD
+                                            AlamatSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alamat SD
+                                            NPSNSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            NPSN SD
+                                            KabKotaSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kab Kota SD
+                                            ProvinsiSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Provinsi SD
+                                            NoIjasah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            No Ijasah
+                                            DiterimaTanggal
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Diterima Tanggal
+                                            DiterimaDiKelas
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Diterima DiKelas
+                                            DiterimaSemester
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Diterima Semester
+                                            MutasiAsalSMP
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mutasi Asal SMP
+                                            AlasanPindah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alasan Pindah
+                                            TglIjasahSD
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tgl Ijasah SD
+                                            NamaOrangTuaPadaIjasah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Orang Tua Pada Ijasah
+                                            NamaAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Ayah
+                                            TahunLahirAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tahun Lahir Ayah
+                                            AlamatAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alamat Ayah
+                                            NomorTelephoneAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nomor Telephone Ayah
+                                            AgamaAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Agama Ayah
+                                            PendidikanTerakhirAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pendidikan Terakhir Ayah
+                                            PekerjaanAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pekerjaan Ayah
+                                            PenghasilanAyah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Penghasilan Ayah
+                                            NamaIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Ibu
+                                            TahunLahirIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tahun Lahir Ibu
+                                            AlamatIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alamat Ibu
+                                            NomorTelephoneIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nomor Telephone Ibu
+                                            AgamaIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Agama Ibu
+                                            PendidikanTerakhirIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pendidikan Terakhir Ibu
+                                            PekerjaanIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pekerjaan Ibu
+                                            PenghasilanIbu
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Penghasilan Ibu
+                                            NamaWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Wali
+                                            TahunLahirWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tahun Lahir Wali
+                                            AlamatWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alamat Wali
+                                            NomorTelephoneWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nomor Telephone Wali
+                                            AgamaWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Agama Wali
+                                            PendidikanTerakhirWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pendidikan Terakhir Wali
+                                            PekerjaanWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Pekerjaan Wali
+                                            WaliPenghasilan
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Wali Penghasilan
+                                            StatusHubunganWali
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Status Hubungan Wali
+                                            MenerimaBeasiswaDari
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Menerima Beasiswa Dari
+                                            TahunMeninggalkanSekolah
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tahun Meninggalkan Sekolah
+                                            AlasanSebab
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Alasan Sebab
-                                        </th>
-                                      
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Informasi Lain
-                                        </th>
-                                       
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Status
-                                        </th>
-                                       
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tahun Daftar
+                                            InformasiLain
                                         </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tamat Belajar Tahun
+                                            status
                                         </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            TahunDaftar
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            TamatBelajarTahun
+                                        </th>
+                                        
 
                                 </tr>
                             </thead>
 
                         </table>
-                        <button type="button" onclick="window.location='{{ route('Uploadarsip.index') }}'" 
-                        class="btn btn-primary btn-sm">
-                        Lihat Detail
-                    </button>
 
                      
                     </div>
@@ -276,18 +271,18 @@
             let table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('arsipsiswa.dataarsipsiswa') }}',
+                ajax: '{{ route('siswalulusall.datasiswalulusall') }}',
                 lengthMenu: [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
                 ],
-                dom: 'Bfrtip', // Tambahkan ini untuk mengaktifkan tombol
+                dom: 'Bfrtip', 
                 buttons: [
                     {
-                        extend: 'excelHtml5', // Tombol untuk ekspor ke Excel
-                        text: 'Export to Excel', // Teks tombol
-                        className: 'btn btn-success', // Tambahkan kelas untuk styling
-                        title: 'Data Siswa', // Nama file Excel
+                        extend: 'excelHtml5', 
+                        text: 'Export to Excel', 
+                        className: 'btn btn-success',
+                        title: 'Data Siswa Lulus', // Nama file Excel
                         exportOptions: {
                             columns: ':visible' // Tentukan kolom yang akan diekspor
                         }
@@ -651,7 +646,6 @@
     name: 'AlasanSebab',
     className: 'text-center'
 },
-
 {
     data: 'InformasiLain',
     name: 'InformasiLain',
@@ -663,12 +657,9 @@
     name: 'status',
     className: 'text-center'
 },
-{
-    data: 'TahunDaftar',
-    name: 'TahunDaftar',
-    className: 'text-center'
-},
 
+{ data: 'created_at', name: 'created_at',
+className: 'text-center' },
 {
     data: 'TamatBelajarTahun',
     name: 'TamatBelajarTahun',

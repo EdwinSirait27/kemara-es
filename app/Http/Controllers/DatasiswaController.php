@@ -45,8 +45,7 @@ class DatasiswaController extends Controller
             ->get()
             ->map(function ($siswa) {
                 $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
-                $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->id_hashed . '">';
-               
+                $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->siswa_id . '">';
                 $siswa->action = '
             <a href="' . route('Datasiswa.edit', $siswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
@@ -61,7 +60,6 @@ class DatasiswaController extends Controller
             ->rawColumns(['action','checkbox'])
             ->make(true);
     }
-    
     public function edit($hashedId)
     {
         $siswa = Siswa::get()->first(function ($u) use ($hashedId) {
@@ -76,7 +74,6 @@ class DatasiswaController extends Controller
     public function update(Request $request, $hashedId)
     {
         // dd($request->all());
-
         $validatedData = $request->validate([
                     'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:512', new NoXSSInput(),
                     function ($attribute, $value, $fail) {
@@ -702,6 +699,42 @@ class DatasiswaController extends Controller
         }
         return redirect()->route('Datasiswa.index')->with('success', 'Siswa Berhasil Diupdate.');
     }
+    public function updateStatus(Request $request)
+{
+    try {
+        // Log request payload
+        Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
+
+        // Validasi input
+        $request->validate([
+            'siswa_ids' => ['required','array', new NoXSSInput()],
+            'siswa_ids.*' => ['string','exists:tb_siswa,siswa_id',new NoXSSInput()],
+        ]);
+
+        Log::info('Siswa IDs yang akan diperbarui:', ['siswa_ids' => $request->siswa_ids]);
+
+        $affectedRows = Siswa::whereIn('siswa_id', $request->siswa_ids)
+            ->update(['status' => 'Lulus']);
+
+        Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
+
+        return response()->json([
+            'message' => 'Status berhasil diperbarui!',
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Terjadi kesalahan saat update status:', [
+            'error_message' => $e->getMessage(),
+            'error_trace' => $e->getTraceAsString(),
+        ]);
+
+        // Response dengan error
+        return response()->json([
+            'message' => 'Terjadi kesalahan saat memperbarui status!',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
     
 
     
