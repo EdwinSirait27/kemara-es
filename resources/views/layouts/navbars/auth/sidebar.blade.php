@@ -611,6 +611,13 @@
                   </a>
               </li>
           </ul>
+          <ul class="nav ms-4">
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Siswaarsipall') ? 'active' : '' }}" href="{{ url('Siswaarsipall') }}">
+                      <span class="nav-link-text ms-1">Data Seluruh Arsip</span>
+                  </a>
+              </li>
+          </ul>
       </div>
   </li>
 @endif

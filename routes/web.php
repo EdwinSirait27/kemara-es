@@ -224,6 +224,10 @@ Route::get('/Siswaarsip', [ArsipSiswaController::class, 'index'])->name('Siswaar
 Route::get('/Uploadarsip', [ArsipSiswaController::class, 'indexUpload'])->name('Uploadarsip.index');
 Route::post('/Uploadarsip/store', [ArsipSiswaController::class, 'store'])->name('Uploadarsip.store');
 Route::get('/Siswaarsip/dataarsipsiswa', [ArsipSiswaController::class, 'getArsipsiswa'])->name('arsipsiswa.dataarsipsiswa');
+//Arsipall
+Route::get('/Siswaarsipall', [ArsipSiswaController::class, 'indexArsipall'])->name('Siswaarsip.indexArsipall');
+Route::get('/Siswaarsipall/dataarsipsiswaall', [ArsipSiswaController::class, 'getArsipsiswaall'])->name('arsipsiswaall.dataarsipsiswaall');
+
 
    
    });
