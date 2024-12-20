@@ -278,16 +278,37 @@
                 ],
                 dom: 'Bfrtip', 
                 buttons: [
-                    {
-                        extend: 'excelHtml5', 
-                        text: 'Export to Excel', 
-                        className: 'btn btn-success',
-                        title: 'Data Siswa Lulus', // Nama file Excel
-                        exportOptions: {
-                            columns: ':visible' // Tentukan kolom yang akan diekspor
-                        }
-                    }
-                ],
+    {
+        extend: 'copyHtml5', // Menambahkan tombol copy
+        text: 'Copy', // Teks pada tombol
+        className: 'btn btn-primary', // Kelas untuk styling
+        title: 'Data Siswa Lulus', // Nama file untuk salinan
+        exportOptions: {
+            columns: ':visible' // Tentukan kolom yang akan dicopy
+        }
+    },
+    {
+        extend: 'excelHtml5', 
+        text: 'Export to Excel', 
+        className: 'btn btn-success', // Kelas untuk styling
+        title: 'Data Siswa Lulus', // Nama file Excel
+        exportOptions: {
+            columns: ':visible' // Tentukan kolom yang akan diekspor
+        }
+    }
+],
+
+                // buttons: [
+                //     {
+                //         extend: 'excelHtml5', 
+                //         text: 'Export to Excel', 
+                //         className: 'btn btn-success', // Tambahkan kelas untuk styling
+                //         title: 'Data Siswa Lulus', // Nama file Excel
+                //         exportOptions: {
+                //             columns: ':visible' // Tentukan kolom yang akan diekspor
+                //         }
+                //     }
+                // ],
                 columns: [{
                         data: 'siswa_id', 
                         name: 'siswa_id',

@@ -35,7 +35,7 @@ class DatasiswaController extends Controller
             // $siswa->created_at = $siswa->User ? $siswa->User->created_at : '-';
         return DataTables::of($siswa)
         ->addColumn('created_at', function ($siswa) {
-            return Carbon::parse($siswa->User->created_at)->format('Y');
+            return Carbon::parse($siswa->User->created_at)->format('Y-m-d');
         })
             ->make(true);
     }

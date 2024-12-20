@@ -53,7 +53,7 @@ class SiswalulusController extends Controller
             });
         return DataTables::of($users)
         ->addColumn('created_at', function ($user) {
-            return Carbon::parse($user->created_at)->format('d-m-Y');
+            return Carbon::parse($user->created_at)->format('Y-m-d');
         })
 
             ->make(true);
@@ -72,7 +72,7 @@ class SiswalulusController extends Controller
             // $siswa->created_at = $siswa->User ? $siswa->User->created_at : '-';
         return DataTables::of($siswa)
         ->addColumn('created_at', function ($siswa) {
-            return Carbon::parse($siswa->User->created_at)->format('d-m-Yd');
+            return Carbon::parse($siswa->user->created_at)->format('Y-m-d');
         })
             ->make(true);
     }
