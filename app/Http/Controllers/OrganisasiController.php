@@ -69,7 +69,7 @@ class OrganisasiController extends Controller
     }
     public function update(Request $request, $hashedId)
     {
-        // dd($request->all());
+        dd($request->all());
 
         $validatedData = $request->validate([
             'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),
@@ -157,7 +157,7 @@ class OrganisasiController extends Controller
                  $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
              }
          }],
-         'namaorganisasi' => ['required', 'string', 'max:4','unique:tb_namaorganisasi,namaorganisasi',new NoXSSInput(),
+         'namaorganisasi' => ['required', 'string', 'max:50','unique:tb_organisasi,namaorganisasi',new NoXSSInput(),
          function ($attribute, $value, $fail) {
              $sanitizedValue = strip_tags($value);
              if ($sanitizedValue !== $value) {

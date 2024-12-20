@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tb_tahunakademik', function (Blueprint $table) {
             $table->unsignedBigInteger('id',true)->nullable()->primary();
+            $table->unsignedBigInteger('kurikulum_id')->nullable();
+            $table->foreign('kurikulum_id')->references('id')->on('tb_kurikulum')->onDelete('set null');
             $table->integer('tahunakademik')->nullable();
             $table->enum('semester',['Ganjil','Genap'])->nullable();
             $table->date('tanggalmulai')->nullable();
@@ -22,7 +24,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

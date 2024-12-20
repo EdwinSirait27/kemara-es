@@ -24,6 +24,9 @@
                                   <th
                                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Kurikulum</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Tahun Akademik</th>
@@ -104,6 +107,8 @@
             },
         },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+          { data: 'Kurikulum_Nama', name: 'Kurikulum_Nama', className: 'text-center' },
+
           { data: 'tahunakademik', name: 'tahunakademik', className: 'text-center' },
           { data: 'semester', name: 'semester', className: 'text-center' },
           { data: 'tanggalmulai', name: 'tanggalmulai', className: 'text-center' },
@@ -215,6 +220,7 @@ $('#users-table').on('click', '.edit-tahunakademik', function(e) {
             method: 'GET',
             success: function(response) {
                 let tahunakademik = response.tahunakademik;
+                $('#editUserModal').find('input[name="kurikulum_id"]').val(tahunakademik.kurikulum_id);
                 $('#editUserModal').find('input[name="tahunakademik"]').val(tahunakademik.tahunakademik);
                 $('#editUserModal').find('input[name="semester"]').val(tahunakademik.semester);
                 $('#editUserModal').find('input[name="tanggalmulai"]').val(tahunakademik.tanggalmulai);

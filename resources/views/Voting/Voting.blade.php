@@ -25,8 +25,8 @@
         }
 
         .osis-card img {
-            width: 100%;
-            height: 200px;
+            width: 80%;
+            height: 400px;
             object-fit: cover;
         }
 

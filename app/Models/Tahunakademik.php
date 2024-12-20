@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use Seld\PharUtils\Timestamps;
 class Tahunakademik extends Model
 {
     use HasFactory;
     protected $table = 'tb_tahunakademik'; // Tentukan nama tabel secara eksplisit
     protected $primaryKey = 'id';
+    // public $timestamps = true;
 
     protected $fillable = [
+        'kurikulum_id',
         'tahunakademik',
         'semester',      
         'tanggalmulai',      
@@ -27,6 +29,11 @@ class Tahunakademik extends Model
     public function getUpdatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('m-d-Y H:i');
+    }
+
+    public function Kurikulum()
+    {
+        return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
     }
 }
 // <div class="row">

@@ -35,7 +35,15 @@
                 </ul>
             </div>
         @endif
-        
+        {{-- @if ($success->any())
+            <div class="alert alert-success" role='alert'>
+                <ul>
+                    @foreach ($success->all() as $suc)
+                        <li>{{ $suc }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif --}}
 
         <form action="{{ route('Tahunakademik.update', $hashedId) }}" method="POST">
             @csrf
@@ -71,6 +79,29 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="kurikulum_id" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Nama Kurikulum') }}
+                                    </label>
+                                    <div>
+                                        <select name="kurikulum_id" id="kurikulum_id" class="form-select">
+                                            <option value="" selected disabled>Pilih Kurikulum</option>
+                                            @foreach ($kurikulums as $optionKurikulum)
+                                                <option value="{{ $optionKurikulum->kurikulum_id }}" 
+                                                    {{ old('kurikulum_id', $kurikulum->kurikulum_id ?? '') == $optionKurikulum->kurikulum_id ? 'selected' : '' }}>
+                                                    {{ $optionKurikulum->kurikulum }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kurikulum_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="tahunakademik" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
                                     </label>
@@ -80,9 +111,14 @@
                                         value="{{ old('tahunakademik', $tahunakademik->tahunakademik) }}" required
                                         oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="4">
                                         <p class="text-muted text-xs mt-2">Contoh : 2024</p>
+
+                                 
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="semester" class="form-control-label">
@@ -105,14 +141,13 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    
                                     <label for="tanggalmulai" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Tanggal Mulai') }}
                                     </label>
@@ -125,6 +160,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="tanggalakhir" class="form-control-label">
@@ -135,14 +173,13 @@
                                             value="{{ old('tanggalakhir', $tahunakademik->tanggalakhir) }}"
                                             required>
 
+
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    
                                     <label for="status" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Status') }}
                                     </label>
@@ -161,6 +198,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ket" class="form-control-label">
@@ -171,16 +211,11 @@
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');"
                                             maxlength="50">
 
+
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                      
-{{-- @php
-                                $oldRoles = old('hakakses', $hakakses); 
-                            @endphp --}}
-                          
+
 
                         </div>
                         <div class="d-flex justify-content-end">
@@ -191,31 +226,13 @@
                                 {{ __('Cancel') }}
                             </a>
                         </div>
-                        
-                        {{-- <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
-                                {{ __('Update') }}
-                            </button> 
-                            <a href="{{ route('dashboardSU.index') }}" class="btn btn-secondary mt-4 mb-4">
-                                {{ __('Cancel') }}
-                            </a>
-                        </div> --}}
-                        
-                        {{-- <div class="d-flex justify-content-end">
-                            <button type="submit"
-                                class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Update' }}</button>
-                            <a href="{{ route('dashboardSU.index') }}" class="btn btn-secondary">Cancel
-
-                            </a>
-
-                        </div> --}}
         </form>
         <div class="alert alert-secondary mx-4" role="alert">
             <span class="text-white">
                 <strong>Keterangan</strong> <br>
             </span>
             <span class="text-white">-
-                <strong> Jika sudah ada Tahun Akademik yang sama dengan nilai semester Ganjil dan Genap, maka tidak bisa menginputkan data kembali </strong> <br>
+                <strong> Jika sudah ada Calon Ketua Osis yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
                
                     <br>
 

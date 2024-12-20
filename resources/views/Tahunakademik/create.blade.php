@@ -28,6 +28,28 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="kurikulum_id" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Nama Kurikulum') }}
+                                        </label>
+                                        <div class="@error('kurikulum_id')border border-danger rounded-3 @enderror">
+                                            <select name="kurikulum_id" id="kurikulum_id" class="form-select">
+                                                <option value="" selected disabled>Pilih Kurikulum</option>
+                                                @foreach ($kurikulums as $kurikulum)
+                                                    <option value="{{ $kurikulum->kurikulum_id }}">{{ $kurikulum->kurikulum }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('kurikulum_id')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
+
+                                      
+                                       
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="tahunakademik" class="form-control-label">
                                             <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
                                         </label>
@@ -43,9 +65,15 @@
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : 2024</p>
 
+                                       
+                                                {{-- <p class="text-muted text-xs mt-2">Contoh : Kurikulum Merdeka</p> --}}
+                                        
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="semester" class="form-control-label">
@@ -64,14 +92,13 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
-                                                {{-- <p class="text-muted text-xs mt-2">Contoh : Kurikulum Merdeka</p> --}}
                                         
+                                       
+        
+        
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tanggalmulai" class="form-control-label">
@@ -88,11 +115,12 @@
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
                                        
-        
-        
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="tanggalakhir" class="form-control-label">
@@ -109,46 +137,28 @@
                                                 @error('tanggalakhir')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="status" class="form-control-label">
-                                            <i class="fas fa-lock"></i> {{ __('Status') }}
-                                        </label>
-                                        <div class="@error('status')border border-danger rounded-3 @enderror">
-                                            <select class="form-control" name="status" id="status" required>
-                                                <option value="" disabled selected>Pilih Status</option>
-                                                <option value="Aktif">Aktif</option>
-                                                <option value="Tidak Aktif">Tidak Aktif</option>
-                                                
-                                            </select>
-                                            @error('status')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror                                
+                                                                  
                                     </div>
                                 </div>
                                 </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="ket" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Keterangan') }}
+                                    <label for="status" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Status') }}
                                     </label>
-                                    <div class="@error('ket')border border-danger rounded-3 @enderror">
-                                        <input class="form-control"
-                                        value="{{ e($ket ?? '') }}"
-                                        type="text"
-                                            id="ket" name="ket" aria-describedby="info-ket"
-                                            maxlength="50" required>
-                                            @error('ket')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
+                                    <div class="@error('status')border border-danger rounded-3 @enderror">
+                                        <select class="form-control" name="status" id="status" required>
+                                            <option value="" disabled selected>Pilih Status</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Tidak Aktif">Tidak Aktif</option>
+                                            
+                                        </select>
+                                        @error('status')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror      
+                                   
                                      
                                    
     
@@ -157,6 +167,31 @@
                                 </div>
                             </div>
                             </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ket" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Keterangan') }}
+                                        </label>
+                                        <div class="@error('ket')border border-danger rounded-3 @enderror">
+                                            <input class="form-control"
+                                            value="{{ e($ket ?? '') }}"
+                                            type="text"
+                                                id="ket" name="ket" aria-describedby="info-ket"
+                                                maxlength="50" required>
+                                                @error('ket')
+                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            @enderror
+                                                                  
+                                    </div>
+                                </div>
+                                </div>
+
+                           
+
+
+
                             </div>
                           
                             
