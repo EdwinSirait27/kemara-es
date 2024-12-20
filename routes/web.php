@@ -217,6 +217,7 @@ Route::get('/Siswalulusall', [SiswalulusController::class, 'indexSiswalulusall']
     Route::get('/siswalulus/datasiswalulus', [SiswalulusController::class, 'getSiswalulus'])->name('siswalulus.datasiswalulus');
     Route::get('/siswalulusall/datasiswalulusall', [SiswalulusController::class, 'getSiswalulusall'])->name('siswalulusall.datasiswalulusall');
     Route::get('/siswalulus/edit/{hashedId}', [SiswalulusController::class, 'edit'])->name('Siswalulus.edit');
+    Route::post('/siswalulus/update-status=alumni', [SiswalulusController::class, 'updateStatusalumni'])->name('Siswalulus.updateStatusalumni');
 
 //Arsip
 Route::get('/Siswaarsip', [ArsipSiswaController::class, 'index'])->name('Siswaarsip.index');

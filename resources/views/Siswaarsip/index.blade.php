@@ -256,11 +256,29 @@
                         </table>
                         <button type="button" onclick="window.location='{{ route('Uploadarsip.index') }}'" 
                         class="btn btn-primary btn-sm">
-                        Lihat Detail
+                        Upload Arsip
                     </button>
 
                      
                     </div>
+                </div>
+                <div class="alert alert-secondary mx-4" role="alert">
+                    <span class="text-white">
+                        <strong>Keterangan</strong> <br>
+                    </span>
+                    <span class="text-white">-
+                        <strong> Tolong pisahkan data arsip yang sudah ada contoh, sudah ada data semua arsip, dan ada data baru yang akan di upload, upload data baru saja yang penting tidak ada namalengkap siswa yang sudah ada di arsip diupload lagi maka akan gagal</strong> 
+                        <br>
+                        <strong> 
+                            Klik tutorial: 
+                            <a href="https://drive.google.com/file/d/1NbgarJgelNQW3jOC3HDtJSuvOF8jtYy8/view?usp=sharing" target="_blank">
+                                Lihat di sini
+                            </a> 
+                        </strong>
+                        
+                      
+        
+                    </span>
                 </div>
             </div>
         </div>

@@ -150,7 +150,7 @@
                             searchable: false,
                             className: 'text-center'
                         },
-                        { data: 'checkbox', orderable: false, searchable: false }
+                        { data: 'checkbox', orderable: false, searchable: false, className: 'text-center' }
                     ]
                 });
             });
@@ -274,6 +274,7 @@ $('#update-status-btn').on('click', function () {
         return;
     }
 
+    // Menampilkan konfirmasi SweetAlert
     Swal.fire({
         title: 'Konfirmasi',
         text: 'Apakah Anda yakin ingin memperbarui status siswa yang dipilih?',
@@ -297,7 +298,7 @@ $('#update-status-btn').on('click', function () {
                         title: 'Status diperbarui',
                         text: response.message
                     }).then(() => {
-                        location.reload();
+                        location.reload(); // Reload halaman setelah sukses
                     });
                 },
                 error: function (xhr) {

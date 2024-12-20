@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tb_siswaarsip', function (Blueprint $table) {
             $table->unsignedBigInteger('id', true)->nullable()->primary();
-            $table->string('NamaLengkap')->nullable();
-            $table->string('NomorInduk')->unique()->nullable();
+            $table->string('NamaLengkap')->unique()->nullable();
+            $table->string('NomorInduk')->nullable();
             $table->string('NamaPanggilan')->nullable();
             $table->enum('JenisKelamin', ['Laki-Laki', 'Perempuan'])->nullable();
             $table->string('NISN')->nullable();
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('Email')->nullable();
             $table->string('NomorTelephone')->nullable();
             $table->string('Kewarganegaraan')->nullable();
-            $table->string('NIK')->unique()->nullable();
+            $table->string('NIK')->nullable();
             $table->string('GolDarah')->nullable();
             $table->string('TinggalDengan')->nullable();
             $table->enum('StatusSiswa', ['Lengkap', 'Yatim','Piatu','Yatim Piatu'])->nullable();

@@ -54,23 +54,13 @@
                                     </a> --}}
                                 </div>
                         </form>
-                        <div class="alert alert-secondary mx-4" role="alert">
-                            <span class="text-white">
-                                <strong>Keterangan</strong> <br>
-                            </span>
-                            <span class="text-white">-
-                                <strong> Jika sudah ada Calon Ketua Osis yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
-                               
-                                    <br>
-                
-                            </span>
-                        </div>
+                        
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                         <script>
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
                                     title: 'Apakah Yakin?',
-                                    text: "Upload Arsip?",
+                                    text: "Upload?",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',
@@ -86,6 +76,18 @@
                         </script>
 
                     </div>
+                </div>
+                <div class="alert alert-secondary mx-4" role="alert">
+                    <span class="text-white">
+                        <strong>Keterangan</strong> <br>
+                    </span>
+                    <span class="text-white">-
+                        <strong> Jika sudah ada Calon Ketua Osis yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong>
+                         <br>
+                       
+                            <br>
+        
+                    </span>
                 </div>
             </div>
         </div>
