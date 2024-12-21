@@ -80,19 +80,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="guru_id" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Wali Kelas') }}
+                                        <i class="fas fa-lock"></i> {{ __('Guru Pembina') }}
                                     </label>
                                     <div>
+                                        
                                         <select name="guru_id" id="guru_id" class="form-select">
                                             <option value="" selected disabled>Pilih Guru</option>
-                                            @foreach ($gurus as $optionGuru)
-                                                <option value="{{ $optionGuru->guru_id }}" 
-                                                    {{ old('guru_id', $guru->guru_id ?? '') == $optionGuru->guru_id ? 'selected' : '' }}>
-                                                    {{ $optionGuru->Nama }}
-                                                </option>
-                                            @endforeach
+                                            @foreach ($gurus as $guru)
+                                            <option value="{{ $guru->guru_id }}" {{ $ekstrakulikuler->guru_id == $guru->guru_id ? 'selected' : '' }}>
+                                                {{ $guru->guru }} - {{ $guru->Nama }}
+                                            </option>
+                                        @endforeach
                                         </select>
+                                       
                                         @error('guru_id')
+                                        
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                         <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
@@ -169,6 +171,9 @@
                                         oninput="this.value = this.value.replace(/[^a-zA-Z0-9 ]/g, '');" maxlength="50">
             
                         </div>
+                        </div>
+                        </div>
+                        </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4 me-2">
                                 {{ __('Update') }}
@@ -188,7 +193,7 @@
                 <strong> Jika sudah ada Nama Ekstrakulikuler yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
                
                     <br>
-
+        
             </span>
         </div>
     </div>

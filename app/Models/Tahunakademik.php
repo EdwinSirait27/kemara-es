@@ -33,7 +33,7 @@ class Tahunakademik extends Model
 
     public function Kurikulum()
     {
-        return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
+        return $this->belongsTo(Kurikulum::class, 'kurikulum_id', 'id');
     }
 }
 // <div class="row">

@@ -117,7 +117,7 @@ public function getOsis()
     }
     public function update(Request $request, $hashedId)
     {
-        dd($request->all());
+        // dd($request->all());
         
         $validatedData = $request->validate([
             'siswa_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],

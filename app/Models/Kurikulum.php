@@ -15,13 +15,8 @@ class Kurikulum extends Model
         'status',
         'ket',
     ];
-    public function getCreatedAtAttribute($value)
+    public function tahunAkademik()
     {
-        return Carbon::parse($value)->format('m-d-Y H:i');
+        return $this->hasMany(TahunAkademik::class, 'kurikulum_id', 'id');
     }
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('m-d-Y H:i');
-    }
-   
 }

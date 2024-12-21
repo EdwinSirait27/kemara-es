@@ -84,7 +84,7 @@
                 <div class="col-auto my-auto">
                     <div class="h-100">
                         @php
-                            $siswaNama = $siswa->Nama;
+                            $siswaNama = $siswa->NamaLengkap;
                             $siswatugas = $siswa->TugasMengajar;
                         @endphp
 

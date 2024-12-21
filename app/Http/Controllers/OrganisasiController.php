@@ -65,11 +65,11 @@ class OrganisasiController extends Controller
         }
         $gurus = Guru::select('guru_id','Nama')->get();
 
-        return view('Organisasi.edit', compact('organisasi', 'hashedId',compact('gurus')));
+        return view('Organisasi.edit', compact('organisasi', 'hashedId','gurus'));
     }
     public function update(Request $request, $hashedId)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $validatedData = $request->validate([
             'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),
@@ -79,7 +79,7 @@ class OrganisasiController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'namaorganisasi' => ['required', 'string', 'max:50', 'unique:tb_organisasi,organisasi',new NoXSSInput(),
+            'namaorganisasi' => ['required', 'string', 'max:50', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -157,7 +157,7 @@ class OrganisasiController extends Controller
                  $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
              }
          }],
-         'namaorganisasi' => ['required', 'string', 'max:50','unique:tb_organisasi,namaorganisasi',new NoXSSInput(),
+         'namaorganisasi' => ['required', 'string', 'max:50',new NoXSSInput(),
          function ($attribute, $value, $fail) {
              $sanitizedValue = strip_tags($value);
              if ($sanitizedValue !== $value) {
@@ -185,7 +185,6 @@ class OrganisasiController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-    
         ]);
         try {
             Organisasi::create([

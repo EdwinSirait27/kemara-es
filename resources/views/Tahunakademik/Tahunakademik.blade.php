@@ -1,3 +1,4 @@
+
 @extends('layouts.user_type.auth')
 @section('title', 'Kemara-ES | Tahun Akademik')
 
@@ -24,7 +25,7 @@
                                   <th
                                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
-                                        <th
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Kurikulum</th>
                                     <th
@@ -106,9 +107,12 @@
                 return meta.row + 1; 
             },
         },
+        {
+                        data: 'Kurikulum_Nama',
+                        name: 'Kurikulum_Nama',
+                        className: 'text-center'
+                    },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
-          { data: 'Kurikulum_Nama', name: 'Kurikulum_Nama', className: 'text-center' },
-
           { data: 'tahunakademik', name: 'tahunakademik', className: 'text-center' },
           { data: 'semester', name: 'semester', className: 'text-center' },
           { data: 'tanggalmulai', name: 'tanggalmulai', className: 'text-center' },

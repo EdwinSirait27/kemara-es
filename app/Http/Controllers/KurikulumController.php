@@ -40,11 +40,11 @@ class KurikulumController extends Controller
                 return $kurikulum;
             });
         return DataTables::of($kurikulum)
-        ->addColumn('created_at', function ($user) {
-            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        ->addColumn('created_at', function ($kurikulum) {
+            return Carbon::parse($kurikulum->created_at)->format('m-d-Y');
         })
-        ->addColumn('updated_at', function ($user) {
-            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        ->addColumn('updated_at', function ($kurikulum) {
+            return Carbon::parse($kurikulum->updated_at)->format('m-d-Y');
         })           
         ->rawColumns(['checkbox', 'action'])
             ->make(true);

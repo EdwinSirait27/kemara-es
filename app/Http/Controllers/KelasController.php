@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use App\Rules\NoXSSInput;
+use Illuminate\Validation\Rule;
 
 
 class KelasController extends Controller
@@ -68,63 +69,58 @@ class KelasController extends Controller
         return view('Kelas.edit', compact('kelas', 'hashedId','gurus'));
     }
     public function update(Request $request, $hashedId)
-    {
-        $validatedData = $request->validate([
-            'guru_id' => ['required', 'string','unique:tb_kelas,guru_id', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'kelas' => ['required', 'string', 'max:4' ,'unique:tb_kelas,kelas',new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'string', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-    
-        ]);
-        $kelas = Kelas::get()->first(function ($u) use ($hashedId) {
-            $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-            return $expectedHash === $hashedId;
-        });
-        if (!$kelas) {
-            return redirect()->route('Kelas.index')->with('error', 'ID tidak valid.');
-        }
-        $kelasData = [
-            'guru_id' => $validatedData['guru_id'],
-            'kelas' => $validatedData['kelas'],
-            'kapasitas' => $validatedData['kapasitas'],
-            'status' => $validatedData['status'],
-            'ket' => $validatedData['ket'],
-            // 'ket' => $roles,
-        ];
-        $kelas->update($kelasData);
-        return redirect()->route('Kelas.index')->with('success', 'Kelas Berhasil Diupdate.');
+{
+    // Temukan kelas berdasarkan hashed ID
+    $kelas = Kelas::get()->first(function ($u) use ($hashedId) {
+        $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+        return $expectedHash === $hashedId;
+    });
+
+    if (!$kelas) {
+        return redirect()->route('Kelas.index')->with('error', 'ID tidak valid.');
     }
+
+    // Validasi data input
+    $validatedData = $request->validate([
+        'guru_id' => ['required','exists:tb_guru,guru_id', new NoXSSInput(),
+        function ($attribute, $value, $fail) {
+            $sanitizedValue = strip_tags($value);
+            if ($sanitizedValue !== $value) {
+                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+            }
+        }], // pastikan guru_id valid
+        'kelas' => 'required|string',
+        'kapasitas' => 'nullable|integer',
+        'status' => 'nullable|string',
+        'ket' => 'nullable|string',
+    ]);
+
+    // Cek apakah kombinasi guru_id dan kelas sudah ada
+    $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
+        ->where('kelas', $validatedData['kelas'])
+        ->where('id', '!=', $kelas->id) // pastikan bukan data yang sedang diperbarui
+        ->first();
+
+    if ($existingKelas) {
+        return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
+    }
+
+    // Data untuk pembaruan
+    $kelasData = [
+        'guru_id' => $validatedData['guru_id'],
+        'kelas' => $validatedData['kelas'],
+        'kapasitas' => $validatedData['kapasitas'] ?? $kelas->kapasitas,
+        'status' => $validatedData['status'] ?? $kelas->status,
+        'ket' => $validatedData['ket'] ?? $kelas->ket,
+    ];
+
+    // Perbarui data kelas
+    $kelas->update($kelasData);
+
+    return redirect()->route('Kelas.index')->with('success', 'Kelas Berhasil Diupdate.');
+}
+
+
     public function deleteKelas(Request $request)
     {
         $request->validate([
@@ -146,57 +142,103 @@ class KelasController extends Controller
         ]);
     }
     public function store(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-         'guru_id' => ['required', 'string','unique:tb_kelas,guru_id',new NoXSSInput(),
-         function ($attribute, $value, $fail) {
-             $sanitizedValue = strip_tags($value);
-             if ($sanitizedValue !== $value) {
-                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-             }
-         }],
-         'kelas' => ['required', 'string', 'max:4','unique:tb_kelas,kelas',new NoXSSInput(),
-         function ($attribute, $value, $fail) {
-             $sanitizedValue = strip_tags($value);
-             if ($sanitizedValue !== $value) {
-                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-             }
-         }],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'guru_id' => [
+            'required',
+            'exists:tb_guru,guru_id',
+            new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
-            }],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'string',  new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-    
-        ]);
-        try {
-            Kelas::create([
-                'guru_id' => $request->guru_id,
-                'kelas' => $request->kelas,
-                'kapasitas' => $request->kapasitas,
-                'status' => $request->status,
-                'ket' => $request->ket,
-            ]);
-            return redirect()->route('Kelas.index')->with('success', 'Kelas created successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to create Kelas: ' . $e->getMessage());
-        }
+            }
+        ], // pastikan guru_id valid
+        'kelas' => 'required|string',
+        'kapasitas' => 'nullable|integer',
+        'status' => 'nullable|string',
+        'ket' => 'nullable|string',
+    ]);
+
+    // Cek apakah kombinasi guru_id dan kelas sudah ada
+    $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
+        ->where('kelas', $validatedData['kelas'])
+        ->first();
+
+    if ($existingKelas) {
+        return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
     }
+
+    try {
+        // Simpan data ke tabel Kelas
+        Kelas::create([
+            'guru_id' => $validatedData['guru_id'],
+            'kelas' => $validatedData['kelas'],
+            'kapasitas' => $validatedData['kapasitas'],
+            'status' => $validatedData['status'],
+            'ket' => $validatedData['ket'],
+        ]);
+
+        return redirect()->route('Kelas.index')->with('success', 'Kelas berhasil dibuat!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal membuat Kelas: ' . $e->getMessage());
+    }
+}
+
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $request->validate([
+    //      'guru_id' => ['required', 'string','unique:tb_kelas,guru_id',new NoXSSInput(),
+    //      function ($attribute, $value, $fail) {
+    //          $sanitizedValue = strip_tags($value);
+    //          if ($sanitizedValue !== $value) {
+    //              $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+    //          }
+    //      }],
+    //      'kelas' => ['required', 'string', 'max:4','unique:tb_kelas,kelas',new NoXSSInput(),
+    //      function ($attribute, $value, $fail) {
+    //          $sanitizedValue = strip_tags($value);
+    //          if ($sanitizedValue !== $value) {
+    //              $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+    //          }
+    //      }],
+    //         'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
+    //         function ($attribute, $value, $fail) {
+    //             $sanitizedValue = strip_tags($value);
+    //             if ($sanitizedValue !== $value) {
+    //                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+    //             }
+    //         }],
+    //         'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
+    //         function ($attribute, $value, $fail) {
+    //             $sanitizedValue = strip_tags($value);
+    //             if ($sanitizedValue !== $value) {
+    //                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+    //             }
+    //         }],
+    //         'ket' => ['required', 'string',  new NoXSSInput(),
+    //         function ($attribute, $value, $fail) {
+    //             $sanitizedValue = strip_tags($value);
+    //             if ($sanitizedValue !== $value) {
+    //                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+    //             }
+    //         }],
+    
+    //     ]);
+    //     try {
+    //         Kelas::create([
+    //             'guru_id' => $request->guru_id,
+    //             'kelas' => $request->kelas,
+    //             'kapasitas' => $request->kapasitas,
+    //             'status' => $request->status,
+    //             'ket' => $request->ket,
+    //         ]);
+    //         return redirect()->route('Kelas.index')->with('success', 'Kelas created successfully!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Failed to create Kelas: ' . $e->getMessage());
+    //     }
+    // }
 }

@@ -77,7 +77,7 @@ class EkstrakulikulerController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'namaekstra' => ['required', 'string', 'max:50', 'unique:tb_ekstrakulikuler,namaekstra', new NoXSSInput(),
+            'namaekstra' => ['required', 'string', 'max:50', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -154,7 +154,7 @@ class EkstrakulikulerController extends Controller
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'namaekstra' => ['required', 'string', 'max:50','unique:tb_ekstrakulikuler,namaekstra', new NoXSSInput(),
+            'namaekstra' => ['required', 'string', 'max:50', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
