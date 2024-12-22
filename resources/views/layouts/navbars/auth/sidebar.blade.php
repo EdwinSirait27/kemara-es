@@ -621,6 +621,18 @@
       </div>
   </li>
 @endif
+@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+<li class="nav-item">
+    <a class="nav-link {{ Request::is('Datamengajar') ? 'active' : '' }}"
+        href="{{ url('Datamengajar') }}">
+        <div
+            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-tachometer-alt"></i>
+        </div>
+        <span class="nav-link-text ms-1">Data Mengajar</span>
+    </a>
+</li>
+@endif
 @if (Gate::allows('isGuru')|| Gate::allows('isKurikulum')|| Gate::allows('isSiswa'))
     <li class="nav-item">
         <a class="nav-link {{ Request::is('DatasiswaKGS') ? 'active' : '' }}"
@@ -646,8 +658,8 @@
 @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
 <li class="nav-item">
-    <a class="nav-link {{ Request::is('aturkelas') ? 'active' : '' }}"
-        href="{{ url('aturkelas') }}">
+    <a class="nav-link {{ Request::is('Kelassiswa') ? 'active' : '' }}"
+        href="{{ url('Kelassiswa') }}">
         <div
             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fas fa-cubes"></i>

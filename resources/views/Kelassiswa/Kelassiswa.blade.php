@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Data Mengajar')
+@section('title', 'Kemara-ES | Kelas Siswa')
 
 @section('content')
     <style>
@@ -13,19 +13,8 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     {{-- <h6>Role & Hak Akses</h6> --}}
-                    <h6><i class="fas fa-user-shield"></i> Data Mengajar</h6>
+                    <h6><i class="fas fa-user-shield"></i> Pengaturan Kelas</h6>
 
-                </div>
-                <div class="mb-1 col-1">
-                    <label for="filter-hari" class="form-label">Filter Hari</label>
-                    <select id="filter-hari" class="form-select">
-                        <option value="">Semua Hari</option>
-                        <option value="Senin">Senin</option>
-                        <option value="Selasa">Selasa</option>
-                        <option value="Rabu">Rabu</option>
-                        <option value="Kamis">Kamis</option>
-                        <option value="Jumat">Jumat</option>
-                    </select>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -37,26 +26,16 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Nama Guru</th>
+                                        Tahun Akademik</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mata Pelajaran</th>
-
+                                        Semester</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Hari</th>
+                                        Kelas</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Awal Pelajaran</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Akhir Pelajaran</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Awal Istirahat</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Akhir Istirahat</th>
+                                        Kapasitas</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Keterangan</th>
@@ -75,9 +54,9 @@
                             </thead>
 
                         </table>
-                        <button type="button" onclick="window.location='{{ route('Datamengajar.create') }}'"
+                        <button type="button" onclick="window.location='{{ route('Kelassiswa.create') }}'"
                             class="btn btn-primary btn-sm">
-                            Tambah Data Mengajar
+                            Tambah Pengaturan Kelas
                         </button>
 
                         {{-- <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
@@ -99,12 +78,11 @@
             let table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: {
-            url: "{{ route('datamengajar.datamengajar') }}",
-            data: function (d) {
-                d.hari = $('#filter-hari').val(); // Tambahkan parameter hari
-            }
-        },
+                ajax: '{{ route('kelassiswa.kelassiswa') }}',
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
                 columns: [{
                         data: 'id', // Kolom indeks
                         name: 'id',
@@ -115,39 +93,26 @@
                     },
                     // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
                     {
-                        data: 'Guru_Nama',
-                        name: 'Guru_Nama',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Mata_Nama',
-                        name: 'Mata_Nama',
+                        data: 'Tahun_Nama',
+                        name: 'Tahun_Nama',
                         className: 'text-center'
                     },
                     
                     {
-                        data: 'hari',
-                        name: 'hari',
+                        data: 'Semester_Nama',
+                        name: 'Semester_Nama',
                         className: 'text-center'
                     },
+                    
                     {
-                        data: 'awalpel',
-                        name: 'awalpel',
+                        data: 'Kelas_Nama',
+                        name: 'Kelas_Nama',
                         className: 'text-center'
                     },
+                    
                     {
-                        data: 'akhirpel',
-                        name: 'akhirpel',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'awalis',
-                        name: 'awalis',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'akhiris',
-                        name: 'akhiris',
+                        data: 'Kapasitas_Nama',
+                        name: 'Kapasitas_Nama',
                         className: 'text-center'
                     },
                     {
@@ -155,6 +120,8 @@
                         name: 'ket',
                         className: 'text-center'
                     },
+                    
+                    
                     {
                         data: 'action',
                         name: 'action',
@@ -184,9 +151,6 @@
             $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function() {
                 $(this).tooltip();
             });
-            $('#filter-hari').change(function () {
-        table.draw(); // Refresh tabel setelah filter diubah
-    });
 
             // Delete Selected Users
             $('#delete-selected').on('click', function() {
@@ -214,7 +178,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route('datamengajar.delete') }}',
+                            url: '{{ route('kelassiswa.delete') }}',
                             method: 'POST',
                             data: {
                                 ids: selectedIds,
@@ -252,22 +216,20 @@
             });
 
         });
-        $('#users-table').on('click', '.edit-datamengajar', function(e) {
+        $('#users-table').on('click', '.edit-kelassiswa', function(e) {
             e.preventDefault();
-            let datamengajarId = $(this).data('id');
+            let kelassiswaId = $(this).data('id');
             $.ajax({
-                url: `/datamengajar/${datamengajarId}/edit`,
+                url: `/kelassiswa/${kelassiswaId}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    let datamengajar = response.datamengajar;
-                    $('#editUserModal').find('input[name="guru_id"]').val(datamengajar.guru_id);
-                    $('#editUserModal').find('input[name="matapelajaran_id"]').val(datamengajar.matapelajaran_id);
-                    $('#editUserModal').find('textarea[name="hari"]').val(datamengajar.hari);
-                    $('#editUserModal').find('textarea[name="awalpel"]').val(datamengajar.awalpel);
-                    $('#editUserModal').find('textarea[name="akhirpel"]').val(datamengajar.akhirpel);
-                    $('#editUserModal').find('textarea[name="awalis"]').val(datamengajar.awalis);
-                    $('#editUserModal').find('textarea[name="akhiris"]').val(datamengajar.akhiris);
-                    $('#editUserModal').find('textarea[name="ket"]').val(datamengajar.ket);
+                    let kelassiswa = response.kelassiswa;
+                    $('#editUserModal').find('input[name="siswa_id"]').val(kelassiswa.siswa_id);
+                    $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
+                    $('#editUserModal').find('input[name="tahunakademik_id"]').val(kelassiswa.tahunakademik_id);
+                    $('#editUserModal').find('input[name="datamengajar_id"]').val(kelassiswa.datamengajar_id);
+                    $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
+                    $('#editUserModal').find('input[name="ket"]').val(kelassiswa.ket);
                     $('#editUserModal').modal('show');
                 },
                 error: function(err) {

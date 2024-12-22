@@ -28,39 +28,70 @@ class DatamengajarController extends Controller
     {
         $gurus = Guru::select('guru_id','Nama')->get(); // Ambil hanya kolom yang diperlukan
         $matpels = Matapelajaran::select('id','matapelajaran')->get(); // Ambil hanya kolom yang diperlukan
-        return view('Datamengajar.create', compact('gurus','matapels'));
+        return view('Datamengajar.create', compact('gurus','matpels'));
     }
     
 
-public function getDatamengajar()
-{
-    $datamengajar = Data_mengajar::with(['Guru','Matapelajaran'])
-        ->select(['id', 'matapelajaran_id', 'guru_id','hari','awalpel','akhirpel','awalis','akhiris','ket'])
-        ->get()
-        ->map(function ($datamengajar) {
-            $datamengajar->id_hashed = substr(hash('sha256', $datamengajar->id . env('APP_KEY')), 0, 8);
-            $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
-            $datamengajar->action = '
-                <a href="' . route('Datamengajar.edit', $datamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                    <i class="fas fa-user-edit text-secondary"></i>
-                </a>';
-
-            $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
-            $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
-            return $datamengajar;
-        });
-    return DataTables::of($datamengajar)
-        ->addColumn('Nama', function ($datamengajar) {
-            return $datamengajar->Guru->Nama;
-        })
-        ->addColumn('matapelajaran', function ($datamengajar) {
-            // Menampilkan gambar di tabel jika ada foto
-            return $datamengajar->Matapelajaran->matapelajaran;
-        })
-        
-        ->rawColumns(['checkbox', 'action'])
-        ->make(true);
-}
+    public function getDatamengajar(Request $request)
+    {
+        $query = Data_mengajar::with(['Guru', 'Matapelajaran'])
+            ->select(['id', 'matapelajaran_id', 'guru_id', 'hari', 'awalpel', 'akhirpel', 'awalis', 'akhiris', 'ket']);
+    
+        // Filter berdasarkan hari
+        if (request()->has('hari') && !empty(request()->hari)) {
+            $query->where('hari', request()->hari);
+        }
+    
+        $datamengajar = $query->get()
+            ->map(function ($datamengajar) {
+                $datamengajar->id_hashed = substr(hash('sha256', $datamengajar->id . env('APP_KEY')), 0, 8);
+                $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
+                $datamengajar->action = '
+                    <a href="' . route('Datamengajar.edit', $datamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                        <i class="fas fa-user-edit text-secondary"></i>
+                    </a>';
+                $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
+                $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
+                return $datamengajar;
+            });
+    
+        return DataTables::of($datamengajar)
+            ->addColumn('Nama', function ($datamengajar) {
+                return $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
+            })
+            ->addColumn('matapelajaran', function ($datamengajar) {
+                return $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
+            })
+            ->rawColumns(['checkbox', 'action'])
+            ->make(true);
+    }
+    
+    // public function getDatamengajar()
+    // {
+    //     $datamengajar = Data_mengajar::with(['Guru','Matapelajaran'])
+    //         ->select(['id', 'matapelajaran_id', 'guru_id','hari','awalpel','akhirpel','awalis','akhiris','ket'])
+    //         ->get()
+    //         ->map(function ($datamengajar) {
+    //             $datamengajar->id_hashed = substr(hash('sha256', $datamengajar->id . env('APP_KEY')), 0, 8);
+    //             $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
+    //             $datamengajar->action = '
+    //                 <a href="' . route('Datamengajar.edit', $datamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+    //                     <i class="fas fa-user-edit text-secondary"></i>
+    //                 </a>';
+    //             $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
+    //             $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
+    //             return $datamengajar;
+    //         });
+    //     return DataTables::of($datamengajar)
+    //         ->addColumn('Nama', function ($datamengajar) {
+    //             return $datamengajar->Guru->Nama;
+    //         })
+    //         ->addColumn('matapelajaran', function ($datamengajar) {
+    //             return $datamengajar->Matapelajaran->matapelajaran;
+    //         })
+    //         ->rawColumns(['checkbox', 'action'])
+    //         ->make(true);
+    // }
 
     public function edit($hashedId)
 {
@@ -104,28 +135,28 @@ public function getDatamengajar()
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'awalpel' => ['required', 'time', new NoXSSInput(),
+            'awalpel' => ['required', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'akhirpel' => ['required', 'time', new NoXSSInput(),
+            'akhirpel' => ['required', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'awalis' => ['required', 'time', new NoXSSInput(),
+            'awalis' => ['required',  new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'akhiris' => ['required', 'time', new NoXSSInput(),
+            'akhiris' => ['required', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
@@ -185,33 +216,34 @@ public function getDatamengajar()
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'awalpel' => ['required', 'time', new NoXSSInput(),
+            'awalpel' => ['required',new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'akhirpel' => ['required', 'time', new NoXSSInput(),
+            'akhirpel' => ['required', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'awalis' => ['required', 'time', new NoXSSInput(),
+            'awalis' => ['required',  new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
             }],
-            'akhiris' => ['required', 'time', new NoXSSInput(),
+            'akhiris' => ['required',new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
                 if ($sanitizedValue !== $value) {
                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                 }
+
             }],
             'ket' => ['required', 'max:50', new NoXSSInput(),
             function ($attribute, $value, $fail) {

@@ -33,23 +33,39 @@ class ArsipSiswaController extends Controller
         
         return view('Uploadarsip.index');
     }
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => ['required','file','mimes:xlsx,xls,csv|max:5120'],
+    //     ]);
+
+    //     $filePath = $request->file('file')->store('uploads/excel');
+
+    //     try {
+    //         Excel::import(new arsip, $filePath);
+    //         Storage::delete($filePath);
+    //         return redirect()->back()->with('success', 'Data arsip siswa berhasil diunggah dan diproses.');
+    //     } catch (\Exception $e) {
+    //         Storage::delete($filePath);
+    //         return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat memproses file: ' . $e->getMessage()]);
+    //     }
+    // }
     public function store(Request $request)
-    {
-        $request->validate([
-            'file' => ['required','file','mimes:xlsx,xls,csv|max:5120'],
-        ]);
+{
+    $request->validate([
+        'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:5120'],
+    ]);
 
-        $filePath = $request->file('file')->store('uploads/excel');
+    try {
+        // Menggunakan file langsung dari request tanpa menyimpan ke disk
+        Excel::import(new arsip, $request->file('file'));
 
-        try {
-            Excel::import(new arsip, $filePath);
-            Storage::delete($filePath);
-            return redirect()->back()->with('success', 'Data arsip siswa berhasil diunggah dan diproses.');
-        } catch (\Exception $e) {
-            Storage::delete($filePath);
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat memproses file: ' . $e->getMessage()]);
-        }
+        return redirect()->back()->with('success', 'Data arsip siswa berhasil diunggah dan diproses.');
+    } catch (\Exception $e) {
+        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat memproses file: ' . $e->getMessage()]);
     }
+}
+
     public function getArsipsiswa()
     {
         // $siswa = Siswa::all()->load('user')->makeHidden(['foto'])
