@@ -24,12 +24,12 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tahun Akademik</th> 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tahun Akademik</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Semester</th>
+                                        Semester</th> 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Kelas</th>
@@ -91,7 +91,6 @@
                             return meta.row + 1;
                         },
                     },
-                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
                     {
                         data: 'Tahun_Nama',
                         name: 'Tahun_Nama',
@@ -224,10 +223,8 @@
                 method: 'GET',
                 success: function(response) {
                     let kelassiswa = response.kelassiswa;
-                    $('#editUserModal').find('input[name="siswa_id"]').val(kelassiswa.siswa_id);
                     $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
                     $('#editUserModal').find('input[name="tahunakademik_id"]').val(kelassiswa.tahunakademik_id);
-                    $('#editUserModal').find('input[name="datamengajar_id"]').val(kelassiswa.datamengajar_id);
                     $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
                     $('#editUserModal').find('input[name="ket"]').val(kelassiswa.ket);
                     $('#editUserModal').modal('show');

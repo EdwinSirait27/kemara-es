@@ -506,34 +506,6 @@
                           </a>
                       </li>
                   </ul>
-                  {{-- <ul class="nav ms-4">
-                      <li class="nav-item">
-                          <a class="nav-link {{ Request::is('tombolosis') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
-                              <span class="nav-link-text ms-1">Tombol Osis</span>
-                          </a>
-                      </li>
-                  </ul>
-                  <ul class="nav ms-4">
-                      <li class="nav-item">
-                          <a class="nav-link {{ Request::is('tomboleditdata') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
-                              <span class="nav-link-text ms-1">Tombol Edit Data</span>
-                          </a>
-                      </li>
-                  </ul>
-                  <ul class="nav ms-4">
-                      <li class="nav-item">
-                          <a class="nav-link {{ Request::is('tombolnilaiguru') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
-                              <span class="nav-link-text ms-1">Tombol Nilai Guru</span>
-                          </a>
-                      </li>
-                  </ul>
-                  <ul class="nav ms-4">
-                      <li class="nav-item">
-                          <a class="nav-link {{ Request::is('tombolnilaikurikulum') ? 'active' : '' }}" href="{{ url('user-profileSU') }}">
-                              <span class="nav-link-text ms-1">Tombol Nilai Kurikulum</span>
-                          </a>
-                      </li>
-                  </ul> --}}
               </div>
           </li>
           @endif
@@ -655,7 +627,7 @@
         </a>
     </li>
 @endif
-@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+{{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
 <li class="nav-item">
     <a class="nav-link {{ Request::is('Kelassiswa') ? 'active' : '' }}"
@@ -666,6 +638,36 @@
         </div>
         <span class="nav-link-text ms-1">Pengaturan Kelas</span>
     </a>
+</li>
+@endif --}}
+@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+<li class="nav-item">
+  <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples2" role="button"
+      aria-expanded="false" aria-controls="laravelExamples2">
+      <div
+          class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+          <i class="fas fa-cubes"></i> 
+      </div>
+      <span class="nav-link-text ms-1">Pengauran Kelas</span>
+  </a>
+  <div class="collapse" id="laravelExamples2">
+      <ul class="nav ms-4">
+          <li class="nav-item">
+              <a class="nav-link {{ Request::is('Kelassiswa') ? 'active' : '' }}" href="{{ url('Kelassiswa') }}">
+                  <span class="nav-link-text ms-1">Pengaturan Kelas Siswa</span>
+              </a>
+          </li>
+      </ul>
+  </div>
+  <div class="collapse" id="laravelExamples2">
+      <ul class="nav ms-4">
+          <li class="nav-item">
+              <a class="nav-link {{ Request::is('Tambahsiswa') ? 'active' : '' }}" href="{{ url('Kelassiswa') }}">
+                  <span class="nav-link-text ms-1">Tambah Siswa ke Kelas</span>
+              </a>
+          </li>
+      </ul>
+  </div>
 </li>
 @endif
 @if (Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))

@@ -13,18 +13,14 @@ return new class extends Migration
     {
         Schema::create('tb_kelas_siswa', function (Blueprint $table) {
             $table->unsignedBigInteger('id', true)->nullable()->primary();
-            $table->unsignedBigInteger('siswa_id')->nullable();
             $table->unsignedBigInteger('kelas_id')->nullable();
             $table->unsignedBigInteger('tahunakademik_id')->nullable();
-            $table->unsignedBigInteger('datamengajar_id')->nullable();
-            $table->foreign('siswa_id')->references('siswa_id')->on('tb_siswa')->onDelete('set null'); 
+            $table->string('ket')->nullable();
             $table->foreign('kelas_id')->references('id')->on('tb_kelas')->onDelete('set null'); 
             $table->foreign('tahunakademik_id')->references('id')->on('tb_tahunakademik')->onDelete('set null'); 
-            $table->foreign('datamengajar_id')->references('id')->on('tb_datamengajar')->onDelete('set null'); 
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

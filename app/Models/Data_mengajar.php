@@ -30,4 +30,9 @@ class Data_mengajar extends Model
     {
         return $this->belongsTo(Guru::class, 'guru_id');
     }
+    public function KelasSiswa()
+{
+    return $this->hasMany(Kelassiswa::class, 'datamengajar_id', 'id');
+}
+
 }

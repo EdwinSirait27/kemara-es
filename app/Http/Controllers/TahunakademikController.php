@@ -88,8 +88,6 @@ class TahunakademikController extends Controller
                     $count = Tahunakademik::where('tahunakademik', $value)
                         ->whereIn('semester', ['Ganjil', 'Genap'])
                         ->count();
-        
-                    // Jika lebih dari dua entri, tolak input
                     if ($count >= 2) {
                         $fail("Tahun Akademik $value sudah memiliki maksimal 2 semester (Ganjil dan Genap).");
                     }

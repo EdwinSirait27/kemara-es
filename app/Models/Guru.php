@@ -50,4 +50,9 @@ class Guru extends Model
         return Carbon::parse($value)->format('m-d-Y H:i');
     }
     
+    public function Kelassiswa()
+    {
+        return $this->hasMany(Kelassiswa::class, 'guru_id', 'id');
+    }
+    
 }

@@ -17,6 +17,10 @@ class Matapelajaran extends Model
         'status',
         'ket',
     ];
+    public function Kelassiswa()
+    {
+        return $this->hasMany(Kelassiswa::class, 'matapelajaran_id', 'id');
+    }
    
     
 }

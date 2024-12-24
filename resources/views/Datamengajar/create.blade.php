@@ -207,10 +207,10 @@
                             
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Buat Tahun Akademik') }}
+                                        {{ __('Buat Data Mengajar') }}
                                     </button>
 
-                                    <a href="{{ route('Tahunakademik.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('Datamengajar.index') }}" class="btn btn-secondary">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>
@@ -220,8 +220,7 @@
                                 <strong>Keterangan</strong> <br>
                             </span>
                             <span class="text-white">-
-                                <strong> Jika sudah ada Tahun Akademik yang sama dengan nilai semester Ganjil dan Genap, maka tidak bisa menginputkan data kembali </strong> <br>
-                               
+                                <strong> Silahkan lengkapi data diatas agar bisa di proses </strong> <br>
                                     <br>
                 
                             </span>
@@ -231,7 +230,7 @@
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
                                     title: 'Apakah Yakin?',
-                                    text: "Buat Tahun Akademik?",
+                                    text: "Buat Data Mengajar?",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',
