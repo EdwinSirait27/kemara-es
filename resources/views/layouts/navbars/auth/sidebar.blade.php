@@ -648,12 +648,12 @@
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i class="fas fa-cubes"></i> 
       </div>
-      <span class="nav-link-text ms-1">Pengauran Kelas</span>
+      <span class="nav-link-text ms-1">Pengaturan Kelas</span>
   </a>
   <div class="collapse" id="laravelExamples2">
       <ul class="nav ms-4">
           <li class="nav-item">
-              <a class="nav-link {{ Request::is('Kelassiswa') ? 'active' : '' }}" href="{{ url('Kelassiswa') }}">
+              <a class="nav-link {{ Request::is('Pengaturankelas') ? 'active' : '' }}" href="{{ url('Pengaturankelas') }}">
                   <span class="nav-link-text ms-1">Pengaturan Kelas Siswa</span>
               </a>
           </li>

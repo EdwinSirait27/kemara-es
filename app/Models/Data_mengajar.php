@@ -34,5 +34,9 @@ class Data_mengajar extends Model
 {
     return $this->hasMany(Kelassiswa::class, 'datamengajar_id', 'id');
 }
+    public function Pengaturankelas()
+{
+    return $this->hasMany(Pengaturankelas::class, 'datamengajar_id', 'id');
+}
 
 }

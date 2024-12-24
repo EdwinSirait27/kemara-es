@@ -11,8 +11,8 @@ class Kelassiswa extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'kelas_id',
-        'tahunakademik_id',
+        'siswa_id',
+        'pengaturankelas_id',
         'ket',
  
     ];
@@ -28,18 +28,9 @@ class Kelassiswa extends Model
     {
         return $this->belongsTo(Siswa::class, 'siswa_id');
     }
-    public function Datamengajar()
+    public function Pengaturankelas()
     {
-        return $this->belongsTo(Data_mengajar::class, 'datamengajar_id','id');
+        return $this->belongsTo(Pengaturankelas::class, 'pengaturankelas_id');
     }
    
-    public function Tahunakademik()
-    {
-        return $this->belongsTo(Tahunakademik::class, 'tahunakademik_id','id');
-    }
-    public function Kelas()
-    {
-        return $this->belongsTo(Kelas::class, 'kelas_id','id');
-    }
-  
 }

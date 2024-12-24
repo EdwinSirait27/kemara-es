@@ -113,4 +113,9 @@ class Siswa extends Model
     {
         return $this->hasOne(User::class, 'siswa_id', 'siswa_id');
     }
+    public function Kelassiswa()
+    {
+        return $this->hasMany(Kelassiswa::class, 'siswa_id', 'siswa_id');
+    }
+
 }

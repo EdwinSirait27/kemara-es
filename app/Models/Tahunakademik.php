@@ -35,9 +35,13 @@ class Tahunakademik extends Model
     {
         return $this->belongsTo(Kurikulum::class, 'kurikulum_id', 'id');
     }
-    public function Kelassiswa()
+    // public function Kelassiswa()
+    // {
+    //     return $this->hasMany(Kelassiswa::class, 'tahunakademik_id', 'id');
+    // }
+    public function Pengaturankelas()
     {
-        return $this->hasMany(Kelassiswa::class, 'tahunakademik_id', 'id');
+        return $this->hasMany(Pengaturankelas::class, 'tahunakademik_id', 'id');
     }
 }
 // <div class="row">

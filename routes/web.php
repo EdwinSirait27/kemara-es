@@ -40,6 +40,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AdminKepalaSekolahController;
 use App\Http\Controllers\KelassiswaController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\PengaturankelasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -237,6 +238,7 @@ Route::get('/Datamengajar', [DatamengajarController::class, 'index'])->name('Dat
 Route::get('/Datamengajar/edit/{hashedId}', [DatamengajarController::class, 'edit'])->name('Datamengajar.edit');
 Route::put('/Datamengajar/{hashedId}', [DatamengajarController::class, 'update'])->name('Datamengajar.update');
 // kelassiswa
+
 Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassiswa.index');
     Route::get('/Kelassiswa/kelassiswa', [KelassiswaController::class, 'getKelassiswa'])->name('kelassiswa.kelassiswa');
     Route::get('/siswa', [KelassiswaController::class, 'getSiswa'])->name('siswa.siswa');
@@ -246,6 +248,15 @@ Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassi
     Route::post('/Kelassiswa', [KelassiswaController::class, 'store'])->name('Kelassiswa.store');
 Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
 Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');
+
+// pengaturan kelas
+Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->name('Pengaturankelas.index');
+    Route::get('/Pengaturankelas/pengaturankelas', [PengaturankelasController::class, 'getPengaturankelas'])->name('pengaturankelas.pengaturankelas');
+    Route::delete('/Pengaturankelas/delete', [PengaturankelasController::class, 'deletePengaturankelas'])->name('pengaturankelas.delete');
+    Route::get('Pengaturankelas/create', [PengaturankelasController::class, 'create'])->name('Pengaturankelas.create');
+    Route::post('/Pengaturankelas', [PengaturankelasController::class, 'store'])->name('Pengaturankelas.store');
+Route::get('/Pengaturankelas/edit/{hashedId}', [PengaturankelasController::class, 'edit'])->name('Pengaturankelas.edit');
+Route::put('/Pengaturankelas/{hashedId}', [PengaturankelasController::class, 'update'])->name('Pengaturankelas.update');
 
 
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_kelas_siswa', function (Blueprint $table) {
+        Schema::create('tb_pengaturan_kelas', function (Blueprint $table) {
             $table->unsignedBigInteger('id', true)->nullable()->primary();
             $table->unsignedBigInteger('kelas_id')->nullable();
             $table->unsignedBigInteger('tahunakademik_id')->nullable();
@@ -21,11 +21,12 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_kelas_siswa');
+        Schema::dropIfExists('tb_pengaturan_kelas');
     }
 };

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelassiswa;
+use App\Models\Pengaturankelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Data_mengajar;
+
 use App\Models\Siswa;
 use App\Models\Tahunakademik;
 use App\Models\Kelas;
@@ -32,18 +34,17 @@ class KelassiswaController extends Controller
                ->where('Status', 'Aktif')
                ->get();
 
-    $tahuns = Tahunakademik::all();
-    $datamengajars = Data_mengajar::select('id','matapelajaran_id','guru_id','hari')->get();
-    $kelass = Kelas::all();
+    $pengaturans = Pengaturankelas::all();
         
-        return view('Kelassiswa.create', compact('siswas','tahuns','datamengajars','kelass'));
+        return view('Kelassiswa.create', compact('siswas','pengaturans'));
     }
     
 
 public function getSiswa()
 {
-    $siswa = Siswa::select(['siswa_id', 'NamaLengkap'])
-        ->get()
+    $siswa = Siswa::select('siswa_id', 'NamaLengkap','status')
+    ->where('Status', 'Aktif')
+    ->get()
         ->map(function ($siswa) {
             $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->id_hashed . '">';
             
@@ -53,31 +54,31 @@ public function getSiswa()
         ->rawColumns(['checkbox'])
         ->make(true);
 }
- public function getDatamengajar()
-    {
-        $datamengajar = Data_mengajar::with(['Guru','Matapelajaran'])
-            ->select(['id', 'matapelajaran_id', 'guru_id'])
-            ->get()
-            ->map(function ($datamengajar) {
-                $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
-                $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
-                $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
-                return $datamengajar;
-            });
-        return DataTables::of($datamengajar)
-            ->addColumn('Nama', function ($datamengajar) {
-                return $datamengajar->Guru->Nama;
-            })
-            ->addColumn('matapelajaran', function ($datamengajar) {
-                return $datamengajar->Matapelajaran->matapelajaran;
-            })
-            ->rawColumns(['checkbox', 'action'])
-            ->make(true);
-    }
+//  public function getDatamengajar()
+//     {
+//         $datamengajar = Data_mengajar::with(['Guru','Matapelajaran'])
+//             ->select(['id', 'matapelajaran_id', 'guru_id'])
+//             ->get()
+//             ->map(function ($datamengajar) {
+//                 $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
+//                 $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
+//                 $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
+//                 return $datamengajar;
+//             });
+//         return DataTables::of($datamengajar)
+//             ->addColumn('Nama', function ($datamengajar) {
+//                 return $datamengajar->Guru->Nama;
+//             })
+//             ->addColumn('matapelajaran', function ($datamengajar) {
+//                 return $datamengajar->Matapelajaran->matapelajaran;
+//             })
+//             ->rawColumns(['checkbox', 'action'])
+//             ->make(true);
+//     }
     public function getKelassiswa()
 {
-    $kelassiswa = Kelassiswa::with(['Tahunakademik','Kelas'])
-        ->select(['id', 'kelas_id', 'tahunakademik_id','ket']) // Hanya memilih kolom tahunakademik_id
+    $kelassiswa = Kelassiswa::with(['Pengaturankelas','Siswa'])
+        ->select(['id', 'pengaturankelas_id']) // Hanya memilih kolom tahunakademik_id
         ->get()
         ->map(function ($kelassiswa) {
             $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->id . env('APP_KEY')), 0, 8);
@@ -87,70 +88,30 @@ public function getSiswa()
                     <i class="fas fa-user-edit text-secondary"></i>
                 </a>';
 
-            $kelassiswa->Tahun_Nama = $kelassiswa->Tahunakademik ? $kelassiswa->Tahunakademik->tahunakademik : 'belum di setel';
-            $kelassiswa->Semester_Nama = $kelassiswa->Tahunakademik ? $kelassiswa->Tahunakademik->semester : 'belum di setel';
-            $kelassiswa->Kelas_Nama = $kelassiswa->Kelas ? $kelassiswa->Kelas->kelas : 'belum di setel';
-            $kelassiswa->Kapasitas_Nama = $kelassiswa->Kelas ? $kelassiswa->Kelas->kapasitas : 'belum di setel';
+            $kelassiswa->Tahun_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik : 'belum di setel';
+            $kelassiswa->Semester_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->semester : 'belum di setel';
+            $kelassiswa->Kelas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kelas : 'belum di setel';
+            $kelassiswa->Kapasitas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kapasitas : 'belum di setel';
             return $kelassiswa;
         });
     return DataTables::of($kelassiswa)
         ->addColumn('tahunakademik', function ($kelassiswa) {
-            return $kelassiswa->Tahunakademik->tahunakademik;
+            return $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik;
         })
         ->addColumn('semester', function ($kelassiswa) {
-            return $kelassiswa->Tahunakademik->semester;
+            return $kelassiswa->Pengaturankelas->Tahunakademik->semester;
         })
         ->addColumn('kelas', function ($kelassiswa) {
-            return $kelassiswa->Kelas->kelas;
+            return $kelassiswa->Pengaturankelas->Kelas->kelas;
         })
         ->addColumn('kapasitas', function ($kelassiswa) {
-            return $kelassiswa->Kelas->kapasitas;
+            return $kelassiswa->Pengaturankelas->Kelas->kapasitas;
         })
         
         ->rawColumns(['checkbox', 'action'])
         ->make(true);
 }
 
-// public function getKelassiswa()
-// {
-//     $kelassiswa = Kelassiswa::with(['Siswa','Tahunakademik','Kelas','Datamengajar'])
-//         ->select(['id', 'siswa_id', 'kelas_id', 'tahunakademik_id','datamengajar_id','ket'])
-//         ->get()
-//         ->map(function ($kelassiswa) {
-//             $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->id . env('APP_KEY')), 0, 8);
-//             $kelassiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelassiswa->id_hashed . '">';
-//             $kelassiswa->action = '
-//                 <a href="' . route('Kelassiswa.edit', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-//                     <i class="fas fa-user-edit text-secondary"></i>
-//                 </a>';
-
-//             $kelassiswa->Siswa_Nama = $kelassiswa->Siswa ? $kelassiswa->Siswa->NamaLengkap : '-';
-//             $kelassiswa->Tahun_Nama = $kelassiswa->Tahunakademik ? $kelassiswa->Tahunakademik->tahunakademik : 'belum di setel';
-//             $kelassiswa->Semester_Nama = $kelassiswa->Tahunakademik ? $kelassiswa->Tahunakademik->semester : 'belum di setel';
-//             $kelassiswa->Kelas_Nama = $kelassiswa->Kelas ? $kelassiswa->Kelas->kelas : 'belum di setel';
-//             $kelassiswa->Kapasitas_Nama = $kelassiswa->Kelas ? $kelassiswa->Kelas->kapasitas : 'belum di setel';
-//             return $kelassiswa;
-//         });
-//     return DataTables::of($kelassiswa)
-//         ->addColumn('NamaLengkap', function ($kelassiswa) {
-//             return $kelassiswa->Siswa->NamaLengkap;
-//         })
-//         ->addColumn('tahunakademik', function ($kelassiswa) {
-//             return $kelassiswa->Tahunakademik->tahunakademik;
-//         })
-//         ->addColumn('semester', function ($kelassiswa) {
-//             return $kelassiswa->Tahunakademik->semester;
-//         })
-//         ->addColumn('kelas', function ($kelassiswa) {
-//             return $kelassiswa->Kelas->kelas;
-//         })
-//         ->addColumn('kapasitas', function ($kelassiswa) {
-//             return $kelassiswa->Kelas->kapasitas;
-//         })
-        
-//         ->rawColumns(['checkbox', 'action'])
-//         ->make(true);
-// }
 
     public function edit($hashedId)
 {
@@ -163,10 +124,12 @@ public function getSiswa()
     if (!$kelassiswa) {
         abort(404, 'Kelas Siswa not found.');
     }
-    $tahuns = Tahunakademik::all();
-    $kelass = Kelas::all();
+    $pengaturans = Pengaturankelas::all();
+    $siswas = Siswa::select('siswa_id', 'NamaLengkap', 'status')
+               ->where('Status', 'Aktif')
+               ->get();
 
-    return view('Kelassiswa.edit', compact('kelassiswa', 'hashedId', 'tahuns','kelass'));
+    return view('Kelassiswa.edit', compact('kelassiswa', 'hashedId', 'pengaturans','siswas'));
 }
 //     public function edit($hashedId)
 // {
