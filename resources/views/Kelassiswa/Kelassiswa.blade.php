@@ -36,10 +36,7 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Kapasitas</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Keterangan</th>
-
+                                  
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
@@ -113,14 +110,7 @@
                         data: 'Kapasitas_Nama',
                         name: 'Kapasitas_Nama',
                         className: 'text-center'
-                    },
-                    {
-                        data: 'ket',
-                        name: 'ket',
-                        className: 'text-center'
-                    },
-                    
-                    
+                    }, 
                     {
                         data: 'action',
                         name: 'action',
@@ -223,10 +213,9 @@
                 method: 'GET',
                 success: function(response) {
                     let kelassiswa = response.kelassiswa;
-                    $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
-                    $('#editUserModal').find('input[name="tahunakademik_id"]').val(kelassiswa.tahunakademik_id);
-                    $('#editUserModal').find('input[name="kelas_id"]').val(kelassiswa.kelas_id);
-                    $('#editUserModal').find('input[name="ket"]').val(kelassiswa.ket);
+                    $('#editUserModal').find('input[name="siswa_id"]').val(kelassiswa.siswa_id);
+                    $('#editUserModal').find('input[name="pengaturankelas_id"]').val(kelassiswa.pengaturankelas_id);
+                   
                     $('#editUserModal').modal('show');
                 },
                 error: function(err) {

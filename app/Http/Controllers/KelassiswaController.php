@@ -6,16 +6,8 @@ use App\Models\Kelassiswa;
 use App\Models\Pengaturankelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
-
-use App\Models\Data_mengajar;
-
 use App\Models\Siswa;
-use App\Models\Tahunakademik;
-use App\Models\Kelas;
-// use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use Carbon\Carbon;
 use App\Rules\NoXSSInput;
 class KelassiswaController extends Controller
 {
@@ -38,6 +30,14 @@ class KelassiswaController extends Controller
         
         return view('Kelassiswa.create', compact('siswas','pengaturans'));
     }
+    public function show()
+    {
+        $lihatsiswas = Kelassiswa::with('Siswa','Pengaturankelas')->select('id', 'siswa_id', 'pengaturankelas_id')->get();
+$jumlahsiswa = Kelassiswa::select('siswa_id')->count();
+    // $pengaturans = Pengaturankelas::all();
+        
+        return view('Kelassiswa.show', compact('lihatsiswas','jumlahsiswa'));
+    }
     
 
 public function getSiswa()
@@ -54,40 +54,25 @@ public function getSiswa()
         ->rawColumns(['checkbox'])
         ->make(true);
 }
-//  public function getDatamengajar()
-//     {
-//         $datamengajar = Data_mengajar::with(['Guru','Matapelajaran'])
-//             ->select(['id', 'matapelajaran_id', 'guru_id'])
-//             ->get()
-//             ->map(function ($datamengajar) {
-//                 $datamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $datamengajar->id_hashed . '">';
-//                 $datamengajar->Guru_Nama = $datamengajar->Guru ? $datamengajar->Guru->Nama : '-';
-//                 $datamengajar->Mata_Nama = $datamengajar->Matapelajaran ? $datamengajar->Matapelajaran->matapelajaran : '-';
-//                 return $datamengajar;
-//             });
-//         return DataTables::of($datamengajar)
-//             ->addColumn('Nama', function ($datamengajar) {
-//                 return $datamengajar->Guru->Nama;
-//             })
-//             ->addColumn('matapelajaran', function ($datamengajar) {
-//                 return $datamengajar->Matapelajaran->matapelajaran;
-//             })
-//             ->rawColumns(['checkbox', 'action'])
-//             ->make(true);
-//     }
+
     public function getKelassiswa()
 {
     $kelassiswa = Kelassiswa::with(['Pengaturankelas','Siswa'])
-        ->select(['id', 'pengaturankelas_id']) // Hanya memilih kolom tahunakademik_id
+        ->select(['id', 'pengaturankelas_id'])
         ->get()
         ->map(function ($kelassiswa) {
             $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->id . env('APP_KEY')), 0, 8);
             $kelassiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelassiswa->id_hashed . '">';
-            $kelassiswa->action = '
-                <a href="' . route('Kelassiswa.edit', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+            $kelassiswa->action = 
+            '
+                <a href="' . route('Kelassiswa.edit', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Daftar Siswa">
                     <i class="fas fa-user-edit text-secondary"></i>
-                </a>';
-
+                </a>
+                <a href="' . route('Kelassiswa.show', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Lihat Detail Siswa">
+        <i class="fas fa-eye text-primary"></i>
+    </a>
+';
+           
             $kelassiswa->Tahun_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik : 'belum di setel';
             $kelassiswa->Semester_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->semester : 'belum di setel';
             $kelassiswa->Kelas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kelas : 'belum di setel';
@@ -111,11 +96,76 @@ public function getSiswa()
         ->rawColumns(['checkbox', 'action'])
         ->make(true);
 }
+//     public function getKelassiswa()
+// {
+//     $kelassiswa = Kelassiswa::with(['Pengaturankelas','Siswa'])
+//         ->select(['id', 'pengaturankelas_id']) // Hanya memilih kolom tahunakademik_id
+//         ->get()
+//         ->map(function ($kelassiswa) {
+//             $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->id . env('APP_KEY')), 0, 8);
+//             $kelassiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelassiswa->id_hashed . '">';
+//             $kelassiswa->action = 
+//             '
+//                 <a href="' . route('Kelassiswa.edit', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Daftar Siswa">
+//                     <i class="fas fa-user-edit text-secondary"></i>
+//                 </a>
+//                 <a href="' . route('Kelassiswa.show', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Lihat Detail Siswa">
+//         <i class="fas fa-eye text-primary"></i>
+//     </a>
+// ';
+           
+//             $kelassiswa->Tahun_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik : 'belum di setel';
+//             $kelassiswa->Semester_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->semester : 'belum di setel';
+//             $kelassiswa->Kelas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kelas : 'belum di setel';
+//             $kelassiswa->Kapasitas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kapasitas : 'belum di setel';
+//             return $kelassiswa;
+//         });
+//     return DataTables::of($kelassiswa)
+//         ->addColumn('tahunakademik', function ($kelassiswa) {
+//             return $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik;
+//         })
+//         ->addColumn('semester', function ($kelassiswa) {
+//             return $kelassiswa->Pengaturankelas->Tahunakademik->semester;
+//         })
+//         ->addColumn('kelas', function ($kelassiswa) {
+//             return $kelassiswa->Pengaturankelas->Kelas->kelas;
+//         })
+//         ->addColumn('kapasitas', function ($kelassiswa) {
+//             return $kelassiswa->Pengaturankelas->Kelas->kapasitas;
+//         })
+        
+//         ->rawColumns(['checkbox', 'action'])
+//         ->make(true);
+// }
+    public function getKelassiswadetail()
+{
+    $kelassiswa = Kelassiswa::with(['Pengaturankelas','Siswa'])
+        ->select(['id', 'siswa_id','pengaturankelas_id']) 
+        ->get()
+        ->map(function ($kelassiswa) {
+            $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->siswa_id . env('APP_KEY')), 0, 8);
+            $kelassiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelassiswa->id_hashed . '">';
+            
+            $kelassiswa->Siswa_Nama = $kelassiswa->Siswa->NamaLengkap ? $kelassiswa->Siswa->NamaLengkap : 'belum di setel';
+            return $kelassiswa;
+        });
+    return DataTables::with('Siswa')->of($kelassiswa)
+    ->addColumn('NamaLengkap', function ($kelassiswa) {
+        return optional($kelassiswa->Siswa)->NamaLengkap ?? 'Tidak Ada Nama';
+    })
+    
+    
+    
+       
+        
+        ->rawColumns(['checkbox'])
+        ->make(true);
+}
 
 
     public function edit($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa','Tahunakademik','Kelas','Datamengajar')->get()->first(function ($u) use ($hashedId) {
+    $kelassiswa = Kelassiswa::with('Siswa','Pengaturankelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
@@ -131,52 +181,14 @@ public function getSiswa()
 
     return view('Kelassiswa.edit', compact('kelassiswa', 'hashedId', 'pengaturans','siswas'));
 }
-//     public function edit($hashedId)
-// {
-//     $kelassiswa = Kelassiswa::with('Siswa','Tahunakademik','Kelas','Datamengajar')->get()->first(function ($u) use ($hashedId) {
-//         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-//         return $expectedHash === $hashedId;
-//     });
-//     $selectedSiswa = $kelassiswa->Siswa()->pluck('siswa_id')->toArray();
-
-//     $selectedMengajar = $kelassiswa->Datamengajar()->pluck('id')->toArray();
-   
-
-//     if (!$kelassiswa) {
-//         abort(404, 'Kelas Siswa not found.');
-//     }
-//     $siswas = Siswa::all();
-//     $tahuns = Tahunakademik::all();
-//     $datamengajars = Data_mengajar::all();
-//     $kelass = Kelas::all();
-
-//     return view('Kelassiswa.edit', compact('kelassiswa', 'hashedId', 'siswas','tahuns','datamengajars','kelass','selectedSiswa','selectedMengajar'));
-// }
 public function update(Request $request, $hashedId)
 {
    
     $validatedData = $request->validate([
         'siswa_id' => ['required','array', new NoXSSInput()],
         'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()], 
-        'datamengajar_id' => ['required','array', new NoXSSInput()],
-        'datamengajar_id.*' => ['exists:tb_datamengajar,id', new NoXSSInput()],
-        'kelas_id' => ['required','numeric', new NoXSSInput()],
-        'tahunakademik_id' => ['required','numeric', new NoXSSInput(),
-        function ($attribute, $value, $fail) use ($request) {
-            $count = Kelassiswa::where('tahunakademik_id', $value)
-                ->count();
-            if ($count >= 1) {
-                $fail("Tahun Akademik sudah Terdaftar.");
-            }
-        },
-        function ($attribute, $value, $fail) {
-            $sanitizedValue = strip_tags($value);
-            if ($sanitizedValue !== $value) {
-                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-            }
-        }
-    ],
-        'ket' => ['required','max:50', new NoXSSInput()],     
+        'pengaturankelas_id' => ['required','numeric', new NoXSSInput()],
+             
     ]);
     $kelassiswa = Kelassiswa::get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -187,96 +199,38 @@ public function update(Request $request, $hashedId)
     }
     $kelassiswaData = [
         'siswa_id' => $validatedData['siswa_id'],
-        'datamengajar_id' => $validatedData['datamengajar_id'],
-        'kelas_id' => $validatedData['kelas_id'],
-        'tahunakademik_id' => $validatedData['tahunakademik_id'],
-        'ket' => $validatedData['ket'],
-        // 'ket' => $roles,
+        'pengaturankelas_id' => $validatedData['pengaturankelas_id'],
+        
     ];
     $kelassiswa->update($kelassiswaData);
     return redirect()->route('Kelassiswa.index')->with('success', 'Organisasi Berhasil Diupdate.');
 }
-    public function store(Request $request)
+public function store(Request $request)
 {
-
     $request->validate([
-        'kelas_id' => ['required','numeric', new NoXSSInput()],
-        'tahunakademik_id' => ['required','numeric', new NoXSSInput(),
-        function ($attribute, $value, $fail) use ($request) {
-            $count = Kelassiswa::where('tahunakademik_id', $value)
-                ->count();
-            if ($count >= 1) {
-                $fail("Tahun Akademik sudah terdaftar.");
-            }
-        },
-        function ($attribute, $value, $fail) {
-            $sanitizedValue = strip_tags($value);
-            if ($sanitizedValue !== $value) {
-                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-            }
-        }
-    ],
-        'ket' => ['required','max:50', new NoXSSInput()],
+        'pengaturankelas_id' => ['required', 'numeric', new NoXSSInput()],
+        'siswa_id' => ['required', 'array', new NoXSSInput()],
+        'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()],
     ]);
-    $tahunakademik_id = $request->input('tahunakademik_id');
-    $kelas_id = $request->input('kelas_id');
-    $ket = $request->input('ket');
-            DB::table('tb_kelas_siswa')->insert([
-                'tahunakademik_id' => $tahunakademik_id,
-                'kelas_id' => $kelas_id,
-                'ket' => $ket,
-                
+
+    try {
+        $siswa_ids = $request->input('siswa_id');
+        $pengaturankelas_id = $request->input('pengaturankelas_id');
+
+        foreach ($siswa_ids as $siswa_id) {
+            Kelassiswa::create([
+                'pengaturankelas_id' => $pengaturankelas_id,
+                'siswa_id' => $siswa_id,
             ]);
-    return redirect()->route('Kelassiswa.index')->with('success', 'Data berhasil disimpan.');
+        }
+
+        return redirect()->route('Kelassiswa.index')->with('success', 'Data pengaturan kelas created successfully!');
+    } catch (\Exception $e) {
+        \Log::error('Failed to store data: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Failed to create Data pengaturan kelas: ' . $e->getMessage());
+    }
 }
-//     public function store(Request $request)
-// {
 
-//     $request->validate([
-//         'siswa_id' => ['required','array', new NoXSSInput()],
-//         'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()], 
-//         'datamengajar_id' => ['required','array', new NoXSSInput()],
-//         'datamengajar_id.*' => ['exists:tb_datamengajar,id', new NoXSSInput()],
-//         'kelas_id' => ['required','numeric', new NoXSSInput()],
-//         'tahunakademik_id' => ['required','numeric', new NoXSSInput(),
-//         function ($attribute, $value, $fail) use ($request) {
-//             $count = Kelassiswa::where('tahunakademik_id', $value)
-//                 ->count();
-//             if ($count >= 1) {
-//                 $fail("Tahun Akademik $value sudah memiliki maksimal 2 semester (Ganjil dan Genap).");
-//             }
-//         },
-//         function ($attribute, $value, $fail) {
-//             $sanitizedValue = strip_tags($value);
-//             if ($sanitizedValue !== $value) {
-//                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-//             }
-//         }
-//     ],
-//         'ket' => ['required','max:50', new NoXSSInput()],
-//     ]);
-
-//     $siswa_ids = $request->input('siswa_id');
-//     $datamengajar_ids = $request->input('datamengajar_id');
-//     $tahunakademik_id = $request->input('tahunakademik_id');
-//     $kelas_id = $request->input('kelas_id');
-//     $ket = $request->input('ket');
-
-//     foreach ($siswa_ids as $siswa_id) {
-//         foreach ($datamengajar_ids as $datamengajar_id) {
-//             DB::table('tb_kelas_siswa')->insert([
-//                 'siswa_id' => $siswa_id,
-//                 'datamengajar_id' => $datamengajar_id,
-//                 'tahunakademik_id' => $tahunakademik_id,
-//                 'kelas_id' => $kelas_id,
-//                 'ket' => $ket,
-                
-//             ]);
-//         }
-//     }
-
-//     return redirect()->route('Kelassiswa.index')->with('success', 'Data berhasil disimpan.');
-// }
 public function deleteKelassiswa(Request $request)
 {
     $request->validate([
@@ -288,6 +242,33 @@ public function deleteKelassiswa(Request $request)
         'message' => 'Selected Kelas siswa and their related data deleted successfully.'
     ]);
 }
+
+public function deleteSiswadarikelas(Request $request)
+{
+    $request->validate([
+        'siswa_ids' => ['required', 'array', 'min:1'],
+        'siswa_ids.*' => ['integer', 'exists:tb_pengaturankelas_siswa,siswa_id'], // Validasi setiap ID
+    ]);
+
+    try {
+        // Update kolom siswa_id menjadi null
+        Kelassiswa::whereIn('siswa_id', $request->siswa_ids)
+            ->update(['siswa_id' => null]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Selected siswa_id has been set to null successfully.',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to set siswa_id to null. Please try again.',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
+
 
     
 }

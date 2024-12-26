@@ -244,7 +244,10 @@ Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassi
     Route::get('/siswa', [KelassiswaController::class, 'getSiswa'])->name('siswa.siswa');
     Route::get('/mengajar', [KelassiswaController::class, 'getDatamengajar'])->name('mengajar.mengajar');
     Route::delete('/Kelassiswa/delete', [KelassiswaController::class, 'deleteKelassiswa'])->name('kelassiswa.delete');
+    Route::delete('/Kelassiswashow/hapus', [KelassiswaController::class, 'deleteSiswadarikelas'])->name('kelassiswashow.hapus');
     Route::get('Kelassiswa/create', [KelassiswaController::class, 'create'])->name('Kelassiswa.create');
+    Route::get('Kelassiswa/show', [KelassiswaController::class, 'show'])->name('Kelassiswa.show');
+    Route::get('getkelassiswadetail', [KelassiswaController::class, 'getKelassiswadetail'])->name('getkelassiswadetail.getkelassiswadetail');
     Route::post('/Kelassiswa', [KelassiswaController::class, 'store'])->name('Kelassiswa.store');
 Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
 Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');

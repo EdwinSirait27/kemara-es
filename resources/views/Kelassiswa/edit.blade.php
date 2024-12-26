@@ -71,87 +71,31 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tahunakademik_id" class="form-control-label">
+                                    <label for="pengaturankelas_id" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
                                     </label>
                                     <div>
-                                        <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
-                                            <option value="" selected disabled>Pilih Tahun Akademik</option>
-                                            @foreach ($tahuns as $tahun)
-                                            <option value="{{ $tahun->id }}" {{ $kelassiswa->tahunakademik_id == $tahun->id ? 'selected' : '' }}>
-                                                Tahun Akademik {{ $tahun->tahunakademik }} Semester {{ $tahun->semester }}
+                                        <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select">
+                                            <option value="" selected disabled>Pilih Pengaturan Kelas</option>
+                                            @foreach ($pengaturans as $peng)
+                                            <option value="{{ $peng->id }}" {{ $kelassiswa->pengaturankelas_id == $peng->id ? 'selected' : '' }}>
+                                                Tahun Akademik {{ $peng->Tahunakademik->tahunakademik }} Semester {{ $peng->Tahunakademik->semester }}
                                             </option>
                                         @endforeach
                                         </select>
-                                        @error('tahunakademik_id')
+                                        @error('pengaturankelas_id')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                         <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
                                         
-                                    {{-- <label for="tahunakademik_id" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
-                                    </label>
-                                    <div>
-                                        <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
-                                            <option value="" selected disabled>Pilih Tahun Akademik</option>
-                                            @foreach ($tahuns as $tahun)
-                                            <option value="{{ $tahun->id }}" {{ $kelassiswa->tahunakademik_id == $tahun->id ? 'selected' : '' }}>
-                                                {{ $tahun->id }} - {{ $tahun->tahunakademik }}
-                                            </option>
-                                        @endforeach
-                                        </select>
-                                        @error('tahunakademik_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
-                                         --}}
-                                   
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="kelas_id" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Kelas') }}
-                                    </label>
-                                    <div>
-                                        <select name="kelas_id" id="kelas_id" class="form-select">
-                                            <option value="" selected disabled>Pilih Kelas</option>
-                                            @foreach ($kelass as $kelas)
-                                            <option value="{{ $kelas->id }}" {{ $kelassiswa->kelas_id == $kelas->id ? 'selected' : '' }}>
-                                                {{ $kelas->id }} - {{ $kelas->kelas }}
-                                            </option>
-                                        @endforeach
-                                        </select>
-                                        @error('kelas_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
-                                        
-                                 
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ket" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Keterangan') }}
-                                    </label>
-                                    <div>
-                                        <input type="text" class="form-control" id="ket" name="ket"
-                                        value="{{ old('ket', $kelassiswa->ket) }}" required
-                                         maxlength="50">
-                                    </div>
-                                </div>
-                            </div>
+                                  
 
                           
                            
 
+                        </div>
+                        </div>
+                        </div>
                         </div>
 
                         <div class="d-flex justify-content-end">

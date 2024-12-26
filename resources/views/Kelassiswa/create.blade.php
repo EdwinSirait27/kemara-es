@@ -28,17 +28,17 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="tahunakademik_id" class="form-control-label">
+                                        <label for="pengaturankelas_id" class="form-control-label">
                                             <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
                                         </label>
-                                        <div class="@error('tahunakademik_id')border border-danger rounded-3 @enderror">
-                                            <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
+                                        <div class="@error('pengaturankelas_id')border border-danger rounded-3 @enderror">
+                                            <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select">
                                                 <option value="" selected disabled>Pilih Tahun</option>
-                                                @foreach ($tahuns as $tahun)
-                                                    <option value="{{ $tahun->id }}">Tahun Akademik {{ $tahun->tahunakademik }} Semester {{ $tahun->semester }}</option>
+                                                @foreach ($pengaturans as $pengaturan)
+                                                    <option value="{{ $pengaturan->id }}">Tahun Akademik {{ $pengaturan->Tahunakademik->tahunakademik }} Semester {{ $pengaturan->Tahunakademik->semester }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('kelas_id')
+                                            @error('pengaturankelas_id')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
@@ -46,49 +46,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="kelas_id" class="form-control-label">
-                                            <i class="fas fa-lock"></i> {{ __('Kelas') }}
-                                        </label>
-                                        <div class="@error('kelas_id')border border-danger rounded-3 @enderror">
-                                            <select name="kelas_id" id="kelas_id" class="form-select">
-                                                <option value="" selected disabled>Pilih Kelas</option>
-                                                @foreach ($kelass as $kelas)
-                                                    <option value="{{ $kelas->id }}">{{ $kelas->kelas }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('kelas_id')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="ket" class="form-control-label">
-                                            <i class="fas fa-lock"></i> {{ __('Keterangan') }}
-                                        </label>
-                                        
-                                        <div class="@error('ket')border border-danger rounded-3 @enderror">
-                                            <input class="form-control"
-                                            value="{{ e($ket ?? '') }}"
-                                            type="text"
-                                                id="ket" name="ket" aria-describedby="info-ket"
-                                                 required>
-                                                @error('ket')
-                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                            @enderror
-                                       
-        
-        
-                                        </div>
-                                    </div>
+                                <div class="mb-3">
+                                    <label for="siswa_id" class="form-label">Pilih Siswa</label>
+                                    <table id="siswaTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Pilih</th>
+                                                <th>Nama Lengkap</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($siswas as $siswa)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="siswa_id[]" value="{{ $siswa->siswa_id }}">
+                                                </td>
+                                                <td>{{ $siswa->NamaLengkap }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 
@@ -96,7 +73,7 @@
                             </div>
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Buat Pengaturan Kelas') }}
+                                        {{ __('Kelas Siswa') }}
                                     </button>
 
                                     <a href="{{ route('Kelassiswa.index') }}" class="btn btn-secondary">
@@ -141,7 +118,7 @@
                         <script>
                             $(document).ready(function() {
                                 $('#siswaTable').DataTable();
-                                $('#mengajarTable').DataTable();
+                                    
                                 
                             });
 
