@@ -251,7 +251,7 @@ Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassi
     Route::post('/Kelassiswa', [KelassiswaController::class, 'store'])->name('Kelassiswa.store');
 Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
 Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');
-
+Route::get('/Kelassiswa/download', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.download');
 // pengaturan kelas
 Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->name('Pengaturankelas.index');
     Route::get('/Pengaturankelas/pengaturankelas', [PengaturankelasController::class, 'getPengaturankelas'])->name('pengaturankelas.pengaturankelas');

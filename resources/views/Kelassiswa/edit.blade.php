@@ -79,7 +79,7 @@
                                             <option value="" selected disabled>Pilih Pengaturan Kelas</option>
                                             @foreach ($pengaturans as $peng)
                                             <option value="{{ $peng->id }}" {{ $kelassiswa->pengaturankelas_id == $peng->id ? 'selected' : '' }}>
-                                                Tahun Akademik {{ $peng->Tahunakademik->tahunakademik }} Semester {{ $peng->Tahunakademik->semester }}
+                                                Tahun Akademik : {{ $peng->Tahunakademik->tahunakademik }} Semester : {{ $peng->Tahunakademik->semester }} Kelas : {{$peng->Kelas->kelas}}
                                             </option>
                                         @endforeach
                                         </select>
@@ -87,15 +87,43 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                         <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
-                                        
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <br>
+                                 
+
+                                        <div class="row">
+                                            <label for="siswa_id" class="form-label">Pilih Siswa</label>
+                                            <table id="siswaTable" class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pilih</th>
+                                                        <th>Nama Lengkap</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($siswas as $siswa)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="siswa_id[]" value="{{ $siswa->siswa_id }}" 
+                                                                @if(in_array($siswa->siswa_id, $selectedSiswa)) checked @endif>
+                                                        </td>
+                                                        <td>{{ $siswa->NamaLengkap }}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
+                                        </div>
                                   
 
                           
                            
+\
 
-                        </div>
-                        </div>
-                        </div>
+
                         </div>
 
                         <div class="d-flex justify-content-end">
@@ -146,6 +174,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
                     
-               
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $('#siswaTable').DataTable();
+                                $('#mengajarTable').DataTable();
+                                
+                            });
+
+
+                        </script>       
 @endsection
 {{-- //disini --}}

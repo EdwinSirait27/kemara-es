@@ -35,7 +35,7 @@
                                             <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select">
                                                 <option value="" selected disabled>Pilih Tahun</option>
                                                 @foreach ($pengaturans as $pengaturan)
-                                                    <option value="{{ $pengaturan->id }}">Tahun Akademik {{ $pengaturan->Tahunakademik->tahunakademik }} Semester {{ $pengaturan->Tahunakademik->semester }}</option>
+                                                    <option value="{{ $pengaturan->id }}">Tahun Akademik : {{ $pengaturan->Tahunakademik->tahunakademik }} Semester : {{ $pengaturan->Tahunakademik->semester }} Kelas : {{$pengaturan->Kelas->kelas}}</option>
                                                 @endforeach
                                             </select>
                                             @error('pengaturankelas_id')
@@ -46,8 +46,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <h5>Pilih Siswa</h5>
                                 <div class="mb-3">
-                                    <label for="siswa_id" class="form-label">Pilih Siswa</label>
+                                    <label for="siswa_id" class="form-label"></label>
                                     <table id="siswaTable" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
@@ -73,7 +79,7 @@
                             </div>
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Kelas Siswa') }}
+                                        {{ __('Masukkan Siswa') }}
                                     </button>
 
                                     <a href="{{ route('Kelassiswa.index') }}" class="btn btn-secondary">
@@ -118,7 +124,7 @@
                         <script>
                             $(document).ready(function() {
                                 $('#siswaTable').DataTable();
-                                    
+
                                 
                             });
 

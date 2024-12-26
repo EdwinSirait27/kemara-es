@@ -53,7 +53,7 @@
                           <div class="numbers">
                               <p class="text-sm mb-0 text-capitalize font-weight-bold">Total User Aktif</p>
                               <h5 class="font-weight-bolder mb-0 text-primary">
-                                  {{ $totaluser }}
+                                  {{e($totaluser)}}
                               </h5>
                           </div>
                       </div>
@@ -95,7 +95,7 @@
                           <div class="numbers">
                               <p class="text-sm mb-0 text-capitalize font-weight-bold">Jumlah Siswa Perempuan</p>
                               <h5 class="font-weight-bolder mb-0 text-danger">
-                                  {{ $totalperempuan }}
+                                  {{ e($totalperempuan) }}
                               </h5>
                           </div>
                       </div>
@@ -118,7 +118,7 @@
                           <div class="numbers">
                               <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Guru</p>
                               <h5 class="font-weight-bolder mb-0 text-info">
-                                  {{ $totalguru }}
+                                  {{ e($totalguru) }}
                               </h5>
                           </div>
                       </div>
@@ -236,7 +236,7 @@
                 labels: ['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'], // Kategori agama
                 datasets: [{
                     label: 'Jumlah Siswa',
-                    data: [{{ $katolik }}, {{ $kristen }}, {{ $islam }}, {{ $hindu }},
+                    data: [{{ e($katolik) }}, {{ $kristen }}, {{ $islam }}, {{ $hindu }},
                         {{ $buddha }}, {{ $kong }}
                     ], // Jumlah siswa berdasarkan agama
                     backgroundColor: 'rgba(75, 192, 192, 0.2)', // Warna isi bar
