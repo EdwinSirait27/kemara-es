@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data_mengajar;
 use App\Models\Kelassiswa;
 use App\Models\Pengaturankelas;
 use App\Models\Tahunakademik;
@@ -11,7 +12,9 @@ use App\Models\Siswa;
 use Yajra\DataTables\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Rules\NoXSSInput;
-class KelassiswaController extends Controller
+
+
+class PengaturankelasdatamengajarController extends Controller
 {
     public function __construct()
     {
@@ -19,15 +22,13 @@ class KelassiswaController extends Controller
     }
     public function index()
     {
-        return view('Kelassiswa.Kelassiswa');
+        return view('Pengaturankelasdatamengajar.Pengaturankelasdatamengajar');
 
     }
   
     public function create() 
 {
-    $siswas = Siswa::select('siswa_id', 'NamaLengkap', 'status')
-        ->where('Status', 'Aktif')
-        ->get();
+    $datamengajars = Data_mengajar::all()->with('Guru','Matapelajaran')->get();
 
     $pengaturans = Pengaturankelas::with('Tahunakademik')->get();
     $tahunakademik = Kelassiswa::with('Siswa', 'Pengaturankelas.Tahunakademik', 'Pengaturankelas.Kelas')
@@ -36,41 +37,41 @@ class KelassiswaController extends Controller
     
     $filterTahunakademik = Tahunakademik::select('id', 'tahunakademik','semester')->get();
         
-    return view('Kelassiswa.create', compact('siswas', 'pengaturans', 'tahunakademik', 'filterTahunakademik'));
+    return view('Pengaturankelasdatamengajar.create', compact('datamengajars', 'pengaturans', 'tahunakademik', 'filterTahunakademik'));
 }
 
-    public function getSiswadankelas(Request $request)
-    {
-        $query = Kelassiswa::with(['Siswa', 'Pengaturankelas'])
-            ->select(['id', 'siswa_id', 'pengaturankelas_id']);
-            if ($request->has('id') && !empty($request->id)) {
-                $query->whereHas('Pengaturankelas.Tahunakademik', function ($q) use ($request) {
-                    $q->where('id', $request->id);
-                });
-            }
-        $lihatsiswa = $query->get()
-            ->map(function ($lihatsiswa) {       
-                $lihatsiswa->Siswa_Nama = $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-                $lihatsiswa->Kelas_Nama = $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-                $lihatsiswa->Tahun_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-                $lihatsiswa->Semester_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-                return $lihatsiswa;
-            });
-        return DataTables::of($lihatsiswa)
-            ->addColumn('Namalengkap', function ($lihatsiswa) {
-                return $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-            })
-            ->addColumn('kelas', function ($lihatsiswa) {
-                return $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-            })
-            ->addColumn('tahunakademik', function ($lihatsiswa) {
-                return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-            })
-            ->addColumn('semester', function ($lihatsiswa) {
-                return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-            })
-            ->make(true);
-    }
+    // public function getSiswadankelas(Request $request)
+    // {
+    //     $query = Kelassiswa::with(['Siswa', 'Pengaturankelas'])
+    //         ->select(['id', 'siswa_id', 'pengaturankelas_id']);
+    //         if ($request->has('id') && !empty($request->id)) {
+    //             $query->whereHas('Pengaturankelas.Tahunakademik', function ($q) use ($request) {
+    //                 $q->where('id', $request->id);
+    //             });
+    //         }
+    //     $lihatsiswa = $query->get()
+    //         ->map(function ($lihatsiswa) {       
+    //             $lihatsiswa->Siswa_Nama = $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
+    //             $lihatsiswa->Kelas_Nama = $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
+    //             $lihatsiswa->Tahun_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
+    //             $lihatsiswa->Semester_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
+    //             return $lihatsiswa;
+    //         });
+    //     return DataTables::of($lihatsiswa)
+    //         ->addColumn('Namalengkap', function ($lihatsiswa) {
+    //             return $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
+    //         })
+    //         ->addColumn('kelas', function ($lihatsiswa) {
+    //             return $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
+    //         })
+    //         ->addColumn('tahunakademik', function ($lihatsiswa) {
+    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
+    //         })
+    //         ->addColumn('semester', function ($lihatsiswa) {
+    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
+    //         })
+    //         ->make(true);
+    // }
     public function show($hashedId)
 {
     $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
@@ -567,8 +568,4 @@ public function deleteSiswadarikelas(Request $request)
     }
 }
 
-
-
-    
 }
-

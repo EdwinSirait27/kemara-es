@@ -35,7 +35,7 @@ class PengaturankelasController extends Controller
 
     $tahuns = Tahunakademik::all();
     $datamengajars = Data_mengajar::select('id','matapelajaran_id','guru_id','hari')->get();
-    $kelass = Kelas::all();
+    $kelass = Kelas::all()->where('status','Aktif');
         
         return view('Pengaturankelas.create', compact('siswas','tahuns','datamengajars','kelass'));
     }
@@ -125,7 +125,8 @@ public function getSiswa()
         abort(404, 'Kelas Siswa not found.');
     }
     $tahuns = Tahunakademik::all();
-    $kelass = Kelas::all();
+    $kelass = Kelas::all()->where('status','Aktif');
+
 
     return view('Pengaturankelas.edit', compact('pengaturan', 'hashedId', 'tahuns','kelass'));
 }

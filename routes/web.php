@@ -246,12 +246,24 @@ Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassi
     Route::delete('/Kelassiswa/delete', [KelassiswaController::class, 'deleteKelassiswa'])->name('kelassiswa.delete');
     Route::delete('/Kelassiswashow/hapus', [KelassiswaController::class, 'deleteSiswadarikelas'])->name('kelassiswashow.hapus');
     Route::get('Kelassiswa/create', [KelassiswaController::class, 'create'])->name('Kelassiswa.create');
-    Route::get('Kelassiswa/show', [KelassiswaController::class, 'show'])->name('Kelassiswa.show');
-    Route::get('getkelassiswadetail', [KelassiswaController::class, 'getKelassiswadetail'])->name('getkelassiswadetail.getkelassiswadetail');
+    // Route::get('Kelassiswa/{$id_hashed}', [KelassiswaController::class, 'show'])->name('Kelassiswa.show');
+    Route::get('/Kelassiswa/show/{hashedId}', [KelassiswaController::class, 'show'])
+    ->name('Kelassiswa.show');
+    Route::get('/getkelassiswadetail/{hashedId}', [KelassiswaController::class, 'getSiswa'])->name('getkelassiswadetail.getkelassiswadetail');
+
+    // Route::get('/Kelassiswa/{id_hashed}/siswa', [KelassiswaController::class, 'getSiswas'])
+    // ->name('Kelassiswa.getSiswas');
     Route::post('/Kelassiswa', [KelassiswaController::class, 'store'])->name('Kelassiswa.store');
 Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
 Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');
-Route::get('/Kelassiswa/download', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.download');
+// Route::get('/Kelassiswa/download/{hashedId}', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.download');
+Route::get('/Kelassiswa/download/{hashedId}', [KelassiswaController::class, 'previewkelas'])
+    ->name('Kelassiswa.download');
+    Route::get('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.downloadkelas');
+
+
+// Route::get('/getSiswadankelas', [KelassiswaController::class, 'getSiswadankelas'])->name('Kelassiswa.getSiswadankelas');
+// Route::get('/getEditsiswadankelas', [KelassiswaController::class, 'getEditsiswadankelas'])->name('Kelassiswa.getEditsiswadankelas');
 // pengaturan kelas
 Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->name('Pengaturankelas.index');
     Route::get('/Pengaturankelas/pengaturankelas', [PengaturankelasController::class, 'getPengaturankelas'])->name('pengaturankelas.pengaturankelas');

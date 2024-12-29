@@ -10,13 +10,22 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    @foreach ($lihatsiswas as $lihat)
+                    {{-- @foreach ($kelassiswa as $lihat)
                         <h3><i class="fas fa-user-shield"></i> Daftar Siswa Kelas
                             {{ e($lihat->Pengaturankelas->Kelas->kelas) }}</h6>
                             <h4>Wali Kelas : {{ e($lihat->Pengaturankelas->Kelas->Guru->Nama) }}</h4>
                             <h4>Kapasitas Kelas: {{ e($lihat->Pengaturankelas->Kelas->kapasitas) }} Siswa</h4>
-                    @endforeach
-                    @if ($jumlahsiswa > 0)
+                    @endforeach --}}
+                    <h3><i class="fas fa-user-shield"></i> Daftar Siswa Kelas
+                    @if ($kelassiswa)
+                    {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h6>
+                    <h4>Tahun Akademik : {{ e($kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik) }}</h4>
+                    <h4>Semester : {{ e($kelassiswa->Pengaturankelas->Tahunakademik->semester) }}</h4>
+                    <h4>Wali Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }}</h4>
+                    <h4>Kapasitas Kelas: {{ e($kelassiswa->Pengaturankelas->Kelas->kapasitas) }} Siswa</h4>
+
+                    @endif
+                    @if ($jumlahsiswa)
                         <h4>Total : {{ e($jumlahsiswa) }} Siswa </h4>
                     @else
                         <h4>Tidak ada siswa.</h4>
@@ -31,18 +40,28 @@
                                 <thead>
                                     <tr>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            No.</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Nama Siswa</th>
-                                        <th>
-                                            <button type="button" id="select-all" class="btn btn-primary btn-sm">
-                                                Select All
-                                            </button>
-                                        </th>
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                              No.</th>
+                                          <th
+                                              class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                              Nama Siswa</th>
+                                              <th>
+                                                <button type="button" id="select-all" class="btn btn-primary btn-sm">
+                                                    Select All
+                                                </button></th> 
+                                        
                                     </tr>
                                 </thead>
+                                {{-- <tbody>
+                                    @if ($kelassiswa)
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="siswa_id[]">
+                                        </td>
+                                        <td>{{ $kelassiswa->Siswa->NamaLengkap }}</td>
+                                    </tr>
+                                @endif
+                                </tbody> --}}
                             </table>
                         @else
                             <h4>Tidak ada siswa.</h4>
@@ -57,9 +76,9 @@
                             <a href="{{ route('Kelassiswa.index') }}" class="btn btn-secondary">
                                 {{ __('Kembali') }}
                             </a>
-                            <a href="{{ route('Kelassiswa.download') }}?download=pdf" class="btn btn-primary">
-                                <i class="fas fa-download"></i> Download PDF
-                            </a>
+                         
+                             
+                            
                                             </div>
                     </div>
                 </div>
@@ -74,7 +93,8 @@
             let table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('getkelassiswadetail.getkelassiswadetail') }}',
+                
+                ajax: '{{ route("getkelassiswadetail.getkelassiswadetail", $hashedId) }}',
                 lengthMenu: [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
@@ -88,8 +108,8 @@
                         },
                     },
                     {
-                        data: 'Siswa_Nama',
-                        name: 'Siswa_Nama',
+                        data: 'NamaLengkap',
+                        name: 'NamaLengkap',
                         className: 'text-center',
                         defaultContent: '-'
                     },
@@ -178,3 +198,4 @@
         });
     </script>
 @endsection
+{{-- ajax: '{{ route('getkelassiswadetail.getkelassiswadetail') }}', --}}

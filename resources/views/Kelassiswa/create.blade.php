@@ -13,15 +13,12 @@
                                 {{ session('success') }}
                             </div>
                         @endif
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    
                         <form method="POST" id="create-user-form" action="{{ route('Kelassiswa.store') }}">
                             @csrf
                             <div class="row">
@@ -51,9 +48,13 @@
                                 <br>
                                 <br>
                                 <br>
-                                <h5>Pilih Siswa</h5>
+                                <h5>Pilih siswa yang akan dimasukkan kedalam kelas</h5>
+    
                                 <div class="mb-3">
                                     <label for="siswa_id" class="form-label"></label>
+                                    @error('siswa_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                     <table id="siswaTable" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
@@ -87,17 +88,57 @@
                                     </a>
                                 </div>
                         </form>
+                        <br>
+                        <br>
+                        <br>
+                        <h5>Daftar siswa yang sudah masuk kelas</h5>
+                        <form id="filterForm">
+                            <div class="form-group">
+                                <label for="tahunakademik">Filter Tahun Akademik</label>
+                                <select id="tahunakademik" name="tahunakademik_id" class="form-control">
+                                    <option value="">Semua</option>
+                                    @foreach ($filterTahunakademik as $tahun)
+                                        <option value="{{ $tahun->id }}">Tahun Akademik: {{ $tahun->tahunakademik }} - Semester: {{$tahun->semester}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
+                            <table id="siswakelasTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Tahun Akademik</th>
+                                        <th>Semester</th>
+                                        <th>Kelas</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- @foreach($lihatsiswas as $siswa)
+                                    <tr>
+                                        <td>{{ $siswa->Siswa->NamaLengkap }}</td>
+                                        <td>{{ $siswa->Pengaturankelas->Kelas->kelas }}</td>
+                                        
+                                    </tr>
+                                    @endforeach --}}
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="alert alert-secondary mx-4" role="alert">
                             <span class="text-white">
                                 <strong>Keterangan</strong> <br>
                             </span>
                             <span class="text-white">-
-                                <strong> Jika sudah ada Tahun Akademik yang sama dengan nilai semester Ganjil dan Genap, maka tidak bisa menginputkan data kembali </strong> <br>
+                                <strong> Jika siswa yang di checkbox sudah ada di dalam kelas pada tahun akademik yang sama, maka tidak perlu lagi dimasukkan, kecuali di tahun akademik yang berbeda boleh dimasukkan.</strong> <br>
                                
                                     <br>
                 
                             </span>
                         </div>
+                        
+
+
+
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                         <script>
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
@@ -124,12 +165,63 @@
                         <script>
                             $(document).ready(function() {
                                 $('#siswaTable').DataTable();
+                                // $('#siswakelasTable').DataTable();
 
                                 
                             });
 
 
                         </script>
+                     <script>
+                        $(document).ready(function() {
+                            let table = $('#siswakelasTable').DataTable({
+                                processing: true,
+                                serverSide: true,
+                                ajax: {
+                            url: "{{ route('Kelassiswa.getSiswadankelas') }}",
+                            data: function (d) {
+                d.id = $('#tahunakademik').val();
+            }
+                        },
+                      
+                                columns: [{
+                                        data: 'id', // Kolom indeks
+                                        name: 'id',
+                                        className: 'text-center',
+                                        render: function(data, type, row, meta) {
+                                            return meta.row + 1;
+                                        },
+                                    },
+                                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+                                    {
+                                        data: 'Siswa_Nama',
+                                        name: 'Siswa_Nama',
+                                        className: 'text-center'
+                                    },
+                                    {
+                                        data: 'Tahun_Nama',
+                                        name: 'Tahun_Nama',
+                                        className: 'text-center'
+                                    },
+                                    
+                                    {
+                                        data: 'Semester_Nama',
+                                        name: 'Semester_Nama',
+                                        className: 'text-center'
+                                    },
+                                    {
+                                        data: 'Kelas_Nama',
+                                        name: 'Kelas_Nama',
+                                        className: 'text-center'
+                                    }
+                                ]
+                            });    
+                            $('#tahunakademik').change(function () {
+        table.ajax.reload();
+    });
+});
+                    </script>
+
                         
                     </div>
                 </div>

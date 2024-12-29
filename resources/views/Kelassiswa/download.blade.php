@@ -61,30 +61,30 @@
 
    
     <div class="class-info">
-        @foreach ($lihatsiswas as $lihat)
+        @if($kelassiswa)
 
-        <h3>Daftar Siswa Kelas : {{ e($lihat->Pengaturankelas->Kelas->kelas) }}</h3>
+        <h3>Daftar Siswa Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h3>
         <table style="border: none; width: 100%; margin-bottom: 10px;">
             <tr style="border: none;">
                 <td style="border: none; width: 150px;">Tahun Ajaran</td>
-                <td style="border: none;">: {{ e($lihat->Pengaturankelas->Tahunakademik->tahunakademik) }}</td>
+                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik) }}</td>
             </tr>
             <tr style="border: none;">
                 <td style="border: none; width: 150px;">Semester</td>
-                <td style="border: none;">: {{ e($lihat->Pengaturankelas->Tahunakademik->semester) }}</td>
+                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->semester) }}</td>
             </tr>
            
             <tr style="border: none;">
                 <td style="border: none;">Wali Kelas</td>
-                <td style="border: none;">: {{ e($lihat->Pengaturankelas->Kelas->Guru->Nama) }} Siswa</td>
+                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }} </td>
             </tr>
             <tr style="border: none;">
                 <td style="border: none;">Kapasitas Kelas</td>
-                <td style="border: none;">: {{ e($lihat->Pengaturankelas->Kelas->kapasitas) }} Siswa</td>
+                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->kapasitas) }} Siswa</td>
             </tr>
         </table>
     </div>
-    @endforeach
+    @endif
 
     @if ($jumlahsiswa > 0)
     <table>
@@ -99,15 +99,15 @@
             @php
             $counter = 1; // Variabel untuk nomor urut
         @endphp
-            @foreach($lihatsiswas as $index => $siswa)
+            @if($kelassiswa)
             <tr>
                 <td style="text-align: center;">{{ $counter }}</td> 
-                <td>{{ $siswa->Siswa->NamaLengkap ?? '-' }}</td>
+                <td>{{ $kelassiswa->Siswa->NamaLengkap ?? '-' }}</td>
                 @for($i = 1; $i <= 20; $i++)
                 <td class="absen-cell"></td>
             @endfor
             </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
 
@@ -123,6 +123,14 @@
     <div class="page-number">
         Dicetak pada: {{ date('d/m/Y H:i') }}
     </div>
+    {{-- <div class="class-info1">
+    <h3>Wali Kelas</h3>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h4>{{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }}</h4>
+    </div> --}}
 </body>
 </html>
 {{-- <!DOCTYPE html>

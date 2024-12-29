@@ -39,6 +39,10 @@
                                   
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Status Kelas</th>
+                                  
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
                                     <th>
                                         <button type="button" id="select-all" class="btn btn-primary btn-sm">
@@ -109,6 +113,11 @@
                     {
                         data: 'Kapasitas_Nama',
                         name: 'Kapasitas_Nama',
+                        className: 'text-center'
+                    }, 
+                    {
+                        data: 'Status_Nama',
+                        name: 'Status_Nama',
                         className: 'text-center'
                     }, 
                     {

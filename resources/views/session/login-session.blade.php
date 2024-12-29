@@ -122,9 +122,11 @@
                                 <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Masuk</button>
                             </div>
                             @if ($ppdb)
-                            <a href="{{ url($ppdb->url) }}">Akses PPDB</a>
+                            <br>
+
+                            Daftar PPDB?    <a href="{{ url($ppdb->url) }}">Akses PPDB</a>
                         @else
-                            <p>PPDB belum aktif.</p>
+                            <p></p>
                         @endif
                         </form>
                     </div>
