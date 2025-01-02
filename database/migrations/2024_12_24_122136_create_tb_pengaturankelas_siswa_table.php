@@ -15,8 +15,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id', true)->nullable()->primary();
             $table->unsignedBigInteger('siswa_id')->nullable();
             $table->unsignedBigInteger('pengaturankelas_id')->nullable();
+            $table->unsignedBigInteger('datamengajar_id')->nullable();
             $table->foreign('siswa_id')->references('siswa_id')->on('tb_siswa')->onDelete('set null'); 
             $table->foreign('pengaturankelas_id')->references('id')->on('tb_pengaturan_kelas')->onDelete('set null'); 
+            $table->foreign('datamengajar_id')->references('id')->on('tb_datamengajar')->onDelete('set null'); 
             $table->timestamps();
         });
     }

@@ -31,6 +31,7 @@ use App\Http\Controllers\DatasiswaController;
 use App\Http\Controllers\ArsipSiswaController;
 use App\Http\Controllers\DataguruController;
 use App\Http\Controllers\KurikulumController;
+use App\Http\Controllers\PengaturankelasdatamengajarController;
 use App\Http\Controllers\OsisController;
 use App\Http\Controllers\VotingController;
 use App\Http\Controllers\RegisterController;
@@ -241,29 +242,32 @@ Route::put('/Datamengajar/{hashedId}', [DatamengajarController::class, 'update']
 
 Route::get('/Kelassiswa', [KelassiswaController::class, 'index'])->name('Kelassiswa.index');
     Route::get('/Kelassiswa/kelassiswa', [KelassiswaController::class, 'getKelassiswa'])->name('kelassiswa.kelassiswa');
+    Route::delete('/Kelassiswa/delete', [KelassiswaController::class, 'deleteKelassiswa'])->name('kelassiswa.delete');
+    Route::get('Kelassiswa/create', [KelassiswaController::class, 'create'])->name('Kelassiswa.create');
+    Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
+    Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');
     Route::get('/siswa', [KelassiswaController::class, 'getSiswa'])->name('siswa.siswa');
     Route::get('/mengajar', [KelassiswaController::class, 'getDatamengajar'])->name('mengajar.mengajar');
-    Route::delete('/Kelassiswa/delete', [KelassiswaController::class, 'deleteKelassiswa'])->name('kelassiswa.delete');
     Route::delete('/Kelassiswashow/hapus', [KelassiswaController::class, 'deleteSiswadarikelas'])->name('kelassiswashow.hapus');
-    Route::get('Kelassiswa/create', [KelassiswaController::class, 'create'])->name('Kelassiswa.create');
-    // Route::get('Kelassiswa/{$id_hashed}', [KelassiswaController::class, 'show'])->name('Kelassiswa.show');
     Route::get('/Kelassiswa/show/{hashedId}', [KelassiswaController::class, 'show'])
     ->name('Kelassiswa.show');
+    Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
+    ->name('Kelassiswa.showmatapelajaran');
     Route::get('/getkelassiswadetail/{hashedId}', [KelassiswaController::class, 'getSiswa'])->name('getkelassiswadetail.getkelassiswadetail');
+    Route::get('/getkelassiswamata/{hashedId}', [KelassiswaController::class, 'getMatapelajaran'])->name('getkelassiswamata.getkelassiswamata');
 
-    // Route::get('/Kelassiswa/{id_hashed}/siswa', [KelassiswaController::class, 'getSiswas'])
-    // ->name('Kelassiswa.getSiswas');
     Route::post('/Kelassiswa', [KelassiswaController::class, 'store'])->name('Kelassiswa.store');
-Route::get('/Kelassiswa/edit/{hashedId}', [KelassiswaController::class, 'edit'])->name('Kelassiswa.edit');
-Route::put('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'update'])->name('Kelassiswa.update');
-// Route::get('/Kelassiswa/download/{hashedId}', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.download');
+
 Route::get('/Kelassiswa/download/{hashedId}', [KelassiswaController::class, 'previewkelas'])
     ->name('Kelassiswa.download');
     Route::get('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.downloadkelas');
+Route::get('/Kelassiswa/downloadmata/{hashedId}', [KelassiswaController::class, 'previewmatapelajaran'])
+    ->name('Kelassiswa.downloadmata');
+    Route::get('/Kelassiswa/{hashedId}', [KelassiswaController::class, 'downloadkelas'])->name('Kelassiswa.downloadkelas');
+    Route::get('/Kelassiswadownloadmatapelajaran/{hashedId}', [KelassiswaController::class, 'downloadmatapelajaran'])->name('Kelassiswa.downloadmatapelajaran');
 
 
-// Route::get('/getSiswadankelas', [KelassiswaController::class, 'getSiswadankelas'])->name('Kelassiswa.getSiswadankelas');
-// Route::get('/getEditsiswadankelas', [KelassiswaController::class, 'getEditsiswadankelas'])->name('Kelassiswa.getEditsiswadankelas');
+Route::get('/getSiswadankelas', [KelassiswaController::class, 'getSiswadankelas'])->name('Kelassiswa.getSiswadankelas');
 // pengaturan kelas
 Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->name('Pengaturankelas.index');
     Route::get('/Pengaturankelas/pengaturankelas', [PengaturankelasController::class, 'getPengaturankelas'])->name('pengaturankelas.pengaturankelas');
@@ -273,7 +277,13 @@ Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->nam
 Route::get('/Pengaturankelas/edit/{hashedId}', [PengaturankelasController::class, 'edit'])->name('Pengaturankelas.edit');
 Route::put('/Pengaturankelas/{hashedId}', [PengaturankelasController::class, 'update'])->name('Pengaturankelas.update');
 
-
+//pengaturankelasdatamengajaar
+Route::get('/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'index'])->name('Pengaturankelasdatamengajar.index');
+    Route::get('/Pengaturankelasdatamengajar/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'getPengaturankelasatamengajar'])->name('pengaturankelasdatamengajar.pengaturankelasdatamengajar');
+    Route::delete('/Pengaturankelasdatamengajar/delete', [PengaturankelasdatamengajarController::class, 'deleteKelasdatamengajar'])->name('pengaturankelasdatamengajar.delete');
+    Route::get('Pengaturankelasdatamengajar/create', [PengaturankelasdatamengajarController::class, 'create'])->name('Pengaturankelasdatamengajar.create');
+    Route::get('/Pengaturankelasdatamengajar/edit/{hashedId}', [PengaturankelasdatamengajarController::class, 'edit'])->name('Pengaturankelasdatamengajar.edit');
+    Route::put('/Pengaturankelasdatamengajar/{hashedId}', [PengaturankelasdatamengajarController::class, 'update'])->name('Pengaturankelasdatamengajar.update');
 
    
    });

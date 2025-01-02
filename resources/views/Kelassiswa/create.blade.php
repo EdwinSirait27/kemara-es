@@ -32,7 +32,7 @@
                                             <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select">
                                                 <option value="" selected disabled>Pilih Tahun</option>
                                                 @foreach ($pengaturans as $pengaturan)
-                                                    <option value="{{ $pengaturan->id }}">Tahun Akademik : {{ $pengaturan->Tahunakademik->tahunakademik }} Semester : {{ $pengaturan->Tahunakademik->semester }} Kelas : {{$pengaturan->Kelas->kelas}}</option>
+                                                    <option value="{{ $pengaturan->id }}">Tahun Akademik : {{ $pengaturan->Tahunakademik->tahunakademik }} Semester : {{ $pengaturan->Tahunakademik->semester }} Kelas : {{$pengaturan->Kelas->kelas}} Tahun Akademik Kelas : {{$pengaturan->Kelas->Tahunakademik->tahunakademik}}</option>
                                                 @endforeach
                                             </select>
                                             @error('pengaturankelas_id')
@@ -74,13 +74,57 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <h5>Pilih mata pelajaran yang akan dimasukkan kedalam kelas</h5>
+    
+                                <div class="mb-3">
+                                    <label for="siswa_id" class="form-label"></label>
+                                    @error('datamengajar_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                    <table id="datamengajarTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Pilih</th>
+                                                <th>Guru</th>
+                                                <th>Mata pelajaran</th>
+                                                <th>Hari</th>
+                                                <th>Awal Pelajaran </th>
+                                                <th>Akhir Pelajaran</th>
+                                                <th>Awal Istirahat</th>
+                                                <th>Akhir Istirahat</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($datamengajars as $datamengajar)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="datamengajar_id[]" value="{{ $datamengajar->id }}">
+                                                </td>
+                                                <td>{{ $datamengajar->Guru->Nama }}</td>
+                                                <td>{{ $datamengajar->Matapelajaran->matapelajaran }}</td>
+                                                <td>{{ $datamengajar->hari }}</td>
+                                                <td>{{ $datamengajar->awalpel }}</td>
+                                                <td>{{ $datamengajar->akhirpel }}</td>
+                                                <td>{{ $datamengajar->awalis }}</td>
+                                                <td>{{ $datamengajar->akhiris }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 
                                {{-- ini punya data awal --}}
                             </div>
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Masukkan Siswa') }}
+                                        {{ __('Masukkan Siswa dan Matapelajaran') }}
                                     </button>
 
                                     <a href="{{ route('Kelassiswa.index') }}" class="btn btn-secondary">

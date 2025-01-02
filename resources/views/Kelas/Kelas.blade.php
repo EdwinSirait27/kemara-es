@@ -30,9 +30,10 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Kelas</th>
-                                    {{-- <th
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Nama</th> --}}
+                                        Tahun Akademik</th>
+                                    
                                     
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -104,6 +105,11 @@
                     },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'kelas', name: 'kelas', className: 'text-center' },
+          {
+                        data: 'Tahun_Nama',
+                        name: 'Tahun_Nama',
+                        className: 'text-center'
+                    },
           { data: 'kapasitas', name: 'kapasitas', className: 'text-center' },
 
           { data: 'status', name: 'status', className: 'text-center' },
@@ -213,6 +219,7 @@ $('#users-table').on('click', '.edit-matapelajaran', function(e) {
             success: function(response) {
                 let kelas = response.kelas;
                 $('#editUserModal').find('input[name="guru_id"]').val(kelas.guru_id);
+                $('#editUserModal').find('input[name="tahunakademik_id"]').val(kelas.tahunakademik_id);
                 $('#editUserModal').find('input[name="kelas"]').val(kelas.kelas);
                 $('#editUserModal').find('input[name="kapasitas"]').val(kelas.kapasitas);
                 $('#editUserModal').find('input[name="status"]').val(kelas.status);

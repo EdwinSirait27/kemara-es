@@ -91,6 +91,7 @@ public function getSiswa()
             $pengaturan->Tahun_Nama = $pengaturan->Tahunakademik ? $pengaturan->Tahunakademik->tahunakademik : 'belum di setel';
             $pengaturan->Semester_Nama = $pengaturan->Tahunakademik ? $pengaturan->Tahunakademik->semester : 'belum di setel';
             $pengaturan->Kelas_Nama = $pengaturan->Kelas ? $pengaturan->Kelas->kelas : 'belum di setel';
+            $pengaturan->KelasTahun_Nama = $pengaturan->Kelas->Tahunakademik ? $pengaturan->Kelas->Tahunakademik->tahunakademik : 'blum';
             $pengaturan->Kapasitas_Nama = $pengaturan->Kelas ? $pengaturan->Kelas->kapasitas : 'belum di setel';
             return $pengaturan;
         });
@@ -103,6 +104,9 @@ public function getSiswa()
         })
         ->addColumn('kelas', function ($pengaturan) {
             return $pengaturan->Kelas->kelas;
+        })
+        ->addColumn('tahunakademik', function ($pengaturan) {
+            return $pengaturan->Kelas->Tahunakademik ? $pengaturan->Kelas->Tahunakademik->tahunakademik : 'Default Tahun Akademik';
         })
         ->addColumn('kapasitas', function ($pengaturan) {
             return $pengaturan->Kelas->kapasitas;

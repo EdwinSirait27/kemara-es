@@ -39,4 +39,5 @@ class Data_mengajar extends Model
     return $this->hasMany(Pengaturankelas::class, 'datamengajar_id', 'id');
 }
 
+
 }

@@ -170,7 +170,32 @@
                                         </div>
                                     </div>
                                 </div>
-                           
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tahunakademik_id" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
+                                        </label>
+                                        <div class="@error('tahunakademik_id')border border-danger rounded-3 @enderror">
+                                            <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
+                                                <option value="" selected disabled>Pilih Tahunakademik</option>
+                                                @foreach ($tahuns as $tahun)
+                                                    <option value="{{ $tahun->id }}">{{ $tahun->id }}-{{ $tahun->tahunakademik }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('tahunakademik_id')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
+                      
+
+                                      
+
+
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">

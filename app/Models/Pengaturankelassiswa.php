@@ -12,6 +12,7 @@ class Pengaturankelassiswa extends Model
     protected $fillable = [
         'siswa_id',
         'pengaturankelas_id',
+        'datamengajar_id',
         
  
     ];
@@ -22,6 +23,10 @@ class Pengaturankelassiswa extends Model
     public function Pengaturankelas()
     {
         return $this->belongsTo(Pengaturankelas::class,'pengaturankelas_id','id');
+    }
+    public function Datamengajar()
+    {
+        return $this->belongsTo(Data_mengajar::class,'datamengajar_id','id');
     }
 
 }

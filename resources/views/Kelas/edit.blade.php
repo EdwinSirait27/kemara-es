@@ -87,7 +87,7 @@
                                             <option value="" selected disabled>Pilih Guru</option>
                                             @foreach ($gurus as $guru)
                                             <option value="{{ $guru->guru_id }}" {{ $kelas->guru_id == $guru->guru_id ? 'selected' : '' }}>
-                                                {{ $guru->guru }} - {{ $guru->Nama }}
+                                                {{ $guru->guru_id }} - {{ $guru->Nama }}
                                             </option>
                                         @endforeach
                                         </select>
@@ -172,13 +172,34 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tahunakademik_id" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
+                                    </label>
+                                    <div>
+                                        <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
+                                            <option value="" selected disabled>Pilih Tahun</option>
+                                            @foreach ($tahuns as $tahun)
+                                            <option value="{{ $tahun->id }}" {{ $kelas->kurikulum_id == $tahun->id ? 'selected' : '' }}>
+                                                {{ $tahun->id }} - {{ $tahun->tahunakademik }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                        @error('tahunakademik_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
+                                        
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
                        
-
-{{-- @php
-                                $oldRoles = old('hakakses', $hakakses); 
-                            @endphp --}}
-                          
-
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4 me-2">

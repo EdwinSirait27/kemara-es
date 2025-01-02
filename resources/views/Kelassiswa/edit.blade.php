@@ -50,7 +50,8 @@
                             </div>
                         @endif
                         @if (session('success'))
-                            <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                            <div class="m-3 alert alert-success alert-dismissible fade show" id="alert-success"
+                                role="alert">
                                 <span class="alert-text text-white">
                                     {{ session('success') }}</span>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -58,7 +59,7 @@
                                 </button>
                             </div>
                         @endif
-                       
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -66,7 +67,8 @@
                                         <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
                                     </label>
                                     <div>
-                                        <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select" readonly>
+                                        <select name="pengaturankelas_id" id="pengaturankelas_id" class="form-select"
+                                            readonly>
                                             <option value="" selected disabled>Pilih Pengaturan Kelas</option>
                                             @foreach ($pengaturans as $peng)
                                                 <option value="{{ $peng->id }}"
@@ -105,7 +107,8 @@
                                             @foreach ($siswas as $siswa)
                                                 <tr>
                                                     <td>
-                                                        <input type="checkbox" name="siswa_id[]" value="{{ $siswa->siswa_id }}"
+                                                        <input type="checkbox" name="siswa_id[]"
+                                                            value="{{ $siswa->siswa_id }}"
                                                             @if (in_array($siswa->siswa_id, $selectedSiswa)) checked @endif>
                                                     </td>
                                                     <td>{{ $siswa->NamaLengkap }}</td>
@@ -115,62 +118,132 @@
                                     </table>
                                 </div>
                             </div>
+                            <br>
+                            <br>
+                            <br>
+                            <h5>Pilih Mata pelajaran yang akan dimasukkan kedalam kelas</h5>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+                            <div class="row">
+                                <div class="table-responsive p-0">
+                                    <label for="siswa_id" class="form-label"></label>
+                                    <table id="siswaTable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Pilih</th>
+                                                <th>Guru</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th>Awal Pelajaran</th>
+                                                <th>Akhir Pelajaran</th>
+                                                <th>Awal Istirahat</th>
+                                                <th>Akhir Istirahat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($datamengajars as $data)
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="datamengajar_id[]"
+                                                            value="{{ $data->id }}"
+                                                            @if (in_array($data->id, $selectedMata)) checked @endif>
+                                                    </td>
+                                                    <td>{{ $data->Guru->Nama }}</td>
+                                                    <td>{{ $data->Matapelajaran->matapelajaran }}</td>
+                                                    <td>{{ $data->awalpel }}</td>
+                                                    <td>{{ $data->akhirpel }}</td>
+                                                    <td>{{ $data->awalis }}</td>
+                                                    <td>{{ $data->akhiris }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
- @if ($kelassiswa && $kelassiswa->Pengaturankelas->Kelas)
-                        <h5>Siswa yang sudah masuk kedalam kelas {{ $kelassiswa->Pengaturankelas->Kelas->kelas ?? 'Nama kelas tidak tersedia' }} Tahun akademik {{$kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik ?? 'Nama kelas tidak tersedia' }} Semester {{$kelassiswa->Pengaturankelas->Tahunakademik->semester ?? 'Nama kelas tidak tersedia' }}
-                        </h5>
-                    @else
-                        <p>Data kelas tidak ditemukan.</p>
-                    @endif
-                    {{-- <form id="filterForm">
-                        <div class="form-group">
-                            <label for="tahunakademik">Filter Tahun Akademik</label>
-                            <select id="tahunakademik" name="tahunakademik_id" class="form-control">
-                                <option value="">Semua</option>
-                                @foreach ($filterTahunakademik as $tahun)
-                                    <option value="{{ $tahun->id }}">Tahun Akademik: {{ $tahun->tahunakademik }} - Semester: {{$tahun->semester}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </form> --}}
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                            @if ($kelassiswa && $kelassiswa->Pengaturankelas->Kelas)
+                                <h5>Siswa yang sudah masuk kedalam kelas
+                                    {{ $kelassiswa->Pengaturankelas->Kelas->kelas ?? 'Nama kelas tidak tersedia' }}
+                                    Tahun akademik
+                                    {{ $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik ?? 'Nama kelas tidak tersedia' }}
+                                    Semester
+                                    {{ $kelassiswa->Pengaturankelas->Tahunakademik->semester ?? 'Nama kelas tidak tersedia' }}
+                                </h5>
+                            @else
+                                <p>Data kelas tidak ditemukan.</p>
+                            @endif
+
                             <div class="row">
                                 <div class="table-responsive p-0">
                                     <table id="tabelsiswakelas" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Nama Siswa</th>
-                                                
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($kelassiswa as $siswakelas)
-                                            <tr>
-        
-                                                <td>{{ $siswakelas->siswa_id }}</td>
-                                            </tr>
-                                        @endforeach --}}
-                                        @if ($kelassiswa)
-                                        <tr>
-        
-                                            <td>{{ $kelassiswa->Siswa->NamaLengkap }}</td>
-                                        </tr>
-                                        @endif
-    {{-- <p>Siswa ID: {{ $kelassiswa->siswa_id }}</p>
-@else
-    <p>Data tidak ditemukan.</p>
-@endif --}}
+                                            @foreach ($siswass as $siswa)
+                                                <tr>
+                                                    <td>{{ $siswa->Siswa->NamaLengkap ?? 'Data tidak tersedia' }}</td>
 
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                            <br>
+                            <br>
+                            <br>
+
+                            @if ($kelassiswa && optional($kelassiswa->Pengaturankelas)->Kelas)
+                            <h5>Mata pelajaran yang sudah masuk kedalam kelas
+                                {{ $kelassiswa->Pengaturankelas->Kelas->kelas ?? 'Nama kelas tidak tersedia' }}
+                                Tahun akademik
+                                {{ optional($kelassiswa->Pengaturankelas->Tahunakademik)->tahunakademik ?? 'Tahun akademik tidak tersedia' }}
+                                Semester
+                                {{ optional($kelassiswa->Pengaturankelas->Tahunakademik)->semester ?? 'Semester tidak tersedia' }}
+                            </h5>
+                        @else
+                            <p>Data kelas tidak ditemukan.</p>
+                        @endif
+                        
+
+                            <div class="row">
+                                <div class="table-responsive p-0">
+                                    <table id="tabelmatapelajarankelas" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Guru</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th>Awal Pelajaran</th>
+                                                <th>Akhir Pelajaran</th>
+                                                <th>Awal Istirahat</th>
+                                                <th>Akhir Istirahat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($datamengajarss as $datamengajar)
+                                                <tr>
+                                                    <td>{{ $datamengajar->Datamengajar->Guru->Nama }}</td>
+                                                    <td>{{ $datamengajar->Datamengajar->Matapelajaran->matapelajaran }}</td>
+                                                    <td>{{ $datamengajar->Datamengajar->awalpel }}</td>
+                                                    <td>{{ $datamengajar->Datamengajar->akhirpel }}</td>
+                                                    <td>{{ $datamengajar->Datamengajar->awalis }}</td>
+                                                    <td>{{ $datamengajar->Datamengajar->akhiris }}</td>
+                                                   
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -194,7 +267,9 @@
                 <strong>Keterangan</strong> <br>
             </span>
             <span class="text-white">-
-                <strong> Untuk pengeditan Tahun Akademik tidak diaktifkan fitur ini hanya untuk  menambahkan siswa ke dalam kelas, untuk tabel kedua itu adalah daftar siswa yang sudah masuk kedalam kelas, bisa menggunakan filter berdasarkan Tahun Akademik yang sedang diakses saat ini.</strong> <br>
+                <strong> Untuk pengeditan Tahun Akademik tidak diaktifkan fitur ini hanya untuk menambahkan siswa ke
+                    dalam kelas, untuk tabel kedua itu adalah daftar siswa yang sudah masuk kedalam kelas, bisa
+                    menggunakan filter berdasarkan Tahun Akademik yang sedang diakses saat ini.</strong> <br>
                 <br>
             </span>
         </div>
@@ -231,6 +306,7 @@
     $(document).ready(function() {
         $('#siswaTable').DataTable();
         $('#tabelsiswakelas').DataTable();
+        $('#tabelmatapelajarankelas').DataTable();
 
     });
 </script>

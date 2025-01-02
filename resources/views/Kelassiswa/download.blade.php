@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Siswa</title>
+    <title>Absensi Siswa</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,7 +63,7 @@
     <div class="class-info">
         @if($kelassiswa)
 
-        <h3>Daftar Siswa Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h3>
+        <h3>Daftar Absensi Siswa Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h3>
         <table style="border: none; width: 100%; margin-bottom: 10px;">
             <tr style="border: none;">
                 <td style="border: none; width: 150px;">Tahun Ajaran</td>
@@ -90,24 +90,31 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 5%; text-align: center;">No</th>
+                <th style="width: 3%;">No</th>
                 <th style="width: 30%;">Nama Siswa</th>
+                {{-- <th colspan="20" class="No">Absensi</th> --}}
                 <th colspan="20" class="absen-header">Absensi</th>
             </tr>
         </thead>
         <tbody>
-            @php
-            $counter = 1; // Variabel untuk nomor urut
-        @endphp
-            @if($kelassiswa)
+            
+            {{-- @if($siswas)
             <tr>
-                <td style="text-align: center;">{{ $counter }}</td> 
-                <td>{{ $kelassiswa->Siswa->NamaLengkap ?? '-' }}</td>
+                <td>{{ $siswas->siswa_id ?? '-' }}</td>
                 @for($i = 1; $i <= 20; $i++)
                 <td class="absen-cell"></td>
             @endfor
             </tr>
-            @endif
+            @endif --}}
+            @foreach ($siswas as $siswa)
+            <tr>
+                <td>{{ $loop->iteration }}</td>              
+                <td>{{ $siswa->Siswa->NamaLengkap ?? 'N/A' }}</td>
+                @for($i = 1; $i <= 20; $i++)
+                <td class="absen-cell"></td>
+            @endfor    
+            </tr>
+        @endforeach
         </tbody>
     </table>
 

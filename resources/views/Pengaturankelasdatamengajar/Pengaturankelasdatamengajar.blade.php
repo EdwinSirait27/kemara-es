@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Pengaturan Kelas')
+@section('title', 'Kemara-ES | Matapelajaran Siswa')
 
 @section('content')
     <style>
@@ -13,7 +13,7 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     {{-- <h6>Role & Hak Akses</h6> --}}
-                    <h6><i class="fas fa-user-shield"></i> Pengaturan Kelas</h6>
+                    <h6><i class="fas fa-user-shield"></i> Pengaturan Mata Pelajaran Kelas</h6>
 
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -33,16 +33,11 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Kelas</th>
+                                   
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Tahun Akademik Kelas</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Kapasitas</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Keterangan</th>
-
+                                        Status Kelas</th>
+                                  
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
@@ -51,15 +46,14 @@
                                             Select All
                                         </button>
                                     </th>
-                                    <!-- Checkbox untuk select all -->
-                                    {{-- <th class="text-secondary opacity-7">Action</th> --}}
+                                 
                                 </tr>
                             </thead>
 
                         </table>
-                        <button type="button" onclick="window.location='{{ route('Pengaturankelas.create') }}'"
+                        <button type="button" onclick="window.location='{{ route('Pengaturankelasdatamengajar.create') }}'"
                             class="btn btn-primary btn-sm">
-                            Tambah Pengaturan Kelas
+                            Tambah Mata Pelajaran 
                         </button>
 
                         {{-- <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
@@ -81,7 +75,7 @@
             let table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('pengaturankelas.pengaturankelas') }}',
+                ajax: '{{ route('pengaturankelasdatamengajar.pengaturankelasdatamengajar') }}',
                 lengthMenu: [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
@@ -111,24 +105,17 @@
                         name: 'Kelas_Nama',
                         className: 'text-center'
                     },
-                    {
-                        data: 'KelasTahun_Nama',
-                        name: 'KelasTahun_Nama',
-                        className: 'text-center'
-                    },
                     
                     {
                         data: 'Kapasitas_Nama',
                         name: 'Kapasitas_Nama',
                         className: 'text-center'
-                    },
+                    }, 
                     {
-                        data: 'ket',
-                        name: 'ket',
+                        data: 'Status_Nama',
+                        name: 'Status_Nama',
                         className: 'text-center'
-                    },
-                    
-                    
+                    }, 
                     {
                         data: 'action',
                         name: 'action',
@@ -185,7 +172,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route('pengaturankelas.delete') }}',
+                            url: '{{ route('pengaturankelasdatamengajar.delete') }}',
                             method: 'POST',
                             data: {
                                 ids: selectedIds,
@@ -223,18 +210,17 @@
             });
 
         });
-        $('#users-table').on('click', '.edit-pengaturankelas', function(e) {
+        $('#users-table').on('click', '.edit-pengaturankelasdatamengajar', function(e) {
             e.preventDefault();
-            let pengaturankelasId = $(this).data('id');
+            let pengaturankelasdatamengajarId = $(this).data('id');
             $.ajax({
-                url: `/pengaturankelas/${pengaturankelasId}/edit`,
+                url: `/pengaturankelasdatamengajar/${pengaturankelasdatamengajarId}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    let pengaturankelas = response.pengaturankelas;
-                    $('#editUserModal').find('input[name="kelas_id"]').val(pengaturankelas.kelas_id);
-                    $('#editUserModal').find('input[name="tahunakademik_id"]').val(pengaturankelas.tahunakademik_id);
+                    let pengaturankelasdatamengajar = response.pengaturankelasdatamengajar;
+                    $('#editUserModal').find('input[name="datamengajar_id"]').val(pengaturankelasdatamengajar.datamengajar_id);
+                    $('#editUserModal').find('input[name="pengaturankelas_id"]').val(pengaturankelasdatamengajar.pengaturankelas_id);
                    
-                    $('#editUserModal').find('input[name="ket"]').val(pengaturankelas.ket);
                     $('#editUserModal').modal('show');
                 },
                 error: function(err) {

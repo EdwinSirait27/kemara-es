@@ -119,7 +119,7 @@
                                             <option value="" selected disabled>Pilih Kelas</option>
                                             @foreach ($kelass as $kelas)
                                             <option value="{{ $kelas->id }}" {{ $pengaturan->kelas_id == $kelas->id ? 'selected' : '' }}>
-                                                {{ $kelas->id }} - {{ $kelas->kelas }}
+                                                {{ $kelas->id }} - {{ $kelas->kelas }} Tahun Akademik {{ $kelas->Tahunakademik->tahunakademik }}
                                             </option>
                                         @endforeach
                                         </select>

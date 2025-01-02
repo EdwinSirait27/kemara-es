@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Guru;
+use App\Models\Tahunakademik;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use App\Rules\NoXSSInput;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Validation\Rule;
 
 
@@ -25,12 +28,13 @@ class KelasController extends Controller
     public function create()
     {
         $gurus = Guru::select('guru_id','Nama')->get();
+        $tahuns = Tahunakademik::select('id','tahunakademik','semester')->get();
 
-        return view('Kelas.create',compact('gurus'));
+        return view('Kelas.create',compact('gurus','tahuns'));
     }
     public function getKelas()
     {
-        $kelas = Kelas::with('guru')->select(['id','guru_id', 'kelas','kapasitas', 'status', 'ket','created_at'])
+        $kelas = Kelas::with('Guru','Tahunakademik')->select(['id','guru_id','tahunakademik_id' ,'kelas','kapasitas', 'status', 'ket','created_at'])
             ->get()
             ->map(function ($kelas) {
                 $kelas->id_hashed = substr(hash('sha256', $kelas->id . env('APP_KEY')), 0, 8);
@@ -39,14 +43,21 @@ class KelasController extends Controller
             <a href="' . route('Kelas.edit', $kelas->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-            $kelas->Guru_Nama = $kelas->guru ? $kelas->guru->Nama : '-';
+            $kelas->Guru_Nama = $kelas->Guru ? $kelas->Guru->Nama : '-';
+            $kelas->Tahun_Nama = $kelas->Tahunakademik ? $kelas->Tahunakademik->tahunakademik : 'blum';
+            $kelas->Semester_Nama = $kelas->Tahunakademik ? $kelas->Tahunakademik->semester : '-';
                
             return $kelas;
             });
         return DataTables::of($kelas)
         ->addColumn('Nama', function ($kelas) {
-            return $kelas->guru->Nama;
+            return $kelas->Guru->Nama;
         })
+        ->addColumn('tahunakademik', function ($kelas) {
+            return $kelas->Tahunakademik ? $kelas->Tahunakademik->tahunakademik : 'Default Tahun Akademik';
+        })
+        
+       
         ->addColumn('created_at', function ($kelas) {
             return Carbon::parse($kelas->created_at)->format('d-m-Y H:i:s');
         })
@@ -56,7 +67,7 @@ class KelasController extends Controller
     }
     public function edit($hashedId)
     {
-        $kelas = Kelas::with('guru')->get()->first(function ($u) use ($hashedId) {
+        $kelas = Kelas::with('Guru','Tahunakademik')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
@@ -64,9 +75,10 @@ class KelasController extends Controller
             abort(404, 'Kelas not found.');
         }
         $gurus = Guru::select('guru_id','Nama')->get();
+        $tahuns = Tahunakademik::select('id','tahunakademik','semester')->get();
 
 
-        return view('Kelas.edit', compact('kelas', 'hashedId','gurus'));
+        return view('Kelas.edit', compact('kelas', 'hashedId','gurus','tahuns'));
     }
     public function update(Request $request, $hashedId)
 {
@@ -89,6 +101,7 @@ class KelasController extends Controller
                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
             }
         }], // pastikan guru_id valid
+        'tahunakademik_id' =>['required','exists:tb_tahunakademik,id', new NoXSSInput()], 
         'kelas' => 'required|string',
         'kapasitas' => 'nullable|integer',
         'status' => 'nullable|string',
@@ -108,6 +121,7 @@ class KelasController extends Controller
     // Data untuk pembaruan
     $kelasData = [
         'guru_id' => $validatedData['guru_id'],
+        'tahunakademik_id' => $validatedData['tahunakademik_id'],
         'kelas' => $validatedData['kelas'],
         'kapasitas' => $validatedData['kapasitas'] ?? $kelas->kapasitas,
         'status' => $validatedData['status'] ?? $kelas->status,
@@ -141,40 +155,55 @@ class KelasController extends Controller
             'message' => 'Selected Kelas and their related data deleted successfully.'
         ]);
     }
-    public function store(Request $request)
+
+public function store(Request $request)
 {
-    // Validasi input
+    // dd($request->all());
+
     $validatedData = $request->validate([
         'guru_id' => [
-            'required',
-            'exists:tb_guru,guru_id',
-            new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }
-        ], // pastikan guru_id valid
-        'kelas' => 'required|string',
+    'required',
+    'exists:tb_guru,guru_id',
+    new NoXSSInput(),
+    function ($attribute, $value, $fail) use ($request) {
+        $sanitizedValue = strip_tags($value);
+        if ($sanitizedValue !== $value) {
+            $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+        }
+
+        // Cek apakah guru_id sudah ada dan memiliki tahunakademik_id yang berbeda
+        $existingKelas = Kelas::where('guru_id')
+            ->where('tahunakademik_id', '!=', $request->tahunakademik_id) // Pastikan tahunakademik_id berbeda
+            ->first();
+
+        if ($existingKelas) {
+            $fail("Guru dengan ID $value sudah memiliki kelas pada tahun akademik yang berbeda.");
+        }
+    }
+],
+'tahunakademik_id' => [
+    'required',
+    'exists:tb_tahunakademik,id',
+    new NoXSSInput()
+],
+'kelas' => 'required|string|max:255',
+
         'kapasitas' => 'nullable|integer',
-        'status' => 'nullable|string',
-        'ket' => 'nullable|string',
+        'status' => 'nullable|string|max:50',
+        'ket' => 'nullable|string|max:255',
     ]);
 
-    // Cek apakah kombinasi guru_id dan kelas sudah ada
-    $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
-        ->where('kelas', $validatedData['kelas'])
-        ->first();
+    // Log data yang sudah divalidasi
+    Log::info('Validated Data:', $validatedData);
 
-    if ($existingKelas) {
-        return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
-    }
-
+ 
     try {
-        // Simpan data ke tabel Kelas
+        // Log sebelum menyimpan data
+        Log::info('Creating Kelas with data:', $validatedData);
+
         Kelas::create([
             'guru_id' => $validatedData['guru_id'],
+            'tahunakademik_id' => $validatedData['tahunakademik_id'],
             'kelas' => $validatedData['kelas'],
             'kapasitas' => $validatedData['kapasitas'],
             'status' => $validatedData['status'],
@@ -183,9 +212,64 @@ class KelasController extends Controller
 
         return redirect()->route('Kelas.index')->with('success', 'Kelas berhasil dibuat!');
     } catch (\Exception $e) {
+        // Log jika ada error saat menyimpan
+        Log::error('Error creating kelas:', [
+            'error' => $e->getMessage(),
+            'data' => $validatedData
+        ]);
         return redirect()->back()->with('error', 'Gagal membuat Kelas: ' . $e->getMessage());
     }
 }
+
+//     public function store(Request $request)
+// {
+//         // dd($request->all());
+
+//     $validatedData = $request->validate([
+//         'guru_id' => [
+//             'required',
+//             'exists:tb_guru,guru_id',
+//             new NoXSSInput(),
+//             function ($attribute, $value, $fail) {
+//                 $sanitizedValue = strip_tags($value);
+//                 if ($sanitizedValue !== $value) {
+//                     $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+//                 }
+//             }
+//         ], // pastikan guru_id valid
+//         'tahunakademik_id' => [
+//             'required',
+//             'exists:tb_tahunakademik,id',
+//             new NoXSSInput()], // pastikan guru_id valid
+//         'kelas' => 'required|string',
+//         'kapasitas' => 'nullable|integer',
+//         'status' => 'nullable|string',
+//         'ket' => 'nullable|string',
+//     ]);
+
+//     $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
+//         ->where('kelas', $validatedData['kelas'])
+//         ->first();
+
+//     if ($existingKelas) {
+//         return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
+//     }
+
+//     try {
+//         Kelas::create([
+//             'guru_id' => $validatedData['guru_id'],
+//             'tahunakademik_id' => $validatedData['tahunakademik_id'],
+//             'kelas' => $validatedData['kelas'],
+//             'kapasitas' => $validatedData['kapasitas'],
+//             'status' => $validatedData['status'],
+//             'ket' => $validatedData['ket'],
+//         ]);
+
+//         return redirect()->route('Kelas.index')->with('success', 'Kelas berhasil dibuat!');
+//     } catch (\Exception $e) {
+//         return redirect()->back()->with('error', 'Gagal membuat Kelas: ' . $e->getMessage());
+//     }
+// }
 
     // public function store(Request $request)
     // {

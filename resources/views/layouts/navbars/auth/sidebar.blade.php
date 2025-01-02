@@ -668,6 +668,15 @@
           </li>
       </ul>
   </div>
+  <div class="collapse" id="laravelExamples2">
+      <ul class="nav ms-4">
+          <li class="nav-item">
+              <a class="nav-link {{ Request::is('Pengaturankelasdatamengajar') ? 'active' : '' }}" href="{{ url('Pengaturankelasdatamengajar') }}">
+                  <span class="nav-link-text ms-1">Tambah Mata Pelajaran ke Kelas</span>
+              </a>
+          </li>
+      </ul>
+  </div>
 </li>
 @endif
 @if (Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))

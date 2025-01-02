@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data_mengajar;
-use App\Models\Kelassiswa;
+use App\Models\Pengaturankelasdatamengajar;
 use App\Models\Pengaturankelas;
 use App\Models\Tahunakademik;
 use Illuminate\Http\Request;
@@ -28,193 +28,147 @@ class PengaturankelasdatamengajarController extends Controller
   
     public function create() 
 {
-    $datamengajars = Data_mengajar::all()->with('Guru','Matapelajaran')->get();
+    $kelasdatamengajar = Data_mengajar::all()->with('Guru','Matapelajaran')->get();
 
     $pengaturans = Pengaturankelas::with('Tahunakademik')->get();
-    $tahunakademik = Kelassiswa::with('Siswa', 'Pengaturankelas.Tahunakademik', 'Pengaturankelas.Kelas')
+    $tahunakademik = Pengaturankelasdatamengajar::with('Datamengajar', 'Pengaturankelas.Tahunakademik', 'Pengaturankelas.Kelas')
         ->select('id', 'siswa_id', 'pengaturankelas_id')
         ->get();
     
     $filterTahunakademik = Tahunakademik::select('id', 'tahunakademik','semester')->get();
         
-    return view('Pengaturankelasdatamengajar.create', compact('datamengajars', 'pengaturans', 'tahunakademik', 'filterTahunakademik'));
+    return view('Pengaturankelasdatamengajar.create', compact('kelasdatamengajar', 'pengaturans', 'tahunakademik', 'filterTahunakademik'));
 }
 
-    // public function getSiswadankelas(Request $request)
-    // {
-    //     $query = Kelassiswa::with(['Siswa', 'Pengaturankelas'])
-    //         ->select(['id', 'siswa_id', 'pengaturankelas_id']);
-    //         if ($request->has('id') && !empty($request->id)) {
-    //             $query->whereHas('Pengaturankelas.Tahunakademik', function ($q) use ($request) {
-    //                 $q->where('id', $request->id);
-    //             });
-    //         }
-    //     $lihatsiswa = $query->get()
-    //         ->map(function ($lihatsiswa) {       
-    //             $lihatsiswa->Siswa_Nama = $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-    //             $lihatsiswa->Kelas_Nama = $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-    //             $lihatsiswa->Tahun_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-    //             $lihatsiswa->Semester_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-    //             return $lihatsiswa;
-    //         });
-    //     return DataTables::of($lihatsiswa)
-    //         ->addColumn('Namalengkap', function ($lihatsiswa) {
-    //             return $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-    //         })
-    //         ->addColumn('kelas', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-    //         })
-    //         ->addColumn('tahunakademik', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-    //         })
-    //         ->addColumn('semester', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-    //         })
-    //         ->make(true);
-    // }
     public function show($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Datamengajar', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
+    if (!$kelasdatamengajar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->withErrors(['Data tidak ditemukan.']);
     }
-    $jumlahsiswa = Kelassiswa::where('siswa_id', $kelassiswa->pengaturankelas_id)
-        ->count();
-    return view('Kelassiswa.show', compact('kelassiswa', 'jumlahsiswa','hashedId'));
+    
+    return view('Pengaturankelasdatamengajar.show', compact('kelasdatamengajar','hashedId'));
 }
-public function downloadkelas($hashedId)
+public function downloadkelasdatamengajar($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas.Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Datamengajar', 'Pengaturankelas.Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
 
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
+    if (!$kelasdatamengajar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->withErrors(['Data tidak ditemukan.']);
     }
 
-    $jumlahsiswa = Kelassiswa::where('siswa_id', $kelassiswa->pengaturankelas_id)->count();
-
-    $siswas = Kelassiswa::with('Siswa')
-        ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
+    
+    $datas = Data_mengajar::with('Datamengajar','Guru')
+        ->where('pengaturankelas_id', $kelasdatamengajar->pengaturankelas_id)
         ->get();
 
     // Generate PDF
-    $pdf = PDF::loadView('Kelassiswa.download', compact('siswas', 'jumlahsiswa', 'kelassiswa'))
+    $pdf = PDF::loadView('Pengaturankelasdatamengajar.download', compact('datas', 'jumlahsiswa', 'kelassiswa'))
         ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
 
-    $fileName = 'data-kelas-siswa-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '.pdf';
+    $fileName = 'data-jadwal-siswa-' . $kelasdatamengajar->Pengaturankelas->Kelas->kelas . '.pdf';
     return $pdf->download($fileName);
 }
 
-public function previewkelas($hashedId)
+public function previewkelasdatamengajar($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas.Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Datamengajar', 'Pengaturankelas.Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
+    if (!$kelasdatamengajar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->withErrors(['Data tidak ditemukan.']);
     }
-    $jumlahsiswa = Kelassiswa::where('siswa_id', $kelassiswa->pengaturankelas_id)->count();
-    $siswas = Kelassiswa::with('Siswa')
-        ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
+    $datas = Data_mengajar::with('Guru','Matapelajaran')
+        ->where('pengaturankelas_id', $kelasdatamengajar->pengaturankelas_id)
         ->get();
 
     if (request()->has('download')) {
-        $pdf = PDF::loadView('Kelassiswa.download', compact('siswas', 'jumlahsiswa', 'kelassiswa'))
+        $pdf = PDF::loadView('Pengaturankelasdatamengajar.download', compact('datas',  'kelasdatamengajar'))
             ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
-        $fileName = 'data-kelas-siswa-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '.pdf';
+        $fileName = 'data-jadwal-siswa-' . $kelasdatamengajar->Pengaturankelas->Kelas->kelas . '.pdf';
         return $pdf->download($fileName);
     }
-    return view('Kelassiswa.download', compact('siswas', 'jumlahsiswa', 'kelassiswa'));
+    return view('Pengaturankelasdatamengajar.download', compact('datas',  'kelasdatamengajar'));
 }
 
-public function getSiswa($hashedId)
+public function getkelasdatamengajar($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Datamengajar', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
+    if (!$kelasdatamengajar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->withErrors(['Data tidak ditemukan.']);
     }
-    $siswas = Kelassiswa::with('Siswa')
-        ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
+    $datas = Data_mengajar::with('Guru','Matapelajran')
+        ->where('pengaturankelas_id', $kelasdatamengajar->pengaturankelas_id)
         ->get();
 
     // Return data untuk DataTables
-    return datatables()->of($siswas)
-        ->addColumn('NamaLengkap', function ($row) {
-            return $row->Siswa->NamaLengkap ?? '-';
+    return datatables()->of($datas)
+        ->addColumn('Nama', function ($row) {
+            return $row->Guru->Nama ?? '-';
         })
-        ->addColumn('tahunakademik', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik;
-        })
-        ->addColumn('semester', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Tahunakademik->semester;
-        })
-        ->addColumn('kelas', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Kelas->kelas;
-        })
-        ->addColumn('kapasitas', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Kelas->kapasitas;
-        })
+        
         ->rawColumns(['checkbox'])
         ->make(true);
 
 }
 
-public function getKelassiswa()
+public function getPengaturankelasatamengajar()
 {
-    $kelassiswa = Kelassiswa::with(['Pengaturankelas', 'Siswa'])
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with(['Pengaturankelas', 'Guru','Matapelajaran'])
         ->select(['id', 'pengaturankelas_id'])
         ->get()
         ->groupBy('pengaturankelas_id')  // Mengelompokkan berdasarkan pengaturankelas_id
         ->map(function ($group) {
-            $kelassiswa = $group->first();
+            $kelasdatamengajar = $group->first();
 
-            $kelassiswa->id_hashed = substr(hash('sha256', $kelassiswa->id . env('APP_KEY')), 0, 8);
-            $kelassiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelassiswa->id_hashed . '">';
-            $kelassiswa->action = '
-                <a href="' . route('Kelassiswa.edit', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Daftar Siswa">
+            $kelasdatamengajar->id_hashed = substr(hash('sha256', $kelasdatamengajar->id . env('APP_KEY')), 0, 8);
+            $kelasdatamengajar->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $kelasdatamengajar->id_hashed . '">';
+            $kelasdatamengajar->action = '
+                <a href="' . route('Pengaturankelasdatamengajar.edit', $kelasdatamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Daftar Siswa">
                     <i class="fas fa-user-edit text-secondary"></i>
                 </a>
-                <a href="' . route('Kelassiswa.show', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Lihat Detail Siswa">
+                <a href="' . route('Pengaturankelasdatamengajar.show', $kelasdatamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Lihat Detail Siswa">
                     <i class="fas fa-eye text-success"></i>
                 </a>
-                <a href="' . route('Kelassiswa.download', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Preview">
+                <a href="' . route('Pengaturankelasdatamengajar.download', $kelasdatamengajar->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Preview">
                     <i class="fas fa-upload text-primary"></i>
                 </a>
-                <a href="' . route('Kelassiswa.downloadkelas', $kelassiswa->id_hashed) . '"  
+                <a href="' . route('Pengaturankelasdatamengajar.downloaddatamengajar', $kelasdatamengajar->id_hashed) . '"  
                         class="btn btn-primary btn-sm">
                         <i class="fas fa-download"></i> Download PDF
                     </a>'
 
             ;
- $kelassiswa->Tahun_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik : 'belum di setel';
-            $kelassiswa->Semester_Nama = $kelassiswa->Pengaturankelas->Tahunakademik ? $kelassiswa->Pengaturankelas->Tahunakademik->semester : 'belum di setel';
-            $kelassiswa->Kelas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kelas : 'belum di setel';
-            $kelassiswa->Kapasitas_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->kapasitas : 'belum di setel';
-            $kelassiswa->Status_Nama = $kelassiswa->Pengaturankelas->Kelas ? $kelassiswa->Pengaturankelas->Kelas->status : 'belum di setel';
-            return $kelassiswa;
+ $kelasdatamengajar->Tahun_Nama = $kelasdatamengajar->Pengaturankelas->Tahunakademik ? $kelasdatamengajar->Pengaturankelas->Tahunakademik->tahunakademik : 'belum di setel';
+            $kelasdatamengajar->Semester_Nama = $kelasdatamengajar->Pengaturankelas->Tahunakademik ? $kelasdatamengajar->Pengaturankelas->Tahunakademik->semester : 'belum di setel';
+            $kelasdatamengajar->Kelas_Nama = $kelasdatamengajar->Pengaturankelas->Kelas ? $kelasdatamengajar->Pengaturankelas->Kelas->kelas : 'belum di setel';
+            $kelasdatamengajar->Kapasitas_Nama = $kelasdatamengajar->Pengaturankelas->Kelas ? $kelasdatamengajar->Pengaturankelas->Kelas->kapasitas : 'belum di setel';
+            $kelasdatamengajar->Status_Nama = $kelasdatamengajar->Pengaturankelas->Kelas ? $kelasdatamengajar->Pengaturankelas->Kelas->status : 'belum di setel';
+            return $kelasdatamengajar;
         });
 
-    return DataTables::of($kelassiswa)
-        ->addColumn('tahunakademik', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik;
+    return DataTables::of($kelasdatamengajar)
+        ->addColumn('tahunakademik', function ($kelasdatamengajar) {
+            return $kelasdatamengajar->Pengaturankelas->Tahunakademik->tahunakademik;
         })
-        ->addColumn('semester', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Tahunakademik->semester;
+        ->addColumn('semester', function ($kelasdatamengajar) {
+            return $kelasdatamengajar->Pengaturankelas->Tahunakademik->semester;
         })
-        ->addColumn('kelas', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Kelas->kelas;
+        ->addColumn('kelas', function ($kelasdatamengajar) {
+            return $kelasdatamengajar->Pengaturankelas->Kelas->kelas;
         })
-        ->addColumn('kapasitas', function ($kelassiswa) {
-            return $kelassiswa->Pengaturankelas->Kelas->kapasitas;
+        ->addColumn('kapasitas', function ($kelasdatamengajar) {
+            return $kelasdatamengajar->Pengaturankelas->Kelas->kapasitas;
         })
         ->rawColumns(['checkbox', 'action'])
         ->make(true);
@@ -222,7 +176,7 @@ public function getKelassiswa()
 
     public function getKelassiswadetail()
 {
-    $kelassiswa = Kelassiswa::with(['Pengaturankelas','Siswa'])
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with(['Pengaturankelas','Matapelajaran','Guru'])
         ->select(['id', 'siswa_id']) 
         
         ->get()
@@ -233,9 +187,9 @@ public function getKelassiswa()
              
             return $kelassiswa;
         });
-    return DataTables::of($kelassiswa)
-    ->addColumn('NamaLengkap', function ($kelassiswa) {
-        return optional($kelassiswa->Siswa)->NamaLengkap ?? 'Tidak Ada Nama';
+    return DataTables::of($kelasdatamengajar)
+    ->addColumn('NamaLengkap', function ($kelasdatamengajar) {
+        return optional($kelasdatamengajar->Matapelajaran)->matapelajaran ?? 'Tidak Ada Nama';
     })
         ->rawColumns(['checkbox'])
         ->make(true);
@@ -243,24 +197,22 @@ public function getKelassiswa()
 
     public function edit($hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Guru','Matapelajaran', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
+    if (!$kelasdatamengajar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->withErrors(['Data tidak ditemukan.']);
     }
     $pengaturans = Pengaturankelas::all();
-    $siswas = Siswa::select('siswa_id', 'NamaLengkap', 'status')
-               ->where('Status', 'Aktif')
-               ->get();
-               $selectedSiswa = $kelassiswa->Siswa ? $kelassiswa->Siswa->pluck('siswa_id')->toArray() : [];
-    return view('Kelassiswa.edit', compact('kelassiswa','hashedId', 'pengaturans','siswas','selectedSiswa'));
+    $datamengajars = Data_mengajar::all();
+               $selectedDatamengajar = $kelasdatamengajar->Matapelajaran ? $kelasdatamengajar->Matapelajaran->pluck('id')->toArray() : [];
+    return view('Pengaturankelasdatamengajar.edit', compact('kelasdatamengajar','hashedId', 'pengaturans','datamengajars','selectedSiswa'));
 }
-public function getEditsiswadankelas(Request $request)
+public function getEditdatamengajar(Request $request)
 {
-    $query = Kelassiswa::with(['Siswa', 'Pengaturankelas.Tahunakademik'])
-        ->select(['id', 'siswa_id', 'pengaturankelas_id']);
+    $query = Pengaturankelasdatamengajar::with(['Datamengajar', 'Pengaturankelas.Tahunakademik'])
+        ->select(['id', 'datamengajar_id', 'pengaturankelas_id']);
 
     // Filter berdasarkan tahun akademik
     if ($request->has('id') && !empty($request->id)) {
@@ -304,7 +256,7 @@ public function getEditsiswadankelas(Request $request)
 // }
 public function update(Request $request, $hashedId)
 {
-    $kelassiswa = Kelassiswa::with('Siswa','Pengaturankelas','Kelas')->get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengajar = Pengaturankelasdatamengajar::with('Datamengajar','Pengaturankelas','Kelas')->get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
@@ -315,16 +267,16 @@ public function update(Request $request, $hashedId)
             'numeric',
             'exists:tb_pengaturan_kelas,id',
             new NoXSSInput(),
-            function ($attribute, $value, $fail) use ($kelassiswa) {
+            function ($attribute, $value, $fail) use ($kelasdatamengajar) {
                 // Periksa apakah pengaturankelas_id sudah digunakan oleh record lain
-                if (Kelassiswa::where('pengaturankelas_id', $value)
-                    ->where('id', '!=', $kelassiswa->id) // Abaikan record yang sedang diupdate
+                if (Pengaturankelasdatamengajar::where('pengaturankelas_id', $value)
+                    ->where('id', '!=', $kelasdatamengajar->id) // Abaikan record yang sedang diupdate
                     ->exists()) {
                     $fail("Pengaturan kelas ini sudah digunakan. Silakan pilih pengaturan kelas yang lain.");
                 }
             },
         ],
-      'siswa_id' => [
+      'datamengajar_id' => [
     'required',
     'array',
     'min:1',
@@ -339,50 +291,50 @@ public function update(Request $request, $hashedId)
         }
 
         // Cari siswa_id yang sudah ada di tabel Kelassiswa dengan pengaturankelas_id yang sama
-        $existingSiswa = Kelassiswa::whereIn('siswa_id', $value)
+        $existingDatamengajar = Pengaturankelasdatamengajar::whereIn('datamengajar_id', $value)
             ->where('pengaturankelas_id', $pengaturankelasId)
-            ->with('Siswa')
+            ->with('Guru','Matapelajaran')
             ->get();
 
         // Jika ditemukan siswa dengan pengaturankelas_id yang sama, validasi gagal
-        if ($existingSiswa->isNotEmpty()) {
-            $namaSiswa = $existingSiswa->pluck('Siswa.NamaLengkap')->join(', ');
-            $fail("Siswa berikut sudah terdaftar dalam kelas ini: $namaSiswa. Silakan pilih siswa lainnya.");
+        if ($existingDatamengajar->isNotEmpty()) {
+            $namaMatapelajaran = $existingDatamengajar->pluck('Matapelajaran.matapelajaran')->join(', ');
+            $fail("Mata pelajaran berikut sudah terdaftar dalam kelas ini: $namaMatapelajaran. Silakan pilih siswa lainnya.");
         }
     },
 ],
         // 'siswa_id' => ['required', 'array', new NoXSSInput()],
         // 'pengaturankelas_id' => ['required', 'numeric', new NoXSSInput()],
-        'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()],
+        'datamengajar_id.*' => ['exists:tb_datamengajar,id', new NoXSSInput()],
     ]);
 
     // Mencari Kelassiswa berdasarkan hashedId
-    $kelassiswa = Kelassiswa::get()->first(function ($u) use ($hashedId) {
+    $kelasdatamengjar = Pengaturankelasdatamengajar::get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
         return $expectedHash === $hashedId;
     });
 
     // Jika data Kelassiswa tidak ditemukan
-    if (!$kelassiswa) {
-        return redirect()->route('Kelassiswa.index')->with('error', 'ID tidak valid.');
+    if (!$kelasdatamengjar) {
+        return redirect()->route('Pengaturankelasdatamengajar.index')->with('error', 'ID tidak valid.');
     }
 
     // Ambil data siswa_id dan pengaturankelas_id dari input
-    $siswa_ids = $request->input('siswa_id');
+    $datamengajar_ids = $request->input('datamengajar_id');
     $pengaturankelas_id = $request->input('pengaturankelas_id');
 
     // Hapus data siswa yang sebelumnya terhubung dengan pengaturankelas_id ini
-    Kelassiswa::where('pengaturankelas_id', $pengaturankelas_id)->delete();
+    Pengaturankelasdatamengajar::where('pengaturankelas_id', $pengaturankelas_id)->delete();
 
     // Tambahkan data baru untuk setiap siswa
-    foreach ($siswa_ids as $siswa_id) {
-        Kelassiswa::create([
-            'siswa_id' => $siswa_id,  // Gunakan siswa_id dari input
+    foreach ($datamengajar_ids as $datamengajar_id) {
+        Pengaturankelasdatamengajar::create([
+            'datamengajar_id' => $datamengajar_id,  // Gunakan siswa_id dari input
             'pengaturankelas_id' => $pengaturankelas_id, // Gunakan pengaturankelas_id dari input
         ]);
     }
 
-    return redirect()->route('Kelassiswa.index')->with('success', 'Organisasi Berhasil Diupdate.');
+    return redirect()->route('Pengaturankelasdatamengajar.index')->with('success', 'Organisasi Berhasil Diupdate.');
 }
 public function store(Request $request)
 {
@@ -394,12 +346,12 @@ public function store(Request $request)
             new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 // Periksa apakah sudah ada pengaturankelas_id ini di tabel Kelassiswa
-                if (Kelassiswa::where('pengaturankelas_id', $value)->exists()) {
+                if (Pengaturankelasdatamengajar::where('pengaturankelas_id', $value)->exists()) {
                     $fail("Pengaturan kelas ini sudah digunakan. Silakan pilih pengaturan kelas yang lain.");
                 }
             },
         ],
-      'siswa_id' => [
+      'datamengajar_id' => [
     'required',
     'array',
     'min:1',
@@ -414,146 +366,75 @@ public function store(Request $request)
         }
 
         // Cari siswa_id yang sudah ada di tabel Kelassiswa dengan pengaturankelas_id yang sama
-        $existingSiswa = Kelassiswa::whereIn('siswa_id', $value)
+        $existingDatamengajar = Pengaturankelasdatamengajar::whereIn('datamengajar_id', $value)
             ->where('pengaturankelas_id', $pengaturankelasId)
-            ->with('Siswa')
+            ->with('Guru','Matapelajaran')
             ->get();
 
         // Jika ditemukan siswa dengan pengaturankelas_id yang sama, validasi gagal
-        if ($existingSiswa->isNotEmpty()) {
-            $namaSiswa = $existingSiswa->pluck('Siswa.NamaLengkap')->join(', ');
-            $fail("Siswa berikut sudah terdaftar dalam kelas ini: $namaSiswa. Silakan pilih siswa lainnya.");
+        if ($existingDatamengajar->isNotEmpty()) {
+            $namaMatapelajaran = $existingDatamengajar->pluck('Matapelajaran.matapelajaran')->join(', ');
+            $fail("Mata pelajran berikut sudah terdaftar dalam kelas ini: $namaMatapelajaran. Silakan pilih mata pelajran lainnya.");
         }
     },
 ],
 
-
-    //     'siswa_id' => ['required', 'array', 'min:1',    new NoXSSInput(),
-    //     function ($attribute, $value, $fail) {
-    //         $existingSiswa = Kelassiswa::whereIn('siswa_id', $value)
-    //             ->with(['Siswa','Pengaturankelas']) // Pastikan relasi ke model Siswa sudah ada
-    //             ->get();
-          
-
-    //         if ($existingSiswa->isNotEmpty()) {
-    //             $namaSiswa = $existingSiswa->pluck('Siswa.NamaLengkap')->join(', '); 
-                
-    //             $fail("Siswa berikut sudah ada dalam kelas ini atau kelas lain: $namaSiswa. Silakan pilih siswa lainnya.");
-    //         }
-    //     },
-    // ],
     
-        'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()],
+        'datamengajar_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()],
     ], [
         'pengaturankelas_id.required' => 'Pengaturan kelas harus dipilih.',
         'pengaturankelas_id.exists' => 'Pengaturan kelas yang dipilih tidak valid.',
-        'siswa_id.required' => 'Minimal satu siswa harus dipilih.',
-        'siswa_id.*.exists' => 'Salah satu siswa yang dipilih tidak valid.',
+        'datamengajar_id.required' => 'Minimal satu mata pelajaran harus dipilih.',
+        'datamengajar_id.*.exists' => 'Salah satu mata pelajaran yang dipilih tidak valid.',
     ]);
     try {
-        $siswa_ids = $request->input('siswa_id');
+        $datamengajar_ids = $request->input('datamengajar');
         $pengaturankelas_id = $request->input('pengaturankelas_id');
 
-        $pengaturankelas = Pengaturankelas::with('Kelas')->findOrFail($pengaturankelas_id);
-        $kapasitas = $pengaturankelas->Kelas->kapasitas ?? 0;
-
-        // Hitung jumlah siswa saat ini dan total siswa setelah penambahan
-        $jumlah_siswa_sekarang = Kelassiswa::where('pengaturankelas_id', $pengaturankelas_id)->count();
-        $total_siswa = $jumlah_siswa_sekarang + count($siswa_ids);
-
-        if ($total_siswa > $kapasitas) {
-            return redirect()->back()->with('error', "Jumlah siswa melebihi kapasitas kelas maksimal ({$kapasitas}) orang.");
-        }
-
+        
         // Persiapkan data untuk insert
-        $dataToInsert = collect($siswa_ids)->map(fn($siswa_id) => [
+        $dataToInsert = collect($datamengajar_ids)->map(fn($datamengajar_id) => [
             'pengaturankelas_id' => $pengaturankelas_id,
-            'siswa_id' => $siswa_id,
+            'datamengajar_id' => $datamengajar_id,
         ])->toArray();
 
         // Batch insert data
-        Kelassiswa::insert($dataToInsert);
+        Pengaturankelasdatamengajar::insert($dataToInsert);
 
-        return redirect()->route('Kelassiswa.index')->with('success', 'Data pengaturan kelas berhasil ditambahkan!');
+        return redirect()->route('Pengaturankelasdatamengajar.index')->with('success', 'Data pengaturan kelas berhasil ditambahkan!');
     } catch (\Throwable $e) {
         \Log::error('Gagal menyimpan data pengaturan kelas.', [
             'error' => $e->getMessage(),
             'pengaturankelas_id' => $pengaturankelas_id ?? null,
-            'siswa_ids' => $siswa_ids ?? [],
+            'datamengajar_ids' => $datamengajar_ids ?? [],
         ]);
         return redirect()->back()->with('error', 'Gagal menyimpan data pengaturan kelas. Silakan coba lagi.');
     }
 }
 
-// public function store(Request $request)
-// {
-//     $request->validate([
-//         'pengaturankelas_id' => ['required', 'numeric', 'exists:tb_pengaturan_kelas,id', new NoXSSInput()],
-//         'siswa_id' => ['required', 'array', new NoXSSInput()],
-//         'siswa_id.*' => ['exists:tb_siswa,siswa_id', new NoXSSInput()],
-//     ]);
-
-//     try {
-//         $siswa_ids = $request->input('siswa_id');
-//         $pengaturankelas_id = $request->input('pengaturankelas_id');
-
-//         $pengaturankelas = Pengaturankelas::with('Kelas')->findOrFail($pengaturankelas_id);
-//         $kapasitas = $pengaturankelas->Kelas->kapasitas ?? 0;
-
-//         $jumlah_siswa_sekarang = Kelassiswa::where('pengaturankelas_id', $pengaturankelas_id)->count();
-//         $total_siswa = $jumlah_siswa_sekarang + count($siswa_ids);
-
-//         if ($total_siswa > $kapasitas) {
-//             return redirect()->back()->with('error', "Jumlah siswa melebihi kapasitas kelas maksimal ({$kapasitas}) orang.");
-//         }
-
-//         $dataToInsert = [];
-//         foreach ($siswa_ids as $siswa_id) {
-//             $dataToInsert[] = [
-//                 'pengaturankelas_id' => $pengaturankelas_id,
-//                 'siswa_id' => $siswa_id,
-              
-//             ];
-//         }
-
-//         Kelassiswa::insert($dataToInsert);
-
-//         return redirect()->route('Kelassiswa.index')->with('success', 'Data pengaturan kelas created successfully!');
-//     } catch (\Exception $e) {
-//         \Log::error('Failed to store data', [
-//             'error' => $e->getMessage(),
-//             'pengaturankelas_id' => $pengaturankelas_id,
-//             'siswa_ids' => $siswa_ids,
-//         ]);
-//         return redirect()->back()->with('error', 'Failed to create Data pengaturan kelas: ' . $e->getMessage());
-//     }
-// }
-
-
-
-public function deleteKelassiswa(Request $request)
+public function deleteKelasdatamengajar(Request $request)
 {
     $request->validate([
         'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
     ]);
-    Kelassiswa::whereIn('id', $request->ids)->delete();
+    Pengaturankelasdatamengajar::whereIn('id', $request->ids)->delete();
     return response()->json([
         'success' => true,
         'message' => 'Selected Kelas siswa and their related data deleted successfully.'
     ]);
 }
 
-public function deleteSiswadarikelas(Request $request)
+public function deleteDatamengajardarikelas(Request $request)
 {
     $request->validate([
-        'siswa_ids' => ['required', 'array', 'min:1'],
-        'siswa_ids.*' => ['integer', 'exists:tb_pengaturankelas_siswa,siswa_id'], // Validasi setiap ID
+        'datamengajar_ids' => ['required', 'array', 'min:1'],
+        'datamengajar_ids.*' => ['integer', 'exists:tb_pengaturankelas_datamengajar,id'], // Validasi setiap ID
     ]);
 
     try {
         // Update kolom siswa_id menjadi null
-        Kelassiswa::whereIn('siswa_id', $request->siswa_ids)
-            ->update(['siswa_id' => null]);
+        Pengaturankelasdatamengajar::whereIn('datamengajar_id', $request->datamengajar_ids)
+            ->update(['datamengajar_id' => null]);
 
         return response()->json([
             'success' => true,
