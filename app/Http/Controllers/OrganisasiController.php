@@ -130,13 +130,7 @@ class OrganisasiController extends Controller
     public function deleteOrganisasi(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
                     
         ]);
         Organisasi::whereIn('id', $request->ids)->delete();

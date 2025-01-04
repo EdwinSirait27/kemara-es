@@ -30,6 +30,7 @@ use App\Http\Controllers\KGSController;
 use App\Http\Controllers\DatasiswaController;
 use App\Http\Controllers\ArsipSiswaController;
 use App\Http\Controllers\DataguruController;
+use App\Http\Controllers\OrganisasisiswaController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\PengaturankelasdatamengajarController;
 use App\Http\Controllers\OsisController;
@@ -37,10 +38,12 @@ use App\Http\Controllers\VotingController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SiswalulusController;
+use App\Http\Controllers\EkstrasiswaController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AdminKepalaSekolahController;
 use App\Http\Controllers\KelassiswaController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\EkstrakuController;
 use App\Http\Controllers\PengaturankelasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -277,16 +280,32 @@ Route::get('/Pengaturankelas', [PengaturankelasController::class, 'index'])->nam
 Route::get('/Pengaturankelas/edit/{hashedId}', [PengaturankelasController::class, 'edit'])->name('Pengaturankelas.edit');
 Route::put('/Pengaturankelas/{hashedId}', [PengaturankelasController::class, 'update'])->name('Pengaturankelas.update');
 
-//pengaturankelasdatamengajaar
-Route::get('/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'index'])->name('Pengaturankelasdatamengajar.index');
-    Route::get('/Pengaturankelasdatamengajar/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'getPengaturankelasatamengajar'])->name('pengaturankelasdatamengajar.pengaturankelasdatamengajar');
-    Route::delete('/Pengaturankelasdatamengajar/delete', [PengaturankelasdatamengajarController::class, 'deleteKelasdatamengajar'])->name('pengaturankelasdatamengajar.delete');
-    Route::get('Pengaturankelasdatamengajar/create', [PengaturankelasdatamengajarController::class, 'create'])->name('Pengaturankelasdatamengajar.create');
-    Route::get('/Pengaturankelasdatamengajar/edit/{hashedId}', [PengaturankelasdatamengajarController::class, 'edit'])->name('Pengaturankelasdatamengajar.edit');
-    Route::put('/Pengaturankelasdatamengajar/{hashedId}', [PengaturankelasdatamengajarController::class, 'update'])->name('Pengaturankelasdatamengajar.update');
+// //pengaturankelasdatamengajaar
+// Route::get('/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'index'])->name('Pengaturankelasdatamengajar.index');
+//     Route::get('/Pengaturankelasdatamengajar/Pengaturankelasdatamengajar', [PengaturankelasdatamengajarController::class, 'getPengaturankelasatamengajar'])->name('pengaturankelasdatamengajar.pengaturankelasdatamengajar');
+//     Route::delete('/Pengaturankelasdatamengajar/delete', [PengaturankelasdatamengajarController::class, 'deleteKelasdatamengajar'])->name('pengaturankelasdatamengajar.delete');
+//     Route::get('Pengaturankelasdatamengajar/create', [PengaturankelasdatamengajarController::class, 'create'])->name('Pengaturankelasdatamengajar.create');
+//     Route::get('/Pengaturankelasdatamengajar/edit/{hashedId}', [PengaturankelasdatamengajarController::class, 'edit'])->name('Pengaturankelasdatamengajar.edit');
+//     Route::put('/Pengaturankelasdatamengajar/{hashedId}', [PengaturankelasdatamengajarController::class, 'update'])->name('Pengaturankelasdatamengajar.update');
 
-   
-   });
+//ekstrasiswa
+Route::get('/Ekstrasiswa', [EkstrasiswaController::class, 'index'])->name('Ekstrasiswa.index');
+    Route::get('/Ekstrasiswa/ekstrasiswa', [EkstrasiswaController::class, 'getEkstrasiswa'])->name('ekstrasiswa.ekstrasiswa');
+    Route::get('/ekstrasiswa/downloadekstrasiswa/{hashedId}', [EkstrasiswaController::class, 'previewekstrasiswa'])
+    ->name('Ekstrasiswa.previewekstrasiswa');
+    Route::get('/Ekstrasiswa/{hashedId}', [EkstrasiswaController::class, 'downloadekstrasiswa'])->name('Ekstrasiswa.downloadekstrasiswa');
+    Route::get('/Ekstrasiswa/show/{hashedId}', [EkstrasiswaController::class, 'previewekstrasiswa'])
+    ->name('Ekstrasiswa.show');
+//organisasi siswa
+Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->name('Organisasisiswa.index');
+    Route::get('/Organisasisiswa/organisasisiswa', [OrganisasisiswaController::class, 'getOrganisasisiswa'])->name('organisasisiswa.organisasisiswa');
+    Route::get('/organisasisiswa/downloadorganisasisiswa/{hashedId}', [OrganisasisiswaController::class, 'previeweOrganisasisiswa'])
+    ->name('Organisasisiswa.previeworganisasisiswa');
+    Route::get('/Organisasisiswa/{hashedId}', [OrganisasisiswaController::class, 'downloadorganisasisiswa'])->name('Organisasisiswa.downloadorganisasisiswa');
+    Route::get('/Organisasisiswa/show/{hashedId}', [OrganisasisiswaController::class, 'previeworganisasisiswa'])
+    ->name('Organisasisiswa.show');
+
+});
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     Route::get('/', [HomeController::class, 'home']);
     Route::get('dashboard', function () {
@@ -398,7 +417,10 @@ Route::middleware(['auth','can:isSiswa','prevent.xss'])->group(function () {
 
     Route::get('/user-profileSiswa', [InfoUserControllerSiswa::class, 'create'])->name('user-profileSiswa.create');
     Route::put('/user-profileSiswa', [InfoUserControllerSiswa::class, 'store'])->name('user-profileSiswa.store');
-    
+    // ekstraku 
+Route::get('/Ekstra-ku', [EkstrakuController::class, 'index'])->name('Ekstra-ku.index');
+Route::post('/Ekstra-ku', [EkstrakuController::class, 'store'])->name('Ekstra-ku.store');
+
 });
 Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
     Route::get('/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'index'])->name('dashboardNonSiswa.index');

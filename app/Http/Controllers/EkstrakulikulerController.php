@@ -128,13 +128,7 @@ class EkstrakulikulerController extends Controller
     public function deleteEkstrakulikuler(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
          
         ]);
         Ekstrakulikuler::whereIn('id', $request->ids)->delete();

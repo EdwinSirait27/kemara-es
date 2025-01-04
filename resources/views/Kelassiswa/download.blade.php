@@ -7,7 +7,7 @@
             font-family: Arial, sans-serif;
             padding: 20px;
         }
-        .header {
+        /* .header {
             text-align: center;
             margin-bottom: 30px;
         }
@@ -47,44 +47,97 @@
             text-align: right;
             font-size: 12px;
             margin-top: 20px;
+        } */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .school-info {
+            margin-bottom: 20px;
+        }
+        .class-info {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        text-align: center;
+        vertical-align: middle;
+    
+    }
+    
+        tr:nth-child(even) {
+            background-color: white;
+        }
+        .total-info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        .page-number {
+            text-align: right;
+            font-size: 12px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    {{-- <div class="header">
-        @foreach ($lihatsiswas as $lihat)
-        <h2>DAFTAR SISWA</h2>
-        <h3>Tahun Ajaran {{ e($lihat->Pengaturankelas->Tahunakademik->tahunakademik) }} </h3>
-        <h3>Semester {{ e($lihat->Pengaturankelas->Tahunakademik->semester) }} </h3>
-        @endforeach
-    </div> --}}
-
-   
     <div class="class-info">
         @if($kelassiswa)
-
-        <h3>Daftar Absensi Siswa Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h3>
-        <table style="border: none; width: 100%; margin-bottom: 10px;">
-            <tr style="border: none;">
-                <td style="border: none; width: 150px;">Tahun Ajaran</td>
-                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik) }}</td>
-            </tr>
-            <tr style="border: none;">
-                <td style="border: none; width: 150px;">Semester</td>
-                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->semester) }}</td>
-            </tr>
-           
-            <tr style="border: none;">
-                <td style="border: none;">Wali Kelas</td>
-                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }} </td>
-            </tr>
-            <tr style="border: none;">
-                <td style="border: none;">Kapasitas Kelas</td>
-                <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->kapasitas) }} Siswa</td>
-            </tr>
-        </table>
-    </div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <!-- Bagian Tabel -->
+            <div style="flex: 1;">
+                <h3>Daftar Absensi Kelas : {{ e($kelassiswa->Pengaturankelas->Kelas->kelas) }}</h3>
+                <table style="border: none; width: 100%; margin-bottom: 10px;">
+                    <tr style="border: none;">
+                        <td style="border: none; width: 150px;">Tahun Ajaran</td>
+                        <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik) }}</td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td style="border: none; width: 150px;">Semester</td>
+                        <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Tahunakademik->semester) }}</td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td style="border: none;">Wali Kelas</td>
+                        <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }} </td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td style="border: none;">Kapasitas Kelas</td>
+                        <td style="border: none;">: {{ e($kelassiswa->Pengaturankelas->Kelas->kapasitas) }} Siswa </td>
+                    </tr>
+                </table>
+            </div>
+    
+            <!-- Bagian Gambar -->
+            <div style="margin-left: 20px;">
+                <img src="{{ asset('assets/img/50204458.jpg') }}" alt="Gambar Kelas" style="max-width: 125px; ">
+            </div>
+        </div>
     @endif
+
+
+
+   
+   
 
     @if ($jumlahsiswa > 0)
     <table>
@@ -108,8 +161,8 @@
             @endif --}}
             @foreach ($siswas as $siswa)
             <tr>
-                <td>{{ $loop->iteration }}</td>              
-                <td>{{ $siswa->Siswa->NamaLengkap ?? 'N/A' }}</td>
+                <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>              
+                <td style="text-align: center; vertical-align: middle;">{{ $siswa->Siswa->NamaLengkap ?? 'N/A' }}</td>
                 @for($i = 1; $i <= 20; $i++)
                 <td class="absen-cell"></td>
             @endfor    
@@ -129,6 +182,18 @@
 
     <div class="page-number">
         Dicetak pada: {{ date('d/m/Y H:i') }}
+        <br>
+        <br>
+        <h3 style="margin-right: 50px;">Wali Kelas</h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3> {{ e($kelassiswa->Pengaturankelas->Kelas->Guru->Nama) }} </h3>
+    </div>
     </div>
     {{-- <div class="class-info1">
     <h3>Wali Kelas</h3>

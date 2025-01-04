@@ -162,6 +162,14 @@
                                     href="{{ url('user-profileSiswa') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('Ekstra-ku') ? 'active' : '' }}"
+                                    href="{{ url('Ekstra-ku') }}">
+                                    <span class="nav-link-text ms-1">Ekstrakulikuler-ku</span>
+                                </a>
+                                <a class="nav-link {{ Request::is('Organisasi-ku') ? 'active' : '' }}"
+                                    href="{{ url('Organisasi-ku') }}">
+                                    <span class="nav-link-text ms-1">Organisasi-ku</span>
+                                </a>
                             @endif
                             @if (Gate::allows('isNonSiswa'))
                                 <a class="nav-link {{ Request::is('user-profileNonSiswa') ? 'active' : '' }}"
@@ -668,7 +676,7 @@
           </li>
       </ul>
   </div>
-  <div class="collapse" id="laravelExamples2">
+  {{-- <div class="collapse" id="laravelExamples2">
       <ul class="nav ms-4">
           <li class="nav-item">
               <a class="nav-link {{ Request::is('Pengaturankelasdatamengajar') ? 'active' : '' }}" href="{{ url('Pengaturankelasdatamengajar') }}">
@@ -676,7 +684,7 @@
               </a>
           </li>
       </ul>
-  </div>
+  </div> --}}
 </li>
 @endif
 @if (Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))
@@ -694,21 +702,21 @@
 @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah')||Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))
 
 <li class="nav-item">
-    <a class="nav-link {{ Request::is('ekstrakulikulerall') ? 'active' : '' }}"
-        href="{{ url('ekstrakulikulerall') }}">
+    <a class="nav-link {{ Request::is('Ekstrasiswa') ? 'active' : '' }}"
+        href="{{ url('Ekstrasiswa') }}">
         <div
             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fas fa-cloud"></i>
         </div>
-        <span class="nav-link-text ms-1">Ekstrakulikuler</span>
+        <span class="nav-link-text ms-1">Ekstrakulikuler Detail</span>
     </a>
 </li>
 @endif
 @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah')||Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))
 
 <li class="nav-item">
-    <a class="nav-link {{ Request::is('organisasiall') ? 'active' : '' }}"
-        href="{{ url('organisasiall') }}">
+    <a class="nav-link {{ Request::is('Organisasisiswa') ? 'active' : '' }}"
+        href="{{ url('Organisasisiswa') }}">
         <div
             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="fas fa-book"></i>
