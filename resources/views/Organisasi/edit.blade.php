@@ -76,6 +76,7 @@
                                 </button>
                             </div>
                         @endif
+                      
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -174,6 +175,33 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tahunakademik_id" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Tahun Akademik') }}
+                                    </label>
+                                    <div>
+                                        
+                                        <select name="tahunakademik_id" id="tahunakademik_id" class="form-select">
+                                            <option value="" selected disabled>Pilih Tahun Akademik</option>
+                                            @foreach ($tahuns as $tahun)
+                                            <option value="{{ $tahun->id }}" {{ $organisasi->tahunakademik_id == $tahun->id ? 'selected' : '' }}>
+                                                 {{ $tahun->tahunakademik }}
+                                            </option>
+                                        @endforeach
+                                        </select>
+                                       
+                                        @error('guru_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
+                                        
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                        
                         </div>
                         <div class="d-flex justify-content-end">

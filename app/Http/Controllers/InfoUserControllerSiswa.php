@@ -20,15 +20,35 @@ class InfoUserControllerSiswa extends Controller
     }
     public function create()
     {
-    $user = auth()->user()->load('Siswa'); 
-
-    $roles = explode(',', $user->getRawOriginal('Role')); 
-
-    // Validasi jika guru tidak ada
-   
-
-    return view('laravel-examples/user-profileSiswa', compact('user', 'roles'));
+        $user = auth()->user()->load('Siswa', 'Siswa.PengaturanKelasSiswa.Pengaturankelas.Kelas');
+    
+        $roles = explode(',', $user->getRawOriginal('Role'));
+    
+        // Ambil semua nama kelas dari relasi pengaturankelas
+        $pengaturankelasNames = $user->Siswa->PengaturanKelasSiswa->flatMap(function ($pengaturan) {
+            return $pengaturan->Pengaturankelas->Kelas->where('status', 'aktif')->pluck('kelas');
+        })->unique()->values()->implode(', ');
+        
+        
+        // $pengaturankelasNames = $user->Siswa->PengaturanKelasSiswa->flatMap(function ($pengaturan) {
+        //     return $pengaturan->Pengaturankelas->Kelas->pluck('kelas');
+        // });
+    
+        return view('laravel-examples/user-profileSiswa', compact('user', 'roles', 'pengaturankelasNames'));
     }
+    
+    // public function create()
+    // {
+    // $user = auth()->user()->load('Siswa','Siswa.Pengaturankelassiswa.Pengaturankelas'); 
+
+    // $roles = explode(',', $user->getRawOriginal('Role')); 
+
+    // // Validasi jika guru tidak ada
+    // $PengaturankelasIds = $user->Siswa->PengaturanKelasSiswa->Pnegaturankelas->pluck('namakelas');
+
+
+    // return view('laravel-examples/user-profileSiswa', compact('user', 'roles','PengaturankelasIds'));
+    // }
 
     public function store(Request $request)
     {

@@ -14,6 +14,7 @@ class Ekstrakulikuler extends Model
 
     protected $fillable = [
         'guru_id',
+        'tahunakademik_id',
         'namaekstra',
         'kapasitas',
         'status',
@@ -21,6 +22,9 @@ class Ekstrakulikuler extends Model
     ];
     public function Guru(){
         return $this->belongsTo(Guru::class,'guru_id');
+    }
+    public function Tahunakademik(){
+        return $this->belongsTo(Tahunakademik::class,'tahunakademik_id','id');
     }
   
 }

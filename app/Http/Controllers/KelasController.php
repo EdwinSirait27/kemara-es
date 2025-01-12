@@ -82,6 +82,8 @@ class KelasController extends Controller
     }
     public function update(Request $request, $hashedId)
 {
+    // dd($request->all());
+
     // Temukan kelas berdasarkan hashed ID
     $kelas = Kelas::get()->first(function ($u) use ($hashedId) {
         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -94,29 +96,47 @@ class KelasController extends Controller
 
     // Validasi data input
     $validatedData = $request->validate([
-        'guru_id' => ['required','exists:tb_guru,guru_id', new NoXSSInput(),
-        function ($attribute, $value, $fail) {
-            $sanitizedValue = strip_tags($value);
-            if ($sanitizedValue !== $value) {
-                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+        'guru_id' => [
+            'required',
+            'exists:tb_guru,guru_id',
+            new NoXSSInput(),
+            function ($attribute, $value, $fail) use ($request, $kelas) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+
+                // Cek apakah sudah ada kelas lain dengan guru_id dan kelas yang sama pada tahun akademik yang sama
+                $existingKelas = Kelas::where('guru_id', $value)
+                    ->where('kelas', $request->kelas)
+                    ->where('tahunakademik_id', $request->tahunakademik_id)
+                    ->where('id', '!=', $kelas->id) // Abaikan data kelas yang sedang diupdate
+                    ->first();
+
+                if ($existingKelas) {
+                    $fail("Guru dengan ID $value sudah memiliki kelas '{$request->kelas}' pada tahun akademik ini.");
+                }
             }
-        }], // pastikan guru_id valid
-        'tahunakademik_id' =>['required','exists:tb_tahunakademik,id', new NoXSSInput()], 
-        'kelas' => 'required|string',
+        ],
+        'tahunakademik_id' => [
+            'required',
+            'exists:tb_tahunakademik,id',
+            new NoXSSInput()
+        ],
+        'kelas' => 'required|string|max:255',
         'kapasitas' => 'nullable|integer',
-        'status' => 'nullable|string',
-        'ket' => 'nullable|string',
+        'status' => 'nullable|string|max:50',
+        'ket' => 'nullable|string|max:255',
     ]);
 
-    // Cek apakah kombinasi guru_id dan kelas sudah ada
-    $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
-        ->where('kelas', $validatedData['kelas'])
-        ->where('id', '!=', $kelas->id) // pastikan bukan data yang sedang diperbarui
-        ->first();
+    // // Cek apakah kombinasi guru_id dan kelas sudah ada
+    // $existingKelas = Kelas::where('guru_id', $validatedData['guru_id'])
+    //     ->where('kelas', $validatedData['kelas'])
+    //     ->where('id', '!=', $kelas->id)->first();
 
-    if ($existingKelas) {
-        return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
-    }
+    // if ($existingKelas) {
+    //     return redirect()->back()->with('error', 'Guru ID sudah ada dengan Kelas yang sama.');
+    // }
 
     // Data untuk pembaruan
     $kelasData = [
@@ -162,32 +182,32 @@ public function store(Request $request)
 
     $validatedData = $request->validate([
         'guru_id' => [
-    'required',
-    'exists:tb_guru,guru_id',
-    new NoXSSInput(),
-    function ($attribute, $value, $fail) use ($request) {
-        $sanitizedValue = strip_tags($value);
-        if ($sanitizedValue !== $value) {
-            $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-        }
-
-        // Cek apakah guru_id sudah ada dan memiliki tahunakademik_id yang berbeda
-        $existingKelas = Kelas::where('guru_id')
-            ->where('tahunakademik_id', '!=', $request->tahunakademik_id) // Pastikan tahunakademik_id berbeda
-            ->first();
-
-        if ($existingKelas) {
-            $fail("Guru dengan ID $value sudah memiliki kelas pada tahun akademik yang berbeda.");
-        }
-    }
-],
-'tahunakademik_id' => [
-    'required',
-    'exists:tb_tahunakademik,id',
-    new NoXSSInput()
-],
-'kelas' => 'required|string|max:255',
-
+            'required',
+            'exists:tb_guru,guru_id',
+            new NoXSSInput(),
+            function ($attribute, $value, $fail) use ($request) {
+                $sanitizedValue = strip_tags($value);
+                if ($sanitizedValue !== $value) {
+                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                }
+    
+                // Cek apakah sudah ada kelas dengan guru_id dan kelas yang sama pada tahun akademik yang sama
+                $existingKelas = Kelas::where('guru_id', $value)
+                    ->where('kelas', $request->kelas)
+                    ->where('tahunakademik_id', $request->tahunakademik_id)
+                    ->first();
+    
+                if ($existingKelas) {
+                    $fail("Guru dengan ID $value sudah memiliki kelas '{$request->kelas}' pada tahun akademik ini.");
+                }
+            }
+        ],
+        'tahunakademik_id' => [
+            'required',
+            'exists:tb_tahunakademik,id',
+            new NoXSSInput()
+        ],
+        'kelas' => 'required|string|max:255',
         'kapasitas' => 'nullable|integer',
         'status' => 'nullable|string|max:50',
         'ket' => 'nullable|string|max:255',

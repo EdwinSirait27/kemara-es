@@ -26,6 +26,12 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tahunakademik</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Semester</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Guru Pembina</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -98,6 +104,8 @@
             },
         },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+          { data: 'Tahun_Nama', name: 'Tahun_Nama', className: 'text-center' },
+          { data: 'Semester_Nama', name: 'Semester_Nama', className: 'text-center' },
           { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
           { data: 'namaorganisasi', name: 'namaorganisasi', className: 'text-center' },
           { data: 'kapasitas', name: 'kapasitas', className: 'text-center' },
@@ -209,6 +217,7 @@ $('#users-table').on('click', '.edit-organisasi', function(e) {
             success: function(response) {
                 let organisasi = response.organisasi;
                 $('#editUserModal').find('input[name="guru_id"]').val(organisasi.guru_id);
+                $('#editUserModal').find('input[name="tahunakademik_id"]').val(organisasi.tahunakademik_id);
                 $('#editUserModal').find('input[name="namaorganisasi"]').val(organisasi.namaorganisasi);
                 $('#editUserModal').find('input[name="kapasitas"]').val(organisasi.kapasitas);
                 $('#editUserModal').find('input[name="status"]').val(organisasi.status);

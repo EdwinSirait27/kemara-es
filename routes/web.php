@@ -39,6 +39,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SiswalulusController;
 use App\Http\Controllers\EkstrasiswaController;
+use App\Http\Controllers\OrganisasikuController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\AdminKepalaSekolahController;
 use App\Http\Controllers\KelassiswaController;
@@ -294,8 +295,15 @@ Route::get('/Ekstrasiswa', [EkstrasiswaController::class, 'index'])->name('Ekstr
     Route::get('/ekstrasiswa/downloadekstrasiswa/{hashedId}', [EkstrasiswaController::class, 'previewekstrasiswa'])
     ->name('Ekstrasiswa.previewekstrasiswa');
     Route::get('/Ekstrasiswa/{hashedId}', [EkstrasiswaController::class, 'downloadekstrasiswa'])->name('Ekstrasiswa.downloadekstrasiswa');
-    Route::get('/Ekstrasiswa/show/{hashedId}', [EkstrasiswaController::class, 'previewekstrasiswa'])
+    Route::get('/Ekstrasiswa/show/{hashedId}', [EkstrasiswaController::class, 'show'])
     ->name('Ekstrasiswa.show');
+    Route::get('/getekstrasiswadetail/{hashedId}', [EkstrasiswaController::class, 'getEkstra'])->name('getekstrasiswadetail.getekstrasiswadetail');
+    Route::delete('/Ekstrasiswashow/hapus', [EkstrasiswaController::class, 'deleteSiswadarikelas'])->name('ekstrasiswashow.hapus');
+    Route::delete('/Ekstrasiswa/delete', [EkstrasiswaController::class, 'deleteEkstrasiswa'])->name('ekstrasiswa.delete');
+    Route::get('/Ekstrasiswa/download/{hashedId}', [EkstrasiswaController::class, 'previewekstrasiswa'])
+    ->name('Ekstrasiswa.download');
+    // Route::get('/Kelassiswadownloadmatapelajaran/{hashedId}', [KelassiswaController::class, 'downloadmatapelajaran'])->name('Kelassiswa.downloadmatapelajaran');
+// 
 //organisasi siswa
 Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->name('Organisasisiswa.index');
     Route::get('/Organisasisiswa/organisasisiswa', [OrganisasisiswaController::class, 'getOrganisasisiswa'])->name('organisasisiswa.organisasisiswa');
@@ -420,6 +428,14 @@ Route::middleware(['auth','can:isSiswa','prevent.xss'])->group(function () {
     // ekstraku 
 Route::get('/Ekstra-ku', [EkstrakuController::class, 'index'])->name('Ekstra-ku.index');
 Route::post('/Ekstra-ku', [EkstrakuController::class, 'store'])->name('Ekstra-ku.store');
+Route::get('/Ekstra-ku/getekstraku', [EkstrakuController::class, 'getEkstraku'])->name('getekstraku.getekstraku');
+Route::get('/Ekstra-ku/getekstraku', [EkstrakuController::class, 'getEkstraku'])->name('getekstraku.getekstraku');
+Route::delete('/Ekstra-ku/hapus', [EkstrakuController::class, 'deleteEkstraku'])->name('ekstraku.hapus');
+    // organisasiku 
+Route::get('/Organisasi-ku', [OrganisasikuController::class, 'index'])->name('Organisasi-ku.index');
+Route::post('/Organisasi-ku', [OrganisasikuController::class, 'store'])->name('Organisasi-ku.store');
+Route::get('/Organisasi-ku/getorganisasiku', [OrganisasikuController::class, 'getOrganisasiku'])->name('getorganisasiku.getorganisasiku');
+Route::delete('/Organisasi-ku/hapus', [OrganisasikuController::class, 'deleteOrganisasiku'])->name('organisasiku.hapus');
 
 });
 Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {

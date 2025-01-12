@@ -55,7 +55,7 @@
                                             <select name="kelas_id" id="kelas_id" class="form-select">
                                                 <option value="" selected disabled>Pilih Kelas</option>
                                                 @foreach ($kelass as $kelas)
-                                                    <option value="{{ $kelas->id }}">Kelas : {{ $kelas->kelas }} Tahun Akademik : {{ $kelas->Tahunakademik->tahunakademik }}</option>
+                                                    <option value="{{ $kelas->id }}">Kelas : {{ $kelas->kelas }} Tahun Akademik Kelas : {{ $kelas->Tahunakademik->tahunakademik }}</option>
                                                 @endforeach
                                             </select>
                                             @error('kelas_id')

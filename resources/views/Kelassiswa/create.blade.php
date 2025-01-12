@@ -33,7 +33,7 @@
                                                 <option value="" selected disabled>Pilih Tahun</option>
                                                 @foreach ($pengaturans as $pengaturan)
                                                     <option value="{{ $pengaturan->id }}">Tahun Akademik : {{ $pengaturan->Tahunakademik->tahunakademik }} Semester : {{ $pengaturan->Tahunakademik->semester }} Kelas : {{$pengaturan->Kelas->kelas}} Tahun Akademik Kelas : {{$pengaturan->Kelas->Tahunakademik->tahunakademik}}</option>
-                                                @endforeach
+                                                @endforeach             
                                             </select>
                                             @error('pengaturankelas_id')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -155,6 +155,7 @@
                                         <th>Tahun Akademik</th>
                                         <th>Semester</th>
                                         <th>Kelas</th>
+                                        <th>Tahun Akademik Kelas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -256,6 +257,11 @@
                                     {
                                         data: 'Kelas_Nama',
                                         name: 'Kelas_Nama',
+                                        className: 'text-center'
+                                    },
+                                    {
+                                        data: 'KelasTahun_Nama',
+                                        name: 'KelasTahun_Nama',
                                         className: 'text-center'
                                     }
                                 ]

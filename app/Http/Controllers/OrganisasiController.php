@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Guru;
+use App\Models\Tahunakademik;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -25,12 +26,13 @@ class OrganisasiController extends Controller
     public function create()
     {
         $gurus = Guru::select('guru_id','Nama')->get();
+        $tahuns = Tahunakademik::select('id','tahunakademik','semester')->get();
 
-        return view('Organisasi.create',compact('gurus'));
+        return view('Organisasi.create',compact('gurus','tahuns'));
     }
     public function getOrganisasi()
     {
-        $organisasi = Organisasi::with('guru')->select(['id', 'guru_id' ,'namaorganisasi','kapasitas', 'status', 'ket','created_at'])
+        $organisasi = Organisasi::with('Guru','Tahunakademik')->select(['id', 'guru_id' ,'tahunakademik_id','namaorganisasi','kapasitas', 'status', 'ket','created_at'])
             ->get()
             ->map(function ($organisasi) {
                 $organisasi->id_hashed = substr(hash('sha256', $organisasi->id . env('APP_KEY')), 0, 8);
@@ -39,13 +41,18 @@ class OrganisasiController extends Controller
             <a href="' . route('Organisasi.edit', $organisasi->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-            $organisasi->Guru_Nama = $organisasi->guru ? $organisasi->guru->Nama : '-';
+            $organisasi->Guru_Nama = $organisasi->Guru ? $organisasi->Guru->Nama : '-';
+            $organisasi->Tahun_Nama = $organisasi->Tahunakademik ? $organisasi->Tahunakademik->tahunakademik : '-';
+            $organisasi->Semester_Nama = $organisasi->Tahunakademik ? $organisasi->Tahunakademik->semester : '-';
 
                 return $organisasi;
             });
         return DataTables::of($organisasi)
         ->addColumn('Nama', function ($organisasi) {
-            return $organisasi->guru->Nama;
+            return $organisasi->Guru->Nama;
+        })
+        ->addColumn('tahunakademik', function ($organisasi) {
+            return $organisasi->Tahunakademik->tahunakademik;
         })
         ->addColumn('created_at', function ($organisasi) {
             return Carbon::parse($organisasi->created_at)->format('d-m-Y H:i:s');
@@ -56,7 +63,7 @@ class OrganisasiController extends Controller
     }
     public function edit($hashedId)
     {
-        $organisasi = Organisasi::with('guru')->get()->first(function ($u) use ($hashedId) {
+        $organisasi = Organisasi::with('Guru','Tahunakademik')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
@@ -64,49 +71,23 @@ class OrganisasiController extends Controller
             abort(404, 'organisasi not found.');
         }
         $gurus = Guru::select('guru_id','Nama')->get();
+        $tahuns = Tahunakademik::select('id','tahunakademik','semester')->get();
 
-        return view('Organisasi.edit', compact('organisasi', 'hashedId','gurus'));
+
+        return view('Organisasi.edit', compact('organisasi', 'hashedId','gurus','tahuns'));
     }
     public function update(Request $request, $hashedId)
     {
         // dd($request->all());
 
         $validatedData = $request->validate([
-            'guru_id' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'namaorganisasi' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'guru_id' => ['required', 'string', 'max:50', new NoXSSInput()
+            ],
+            'namaorganisasi' => ['required', 'string', 'max:50', new NoXSSInput()],
+            'tahunakademik_id' => ['required', 'string', 'max:50', new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/', new NoXSSInput()],
             
         ]);
         $organisasi = Organisasi::get()->first(function ($u) use ($hashedId) {
@@ -118,6 +99,7 @@ class OrganisasiController extends Controller
         }
         $organisasiData = [
             'guru_id' => $validatedData['guru_id'],
+            'tahunakademik_id' => $validatedData['tahunakademik_id'],
             'namaorganisasi' => $validatedData['namaorganisasi'],
             'kapasitas' => $validatedData['kapasitas'],
             'status' => $validatedData['status'],
@@ -144,45 +126,17 @@ class OrganisasiController extends Controller
     {
         // dd($request->all());
         $request->validate([
-         'guru_id' => ['required', 'string', new NoXSSInput(),
-         function ($attribute, $value, $fail) {
-             $sanitizedValue = strip_tags($value);
-             if ($sanitizedValue !== $value) {
-                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-             }
-         }],
-         'namaorganisasi' => ['required', 'string', 'max:50',new NoXSSInput(),
-         function ($attribute, $value, $fail) {
-             $sanitizedValue = strip_tags($value);
-             if ($sanitizedValue !== $value) {
-                 $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-             }
-         }],
-            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'string',  new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+         'guru_id' => ['required', 'string', new NoXSSInput()],
+         'tahunakademik_id' => ['required', 'string', new NoXSSInput()],
+         'namaorganisasi' => ['required', 'string', 'max:50',new NoXSSInput()],
+            'kapasitas' => ['required', 'string', 'max:2', new NoXSSInput()],
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'ket' => ['required', 'string',  new NoXSSInput()],
         ]);
         try {
             Organisasi::create([
                 'guru_id' => $request->guru_id,
+                'tahunakademik_id' => $request->tahunakademik_id,
                 'namaorganisasi' => $request->namaorganisasi,
                 'kapasitas' => $request->kapasitas,
                 'status' => $request->status,

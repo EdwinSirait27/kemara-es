@@ -68,7 +68,7 @@
                         <h2 class="text-white mb-2 mt-5">Selamat Datang Calon Peserta Didik SMPK Kesuma Mataram </h2>
                         <p class="text-lead text-white">
                             Silahkan diisi format berikut dengan benar<br>
-                            jika belum paham, silahkan kunjungi Instagram dari SMPK Kesuma Mataram untuk melihat tuotrial pendaftaran siswa baru.
+                            jika belum paham, silahkan kunjungi Instagram dari SMPK Kesuma Mataram untuk melihat tutorial pendaftaran siswa baru.
                         </p>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Jenis Kelamin Siswa</label>
+                                        <label><i class="fas fa-envelope"> </i> Jenis Kelamin Siswa</label>
                                         <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
                                             <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
                                             </option>
@@ -225,7 +225,7 @@
                                             id="username"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
                                             placeholder="Masukkan Username" aria-label="username" maxlength="12"
-                                            required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">>
+                                            required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')">
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror

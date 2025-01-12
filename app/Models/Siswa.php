@@ -117,5 +117,13 @@ class Siswa extends Model
     {
         return $this->hasMany(Kelassiswa::class, 'siswa_id', 'siswa_id');
     }
+    public function Pengaturankelassiswa()
+    {
+        return $this->hasMany(Pengaturankelassiswa::class, 'siswa_id', 'siswa_id');
+    }
+    public function Pengaturankelas()
+    {
+        return $this->hasMany(Pengaturankelas::class, 'siswa_id', 'siswa_id');
+    }
 
 }

@@ -45,5 +45,8 @@ class Pengaturankelas extends Model
     {
         return $this->hasMany(Kelassiswa::class, 'pengaturankelas_id', 'id');
     }
-
+    public function Pengaturankelassiswa()
+    {
+        return $this->hasMany(Pengaturankelassiswa::class, 'pengaturankelas_id', 'id');
+    }
 }

@@ -22,6 +22,6 @@ class Organisasisiswa extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function Organisasi(){
-        return $this->belongsTo(Organisasi::class,'oeganisasi_id','id');
+        return $this->belongsTo(Organisasi::class,'organisasi_id','id');
     }
 }

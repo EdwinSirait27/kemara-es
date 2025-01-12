@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pengaturankelassiswa extends Model
 {
-    protected $table = 'tb_pengaturan_kelas_siswa'; // Tentukan nama tabel secara eksplisit
+    protected $table = 'tb_pengaturankelas_siswa'; // Tentukan nama tabel secara eksplisit
     protected $primaryKey = 'id';
 
     protected $fillable = [

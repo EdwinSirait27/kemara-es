@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\NoXSSInput;
 use Illuminate\Http\Request;
 use App\Models\Ekstrasiswa;
 use App\Models\Ekstrakulikuler;
 use App\Models\User;
+use App\Models\Tombol;
+use Yajra\DataTables\DataTables;
+
+
 
 
 class EkstrakuController extends Controller
@@ -16,24 +21,24 @@ class EkstrakuController extends Controller
     }
     public function index()
     {
+        $tombol = Tombol::where('url', 'Ekstra-ku')
+        ->where('start_date', '<=', now())
+        ->where('end_date', '>=', now())
+        ->first();
         $users = User::where('id', auth()->id())->with('Siswa')->first();
         $ekstras = Ekstrakulikuler::get();
-        return view('Ekstra-ku.index',compact('ekstras','users'));
+        return view('Ekstra-ku.index',compact('ekstras','users','tombol'));
 
     }
     public function store(Request $request)
     {
         $request->validate([
-            'ekstrakulikuler_id' => 'required|array|min:1',
-            'ekstrakulikuler_id.*' => 'exists:tb_ekstrakulikuler,id',
+            'user_id' => ['nullable', 'array','min:1', new NoXSSInput()],
+            'ekstrakulikuler_id' => ['required','array','min:1', new NoXSSInput()],
+            'ekstrakulikuler_id.*' => ['exists:tb_ekstrakulikuler,id', new NoXSSInput()],
         ]);
-    
         $userId = auth()->id();
-    
-        // Ambil ID ekstrakurikuler yang sudah ada untuk user ini
         $existingEkstraIds = Ekstrasiswa::where('user_id', $userId)->pluck('ekstrakulikuler_id')->toArray();
-    
-        // Filter hanya ID ekstrakurikuler baru yang belum ada di database
         $newEkstraIds = array_diff($request->ekstrakulikuler_id, $existingEkstraIds);
     
         // Simpan hanya ID yang baru
@@ -46,25 +51,43 @@ class EkstrakuController extends Controller
     
         return redirect()->route('Ekstra-ku.index')->with('success', 'Ekstrakurikuler berhasil diperbarui.');
     }
+    public function getEkstraku()
+    {
+        $userId = auth()->id();
     
-//     public function store(Request $request)
-// {
+        $ekstraku = Ekstrasiswa::with('User.Siswa', 'Ekstrakulikuler')
+            ->where('user_id', $userId) // Hanya ambil data milik user yang sedang login
+            ->select(['id', 'ekstrakulikuler_id'])
+            ->get()
+            ->map(function ($ekstraku) {
+                // Tambahkan properti Siswa_Nama dan Ekstra_Nama
+                // $ekstraku->Siswa_Nama = $ekstraku->User->Siswa ? $ekstraku->User->Siswa->NamaLengkap : '-';
+                $ekstraku->Ekstra_Nama = $ekstraku->Ekstrakulikuler ? $ekstraku->Ekstrakulikuler->namaekstra : '-';
+                return $ekstraku;
+            });
     
-//     $request->validate([
-//         'ekstrakulikuler_id' => 'required|array|min:1',
-//         'ekstrakulikuler_id.*' => 'exists:tb_ekstrakulikuler,id',
-//     ]);
-//     $userId = auth()->id();
-//     Ekstrasiswa::where('user_id', $userId)->delete();
-//     foreach ($request->ekstrakulikuler_id as $ekstraId) {
-//         Ekstrasiswa::create([
-//             'user_id' => $userId,
-//             'ekstrakulikuler_id' => $ekstraId,
-//         ]);
-//     }
-//     return redirect()->route('Ekstra-ku.index')->with('success', 'Ekstrakulikuler berhasil diperbarui.');
-// }
-
+        return DataTables::of($ekstraku)
+        // ->addColumn('NamaLengkap', function ($ekstraku) {
+        //     return $ekstraku->Siswa->NamaLengkap;
+        // })
+        ->addColumn('namaekstra', function ($ekstraku) {
+            return $ekstraku->Ekstrakulikuler->namaekstra;
+        })
+            ->rawColumns(['checkbox', 'action'])
+            ->make(true);
+    }
+    public function deleteEkstraku(Request $request)
+    {
+        $request->validate([
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+                    
+        ]);
+        Ekstrasiswa::whereIn('id', $request->ids)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Selected Organisasi and their related data deleted successfully.'
+        ]);
+    }
 
 
 }

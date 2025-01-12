@@ -98,9 +98,15 @@ class User extends Authenticatable
     
     public function Siswa()
     {
-        return $this->belongsTo(Siswa::class, 'siswa_id');
+        return $this->belongsTo(Siswa::class, 'siswa_id','siswa_id');
     }
+    public function Pengaturankelassiswa()
+{
+    return $this->hasOne(Pengaturankelassiswa::class, 'siswa_id', 'siswa_id');
 }
+
+}
+
 // <?php
 
 // namespace App\Models;

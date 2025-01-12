@@ -23,4 +23,13 @@ class Ekstrasiswa extends Model
     public function Ekstrakulikuler(){
         return $this->belongsTo(Ekstrakulikuler::class,'ekstrakulikuler_id','id');
     }
+    public function Pengaturankelassiswa()
+    {
+        return $this->hasMany(Pengaturankelassiswa::class, 'siswa_id', 'siswa_id');
+    }
+    public function Pengaturankelas()
+    {
+        return $this->hasMany(Pengaturankelas::class, 'siswa_id', 'siswa_id');
+    }
+
 }

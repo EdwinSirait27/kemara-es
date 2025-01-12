@@ -24,6 +24,12 @@
                                   <th
                                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tahunakademik</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Semester</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Guru Pembina</th>
@@ -97,6 +103,8 @@
                 return meta.row + 1; 
             },
         },
+        { data: 'Tahun_Nama', name: 'Tahun_Nama', className: 'text-center' },
+          { data: 'Semester_Nama', name: 'Semester_Nama', className: 'text-center' },
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
           { data: 'namaekstra', name: 'namaekstra', className: 'text-center' },
@@ -209,6 +217,7 @@ $('#users-table').on('click', '.edit-ekstrakulikuler', function(e) {
             success: function(response) {
                 let ekstrakulikuler = response.ekstrakulikuler;
                 $('#editUserModal').find('input[name="guru_id"]').val(ekstrakulikuler.guru_id);
+                $('#editUserModal').find('input[name="tahunakademik_id"]').val(ekstrakulikuler.tahunakademik_id);
                 $('#editUserModal').find('input[name="namaekstra"]').val(ekstrakulikuler.namaekstra);
                 $('#editUserModal').find('input[name="kapasitas"]').val(ekstrakulikuler.kapasitas);
                 $('#editUserModal').find('input[name="status"]').val(ekstrakulikuler.status);

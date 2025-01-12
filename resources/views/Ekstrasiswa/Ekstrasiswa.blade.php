@@ -26,6 +26,12 @@
                                         No.</th>
                                      <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tahun Akademik</th> 
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Semester</th> 
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Guru Pembina</th> 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -76,6 +82,16 @@
                         render: function(data, type, row, meta) {
                             return meta.row + 1;
                         },
+                    },
+                    {
+                        data: 'Tahun_Nama',
+                        name: 'Tahun_Nama',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'Semester_Nama',
+                        name: 'Semester_Nama',
+                        className: 'text-center'
                     },
                     {
                         data: 'Guru_Nama',
@@ -152,7 +168,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '{{ route('kelassiswa.delete') }}',
+                            url: '{{ route('ekstrasiswa.delete') }}',
                             method: 'POST',
                             data: {
                                 ids: selectedIds,

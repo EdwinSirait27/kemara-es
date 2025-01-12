@@ -58,6 +58,7 @@ class KelassiswaController extends Controller
         ->map(function ($lihatsiswa) {
             $lihatsiswa->Siswa_Nama = $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
             $lihatsiswa->Kelas_Nama = $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
+            $lihatsiswa->KelasTahun_Nama = $lihatsiswa->Pengaturankelas->Kelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Kelas->Tahunakademik->tahunakademik : '-';
             $lihatsiswa->Tahun_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
             $lihatsiswa->Semester_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
             return $lihatsiswa;
@@ -73,44 +74,16 @@ class KelassiswaController extends Controller
         ->addColumn('tahunakademik', function ($lihatsiswa) {
             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
         })
+        ->addColumn('tahunakademik', function ($lihatsiswa) {
+            return $lihatsiswa->Pengaturankelas->Kelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Kelas->Tahunakademik->tahunakademik : '-';
+        })
         ->addColumn('semester', function ($lihatsiswa) {
             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
         })
         ->make(true);
 }
 
-    // public function getSiswadankelas(Request $request)
-    // {
-    //     $query = Kelassiswa::with(['Siswa', 'Pengaturankelas'])
-    //         ->select(['id', 'siswa_id', 'pengaturankelas_id']);
-    //     if ($request->has('id') && !empty($request->id)) {
-    //         $query->whereHas('Pengaturankelas.Tahunakademik', function ($q) use ($request) {
-    //             $q->where('id', $request->id);
-    //         });
-    //     }
-    //     $lihatsiswa = $query->get()
-    //         ->map(function ($lihatsiswa) {
-    //             $lihatsiswa->Siswa_Nama = $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-    //             $lihatsiswa->Kelas_Nama = $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-    //             $lihatsiswa->Tahun_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-    //             $lihatsiswa->Semester_Nama = $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-    //             return $lihatsiswa;
-    //         });
-    //     return DataTables::of($lihatsiswa)
-    //         ->addColumn('Namalengkap', function ($lihatsiswa) {
-    //             return $lihatsiswa->Siswa ? $lihatsiswa->Siswa->NamaLengkap : '-';
-    //         })
-    //         ->addColumn('kelas', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Kelas ? $lihatsiswa->Pengaturankelas->Kelas->kelas : '-';
-    //         })
-    //         ->addColumn('tahunakademik', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->tahunakademik : '-';
-    //         })
-    //         ->addColumn('semester', function ($lihatsiswa) {
-    //             return $lihatsiswa->Pengaturankelas->Tahunakademik ? $lihatsiswa->Pengaturankelas->Tahunakademik->semester : '-';
-    //         })
-    //         ->make(true);
-    // }
+
     public function show($hashedId)
     {
         $kelassiswa = Kelassiswa::with('Siswa', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
@@ -208,42 +181,7 @@ class KelassiswaController extends Controller
         $fileName = 'data-jadwal-kelas-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '-tahun akademik-' . $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik .  '.pdf';
         return $pdf->download($fileName);
     }
-    // public function downloadmatapelajaran($hashedId)
-    // {
-    //     $kelassiswa = Kelassiswa::with('Datamengajar', 'Pengaturankelas.Kelas')->get()->first(function ($u) use ($hashedId) {
-    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-    //         return $expectedHash === $hashedId;
-    //     });
-
-    //     if (!$kelassiswa) {
-    //         return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
-    //     }
-    //         $hariUrut = [
-    //             'Senin' => 1,
-    //             'Selasa' => 2,
-    //             'Rabu' => 3,
-    //             'Kamis' => 4,
-    //             'Jumat' => 5,
-    //         ];
-            
-    //         $datamengajars = Kelassiswa::select('datamengajar_id')
-    //             ->with('Datamengajar') // Mengambil relasi Datamengajar
-    //             ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
-    //             ->get()
-    //             ->unique('datamengajar_id');
-            
-    //         // Urutkan berdasarkan hari
-    //         $datamengajars = $datamengajars->sortBy(function ($item) use ($hariUrut) {
-    //             // Mendapatkan hari dari relasi Datamengajar
-    //             return $hariUrut[$item->Datamengajar->hari] ?? 999; // Jika hari tidak ada, beri nilai tinggi
-    //         });
-    //     // Generate PDF
-    //     $pdf = PDF::loadView('Kelassiswa.downloadmatapelajaran', compact('datamengajars', 'kelassiswa'))
-    //         ->setPaper('a4', 'landscape'); 
-
-    //     $fileName = 'data-kelas-siswa-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '.pdf';
-    //     return $pdf->download($fileName);
-    // }
+   
 
     public function previewkelas($hashedId)
     {
@@ -403,87 +341,6 @@ $datamengajars = $datamengajars->sortBy(function ($item) use ($hariUrut) {
         ->make(true);
 }
 
-    // public function getMatapelajaran(Request $request, $hashedId)
-    // {
-    //     $kelassiswa = Kelassiswa::with('Datamengajar', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
-    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-    //         return $expectedHash === $hashedId;
-    //     });
-    //     if (!$kelassiswa) {
-    //         return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
-    //     }
-    //     $datamengajars
-    //         = Kelassiswa::with('Datamengajar')
-    //             ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
-    //             ->get();
-
-    //     return datatables()->of($datamengajars)
-    //         ->addColumn('Nama', function ($row) {
-    //             return $row->Datamengajar->Guru->Nama ?? '-';
-    //         })
-    //         ->addColumn('matapelajaran', function ($row) {
-    //             return $row->Datamengajar->Matapelajaran->matapelajaran ?? '-';
-    //         })
-    //         ->addColumn('hari', function ($row) {
-    //             return $row->Datamengajar->hari ?? '-';
-    //         })
-    //         ->addColumn('awalpel', function ($row) {
-    //             return $row->Datamengajar->awalpel ?? '-';
-    //         })
-    //         ->addColumn('akhirpel', function ($row) {
-    //             return $row->Datamengajar->akhirpel ?? '-';
-    //         })
-    //         ->addColumn('awalis', function ($row) {
-    //             return $row->Datamengajar->awalis ?? '-';
-    //         })
-    //         ->addColumn('akhiris', function ($row) {
-    //             return $row->Datamengajar->akhiris ?? '-';
-    //         })  
-    //         ->rawColumns(['checkbox'])
-    //         ->make(true);
-
-    // }
-    // public function getMatapelajaran($hashedId)
-    // {
-    //     $kelassiswa = Kelassiswa::with('Datamengajar', 'Pengaturankelas', 'Kelas')->get()->first(function ($u) use ($hashedId) {
-    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-    //         return $expectedHash === $hashedId;
-    //     });
-    //     if (!$kelassiswa) {
-    //         return redirect()->route('Kelassiswa.index')->withErrors(['Data tidak ditemukan.']);
-    //     }
-    //     $datamengajars
-    //         = Kelassiswa::with('Datamengajar')
-    //             ->where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
-    //             ->get();
-
-    //     return datatables()->of($datamengajars)
-    //         ->addColumn('Nama', function ($row) {
-    //             return $row->Datamengajar->Guru->Nama ?? '-';
-    //         })
-    //         ->addColumn('matapelajaran', function ($row) {
-    //             return $row->Datamengajar->Matapelajaran->matapelajaran ?? '-';
-    //         })
-    //         ->addColumn('hari', function ($row) {
-    //             return $row->Datamengajar->hari ?? '-';
-    //         })
-    //         ->addColumn('awalpel', function ($row) {
-    //             return $row->Datamengajar->awalpel ?? '-';
-    //         })
-    //         ->addColumn('akhirpel', function ($row) {
-    //             return $row->Datamengajar->akhirpel ?? '-';
-    //         })
-    //         ->addColumn('awalis', function ($row) {
-    //             return $row->Datamengajar->awalis ?? '-';
-    //         })
-    //         ->addColumn('akhiris', function ($row) {
-    //             return $row->Datamengajar->akhiris ?? '-';
-    //         })  
-    //         ->rawColumns(['checkbox'])
-    //         ->make(true);
-
-    // }
-   
 
     public function getKelassiswa()
     {

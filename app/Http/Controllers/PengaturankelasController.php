@@ -35,8 +35,11 @@ class PengaturankelasController extends Controller
 
     $tahuns = Tahunakademik::all();
     $datamengajars = Data_mengajar::select('id','matapelajaran_id','guru_id','hari')->get();
-    $kelass = Kelas::all()->where('status','Aktif');
-        
+    // $kelass = Kelas::all()->where('status','Aktif');
+    $kelass = Kelas::with('Tahunakademik')
+    ->where('status', 'Aktif')
+    ->get();
+
         return view('Pengaturankelas.create', compact('siswas','tahuns','datamengajars','kelass'));
     }
     
@@ -234,6 +237,7 @@ public function store(Request $request)
         Pengaturankelas::create([
             'tahunakademik_id' => $request->tahunakademik_id,
             'kelas_id' => $request->kelas_id,
+            'ket' => $request->ket,
             
         ]);
         return redirect()->route('Pengaturankelas.index')->with('success', 'Data pengaturan kelas created successfully!');
