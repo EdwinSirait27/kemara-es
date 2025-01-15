@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use App\Rules\NoXSSInput;
+use Illuminate\Validation\Rule;
 
 class DashboardControllerSU extends Controller
 {
@@ -64,14 +65,18 @@ class DashboardControllerSU extends Controller
     }
     public function update(Request $request, $hashedId)
     {
+        \Log::info('User ID: ' . $hashedId);
+
         $validatedData = $request->validate([
-            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username',new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'username' => [
+                'required',
+                'string',
+                'max:12',
+                'min:7',
+                'regex:/^[a-zA-Z0-9_-]+$/',
+                Rule::unique('users', 'username')->ignore($user->hashedId), // Abaikan username milik user ini
+                new NoXSSInput()
+            ],
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);

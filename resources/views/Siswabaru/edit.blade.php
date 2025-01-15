@@ -1,6 +1,6 @@
 @extends('layouts.user_type.auth')
 @section('content')
-@section('title', 'Kemara-ES | Update')
+@section('title', 'Kemara-ES | Edit Profile')
 
 <style>
     .avatar {
@@ -36,7 +36,7 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboardSUSiswa.updateSiswa', $hashedId) }}" method="POST">
+        <form action="{{ route('Siswabaru.update', $hashedId) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="container-fluid py-4">
@@ -99,12 +99,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Nama" class="form-control-label">
+                                    <label for="NamaLengkap" class="form-control-label">
                                         <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
                                     </label>
                                     <div>
                                         <input class="form-control" value="{{ old('NamaLengkap', $user->Siswa->NamaLengkap ?? '') }}"
-                                            type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-Nama"
+                                            type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap"
                                              maxlength="255">
                                     </div>
                                 </div>
@@ -119,9 +119,8 @@
                                     <div class="@error('hakakses') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="hakakses" id="hakakses" required>
                                             <option value="" disabled {{ old('hakakses', $user->hakakses ?? '') == '' ? 'selected' : '' }}>Pilih Hak Akses</option>
-                                            <option value="Siswa" {{ old('hakakses', $user->hakakses ?? '') == 'Siswa' ? 'selected' : '' }}>Siswa</option>
-                                            <option value="NonSiswa" {{ old('hakakses', $user->NonSiswa ?? '') == 'NonSiswa' ? 'selected' : '' }}>NonSiswa</option>
                                             
+                                            <option value="NonSiswa" {{ old('hakakses', $user->hakakses ?? '') == 'NonSiswa' ? 'selected' : '' }}>NonSiswa</option>
                                         </select>
                                         @error('hakakses')
                                             <span class="invalid-feedback" role="alert">
@@ -137,7 +136,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @php
-                                    $roles = ['Siswa','NonSiswa'];
+                                    $roles = ['NonSiswa'];
                                     $selectedRoles = old('Role', explode(',', $user->Role ?? ''));
                                 @endphp
                                 
@@ -175,7 +174,7 @@
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
                                 {{ __('Update') }}
                             </button>
-                            <a href="{{ route('dashboardSUSiswa.indexSiswa') }}" class="btn btn-secondary mt-4 mb-4">
+                            <a href="{{ route('Siswabaru.indexppdb') }}" class="btn btn-secondary mt-4 mb-4">
                                 {{ __('Cancel') }}
                             </a>
                         </div>

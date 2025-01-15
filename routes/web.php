@@ -312,6 +312,12 @@ Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->nam
     Route::get('/Organisasisiswa/{hashedId}', [OrganisasisiswaController::class, 'downloadorganisasisiswa'])->name('Organisasisiswa.downloadorganisasisiswa');
     Route::get('/Organisasisiswa/show/{hashedId}', [OrganisasisiswaController::class, 'previeworganisasisiswa'])
     ->name('Organisasisiswa.show');
+    // siswa baru
+    Route::get('/Siswabaru', [PpdbController::class, 'indexppdb'])->name('Siswabaru.indexppdb');
+    Route::get('/siswabaru/siswabaru', [PpdbController::class, 'getPpdbs'])->name('siswabaru.siswabaru');
+    Route::delete('/siswabaru/delete', [PpdbController::class, 'deletesiswabaru'])->name('siswabaru.delete');
+    Route::get('/Siswabaru/edit/{hashedId}', [PpdbController::class, 'edit'])->name('Siswabaru.edit');
+    Route::put('/Siswabaru/{hashedId}', [PpdbController::class, 'update'])->name('Siswabaru.update');
 
 });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
