@@ -7,6 +7,8 @@ use App\Models\Siswa;
 use Yajra\DataTables\DataTables;
 // use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+
 use App\Rules\NoXSSInput;
 
 // use Illuminate\Support\Facades\Log;
@@ -70,45 +72,55 @@ class DashboardControllerSUSiswa extends Controller
         // Kirim data user dan hashedId ke view
         return view('dashboardSUSiswa.editSiswa', compact('user', 'hashedId', 'roles'));
     }
-    public function updateSiswa(Request $request, $hashedId)
+    public function updateSiswa(Request $request, $hashedId) 
     {
-        $validatedData = $request->validate([
-            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username', new NoXSSInput()],
-            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
-            'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],      
-            'Role' => ['required', 'string', 'min:1','in:Siswa,NonSiswa', new NoXSSInput()],      
-            'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()],    
-        ]);
+        // dd($request->all());
 
+        // Cari user berdasarkan hashed ID
         $user = User::with('Siswa')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
-
+    
         if (!$user) {
             return redirect()->route('dashboardSUSiswa.indexSiswa')->with('error', 'ID tidak valid.');
         }
-
-        // Convert Role array to comma-separated string
+    
+        $validatedData = $request->validate([
+            'username' => [
+                'required',
+                'string',
+                'max:12',
+                'min:7',
+                'regex:/^[a-zA-Z0-9_-]+$/',
+                Rule::unique('users')->ignore($user->id), // Gunakan ID asli
+                new NoXSSInput()
+            ],
+            'password' => ['nullable', 'string', 'min:7', 'max:12', 'confirmed', new NoXSSInput()],
+            'hakakses' => ['required', 'string', 'in:Siswa', new NoXSSInput()],
+            'Role' => ['required', 'array', 'min:1', 'in:Siswa', new NoXSSInput()],
+            'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()],
+        ]);
+    
         $roles = implode(',', $validatedData['Role']);
-
         $userData = [
             'username' => $validatedData['username'],
             'hakakses' => $validatedData['hakakses'],
-            'Role' => $roles, // Simpan sebagai string
+            'Role' => $roles,
         ];
+    
         if (!empty($validatedData['password'])) {
             $userData['password'] = bcrypt($validatedData['password']);
         }
-
+    
         $user->update($userData);
-
+    
         if ($user->Siswa) {
             $user->Siswa->update([
                 'NamaLengkap' => $validatedData['NamaLengkap'],
             ]);
         }
-
+    
         return redirect()->route('dashboardSUSiswa.indexSiswa')->with('success', 'User Berhasil Diupdate.');
     }
     public function storeSiswa(Request $request)

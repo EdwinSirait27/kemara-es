@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Dashboard SU')
+@section('title', 'Kemara-ES | PPDB')
 
 @section('content')
 <style>
@@ -11,9 +11,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0">
+                <div class="card-header pb-0">  
                     {{-- <h6>Role & Hak Akses</h6> --}}
-                    <h6><i class="fas fa-user-shield"></i> Role & Hak Akses</h6>
+                    <h6><i class="fas fa-user-shield"></i> Roles & Hak Akses</h6>
 
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -50,23 +50,16 @@
                                           <button type="button" id="select-all" class="btn btn-primary btn-sm">
                                               Select All
                                           </button></th> 
-                                        <!-- Checkbox untuk select all -->
-                                    {{-- <th class="text-secondary opacity-7">Action</th> --}}
+                                      
                                 </tr>
                             </thead>
                            
                         </table>
-                        {{-- <button type="button" onclick="window.location='{{ route('dashboardSUSiswa.createSiswa') }}'" 
-    class="btn btn-primary btn-sm">
-    Tambah User
-</button> --}}
-
-                        {{-- <a href="{{ route('dashboardSU.create') }}" class="btn btn-primary mb-3">
-                          Create New User
-                      </a> --}}
                         <button type="button" id="delete-selected" class="btn btn-danger btn-sm">
                           Delete
-                      </button> 
+                      </button>
+                      <button id="update-status-btn" class="btn btn-success">Update Status Siswa</button>
+                    
                       </div>
                     </div>
                   </div>
@@ -120,7 +113,64 @@
                   }
             ]
         });
-        
+
+        $('#update-status-btn').on('click', function () {
+    let selectedIds = [];
+    $('.user-checkbox:checked').each(function () {
+        selectedIds.push($(this).val());
+    });
+
+    // if (selectedIds.length === 0) {
+    //     alert('Pilih minimal satu siswa untuk diupdate!');
+    //     return;
+    // }
+    if (selectedIds.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Tidak Ada User Yang Dipilih',
+                    text: 'Pilih minimal satu siswa untuk diupdate menjadi siswa.'
+                });
+                return;
+            }
+
+    // Menampilkan konfirmasi SweetAlert
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin memperbarui status siswa yang dipilih menjadi Siswa?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, perbarui!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "{{ route('siswabaru.updateStatus') }}", // Ganti dengan route update status Anda
+                type: "POST",
+                data: {
+                    ids: selectedIds,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Status diperbarui',
+                        text: response.message
+                    }).then(() => {
+                        location.reload(); // Reload halaman setelah sukses
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi kesalahan',
+                        text: 'Terjadi kesalahan saat memperbarui status!'
+                    });
+                }
+            });
+        }
+    });
+});
     
         $('#select-all').on('click', function() {
                   let checkboxes = $('.user-checkbox');
@@ -219,5 +269,15 @@
                 }
             });
         });
+        
     </script>
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
 @endsection

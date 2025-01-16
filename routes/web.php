@@ -318,6 +318,7 @@ Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->nam
     Route::delete('/siswabaru/delete', [PpdbController::class, 'deletesiswabaru'])->name('siswabaru.delete');
     Route::get('/Siswabaru/edit/{hashedId}', [PpdbController::class, 'edit'])->name('Siswabaru.edit');
     Route::put('/Siswabaru/{hashedId}', [PpdbController::class, 'update'])->name('Siswabaru.update');
+    Route::post('/Siswabaru/updatestatus', [PpdbController::class, 'updateStatus'])->name('siswabaru.updateStatus');
 
 });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {

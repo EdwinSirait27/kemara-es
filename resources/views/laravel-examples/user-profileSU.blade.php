@@ -40,7 +40,9 @@
                             <img src="{{ auth()->check() && optional(auth()->user()->guru)->foto 
                             ? asset('storage/fotoguru/' . auth()->user()->guru->foto) 
                             : asset('storage/fotoguru/we.jpg') }}"
-                                alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            alt="Foto Guru" 
+                            class="w-100 border-radius-lg shadow-sm" 
+                            id="imagePopup">
                             <a href="javascript:;"
                                 class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
                                 id="uploadBtn">

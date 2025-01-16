@@ -63,69 +63,99 @@ class DashboardControllerSU extends Controller
         }
         return view('dashboardSU.edit', compact('user', 'hashedId', 'roles'));
     }
-    public function update(Request $request, $hashedId)
-    {
-        \Log::info('User ID: ' . $hashedId);
+    public function update(Request $request, $hashedId) 
+{
+    // Cari user berdasarkan hashed ID
+    $user = User::with('Guru')->get()->first(function ($u) use ($hashedId) {
+        $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+        return $expectedHash === $hashedId;
+    });
 
-        $validatedData = $request->validate([
-            'username' => [
-                'required',
-                'string',
-                'max:12',
-                'min:7',
-                'regex:/^[a-zA-Z0-9_-]+$/',
-                Rule::unique('users', 'username')->ignore($user->hashedId), // Abaikan username milik user ini
-                new NoXSSInput()
-            ],
-            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
-            'Nama' => ['required', 'string', 'max:255', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            
-        ]);
-        $user = User::with('Guru')->get()->first(function ($u) use ($hashedId) {
-            $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-            return $expectedHash === $hashedId;
-        });
-        if (!$user) {
-            return redirect()->route('dashboardSU.index')->with('error', 'ID tidak valid.');
-        }
-        $roles = implode(',', $validatedData['Role']);
-        $userData = [
-            'username' => $validatedData['username'],
-            'hakakses' => $validatedData['hakakses'],
-            'Role' => $roles,
-        ];
-        if (!empty($validatedData['password'])) {
-            $userData['password'] = bcrypt($validatedData['password']);
-        }
-        $user->update($userData);
-
-        if ($user->Guru) {
-            $user->Guru->update([
-                'Nama' => $validatedData['Nama'],
-            ]);
-        }
-        return redirect()->route('dashboardSU.index')->with('success', 'User Berhasil Diupdate.');
+    if (!$user) {
+        return redirect()->route('dashboardSU.index')->with('error', 'ID tidak valid.');
     }
+
+    $validatedData = $request->validate([
+        'username' => [
+            'required',
+            'string',
+            'max:12',
+            'min:7',
+            'regex:/^[a-zA-Z0-9_-]+$/',
+            Rule::unique('users')->ignore($user->id), // Gunakan ID asli
+            new NoXSSInput()
+        ],
+        'password' => ['nullable', 'string', 'min:7', 'max:12', 'confirmed', new NoXSSInput()],
+        'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
+        'Role' => ['required', 'array', 'min:1', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
+        'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],
+    ]);
+
+    $roles = implode(',', $validatedData['Role']);
+    $userData = [
+        'username' => $validatedData['username'],
+        'hakakses' => $validatedData['hakakses'],
+        'Role' => $roles,
+    ];
+
+    if (!empty($validatedData['password'])) {
+        $userData['password'] = bcrypt($validatedData['password']);
+    }
+
+    $user->update($userData);
+
+    if ($user->Guru) {
+        $user->Guru->update([
+            'Nama' => $validatedData['Nama'],
+        ]);
+    }
+
+    return redirect()->route('dashboardSU.index')->with('success', 'User Berhasil Diupdate.');
+}
+    // public function update(Request $request, $hashedId)
+    // {
+        
+    //     $validatedData = $request->validate([
+    //         'username' => [
+    //             'required',
+    //             'string',
+    //             'max:12',
+    //             'min:7',
+    //             'regex:/^[a-zA-Z0-9_-]+$/',
+    //             Rule::unique('users')->ignore($hashedId),
+    //             new NoXSSInput()
+    //         ],
+    //         'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+    //         'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
+    //         'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
+    //         'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],      
+            
+    //     ]);
+    //     $user = User::with('Guru')->get()->first(function ($u) use ($hashedId) {
+    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+    //         return $expectedHash === $hashedId;
+    //     });
+    //     if (!$user) {
+    //         return redirect()->route('dashboardSU.index')->with('error', 'ID tidak valid.');
+    //     }
+    //     $roles = implode(',', $validatedData['Role']);
+    //     $userData = [
+    //         'username' => $validatedData['username'],
+    //         'hakakses' => $validatedData['hakakses'],
+    //         'Role' => $roles,
+    //     ];
+    //     if (!empty($validatedData['password'])) {
+    //         $userData['password'] = bcrypt($validatedData['password']);
+    //     }
+    //     $user->update($userData);
+
+    //     if ($user->Guru) {
+    //         $user->Guru->update([
+    //             'Nama' => $validatedData['Nama'],
+    //         ]);
+    //     }
+    //     return redirect()->route('dashboardSU.index')->with('success', 'User Berhasil Diupdate.');
+    // }
     public function deleteUsers(Request $request)
     {
         $request->validate([

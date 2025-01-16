@@ -229,6 +229,15 @@ $('#users-table').on('click', '.edit-user', function(e) {
             text: '{{ session('warning') }}',
         });
     </script>
+    @endif
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+        });
+    </script>
 @endif
     {{-- <script>
       $(document).ready(function() {
