@@ -113,63 +113,15 @@ class DatamengajarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'guru_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'matapelajaran_id' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'guru_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'matapelajaran_id' => ['required', 'string', 'max:50', new NoXSSInput()],
 
-            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'awalpel' => ['required', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'akhirpel' => ['required', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'awalis' => ['required',  new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'akhiris' => ['required', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat', new NoXSSInput()],
+            'awalpel' => ['required', new NoXSSInput()],
+            'akhirpel' => ['required', new NoXSSInput()],
+            'awalis' => ['required',  new NoXSSInput()],
+            'akhiris' => ['required', new NoXSSInput()],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
         ]);
         // dd($request->all());
         try {
@@ -194,49 +146,13 @@ class DatamengajarController extends Controller
         // dd($request->all());
         
         $validatedData = $request->validate([
-           'guru_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'matapelajaran_id' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+           'guru_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'matapelajaran_id' => ['required', 'string', 'max:50', new NoXSSInput()],
 
-            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'awalpel' => ['required',new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'akhirpel' => ['required', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'awalis' => ['required',  new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat', new NoXSSInput()],
+            'awalpel' => ['required',new NoXSSInput()],
+            'akhirpel' => ['required', new NoXSSInput()],
+            'awalis' => ['required',  new NoXSSInput()],
             'akhiris' => ['required',new NoXSSInput(),
             function ($attribute, $value, $fail) {
                 $sanitizedValue = strip_tags($value);
@@ -245,13 +161,7 @@ class DatamengajarController extends Controller
                 }
 
             }],
-            'ket' => ['required', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
         ]);
         $datamengajar = Data_mengajar::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);

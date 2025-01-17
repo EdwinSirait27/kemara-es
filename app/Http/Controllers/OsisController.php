@@ -80,27 +80,9 @@ public function getOsis()
     public function store(Request $request)
     {
         $request->validate([
-            'siswa_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'visi' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'misi' => ['required', 'string', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'siswa_id' => ['nullable', 'numeric', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'visi' => ['required', 'string', 'max:50', new NoXSSInput()],
+            'misi' => ['required', 'string', 'max:50', new NoXSSInput()],
         ]);
         // dd($request->all());
         try {
@@ -143,13 +125,7 @@ public function getOsis()
     public function deleteOsis(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
         ]);
         Osis::whereIn('id', $request->ids)->delete();
         return response()->json([

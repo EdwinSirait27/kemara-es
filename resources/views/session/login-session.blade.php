@@ -58,7 +58,7 @@
                     <h2 class="text-white mb-2 mt-5">Selamat Datang di Kemara-ES</h2>
                     <p class="text-lead text-white">
                         Sistem Informasi Akademik Terintegrasi<br>
-                        Akses mudah, data akurat, dan layanan optimal untuk mendukung kegiatan akademik SMPK KESUMA
+                        Akses mudah, data akurat, dan layanan optimal untuk mendukung kegiatan akademik SMAK KESUMA
                         Mataram. Silakan masuk untuk melanjutkan.
                     </p>
                 </div>
@@ -71,8 +71,8 @@
                 <div class="card z-index-0">
                     <div class="card-header text-center pt-4">
                         <h5>Kemara-ES</h5>
-                        <img src="{{ asset('assets/img/50204458.jpg') }}" alt="Logo"
-                            style="width: 100px; height: 125px; margin-right: 10px; border-radius: 0.5rem;">
+                        <img src="{{ asset('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo"
+                            style="width: 125px; height: 125px; margin-right: 10px; border-radius: 0.5rem;">
                     </div>
                     <div class="card-body">
                         <form role="form" method="POST" action="/session">
@@ -95,7 +95,7 @@
                                 <label><i class="fas fa-user"></i> Username</label>
                                 <input type="text" class="form-control" name="username" id="username"
                                     placeholder="Username" aria-label="username" aria-describedby="username-addon"
-                                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')">
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')" value="{{ old('username') }}">
                                 @error('username')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror

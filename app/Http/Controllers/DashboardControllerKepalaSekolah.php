@@ -7,6 +7,8 @@ use App\Models\Pengumuman;
 use App\Models\User;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -69,13 +71,7 @@ public function store(Request $request)
         return redirect()->route('dashboardKepalaSekolah.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -97,13 +93,7 @@ public function store(Request $request)
     {
         $request->validate([
             
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
 
             
         ]);

@@ -160,20 +160,8 @@ class DashboardControllerSU extends Controller
     {
         $request->validate([
             
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],  
-            'ids.*' => ['uuid', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],  
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],  
+            'ids.*' => ['uuid', new NoXSSInput()],  
            
         ]);
         User::whereIn('id', $request->ids)->delete();
@@ -186,27 +174,9 @@ class DashboardControllerSU extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username',new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'username' => ['required', 'string', 'max:12','min:7','regex:/^[a-zA-Z0-9_-]+$/', 'unique:users,username',new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
+            'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],      
             'Role' => ['required', 'array', 'min:1','in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()
            ],      
             // 'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],  

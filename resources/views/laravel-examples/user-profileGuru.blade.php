@@ -71,13 +71,16 @@
                     <div class="h-100">
                         @php
                             $GuruNama = optional(auth()->user()->Guru)->Nama;
+                            $Gurutugas = optional(auth()->user()->Guru)->TugasMengajar;
                         @endphp
 
                         <h5 class="mb-1">
                             {{ $GuruNama ?? 'Tidak ada Nama' }}
                         </h5>
+
                         <p class="mb-0 font-weight-bold text-sm">
-                            {{ __(' CEO / Co-Founder') }}
+                            Tugas Mengajar :{{ $Gurutugas ?? 'Tidak ada ' }}
+
                         </p>
                     </div>
                 </div>

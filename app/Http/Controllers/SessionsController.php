@@ -51,16 +51,13 @@ class SessionsController extends Controller
                 'string',
                 'min:7',
                 'max:12',
-                new NoXSSInput(),
-                function ($attribute, $value, $fail) {
-                    $sanitizedValue = strip_tags($value);
-                    if ($sanitizedValue !== $value) {
-                        $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                    }
-                }
             ],
+        ], [
+            'password.max' => 'Password tidak boleh lebih dari 12 karakter.',
+            'password.min' => 'Password tidak boleh kurang dari 7 karakter.',
         ]);
     
+        
         $rateLimiterKey = "login:{$request->ip()}:{$request->username}";
     
         if (RateLimiter::tooManyAttempts($rateLimiterKey, 5)) {

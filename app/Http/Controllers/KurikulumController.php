@@ -64,27 +64,9 @@ class KurikulumController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'kurikulum' => ['required', 'string', 'max:50','unique:tb_kurikulum,kurikulum', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'ket' => ['required', 'string', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'kurikulum' => ['required', 'string', 'max:50','unique:tb_kurikulum,kurikulum', new NoXSSInput()],      
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
+            'ket' => ['required', 'string', new NoXSSInput()],      
             
         ]);
         $kurikulum = Kurikulum::get()->first(function ($u) use ($hashedId) {
@@ -106,13 +88,7 @@ class KurikulumController extends Controller
     public function deleteUsers(Request $request)
     {
         $request->validate([
-            'ids' => ['required','array','min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'ids' => ['required','array','min:1', new NoXSSInput()],      
             
         ]);
         Kurikulum::whereIn('id', $request->ids)->delete();
@@ -132,20 +108,8 @@ class KurikulumController extends Controller
                   $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
               }
           }],      
-            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
-            'ket' => ['required', 'string', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],      
+            'status' => ['required', 'string', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
+            'ket' => ['required', 'string', new NoXSSInput()],      
             
         ]);
         try {

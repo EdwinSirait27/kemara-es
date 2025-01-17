@@ -102,15 +102,18 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             @php
-                                $GuruNama = optional(auth()->user()->Guru)->Nama;
-                            @endphp
+                            $GuruNama = optional(auth()->user()->Guru)->Nama;
+                            $Gurutugas = optional(auth()->user()->Guru)->TugasMengajar;
+                        @endphp
 
-                            <h5 class="mb-1">
-                                {{ $GuruNama ?? 'Tidak ada Nama' }}
-                            </h5>
-                            <p class="mb-0 font-weight-bold text-sm">
-                                {{ __(' CEO / Co-Founder') }}
-                            </p>
+                        <h5 class="mb-1">
+                            {{ $GuruNama ?? 'Tidak ada Nama' }}
+                        </h5>
+
+                        <p class="mb-0 font-weight-bold text-sm">
+                            Tugas Mengajar :{{ $Gurutugas ?? 'Tidak ada ' }}
+
+                        </p>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">

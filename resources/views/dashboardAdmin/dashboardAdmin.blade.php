@@ -17,7 +17,7 @@
                         <div class="col-lg-12">
                             <div class="d-flex flex-column h-100">
                                 <h5 class="font-weight-bolder">Kemara-ES | Dashboard Admin</h5>
-                                <p class="mb-1 pt-2 text-bold">Selamat datang di Sistem Informasi Akademik SMPK Kesuma
+                                <p class="mb-1 pt-2 text-bold">Selamat datang di Sistem Informasi Akademik SMAK Kesuma
                                     Mataram</p>
                                 <p class=" mb-4" style="text-align: justify;">
                                     Sistem Informasi Akademik Kemara-ES adalah platform yang dirancang khusus untuk

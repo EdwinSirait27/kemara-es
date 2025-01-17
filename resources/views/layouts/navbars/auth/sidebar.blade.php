@@ -123,7 +123,7 @@ html, body {
             @endif
 
             <div class="d-flex align-items-center">
-                <img src="{{ asset('assets/img/50204458.jpg')}}" class="navbar-brand-img h-100 me-2" alt="Logo">
+                <img src="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).png')}}" class="navbar-brand-img h-100 me-2" alt="Logo">
                 <div>
                     <h5 class="ms-3 font-weight-bold d-none d-md-inline">Kemara-ES</h5>
 

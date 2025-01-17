@@ -57,34 +57,10 @@ class TombolController extends Controller
     public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
-            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'start_date' => ['required', 'date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'end_date' => ['required', 'date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/', new NoXSSInput()],
+            'start_date' => ['required', 'date', new NoXSSInput()],
+            'end_date' => ['required', 'date', new NoXSSInput()],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
             
             
         ]);
@@ -109,13 +85,7 @@ class TombolController extends Controller
     {
         $request->validate([
             // 'ids' => 'required|array|min:1',
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
 
             // 'ids.*' => 'uuid',
         ]);
@@ -129,34 +99,10 @@ class TombolController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/','unique:tb_tombol,url', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'start_date' => ['required', 'date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'end_date' => ['required', 'date', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
-            'ket' => ['required', 'max:50', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'url' => ['required', 'string', 'max:50', 'regex:/^[a-zA-Z0-9_-]+$/','unique:tb_tombol,url', new NoXSSInput()],
+            'start_date' => ['required', 'date', new NoXSSInput()],
+            'end_date' => ['required', 'date', new NoXSSInput()],
+            'ket' => ['required', 'max:50', new NoXSSInput()],
         ]);
         try {
             Tombol::create([

@@ -41,13 +41,7 @@ class DashboardControllerAdmin extends Controller
         return redirect()->route('dashboardAdmin.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
 
           
         ]);
@@ -70,13 +64,7 @@ class DashboardControllerAdmin extends Controller
     public function deletePengumuman(Request $request)
     {
         $request->validate([
-            'ids' => ['required', 'arrau', 'min:1', new NoXSSInput(),
-            function ($attribute, $value, $fail) {
-                $sanitizedValue = strip_tags($value);
-                if ($sanitizedValue !== $value) {
-                    $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-                }
-            }],
+            'ids' => ['required', 'arrau', 'min:1', new NoXSSInput()],
             
         ]);
     
