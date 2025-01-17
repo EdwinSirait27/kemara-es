@@ -45,12 +45,12 @@ class InfoUserControllerNonSiswa extends Controller
             // 'foto' => ['nullable', 'image','mimes:jpeg,png,jpg','max:512', new NoXSSInput()],
             'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
             
-            'NamaLengkap' => ['required', 'string','max:100', new NoXSSInput()],
-            'NomorInduk' => ['required', 'numeric','max:100', new NoXSSInput()],
+            'NamaLengkap' => ['nullable', 'string','max:100', new NoXSSInput()],
+            'NomorInduk' => ['nullable', 'numeric','max:100', new NoXSSInput()],
             'NamaPanggilan' => ['nullable', 'string','max:50', new NoXSSInput()],
-            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
+            'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
             'NISN' => ['nullable', 'numeric','max:16', new NoXSSInput()],
-            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
+            'TempatLahir' => ['nullable', 'string','max:30', new NoXSSInput()],
             'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
             'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
@@ -59,7 +59,7 @@ class InfoUserControllerNonSiswa extends Controller
             'NIK' => ['nullable', 'numeric','max:16', new NoXSSInput()],
             'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput()],
            'username' => [
-                'required', 
+                'nullable', 
                 'string', 
                 'max:12', 
                 'regex:/^[a-zA-Z0-9_-]+$/', 
@@ -126,7 +126,8 @@ class InfoUserControllerNonSiswa extends Controller
                     'Email' => $request->Email,
                     'NomorTelephone' => $request->NomorTelephone,
                     'NIK' => $request->NIK,
-                    'status' => $request->status,
+                    'status' => $request->status ?? 'NonAktif',
+
                 ]
             );
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Guru;
+use App\Models\Tombol;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -31,11 +33,13 @@ class InfoUserControllerKurikulum extends Controller
 
     public function store(Request $request)
     {
+    // dd($request->all());
+
         $user = Auth::user();
 
         $this->validate($request, [
-            'Nama' => ['required', 'string', 'max:50', new NoXSSInput()],
-            'Role' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],
+            'Nama' => ['nullable', 'string', 'max:50', new NoXSSInput()],
+            'Role' => ['nullable', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string', 'max:12', new NoXSSInput()],      
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
             'foto' => [
@@ -45,32 +49,32 @@ class InfoUserControllerKurikulum extends Controller
     'max:512'
 ],
            
-            'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput()],      
-            'TanggalLahir' => ['required', 'date', new NoXSSInput()],      
-            'Agama' => ['required', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
-            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],      
-            'StatusPegawai' => ['required', 'string','max:255', new NoXSSInput()],      
+            'TempatLahir' => ['nullable', 'string', 'max:255', new NoXSSInput()],      
+            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],      
+            'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
+            'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],      
+            'StatusPegawai' => ['nullable', 'string','max:255', new NoXSSInput()],      
             'NipNips' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'Nuptk' => ['nullable', 'string','max:16', new NoXSSInput()],      
-            'Nik' => ['required', 'string','max:16', new NoXSSInput()],      
+            'Nik' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'Npwp' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'NomorSertifikatPendidik' => ['nullable', 'string','max:16', new NoXSSInput()],      
-            'TahunSertifikasi' => ['required', 'date', new NoXSSInput()],      
-            'jadwalkenaikangaji' => ['required', 'date', new NoXSSInput()],      
-            'PendidikanAkhir' => ['required', 'string', 'max:100', new NoXSSInput()],      
-            'TahunTamat' => ['required', 'date', new NoXSSInput()],      
-            'Jurusan' => ['required', 'string', 'max:100', new NoXSSInput()],      
-            'TugasMengajar' => ['required', 'string', 'max:100', new NoXSSInput()],      
-            'TahunPensiun' => ['required', 'date', new NoXSSInput()],      
-            'Pangkat' => ['required', 'string', 'max:50', new NoXSSInput()],      
-            'jadwalkenaikanpangkat' => ['required', 'date', new NoXSSInput()],      
-            'Jabatan' => ['required', 'string', 'max:50', new NoXSSInput()],      
-            'NomorTelephone' => ['required', 'string', 'max:13', new NoXSSInput()],      
-            'Alamat' => ['required', 'string', 'max:100', new NoXSSInput()],      
-            'Email' => ['required', 'string', 'max:100', new NoXSSInput()],      
-            'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
+            'TahunSertifikasi' => ['nullable', 'date', new NoXSSInput()],      
+            'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
+            'PendidikanAkhir' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
+            'TahunTamat' => ['nullable', 'date', new NoXSSInput()],      
+            'Jurusan' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
+            'TugasMengajar' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
+            'TahunPensiun' => ['nullable', 'date', new NoXSSInput()],      
+            'Pangkat' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+            'jadwalkenaikanpangkat' => ['nullable', 'date', new NoXSSInput()],      
+            'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+            'NomorTelephone' => ['nullable', 'string', 'max:13', new NoXSSInput()],      
+            'Alamat' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
+            'Email' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
+            'status' => ['nullable', 'in:Aktif,Tidak Aktif', new NoXSSInput()],      
             'username' => [
-                'required', 
+                'nullable', 
                 'string', 
                 'max:12', 
                 'regex:/^[a-zA-Z0-9_-]+$/', 
@@ -154,7 +158,8 @@ class InfoUserControllerKurikulum extends Controller
                     'NomorTelephone' => $request->NomorTelephone,
                     'Alamat' => $request->Alamat,
                     'Email' => $request->Email,
-                    'status' => $request->status,
+                    'status' => $request->status ?? 'Aktif',
+
                 ]
             );
 
@@ -191,4 +196,90 @@ class InfoUserControllerKurikulum extends Controller
             ], 500);
         }
     }
+    public function createdataku()
+    {
+        $tombol = Tombol::where('url', 'DatakuKurikulum')->first();
+        if (!$tombol) {
+            return redirect()->route('dashboardKurikulum.index')->with('warning', 'Dataku tidak tersedia.');
+        }
+    
+        $user = auth()->user()->load('Guru'); 
+    
+        $roles = explode(',', $user->getRawOriginal('Role')); 
+        $start_date = Carbon::parse($tombol->start_date);
+        $end_date = Carbon::parse($tombol->end_date);
+    
+        if (Carbon::now()->between($start_date, $end_date)) {
+            return view('laravel-examples/DatakuKurikulum', compact('user', 'roles'));
+        }
+    
+        return redirect()->route('dashboardKurikulum.index')->with('warning', 'Dataku masih tertutup.');
+    }
+        public function storeall(Request $request)
+        {
+            $user = Auth::user();
+        
+            $this->validate($request, [
+                'Nama' => ['nullable', 'string', 'max:50', new NoXSSInput()],
+                'TempatLahir' => ['nullable', 'string', 'max:255', new NoXSSInput()],      
+                'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],      
+                'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
+                'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],      
+                'StatusPegawai' => ['nullable', 'string','max:255', new NoXSSInput()],      
+                'username' => [
+                    'nullable', 
+                    'string', 
+                    'max:12', 
+                    'regex:/^[a-zA-Z0-9_-]+$/', 
+                    Rule::unique('users', 'username')->ignore($user->id), 
+                    new NoXSSInput(),
+                    function ($attribute, $value, $fail) {
+                        $sanitizedValue = strip_tags($value);
+                        if ($sanitizedValue !== $value) {
+                            $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
+                        }
+                    }
+                ],   
+            ]);
+            try {
+                DB::beginTransaction();
+                $updateData = [
+                    'username' => $request->username,
+                ];
+                $user->update($updateData);
+                $guru = Guru::updateOrCreate(
+                    ['guru_id' => $user->guru_id],
+                    [
+                                        'Nama' => $request->Nama,
+                        'TempatLahir' => $request->TempatLahir,
+                        'TanggalLahir' => $request->TanggalLahir,
+                        'Agama' => $request->Agama,
+                        'JenisKelamin' => $request->JenisKelamin,
+                        'StatusPegawai' => $request->StatusPegawai,
+                      
+                        'status' => $request->status ?? 'Aktif',
+                    ]
+                );
+                $user->update(['guru_id' => $guru->guru_id]);
+                DB::commit();
+                $routes = [
+                    'SU' => 'user-profileSU.create',
+                    'Admin' => 'user-profileAdmin.create',
+                    'KepalaSekolah' => 'user-profileKepalaSekolah.create',
+                    'Kurikulum' => 'user-profileKurikulum.create',
+                    'Guru' => 'user-profileGuru.create',
+                    'Siswa' => 'user-profileSiswa.create',
+                ];
+        
+                return redirect()->route($routes[$user->hakakses] ?? 'logout')
+                    ->with('success', 'Profil berhasil diperbarui');
+            } catch (\Exception $e) {
+                DB::rollBack();    
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal membuat atau memperbarui profil guru',
+                    'error' => $e->getMessage(),
+                ], 500);
+            }
+        }
 }

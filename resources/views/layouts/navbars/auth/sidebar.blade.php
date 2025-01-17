@@ -181,11 +181,19 @@ html, body {
                                     href="{{ url('user-profileSU') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('DatakuSU') ? 'active' : '' }}"
+                                    href="{{ url('DatakuSU') }}">
+                                    <span class="nav-link-text ms-1">Data-Ku</span>
+                                </a>
                             @endif
                             @if (Gate::allows('isKepalaSekolah'))
                                 <a class="nav-link {{ Request::is('user-profileKepalaSekolah') ? 'active' : '' }}"
                                     href="{{ url('user-profileKepalaSekolah') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
+                                </a>
+                                <a class="nav-link {{ Request::is('DatakuKepalaSekolah') ? 'active' : '' }}"
+                                    href="{{ url('DatakuKepalaSekolah') }}">
+                                    <span class="nav-link-text ms-1">Data-Ku</span>
                                 </a>
                             @endif
                             @if (Gate::allows('isGuru'))
@@ -193,18 +201,30 @@ html, body {
                                     href="{{ url('user-profileGuru') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('DatakuGuru') ? 'active' : '' }}"
+                                    href="{{ url('DatakuGuru') }}">
+                                    <span class="nav-link-text ms-1">Data-Ku</span>
+                                </a>
                             @endif
                             @if (Gate::allows('isKurikulum'))
                                 <a class="nav-link {{ Request::is('user-profileKurikulum') ? 'active' : '' }}"
                                     href="{{ url('user-profileKurikulum') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('DatakuKurikulum') ? 'active' : '' }}"
+                                href="{{ url('DatakuKurikulum') }}">
+                                <span class="nav-link-text ms-1">Data-Ku</span>
+                            </a>
                             @endif
                             @if (Gate::allows('isSiswa'))
                                 <a class="nav-link {{ Request::is('user-profileSiswa') ? 'active' : '' }}"
                                     href="{{ url('user-profileSiswa') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('DatakuSiswa') ? 'active' : '' }}"
+                                href="{{ url('DatakuSiswa') }}">
+                                <span class="nav-link-text ms-1">Data-Ku</span>
+                            </a>
                                 <a class="nav-link {{ Request::is('Ekstra-ku') ? 'active' : '' }}"
                                     href="{{ url('Ekstra-ku') }}">
                                     <span class="nav-link-text ms-1">Ekstrakulikuler-ku</span>
@@ -225,6 +245,10 @@ html, body {
                                     href="{{ url('user-profileAdmin') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
+                                <a class="nav-link {{ Request::is('DatakuAdmin') ? 'active' : '' }}"
+                                href="{{ url('DatakuAdmin') }}">
+                                <span class="nav-link-text ms-1">Data-Ku</span>
+                            </a>
                             @endif
                         </li>
                     </ul>

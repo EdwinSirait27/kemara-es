@@ -100,7 +100,7 @@
                     </script>
                     <div class="col-auto my-auto">
                         <div class="h-100">
-                            @php
+                              @php
                             $GuruNama = optional(auth()->user()->Guru)->Nama;
                             $Gurutugas = optional(auth()->user()->Guru)->TugasMengajar;
                         @endphp

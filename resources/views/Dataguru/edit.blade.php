@@ -38,9 +38,17 @@
                             @csrf
                             @method('PUT')
                             @if ($guru->foto)
-    <img src="{{ $guru->foto ? asset('storage/fotoguru/' . $guru->foto) : '' }}" 
+    {{-- <img src="{{ $guru->foto ? asset('storage/fotoguru/' . $guru->foto) : '' }}" 
          alt="Foto Guru" width="100" height="100"
-         class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+         class="w-100 border-radius-lg shadow-sm" id="imagePopup"> --}}
+         <img src="{{ asset('storage/fotoguru/we.jpg') }}" 
+     alt="Foto Guru Default" 
+     width="100" 
+     height="100"
+     class="w-100 border-radius-lg shadow-sm">
+
+    
+
 @endif
 <a href="javascript:;"
    class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"

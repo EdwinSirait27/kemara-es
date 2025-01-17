@@ -239,83 +239,16 @@ $('#users-table').on('click', '.edit-user', function(e) {
         });
     </script>
 @endif
-    {{-- <script>
-      $(document).ready(function() {
-          let table = $('#users-table').DataTable({
-              processing: true,
-              serverSide: true,
-              ajax: '{{ route('users.data') }}',
-              lengthMenu: [
-                  [10, 25, 50, 100, -1],
-                  [10, 25, 50, 100, "All"]
-              ],
-              columns: [
-                  {
-                      data: 'id',
-                      name: 'checkbox',
-                      orderable: false,
-                      searchable: false,
-                      className: 'text-center',
-                      render: function(data, type, row) {
-                          return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
-                      }
-                  },
-                  { data: 'id', name: 'id', className: 'text-center' },
-                  { data: 'Username', name: 'Username', className: 'text-center' },
-                  { data: 'Role', name: 'Role', className: 'text-center' },
-                  { data: 'created_at', name: 'created_at', className: 'text-center' },
-                  {
-                      data: 'action',
-                      name: 'action',
-                      orderable: false,
-                      searchable: false,
-                      className: 'text-center'
-                  }
-              ]
-          });
-  
-          $('#select-all').on('click', function() {
-              let checkboxes = $('.user-checkbox');
-              let allChecked = checkboxes.filter(':checked').length === checkboxes.length; 
-              checkboxes.prop('checked', !allChecked);
-          });
-          $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function() {
-              $(this).tooltip();
-          });
-          $('#delete-selected').on('click', function() {
-              let selectedIds = $('.user-checkbox:checked').map(function() {
-                  return $(this).val();
-              }).get();
-      if (selectedIds.length === 0) {
-                  alert('Please select at least one user to delete.');
-                  return;
-              }
-              if (confirm('Are you sure you want to delete selected users?')) {
-                  $.ajax({
-                      url: '{{ route('users.delete') }}',
-                      method: 'POST', // Use POST for CSRF compatibility
-                      data: {
-                          ids: selectedIds,
-                          _method: 'DELETE', // Simulate DELETE request
-                          _token: '{{ csrf_token() }}'
-                      },
-                      success: function(response) {
-                          if (response.success) {
-                              alert(response.message);
-                              table.ajax.reload();
-                          } else {
-                              alert('Failed to delete users.');
-                          }
-                      },
-                      error: function(xhr) {
-                          alert('An error occurred while deleting users.');
-                          console.error(xhr.responseText);
-                      }
-                  });
-              }
-          });
-      });
-  </script> --}}
+@if(session('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Waduhhh',
+            text: '{{ session('warning') }}',
+        });
+    </script>
+@endif
+    
 @endsection
  {{-- <tbody>
               <tr>

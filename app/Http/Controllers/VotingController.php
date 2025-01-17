@@ -45,14 +45,12 @@ class VotingController extends Controller
 {
     // dd($request->all());
     $request->validate([
-        'osis_id' => ['required', 'array', 'min:1', new NoXSSInput()],
-        'osis_id.*' => ['exists:tb_osis,id', new NoXSSInput(),
-        function ($attribute, $value, $fail) {
-            $sanitizedValue = strip_tags($value);
-            if ($sanitizedValue !== $value) {
-                $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
-            }
-        }], 
+        'osis_id' => ['required', 'array', 'min:1', 'max:1', new NoXSSInput()],
+        'osis_id.*' => ['exists:tb_osis,id', new NoXSSInput()],
+    ], [
+        'osis_id.required' => 'Anda harus memilih salah satu kandidat.',
+        'osis_id.max' => 'Hanya diperbolehkan memilih 1 kandidat.',
+        // 'password.min' => 'Password tidak boleh kurang dari 7 karakter.',
     ]);
     $user = Auth::user();
     $user_id = $user->id;
@@ -69,6 +67,10 @@ class VotingController extends Controller
         ]);
         $voting->save();  
     }
+    $hasil_voting = Hasilvoting::updateOrCreate(
+        ['osis_id' => $osis_id],
+        ['jumlahsuara' => hasilvoting::where('osis_id', $osis_id)->count() + 1]
+    );
 
     return redirect()->route('Voting.index')->with('success', 'Suara Anda telah tercatat.');
 }
@@ -91,4 +93,5 @@ class VotingController extends Controller
             return redirect('logout');
         }
     }
+
 }

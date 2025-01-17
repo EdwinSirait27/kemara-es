@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Siswa;
+use App\Models\Tombol;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -60,10 +62,10 @@ class InfoUserControllerSiswa extends Controller
             'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput()],
             'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
             
-            'NamaLengkap' => ['required', 'string','max:100','min:10', new NoXSSInput()],
-            'NomorInduk' => ['required', 'string','max:16', new NoXSSInput()],
+            'NamaLengkap' => ['nullable', 'string','max:100','min:10', new NoXSSInput()],
+            'NomorInduk' => ['nullable', 'string','max:16', new NoXSSInput()],
             'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
-            'JenisKelamin' => ['required', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
+            'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
             'NISN' => ['nullable', 'string','max:16', new NoXSSInput()],
             'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
             'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
@@ -74,7 +76,7 @@ class InfoUserControllerSiswa extends Controller
             'NIK' => ['nullable', 'string','max:16', new NoXSSInput()],
             'status' => ['nullable', 'string','in:Aktif,Tidak Aktif', new NoXSSInput()],
            'username' => [
-                'required', 
+                'nullable', 
                 'string', 
                 'max:12', 
                 'regex:/^[a-zA-Z0-9_-]+$/', 
@@ -148,7 +150,8 @@ class InfoUserControllerSiswa extends Controller
                     'Email' => $request->Email,
                     'NomorTelephone' => $request->NomorTelephone,
                     'NIK' => $request->NIK,
-                    'status' => $request->status,
+                    'status' => $request->status ?? 'Aktif',
+
                 ]
             );
     
@@ -178,4 +181,89 @@ class InfoUserControllerSiswa extends Controller
             ], 500);
         }
     }
+    public function createdataku()
+    {
+        $tombol = Tombol::where('url', 'DatakuSiswa')->first();
+        if (!$tombol) {
+            return redirect()->route('dashboardSiswa.index')->with('warning', 'Dataku tidak tersedia.');
+        }
+    
+        $user = auth()->user()->load('Siswa'); 
+    
+        $roles = explode(',', $user->getRawOriginal('Role')); 
+        $start_date = Carbon::parse($tombol->start_date);
+        $end_date = Carbon::parse($tombol->end_date);
+    
+        if (Carbon::now()->between($start_date, $end_date)) {
+            return view('laravel-examples/DatakuSiswa', compact('user', 'roles'));
+        }
+    
+        return redirect()->route('dashboardSiswa.index')->with('warning', 'Dataku masih tertutup.');
+    }
+        public function storeall(Request $request)
+        {
+            $user = Auth::user();
+        
+            $this->validate($request, [
+                
+                'NamaLengkap' => ['nullable', 'string','max:100','min:10', new NoXSSInput()],
+                'NomorInduk' => ['nullable', 'string','max:16', new NoXSSInput()],
+                'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
+                'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
+                'status' => ['nullable', 'string','in:Aktif', new NoXSSInput()],
+                'NISN' => ['nullable', 'string','max:16', new NoXSSInput()],
+                'TempatLahir' => ['nullable', 'string','max:30', new NoXSSInput()],
+                'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
+                'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
+                'username' => [
+                    'nullable', 
+                    'string', 
+                    'max:12', 
+                    'regex:/^[a-zA-Z0-9_-]+$/', 
+                    Rule::unique('users', 'username')->ignore($user->id), 
+                    new NoXSSInput()
+                ],   
+            ]);
+            try {
+                DB::beginTransaction();
+                $updateData = [
+                    'username' => $request->username,
+                ];
+                $user->update($updateData);
+                $siswa = Siswa::updateOrCreate(
+                    ['siswa_id' => $user->siswa_id],
+                    [
+                                        'NamaLengkap' => $request->NamaLengkap,
+                                        'NomorInduk' => $request->NomorInduk,
+                                        'NamaPanggilan' => $request->NamaPanggilan,
+                                        'JenisKelamin' => $request->JenisKelamin,
+                                        'NISN' => $request->NISN,
+                        'TempatLahir' => $request->TempatLahir,
+                        'TanggalLahir' => $request->TanggalLahir,
+                        'Agama' => $request->Agama,
+                        'status' => $request->status ?? 'Aktif',
+                    ]
+                );
+                $user->update(['siswa_id' => $siswa->siswa_id]);
+                DB::commit();
+                $routes = [
+                    'SU' => 'user-profileSU.create',
+                    'Admin' => 'user-profileAdmin.create',
+                    'KepalaSekolah' => 'user-profileKepalaSekolah.create',
+                    'Kurikulum' => 'user-profileKurikulum.create',
+                    'Guru' => 'user-profileGuru.create',
+                    'Siswa' => 'user-profileSiswa.create',
+                ];
+        
+                return redirect()->route($routes[$user->hakakses] ?? 'logout')
+                    ->with('success', 'Profil berhasil diperbarui');
+            } catch (\Exception $e) {
+                DB::rollBack();    
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal membuat atau memperbarui profil guru',
+                    'error' => $e->getMessage(),
+                ], 500);
+            }
+        }
 }

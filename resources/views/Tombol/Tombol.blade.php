@@ -220,5 +220,25 @@
             });
         });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (session('success'))
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    @endif
+
+    @if (session('error'))
+        Swal.fire({
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    @endif
+</script>
 
 @endsection

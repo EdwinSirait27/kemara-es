@@ -88,7 +88,7 @@ class DashboardControllerSU extends Controller
         'password' => ['nullable', 'string', 'min:7', 'max:12', 'confirmed', new NoXSSInput()],
         'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
         'Role' => ['required', 'array', 'min:1', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
-        'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],
+        'Nama' => ['nullable', 'string', 'max:255', new NoXSSInput()],
     ]);
 
     $roles = implode(',', $validatedData['Role']);

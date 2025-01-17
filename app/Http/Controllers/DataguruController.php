@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\User;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Siswa;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Rules\NoXSSInput;
+use Illuminate\Validation\Rule;
+
 
 class DataguruController extends Controller
 {
@@ -156,5 +161,7 @@ class DataguruController extends Controller
         }
         return redirect()->route('Dataguru.index')->with('success', 'Guru Berhasil Diupdate.');
     }
+    
+   
     
 }

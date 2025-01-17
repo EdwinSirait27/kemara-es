@@ -354,6 +354,8 @@ Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     Route::delete('/users/delete', [DashboardControllerSU::class, 'deleteUsers'])->name('users.delete');
     Route::get('/user-profileSU', [InfoUserController::class, 'create'])->name('user-profileSU.create');
     Route::put('/user-profileSU', [InfoUserController::class, 'store'])->name('user-profileSU.store'); 
+    Route::get('/DatakuSU', [InfoUserController::class, 'createdataku'])->name('DatakuSU.createdataku');
+    Route::put('/DatakuSU', [InfoUserController::class, 'storeall'])->name('DatakuSU.storeall'); 
     Route::get('dashboardSU/create', [DashboardControllerSU::class, 'create'])->name('dashboardSU.create');
     Route::post('/dashboardSU', [DashboardControllerSU::class, 'store'])->name('dashboardSU.store');
 Route::get('/dashboardSU/edit1/{hashedId}', [DashboardControllerSU::class, 'edit'])->name('dashboardSU.edit1');
@@ -409,13 +411,17 @@ Route::middleware(['auth','can:isKepalaSekolah','prevent.xss'])->group(function 
 
 Route::get('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'create'])->name('user-profileKepalaSekolah.create');
     Route::put('/user-profileKepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'store'])->name('user-profileKepalaSekolah.store');
-
+    Route::get('/DatakukepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'createdataku'])->name('DatakukepalaSekolah.createdataku');
+    Route::put('/DatakukepalaSekolah', [InfoUserControllerKepalaSekolah::class, 'storeall'])->name('DatakukepalaSekolah.storeall'); 
+    
 
 });
 Route::middleware(['auth','can:isKurikulum','prevent.xss'])->group(function () {
 // Kurikulum
 Route::get('/dashboardKurikulum', [DashboardControllerKurikulum::class, 'index'])->name('dashboardKurikulum.index');
 
+Route::get('/DatakuKurikulum', [InfoUserControllerKurikulum::class, 'createdataku'])->name('DatakuKurikulum.createdataku');
+Route::put('/DatakuKurikulum', [InfoUserControllerKurikulum::class, 'storeall'])->name('DatakuKurikulum.storeall'); 
 Route::get('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'create'])->name('user-profileKurikulum.create');
 Route::put('/user-profileKurikulum', [InfoUserControllerKurikulum::class, 'store'])->name('user-profileKurikulum.store');
 
@@ -425,9 +431,12 @@ Route::middleware(['auth','can:isGuru','prevent.xss'])->group(function () {
 
     Route::get('/user-profileGuru', [InfoUserControllerGuru::class, 'create'])->name('user-profileGuru.create');
         Route::put('/user-profileGuru', [InfoUserControllerGuru::class, 'store'])->name('user-profileGuru.store');
-    
+        Route::get('/DatakuGuru', [InfoUserControllerGuru::class, 'createdataku'])->name('DatakuGuru.createdataku');
+        Route::put('/DatakuGuru', [InfoUserControllerGuru::class, 'storeall'])->name('DatakuGuru.storeall'); 
 });
 Route::middleware(['auth','can:isSiswa','prevent.xss'])->group(function () {
+    Route::get('/DatakuSiswa', [InfoUserControllerSiswa::class, 'createdataku'])->name('DatakuSiswa.createdataku');
+        Route::put('/DatakuSiswa', [InfoUserControllerSiswa::class, 'storeall'])->name('DatakuSiswa.storeall'); 
     Route::get('/dashboardSiswa', [DashboardControllerSiswa::class, 'index'])->name('dashboardSiswa.index');
 
     Route::get('/user-profileSiswa', [InfoUserControllerSiswa::class, 'create'])->name('user-profileSiswa.create');
