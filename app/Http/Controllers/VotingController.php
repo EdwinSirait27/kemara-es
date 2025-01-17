@@ -8,6 +8,7 @@ use App\Models\Hasilvoting;
 use App\Models\Osis;
 use App\Models\Tombol;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Http\Request;
@@ -93,5 +94,53 @@ class VotingController extends Controller
             return redirect('logout');
         }
     }
+    public function getVoting()
+{
+    $voting = Voting::with('User', 'Osis.Siswa') // Pastikan relasi sudah benar
+        ->select(['id', 'user_id', 'osis_id', 'created_at'])
+        ->get()
+        ->map(function ($voting) {
+            // Log relasi untuk debugging
+            Log::info('Voting Data:', [
+                'User' => $voting->User,
+                'Osis' => $voting->Osis,
+               
+            ]);
 
+            $voting->Semua_Nama = $voting->User ? $voting->User->hakakses : '-';
+            $voting->SiswaOsis_Nama = $voting->Osis->Siswa ? $voting->Osis->Siswa->NamaLengkap : '-';
+
+            return $voting;
+        });
+
+    return DataTables::of($voting)
+    ->addColumn('SiswaOsis_Nama', function ($voting) {
+        return $voting->SiswaOsis_Nama; // Pastikan data ini ada
+    })
+    ->addColumn('Semua_Nama', function ($voting) {
+        return $voting->Semua_Nama; // Pastikan data ini ada
+    })   
+    ->addColumn('created_at', function ($voting) {
+            return Carbon::parse($voting->created_at)->format('d-m-Y H:i:s');
+        })
+        ->make(true);
+}
+
+    // public function getVoting()
+    // {
+    //     $voting = Voting::with('User','Osis','Siswa')->select(['id', 'user_id','osis_id','created_at'])
+    //         ->get()
+    //         ->map(function ($voting) {
+                
+    //         $voting->Semua_Nama = $voting->User ? $voting->User->hakakses : '-';
+    //         $voting->SiswaOsis_Nama = $voting->Osis ? $voting->Osis->osis_id : '-';
+            
+    //             return $voting;
+    //         });
+    //     return DataTables::of($voting)
+    //     ->addColumn('created_at', function ($voting) {
+    //         return Carbon::parse($voting->created_at)->format('d-m-Y H:i:s');
+    //     })
+    //         ->make(true);
+    // }
 }

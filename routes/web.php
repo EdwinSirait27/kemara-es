@@ -126,6 +126,7 @@ Route::middleware(['auth','can:isvoting','prevent.xss'])->group(function () {
     
 Route::get('/Voting', [VotingController::class, 'index'])->name('Voting.index');
 Route::post('/Voting', [VotingController::class, 'store'])->name('Voting.store');
+Route::get('/voting/voting', [VotingController::class, 'getVoting'])->name('voting.voting');
 
     
    });

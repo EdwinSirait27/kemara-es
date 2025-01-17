@@ -65,10 +65,10 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
-                        <h2 class="text-white mb-2 mt-5">Selamat Datang Calon Peserta Didik SMPK Kesuma Mataram </h2>
+                        <h2 class="text-white mb-2 mt-5">Selamat Datang Calon Peserta Didik SMAK Kesuma Mataram </h2>
                         <p class="text-lead text-white">
                             Silahkan diisi format berikut dengan benar<br>
-                            jika belum paham, silahkan kunjungi Instagram dari SMPK Kesuma Mataram untuk melihat tutorial pendaftaran siswa baru.
+                            jika belum paham, silahkan kunjungi Instagram dari SMAK Kesuma Mataram untuk melihat tutorial pendaftaran siswa baru.
                         </p>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
                     <div class="card z-index-0">
                         <div class="card-header text-center pt-4">
                             <h5>Kemara-ES</h5>
-                            <img src="{{ asset('assets/img/50204458.jpg') }}" alt="Logo"
-                                style="width: 100px; height: 125px; margin-right: 10px; border-radius: 0.5rem;">
+                            <img src="{{ asset('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo"
+                                style="width: 125px; height: 125px; margin-right: 10px; border-radius: 0.5rem;">
                         </div>
                         <div class="card-body">
                             <form id="ppdb-form" role="form" method="POST" action="{{ route('Ppdb.store') }}">

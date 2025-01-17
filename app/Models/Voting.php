@@ -18,10 +18,11 @@ class Voting extends Model
     ];
     public function User()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id','id');
     }
     public function Osis()
     {
-        return $this->belongsTo(Osis::class, 'osis_id');
+        return $this->belongsTo(Osis::class, 'osis_id','id');
     }
+
 }

@@ -42,7 +42,24 @@
         .vote-button {
             margin-top: 15px;
         }
-    </style>
+  
+    .card:hover {
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+    }
+    .icon {
+        font-size: 32px;  /* Ukuran ikon lebih besar */
+        color: #fff;
+    }
+    .numbers h5 {
+        font-size: 1.5rem;
+    }
+    .col-4.text-center {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+</style>
+
 
     <div class="container">
         <h3 class="text-center mb-4">Pemilihan Ketua OSIS</h3>
@@ -97,7 +114,86 @@
 </form>
 
     </div>
-    <h1>tes</h1>
+ <br>
+ <br>
+ <br>
+ <br>
+ <br>
     
+
+
+
+
+
+
+
+
+
+    {{-- disini --}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    {{-- <h6>Role & Hak Akses</h6> --}}
+                    <h6><i class="fas fa-user-shield"></i>Hasil Voting</h6>
+
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0"id="users-table">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        No.</th>
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Pemilih</th> 
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Calon Ketua Osis</th> 
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Waktu Pemilihan</th> 
+                                    
+                                    
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $(document).ready(function() {
+    let table = $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('voting.voting') }}',
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+        columns: [
+          {
+            data: 'id', // Kolom indeks
+            name: 'id',
+            className: 'text-center',
+            render: function (data, type, row, meta) {
+                return meta.row + 1; 
+            },
+        },
+        { data: 'Semua_Nama', name: 'Semua_Nama', className: 'text-center' },
+          { data: 'SiswaOsis_Nama', name: 'SiswaOsis_Nama', className: 'text-center' },
+            { data: 'created_at', name: 'created_at', className: 'text-center' }
+        ]
+    });
+});
+    </script>
 
 @endsection 
