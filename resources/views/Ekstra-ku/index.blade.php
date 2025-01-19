@@ -1,9 +1,87 @@
 @extends('layouts.user_type.auth')
 @section('title', 'Kemara-ES | Ekstra-Ku')
 @section('content')
+<style>
+    .chart-canvas {
+        display: block;
+        width: 100%;
+        height: 300px;
+        z-index: 1;
+    }
+
+    .osis-card {
+        margin-bottom: 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .osis-card:hover {
+        transform: scale(1.05);
+    }
+
+    .osis-card img {
+        width: 80%;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .osis-card .caption {
+        padding: 15px;
+        background-color: #f8f9fa;
+    }
+
+    .osis-card p {
+        margin: 5px 0;
+    }
+
+    .vote-button {
+        margin-top: 15px;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+    }
+
+    .icon {
+        font-size: 32px;
+        /* Ukuran ikon lebih besar */
+        color: #fff;
+    }
+
+    .numbers h5 {
+        font-size: 1.5rem;
+    }
+
+    .col-4.text-center {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .zoomable-image {
+    transition: transform 0.3s ease;
+    width: auto;
+    height: auto;
+}
+#original-dimensions {
+    font-weight: bold;
+    color: #4CAF50;
+    margin-top: 10px;
+}
+
+
+.zoomable-image:hover {
+    transform: scale(1.2); /* Perbesar gambar saat di-hover */
+}
+
+
+</style>
+
 @if ($tombol)
     
-    <div class="container mt-4">
+    <div class="container mt-4 col-12">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card shadow-lg">
@@ -35,6 +113,36 @@
                             <h6 class="mb-3">Pilih Ekstrakurikuler:</h6>
                             <div class="row">
                                 @foreach ($ekstras as $ekstra)
+                                <div class="col-12-md-4 col-sm-6">
+                                    <div class="osis-card">
+                                        <div class="image view view-first">
+                                            {{-- <img src="{{ asset('storage/ekskul/' . $ekstra->foto) }}"
+                                                alt="Foto {{ $ekstra->namaekstra }}" /> --}}
+                                                <img src="{{ asset('storage/ekskul/' . $ekstra->foto) }}" 
+                                                alt="Foto {{ $ekstra->namaekstra }}" 
+                                                class="zoomable-image" />
+                                           
+
+                                        </div>
+                                        <div class="caption">
+                                            <p><strong>Ekstrakulikuler:</strong> {{ $ekstra->namaekstra }}</p>
+                                            <p><strong>Keterangan:</strong> {{ $ekstra->ket }}</p>
+                                            <p><strong>Kapasitas:</strong> {{ $ekstra->kapasitas }}</p>
+                                            <div class="form-check text-center">
+                                                <input type="checkbox" name="ekstrakulikuler_id[]" value="{{ $ekstra->id }}"
+                                                id="ekstra-{{ $ekstra->id }}" class="form-check-input">
+                                            <label for="ekstra-{{ $ekstra->id }}"
+                                                class="form-check-label">{{ $ekstra->namaekstra }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            @endforeach
+
+
+
+                                {{-- @foreach ($ekstras as $ekstra)
                                     <div class="col-md-4">
                                         <div class="form-check">
                                             <input type="checkbox" name="ekstrakulikuler_id[]" value="{{ $ekstra->id }}"
@@ -43,7 +151,7 @@
                                                 class="form-check-label">{{ $ekstra->namaekstra }}</label>
                                         </div>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success">Simpan</button>
@@ -275,7 +383,7 @@
                                 } else {
                                     Swal.fire(
                                         'Failed!',
-                                        'Failed to delete Osis.',
+                                        'Failed to delete Ekstrakulikuler.',
                                         'error'
                                     );
                                 }
@@ -283,7 +391,7 @@
                             error: function(xhr) {
                                 Swal.fire(
                                     'Error!',
-                                    'An error occurred while deleting siswa.',
+                                    'An error occurred while deleting Ekstrakulikuler.',
                                     'error'
                                 );
                                 console.error(xhr.responseText);

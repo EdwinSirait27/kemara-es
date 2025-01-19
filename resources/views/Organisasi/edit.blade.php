@@ -45,7 +45,7 @@
             </div>
         @endif --}}
 
-        <form action="{{ route('Organisasi.update', $hashedId) }}" method="POST">
+        <form action="{{ route('Organisasi.update', $hashedId) }}" method="POST"enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="container-fluid py-4">
@@ -191,7 +191,7 @@
                                         @endforeach
                                         </select>
                                        
-                                        @error('guru_id')
+                                        @error('tahunakademik_id')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                         <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu</p>
@@ -200,7 +200,26 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="foto" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Foto') }}
+                                        </label>
+                                        <div>
+                                            @if ($organisasi->foto)
+                                            <div class="mb-3">
+                                                <img src="{{ asset('storage/organisasi/' . $organisasi->foto) }}" alt="foto" class="img-thumbnail" style="max-width: 200px;">
+                                            </div>
+                                        @endif
+                                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*">
+                                        @error('foto')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                
+                            </div>
+                            </div>
+                            </div>
                         </div>
                        
                         </div>

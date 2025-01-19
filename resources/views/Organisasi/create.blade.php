@@ -27,7 +27,7 @@
                     
 
                         {{-- Form untuk membuat user --}}
-                        <form method="POST" id="create-user-form" action="{{ route('Organisasi.store') }}">
+                        <form method="POST" id="create-user-form" action="{{ route('Organisasi.store') }}"enctype="multipart/form-data">
                             @csrf
                            
                             <div class="row">
@@ -148,6 +148,22 @@
                                   </div>
                               </div>
                           </div>
+                          <div class="row">
+    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="foto" class="form-control-label">{{ __('Foto') }}</label>
+                                    <div class="@error('foto')border border-danger rounded-3 @enderror">
+                                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*" required>
+                                            @error('foto')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                        <p class="text-muted text-xs mt-2">maksimal 512 kb</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                            
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">

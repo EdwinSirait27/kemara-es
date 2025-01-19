@@ -26,7 +26,7 @@
                         @endif
 
                         {{-- Form untuk membuat user --}}
-                        <form method="POST" id="create-user-form" action="{{ route('Ekstrakulikuler.store') }}">
+                        <form method="POST" id="create-user-form" action="{{ route('Ekstrakulikuler.store') }}"enctype="multipart/form-data">
                             @csrf
                          
                             <div class="row">
@@ -45,24 +45,7 @@
                                             @error('guru_id')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
-                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>
-
-                                       
-                                        {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
-                                        <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                            @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)
-                                                <input class="form-control" value="{{ auth()->user()->Guru->Alamat }}"
-                                                    type="text" placeholder="Alamat" id="Alamat" name="Alamat"
-                                                    maxlength="50" required>
-                                                @error('Alamat')
-                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                                @enderror
-                                            @else
-                                                <input class="form-control" value="tidak ada data" type="text" id="Alamat"
-                                                    name="Alamat"required>
-                                            @endif --}}
-        
-        
+                                            <p class="text-muted text-xs mt-2">Contoh : Pilih salah satu </p>        
                                         </div>
                                     </div>
                                 </div>
@@ -81,12 +64,6 @@
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : Olimpiade</p>
-
-                                       
-
-
-
-                                        
                                         </div>
                                     </div>
                                 </div>
@@ -107,25 +84,6 @@
                                             @enderror
                                             <p class="text-muted text-xs mt-2">Contoh : 2</p>
 
-                                      
-
-
-                                       
-                                        {{-- <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
-                                        <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                            @if (auth()->check() && auth()->user()->Guru && auth()->user()->Guru->Alamat)
-                                                <input class="form-control" value="{{ auth()->user()->Guru->Alamat }}"
-                                                    type="text" placeholder="Alamat" id="Alamat" name="Alamat"
-                                                    maxlength="50" required>
-                                                @error('Alamat')
-                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                                @enderror
-                                            @else
-                                                <input class="form-control" value="tidak ada data" type="text" id="Alamat"
-                                                    name="Alamat"required>
-                                            @endif --}}
-        
-        
                                         </div>
                                     </div>
                                 </div>
@@ -143,12 +101,7 @@
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
-                                            @enderror
-                                     
-
-
-
-                                        
+                                            @enderror                                        
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +110,6 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        
                                         <label for="ket" class="form-control-label">{{ __('Deskripsi') }}</label>
                                         <div class="@error('ket')border border-danger rounded-3 @enderror">
                                             <input class="form-control"
@@ -191,7 +143,37 @@
                                       </div>
                                   </div>
                               </div>
+                              <div class="row">
+    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="foto" class="form-control-label">{{ __('Foto') }}</label>
+                                        <div class="@error('foto')border border-danger rounded-3 @enderror">
+                                            <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*" required>
+                                                @error('foto')
+                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            @enderror
+                                            <p class="text-muted text-xs mt-2">maksimal 512 kb</p>
+    
+                                        </div>
+                                    </div>
+                                </div>
                           </div>
+                          {{-- <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="foto" class="form-control-label">{{ __('Foto') }}</label>
+                                    <div class="@error('foto')border border-danger rounded-3 @enderror">
+                                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/*" required>
+                                            @error('foto')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                          </div> --}}
+                          
                            
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">

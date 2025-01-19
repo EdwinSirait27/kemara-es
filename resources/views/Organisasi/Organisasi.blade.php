@@ -36,6 +36,9 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Organisasi</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Foto</th>
                                     {{-- <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Nama</th> --}}
@@ -108,6 +111,19 @@
           { data: 'Semester_Nama', name: 'Semester_Nama', className: 'text-center' },
           { data: 'Guru_Nama', name: 'Guru_Nama', className: 'text-center' },
           { data: 'namaorganisasi', name: 'namaorganisasi', className: 'text-center' },
+          {
+                            data: 'foto',
+                            name: 'foto',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/organisasi') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
           { data: 'kapasitas', name: 'kapasitas', className: 'text-center' },
 
           { data: 'status', name: 'status', className: 'text-center' },
@@ -217,6 +233,7 @@ $('#users-table').on('click', '.edit-organisasi', function(e) {
             success: function(response) {
                 let organisasi = response.organisasi;
                 $('#editUserModal').find('input[name="guru_id"]').val(organisasi.guru_id);
+                $('#editUserModal').find('input[name="foto"]').val(organisasi.foto);
                 $('#editUserModal').find('input[name="tahunakademik_id"]').val(organisasi.tahunakademik_id);
                 $('#editUserModal').find('input[name="namaorganisasi"]').val(organisasi.namaorganisasi);
                 $('#editUserModal').find('input[name="kapasitas"]').val(organisasi.kapasitas);

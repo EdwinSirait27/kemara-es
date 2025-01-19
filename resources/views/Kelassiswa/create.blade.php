@@ -79,7 +79,7 @@
                                 <br>
                                 <br>
                                 <br>
-                                <h5>Pilih mata pelajaran yang akan dimasukkan kedalam kelas</h5>
+                                <h5>Pilih Mata Pelajaran yang akan dimasukkan kedalam kelas</h5>
     
                                 <div class="mb-3">
                                     <label for="siswa_id" class="form-label"></label>
@@ -124,7 +124,7 @@
                             </div>
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Masukkan Siswa dan Matapelajaran') }}
+                                        {{ __('Masukkan Siswa dan Mata pelajaran') }}
                                     </button>
 
                                     <a href="{{ route('Kelassiswa.index') }}" class="btn btn-secondary">
@@ -210,8 +210,9 @@
                         <script>
                             $(document).ready(function() {
                                 $('#siswaTable').DataTable();
+                                $('#datamengajarTable').DataTable();
                                 // $('#siswakelasTable').DataTable();
-
+                                
                                 
                             });
 

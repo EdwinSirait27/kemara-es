@@ -35,7 +35,11 @@ class OrganisasikuController extends Controller
             'user_id' => ['nullable', 'array','min:1', new NoXSSInput()],
             'organisasi_id' => ['required','array','min:1', new NoXSSInput()],
             'organisasi_id.*' => ['exists:tb_organisasi,id', new NoXSSInput()],
-        ]);
+        ],
+    [
+        'organisasi_id.required' => 'Anda harus memilih salah satu dari organisasi.',
+
+    ]);
         $userId = auth()->id();
         $existingOrganisasiIds = Organisasisiswa::where('user_id', $userId)->pluck('organisasi_id')->toArray();
         $newOrganisasiIds = array_diff($request->organisasi_id, $existingOrganisasiIds);

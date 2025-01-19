@@ -36,7 +36,12 @@ class EkstrakuController extends Controller
             'user_id' => ['nullable', 'array','min:1', new NoXSSInput()],
             'ekstrakulikuler_id' => ['required','array','min:1', new NoXSSInput()],
             'ekstrakulikuler_id.*' => ['exists:tb_ekstrakulikuler,id', new NoXSSInput()],
-        ]);
+
+        ],[
+            'ekstrakulikuler_id.required' => 'Anda harus memilih salah satu dari ektrakulikuler.',
+            // 'osis_id.max' => 'Hanya diperbolehkan memilih 1 kandidat.',
+            // 'password.min' => 'Password tidak boleh kurang dari 7 karakter.',
+    ]);
         $userId = auth()->id();
         $existingEkstraIds = Ekstrasiswa::where('user_id', $userId)->pluck('ekstrakulikuler_id')->toArray();
         $newEkstraIds = array_diff($request->ekstrakulikuler_id, $existingEkstraIds);

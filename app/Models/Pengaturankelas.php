@@ -14,6 +14,7 @@ class Pengaturankelas extends Model
         'kelas_id',
         'tahunakademik_id',
         'ket',
+        'status',
  
     ];
     public function getCreatedAtAttribute($value)

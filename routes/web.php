@@ -127,6 +127,7 @@ Route::middleware(['auth','can:isvoting','prevent.xss'])->group(function () {
 Route::get('/Voting', [VotingController::class, 'index'])->name('Voting.index');
 Route::post('/Voting', [VotingController::class, 'store'])->name('Voting.store');
 Route::get('/voting/voting', [VotingController::class, 'getVoting'])->name('voting.voting');
+Route::get('/hasil/hasil', [VotingController::class, 'getHasil'])->name('hasil.hasil');
 
     
    });
@@ -378,7 +379,8 @@ Route::put('/dashboardSUSiswa/{hashedId}', [DashboardControllerSUSiswa::class, '
 Route::middleware(['auth','can:isAdmin','prevent.xss'])->group(function () {
   // Admin
   Route::get('/dashboardAdmin', [DashboardControllerAdmin::class, 'index'])->name('dashboardAdmin.index');
- 
+  Route::get('/DatakuAdmin', [InfoUserControllerAdmin::class, 'createdataku'])->name('DatakuAdmin.createdataku');
+  Route::put('/DatakuAdmin', [InfoUserControllerAdmin::class, 'storeall'])->name('DatakuAdmin.storeall'); 
   Route::get('/user-profileAdmin', [InfoUserControllerAdmin::class, 'create'])->name('user-profileAdmin.create');
   Route::put('/user-profileAdmin', [InfoUserControllerAdmin::class, 'store'])->name('user-profileAdmin.store');
   Route::get('billing', function () {

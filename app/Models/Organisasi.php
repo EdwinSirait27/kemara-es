@@ -14,6 +14,7 @@ class Organisasi extends Model
 
     protected $fillable = [
         'guru_id',
+        'foto',
         'tahunakademik_id',
         'namaorganisasi',
         'kapasitas',

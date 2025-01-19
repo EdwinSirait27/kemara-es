@@ -25,5 +25,9 @@ class Hasilvoting extends Model
     {
         return Carbon::parse($value)->format('m-d-Y H:i');
     }
+    public function Osis()
+    {
+        return $this->belongsTo(Osis::class, 'osis_id','id');
+    }
 
 }
