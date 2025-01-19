@@ -90,6 +90,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="status" class="form-control-label">{{ __('Status') }}</label>
+                                        <div class="@error('status')border border-danger rounded-3 @enderror">
+                                            <select class="form-control" name="status" id="status" required>
+                                                <option value="" disabled selected>Pilih Status</option>
+                                                <option value="Aktif">Aktif</option>
+                                                <option value="Tidak Aktif">Tidak Aktif</option>
+                                                
+                                            </select>
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+
+                                      
+
+
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                                 
                                {{-- ini punya data awal --}}

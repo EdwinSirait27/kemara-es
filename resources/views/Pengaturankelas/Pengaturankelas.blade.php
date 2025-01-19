@@ -42,6 +42,9 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Keterangan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Status</th>
 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -125,6 +128,11 @@
                     {
                         data: 'ket',
                         name: 'ket',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
                         className: 'text-center'
                     },
                     
@@ -235,6 +243,7 @@
                     $('#editUserModal').find('input[name="tahunakademik_id"]').val(pengaturankelas.tahunakademik_id);
                    
                     $('#editUserModal').find('input[name="ket"]').val(pengaturankelas.ket);
+                    $('#editUserModal').find('input[name="status"]').val(pengaturankelas.status);
                     $('#editUserModal').modal('show');
                 },
                 error: function(err) {
@@ -243,5 +252,31 @@
             });
         });
     </script>
-
+@if(session('warning'))
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: '{{ session('warning') }}',
+    });
+</script>
+@endif
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'berhasil',
+        text: '{{ session('success') }}',
+    });
+</script>
+@endif
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '{{ session('error') }}',
+    });
+</script>
+@endif
 @endsection

@@ -148,6 +148,25 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Status') }}
+                                    </label>
+                                    <div class="@error('status') border border-danger rounded-3 @enderror">
+                                        <select class="form-control" name="status" id="status" required>
+                                            <option value="" disabled {{ old('status', $pengaturan->status ?? '') == '' ? 'selected' : '' }}>Pilih Status</option>
+                                            <option value="Aktif" {{ old('status', $pengaturan->status ?? '') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                            <option value="Tidak Aktif" {{ old('status', $pengaturan->status ?? '') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                                        </select>
+                                        @error('status')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                   
+                                    </div>
+                                </div>
 
                           
                            

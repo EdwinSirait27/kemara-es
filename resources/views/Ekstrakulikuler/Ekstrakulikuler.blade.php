@@ -248,6 +248,32 @@ $('#users-table').on('click', '.edit-ekstrakulikuler', function(e) {
         });
     });
 </script>
-  
+@if(session('warning'))
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: '{{ session('warning') }}',
+    });
+</script>
+@endif
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '{{ session('error') }}',
+    });
+</script>
+@endif
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Good...',
+        text: '{{ session('success') }}',
+    });
+</script>
+@endif
 @endsection
  

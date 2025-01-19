@@ -187,4 +187,22 @@ $('#update-status-btn').on('click', function () {
         });
     </script>
 @endif
+@if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'berhasil',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
+@if(session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        });
+    </script>
+@endif
     @endsection
