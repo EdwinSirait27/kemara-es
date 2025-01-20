@@ -3,40 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman dengan Watermark</title>
+    <title>Ekstrakulikuler {{ e($ekstrasiswa->Ekstrakulikuler->namaekstra) }} </title>
     <style>
-        /* body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f4f4f4;
-            position: relative;
-        }
-
-        .container {
-            width: 80%;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .watermark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('/assets/img/50204458.jpg') center center no-repeat;
-            background-size: 500px;
-            opacity: 0.1;
-            z-index: 0;
-        } */
+    
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -46,9 +15,9 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 125%;
             background: url('/assets/img/50204458.jpg') center center no-repeat;
-            background-size: 500px;
+            background-size: 400px;
             opacity: 0.1;
             z-index: 0;
         }
@@ -102,9 +71,30 @@
             font-size: 12px;
             margin-top: 20px;
         }
+        .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%; 
+    }
+
+    .navbar-brand-img {
+        max-height: 100%;
+    }
+    .bold-hr {
+    border: 0;
+    border-top: 5px solid #000;
+    margin: 20px 0; 
+}
     </style>
 </head>
 <body>
+    <div class="logo-container">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/kopsurat.png'))) }}" class="navbar-brand-img h-100 me-2" alt="Logo">
+
+    </div>
+    <hr class="bold-hr">
+
     <div class="watermark"></div>
     <div class="class-info">
         @if($ekstrasiswa)
@@ -130,11 +120,6 @@
                     </tr>
                 </table>
             </div>
-    
-            {{-- <div style="margin-left: 20px;">
-                <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('assets/img/50204458.jpg'))) }}" 
-                 alt="Gambar Kelas" style="max-width: 125px; ">
-            </div> --}}
         </div>
     @endif
     @if ($jumlahsiswa > 0)
@@ -185,10 +170,6 @@
             <h3> {{ e($ekstrasiswa->Ekstrakulikuler->Guru->Nama) }} </h3>
         </div>
         </div>
-    {{-- <div class="container">
-        <h1>Judul Halaman</h1>
-        <p>Ini adalah contoh halaman dengan watermark menggunakan gambar dari folder asset Laravel.</p>
-    </div> --}}
 </body>
 </html>
 

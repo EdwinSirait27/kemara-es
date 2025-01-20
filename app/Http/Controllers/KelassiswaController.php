@@ -139,7 +139,7 @@ class KelassiswaController extends Controller
 
         // Generate PDF
         $pdf = PDF::loadView('Kelassiswa.download', compact( 'siswas','jumlahsiswa', 'kelassiswa'))
-            ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
+            ->setPaper('f4', 'potrait'); // Atur ukuran kertas dan orientasi
 
                    $fileName = 'data-absensi-siswa-kelas-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '-tahun akademik-' . $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik .  '.pdf';
 

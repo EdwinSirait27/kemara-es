@@ -155,7 +155,7 @@ public function downloadekstrasiswa($hashedId)
     
 
         $pdf = PDF::loadView('Ekstrasiswa.downloadekstrasiswa', compact( 'siswas','jumlahsiswa', 'ekstrasiswa','siswasProcessed'))
-            ->setPaper('f4', 'potrait');
+            ->setPaper('a4', 'landscape');
                    $fileName = 'data-absensi-ekstrakulikuler-' . $ekstrasiswa->Ekstrakulikuler->namaekstra . '-tahun akademik-' . $ekstrasiswa->Ekstrakulikuler->Tahunakademik->tahunakademik .  '.pdf';
                return $pdf->download($fileName);
     }

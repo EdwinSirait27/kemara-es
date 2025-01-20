@@ -28,7 +28,7 @@ class InfoUserControllerSiswa extends Controller
     
         // Ambil semua nama kelas dari relasi pengaturankelas
         $pengaturankelasNames = $user->Siswa->PengaturanKelasSiswa->flatMap(function ($pengaturan) {
-            return $pengaturan->Pengaturankelas->Kelas->where('status', 'aktif')->pluck('kelas');
+            return $pengaturan->Pengaturankelas->Kelas->where('status', 'Aktif')->pluck('kelas');
         })->unique()->values()->implode(', ');
         
         

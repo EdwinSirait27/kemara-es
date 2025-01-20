@@ -39,7 +39,7 @@ class EkstrakuController extends Controller
 
         ],[
             'ekstrakulikuler_id.required' => 'Anda harus memilih salah satu dari ektrakulikuler.',
-            // 'osis_id.max' => 'Hanya diperbolehkan memilih 1 kandidat.',
+            // 'osis_id.ff' => 'Hanya diperbolehkan memilih 1 kandidat.',
             // 'password.min' => 'Password tidak boleh kurang dari 7 karakter.',
     ]);
         $userId = auth()->id();
