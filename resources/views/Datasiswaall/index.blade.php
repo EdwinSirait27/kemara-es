@@ -350,42 +350,27 @@
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
                 ],
-                dom: 'Bfrtip',
-                buttons: [{
-                        extend: 'copyHtml5',
-                        text: 'Copy',
-                        className: 'btn btn-primary',
-                        title: 'Data Siswa Keseluruhan',
-                        exportOptions: {
-                            columns: ':visible'
-                        },
-                        customize: function(data) {
-                            // Mengubah format tanggal di dalam data yang disalin (contoh format: m/d/Y)
-                            return data.replace(/\d{1,2}\/\d{1,2}\/\d{4}/g, function(match) {
-                                var dateParts = match.split('/');
-                                return dateParts[0] + '-' + dateParts[1] + '-' + dateParts[
-                                    2]; // Format menjadi m-d-Y
-                            });
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: 'Export to Excel',
-                        className: 'btn btn-success',
-                        title: 'Data Siswa',
-                        exportOptions: {
-                            columns: ':visible'
-                        },
-                        customize: function(data) {
-                            // Mengubah format tanggal di dalam data yang diekspor (contoh format: m/d/Y)
-                            return data.replace(/\d{1,2}\/\d{1,2}\/\d{4}/g, function(match) {
-                                var dateParts = match.split('/');
-                                return dateParts[0] + '-' + dateParts[1] + '-' + dateParts[
-                                    2]; // Format menjadi m-d-Y
-                            });
-                        }
-                    }
-                ],
+                dom: 'Bfrtip', // Tambahkan ini untuk mengaktifkan tombol
+                buttons: [
+    {
+        extend: 'copyHtml5', // Menambahkan tombol copy
+        text: 'Copy', // Teks pada tombol
+        className: 'btn btn-primary', // Kelas untuk styling
+        title: 'Data Siswa ', // Nama file untuk salinan
+        exportOptions: {
+            columns: ':visible' // Tentukan kolom yang akan dicopy
+        }
+    },
+    {
+        extend: 'excelHtml5', 
+        text: 'Export to Excel', 
+        className: 'btn btn-success', // Kelas untuk styling
+        title: 'Data Siswa', // Nama file Excel
+        exportOptions: {
+            columns: ':visible' // Tentukan kolom yang akan diekspor
+        }
+    }
+],
                 columns: [{
                         data: 'siswa_id',
                         name: 'siswa_id',
@@ -764,7 +749,7 @@
                     {
                         data: 'created_at',
                         name: 'created_at'
-                    },
+                    }
                 ]
             });
         });

@@ -102,7 +102,7 @@ class Siswa extends Model
     }
     public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse($value)->format('m-d-Y H:i');
+        return Carbon::parse($value)->format('Y-m-d');
     }
     public function getUpdatedAtAttribute($value)
     {

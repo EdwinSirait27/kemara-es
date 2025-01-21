@@ -50,7 +50,7 @@ class EkstrasiswaController extends Controller
 </a>
 
                 <a href="' . route('Ekstrasiswa.downloadekstrasiswa', $ekstrasiswa->id_hashed) . '"  class="btn btn-primary btn-sm">
-                    <i class="fas fa-download"></i> Download Ekstrakulikuler Siswa
+                    <i class="fas fa-download"></i> Download PDF
                 </a>
                 ';
             $ekstrasiswa->Guru_Nama = $ekstrasiswa->Ekstrakulikuler->Guru ? $ekstrasiswa->Ekstrakulikuler->Guru->Nama : '-';
@@ -114,8 +114,18 @@ public function previewekstrasiswa($hashedId)
         $siswa->NamaLengkap = $siswa->User->Siswa->NamaLengkap ?? 'N/A';
 
         // Menambahkan kelas siswa
-        $pengaturankelassiswa = $siswa->User->Siswa->Pengaturankelassiswa->first();
-        $siswa->Kelas = $pengaturankelassiswa ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? 'N/A' : 'N/A';
+        // $pengaturankelassiswa = $siswa->User->Siswa->Pengaturankelassiswa->first();
+        // $siswa->Kelas = $pengaturankelassiswa ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? 'N/A' : 'N/A';
+        $pengaturankelassiswa = $siswa->User->Siswa->Pengaturankelassiswa()
+    ->whereHas('Pengaturankelas', function ($query) {
+        $query->where('status', 'Aktif');
+    })
+    ->first();
+
+$siswa->Kelas = $pengaturankelassiswa 
+    ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? 'N/A' 
+    : 'N/A';
+
 
         return $siswa;
     });
@@ -148,8 +158,15 @@ public function downloadekstrasiswa($hashedId)
 
     $siswasProcessed = $siswas->map(function ($siswa) {
         $siswa->NamaLengkap = $siswa->User->Siswa->NamaLengkap ?? 'N/A';
-        $pengaturankelassiswa = $siswa->User->Siswa->Pengaturankelassiswa->first();
-        $siswa->Kelas = $pengaturankelassiswa ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? 'N/A' : 'N/A';
+        $pengaturankelassiswa = $siswa->User->Siswa->Pengaturankelassiswa()
+    ->whereHas('Pengaturankelas', function ($query) {
+        $query->where('status', 'Aktif');
+    })
+    ->first();
+
+$siswa->Kelas = $pengaturankelassiswa 
+    ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? 'N/A' 
+    : 'N/A';
         return $siswa;
     });
     
@@ -178,50 +195,25 @@ public function getEkstra($hashedId)
             return $row->User->Siswa->NamaLengkap ?? '-';
         })
         ->addColumn('kelas', function ($row) {
-            $pengaturankelassiswa = $row->User->Siswa->Pengaturankelassiswa->first();
-            return $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? '-';
+            $pengaturankelassiswa = $row->User->Siswa->Pengaturankelassiswa()
+    ->whereHas('Pengaturankelas', function ($query) {
+        $query->where('status', 'Aktif');
+    })
+    ->first();
+
+return $pengaturankelassiswa 
+    ? $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? '-' 
+    : '-';
+
+            // $pengaturankelassiswa = $row->User->Siswa->Pengaturankelassiswa->first();
+            // return $pengaturankelassiswa->Pengaturankelas->Kelas->kelas ?? '-';
         })
         ->rawColumns(['checkbox'])
         ->make(true);
 
 }
-    // public function getEkstrasiswa()
-    // {
-    //     $ekstrasiswa = Ekstrasiswa::with('Ekstrakulikuler','User')->select(['id', 'ekstrakulikuler_id'])
-    //     ->get()
-       
-    //         ->map(function ($ekstrasiswa) {
-    //             $ekstrasiswa->id_hashed = substr(hash('sha256', $ekstrasiswa->id . env('APP_KEY')), 0, 8);
-    //             $ekstrasiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $ekstrasiswa->id_hashed . '">';
-    //             $ekstrasiswa->action = '
-    //         <a href="' . route('Ekstrasiswa.show', $ekstrasiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="lihat detail">
-    //             <i class="fas fa-user-edit text-secondary"></i>
-    //         </a>
-    //         <a href="' . route('Ekstrasiswa.downloadekstrasiswa', $ekstrasiswa->id_hashed) . '"  class="btn btn-primary btn-sm">
-    //                     <i class="fas fa-download"></i> Download Ekstrakulikuler Siswa
-    //                 </a>';
-    //         $ekstrasiswa->Guru_Nama = $ekstrasiswa->Ekstrakulikuler->Guru ? $ekstrasiswa->Ekstrakulikuler->Guru->Nama : '-';
-    //         $ekstrasiswa->Ekstra_Nama = $ekstrasiswa->Ekstrakulikuler->namaekstra ? $ekstrasiswa->Ekstrakulikuler->namaekstra : '-';
-    //         $ekstrasiswa->Kap_Nama = $ekstrasiswa->Ekstrakulikuler->kapasitas ? $ekstrasiswa->Ekstrakulikuler->kapasitas : '-';
-            
-    //             return $ekstrasiswa;
-    //         });
-    //     return DataTables::of($ekstrasiswa)
-    //     ->addColumn('Nama', function ($ekstrasiswa) {
-    //         return $ekstrasiswa->Ekstrakulikuler->Guru->Nama;
-    //     })
-    //     ->addColumn('namaekstra', function ($ekstrasiswa) {
-    //         return $ekstrasiswa->Ekstrakulikuler->namaekstra;
-    //     })
-    //     ->addColumn('kapasitas', function ($ekstrasiswa) {
-    //         return $ekstrasiswa->Ekstrakulikuler->kapasitas;
-    //     })
-    //         ->rawColumns(['checkbox', 'action'])
-    //         ->make(true);
+public function show($hashedId)
 
-    // }
-  
-    public function show($hashedId)
     {
         $ekstrasiswa = Ekstrasiswa::with('User', 'Ekstrakulikuler')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
@@ -236,37 +228,7 @@ public function getEkstra($hashedId)
         ->count(); 
         return view('Ekstrasiswa.show', compact( 'jumlahsiswa', 'ekstrasiswa','hashedId'));
     }
-    // public function downloadekstrasiswa($hashedId)
-    // {
-    //     $ekstrasiswa = Ekstrasiswa::with('Ekstrakulikuler', 'User')->get()->first(function ($u) use ($hashedId) {
-    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
-    //         return $expectedHash === $hashedId;
-    //     });
-
-    //     if (!$ekstrasiswa) {
-    //         return redirect()->route('Ekstrasiswa.index')->withErrors(['Data tidak ditemukan.']);
-    //     }
-
-    //     $jumlahsiswa = Ekstrasiswa::where('id', $ekstrasiswa->id)
-    //     ->get()
-    //     ->unique('siswa_id') // Memastikan hanya siswa_id unik yang diambil
-    //     ->count(); // Menghitung jumlah siswa unik
     
-    //     $siswas = Ekstrasiswa::with('User')
-    //     ->where('id', $ekstrasiswa->id)
-    //     ->get()
-    //     ->unique('id');
-    
-
-    //     // Generate PDF
-    //     $pdf = PDF::loadView('Ekstrasiswa.downloadekstrasiswa', compact( 'siswas','jumlahsiswa', 'ekstrasiswa'))
-    //         ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
-
-    //                $fileName = 'data-ekstrakulikuler-siswa-' . $ekstrasiswa->Ekstrakulikuler->namaekstra.  '.pdf';
-
-    //            return $pdf->download($fileName);
-    // }
-
     public function deleteEkstrasiswa(Request $request)
     {
         $request->validate([
@@ -301,3 +263,69 @@ public function getEkstra($hashedId)
 
 
 }
+// public function getEkstrasiswa()
+// {
+//     $ekstrasiswa = Ekstrasiswa::with('Ekstrakulikuler','User')->select(['id', 'ekstrakulikuler_id'])
+//     ->get()
+   
+//         ->map(function ($ekstrasiswa) {
+//             $ekstrasiswa->id_hashed = substr(hash('sha256', $ekstrasiswa->id . env('APP_KEY')), 0, 8);
+//             $ekstrasiswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $ekstrasiswa->id_hashed . '">';
+//             $ekstrasiswa->action = '
+//         <a href="' . route('Ekstrasiswa.show', $ekstrasiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="lihat detail">
+//             <i class="fas fa-user-edit text-secondary"></i>
+//         </a>
+//         <a href="' . route('Ekstrasiswa.downloadekstrasiswa', $ekstrasiswa->id_hashed) . '"  class="btn btn-primary btn-sm">
+//                     <i class="fas fa-download"></i> Download Ekstrakulikuler Siswa
+//                 </a>';
+//         $ekstrasiswa->Guru_Nama = $ekstrasiswa->Ekstrakulikuler->Guru ? $ekstrasiswa->Ekstrakulikuler->Guru->Nama : '-';
+//         $ekstrasiswa->Ekstra_Nama = $ekstrasiswa->Ekstrakulikuler->namaekstra ? $ekstrasiswa->Ekstrakulikuler->namaekstra : '-';
+//         $ekstrasiswa->Kap_Nama = $ekstrasiswa->Ekstrakulikuler->kapasitas ? $ekstrasiswa->Ekstrakulikuler->kapasitas : '-';
+        
+//             return $ekstrasiswa;
+//         });
+//     return DataTables::of($ekstrasiswa)
+//     ->addColumn('Nama', function ($ekstrasiswa) {
+//         return $ekstrasiswa->Ekstrakulikuler->Guru->Nama;
+//     })
+//     ->addColumn('namaekstra', function ($ekstrasiswa) {
+//         return $ekstrasiswa->Ekstrakulikuler->namaekstra;
+//     })
+//     ->addColumn('kapasitas', function ($ekstrasiswa) {
+//         return $ekstrasiswa->Ekstrakulikuler->kapasitas;
+//     })
+//         ->rawColumns(['checkbox', 'action'])
+//         ->make(true);
+
+// }
+
+    // public function downloadekstrasiswa($hashedId)
+    // {
+    //     $ekstrasiswa = Ekstrasiswa::with('Ekstrakulikuler', 'User')->get()->first(function ($u) use ($hashedId) {
+    //         $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
+    //         return $expectedHash === $hashedId;
+    //     });
+
+    //     if (!$ekstrasiswa) {
+    //         return redirect()->route('Ekstrasiswa.index')->withErrors(['Data tidak ditemukan.']);
+    //     }
+
+    //     $jumlahsiswa = Ekstrasiswa::where('id', $ekstrasiswa->id)
+    //     ->get()
+    //     ->unique('siswa_id') // Memastikan hanya siswa_id unik yang diambil
+    //     ->count(); // Menghitung jumlah siswa unik
+    
+    //     $siswas = Ekstrasiswa::with('User')
+    //     ->where('id', $ekstrasiswa->id)
+    //     ->get()
+    //     ->unique('id');
+    
+
+    //     // Generate PDF
+    //     $pdf = PDF::loadView('Ekstrasiswa.downloadekstrasiswa', compact( 'siswas','jumlahsiswa', 'ekstrasiswa'))
+    //         ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
+
+    //                $fileName = 'data-ekstrakulikuler-siswa-' . $ekstrasiswa->Ekstrakulikuler->namaekstra.  '.pdf';
+
+    //            return $pdf->download($fileName);
+    // }

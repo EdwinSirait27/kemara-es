@@ -24,6 +24,12 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         No.</th>
+                                        <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tahun Akademik</th> 
+                                     <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Semester</th> 
                                      <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Guru Pembina</th> 
@@ -78,6 +84,16 @@
                         },
                     },
                     {
+                        data: 'Tahun_Nama',
+                        name: 'Tahun_Nama',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'Semester_Nama',
+                        name: 'Semester_Nama',
+                        className: 'text-center'
+                    },
+                    {
                         data: 'Guru_Nama',
                         name: 'Guru_Nama',
                         className: 'text-center'
@@ -126,68 +142,67 @@
                 $(this).tooltip();
             });
 
-            // Delete Selected Users
-            // $('#delete-selected').on('click', function() {
-            //     let selectedIds = $('.user-checkbox:checked').map(function() {
-            //         return $(this).val();
-            //     }).get();
+            $('#delete-selected').on('click', function() {
+                let selectedIds = $('.user-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
 
-            //     if (selectedIds.length === 0) {
-            //         Swal.fire({
-            //             icon: 'warning',
-            //             title: 'Tidak Ada Organisasi Yang Dipilih',
-            //             text: 'Tolong Pilih Salah Satu.'
-            //         });
-            //         return;
-            //     }
+                if (selectedIds.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Tidak Ada Osis Yang Dipilih',
+                        text: 'Tolong Pilih Salah Satu.'
+                    });
+                    return;
+                }
 
-            //     Swal.fire({
-            //         title: 'Apakah Anda Yakin?',
-            //         text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         confirmButtonColor: '#d33',
-            //         cancelButtonColor: '#3085d6',
-            //         confirmButtonText: 'Iya, Delete!'
-            //     }).then((result) => {
-            //         if (result.isConfirmed) {
-            //             $.ajax({
-            //                 url: '{{ route('kelassiswa.delete') }}',
-            //                 method: 'POST',
-            //                 data: {
-            //                     ids: selectedIds,
-            //                     _method: 'DELETE',
-            //                     _token: '{{ csrf_token() }}'
-            //                 },
-            //                 success: function(response) {
-            //                     if (response.success) {
-            //                         Swal.fire(
-            //                             'Deleted!',
-            //                             response.message,
-            //                             'success'
-            //                         );
-            //                         table.ajax.reload();
-            //                     } else {
-            //                         Swal.fire(
-            //                             'Failed!',
-            //                             'Failed to delete Osis.',
-            //                             'error'
-            //                         );
-            //                     }
-            //                 },
-            //                 error: function(xhr) {
-            //                     Swal.fire(
-            //                         'Error!',
-            //                         'An error occurred while deleting Osis.',
-            //                         'error'
-            //                     );
-            //                     console.error(xhr.responseText);
-            //                 }
-            //             });
-            //         }
-            //     });
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Iya, Delete!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('organisasisiswa.delete') }}',
+                            method: 'POST',
+                            data: {
+                                ids: selectedIds,
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        response.message,
+                                        'success'
+                                    );
+                                    table.ajax.reload();
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete organisasi.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting organisasi.',
+                                    'error'
+                                );
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
 
-            // });
+            });
 
         });
         

@@ -32,34 +32,68 @@ class DatasiswaController extends Controller
 
                 return $siswa;
             });
-            // $siswa->created_at = $siswa->User ? $siswa->User->created_at : '-';
+            // $siswa->created = $siswa->user ? $siswa->user->created_at : 'belum di setel';
+
         return DataTables::of($siswa)
-        ->addColumn('created_at', function ($siswa) {
-            return Carbon::parse($siswa->User->created_at)->format('Y-m-d');
-        })
+        
             ->make(true);
     }
-    public function getDatasiswa()
-    {
-        $siswa = Siswa::select(['siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email','status'])
-            ->get()
-            ->map(function ($siswa) {
-                $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
-                $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->siswa_id . '">';
-                $siswa->action = '
-            <a href="' . route('Datasiswa.edit', $siswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+    public function getDatasiswa(Request $request)
+{
+    $query = Siswa::select([
+        'siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email', 'status'
+    ]);
+
+    // Filter berdasarkan status
+    if ($request->has('status') && !empty($request->status)) {
+        $query->where('status', $request->status);
+    }
+
+    $siswa = $query->get()->map(function ($siswa) {
+        $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
+        $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->id_hashed . '">';
+        $siswa->action = '
+            <a href="' . route('Datasiswa.edit', $siswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                 <i class="fas fa-user-edit text-secondary"></i>
             </a>';
-                $siswa->foto = $siswa->foto ? $siswa->foto : 'we.jpg';
-                return $siswa;
-            });
-        return DataTables::of($siswa)
-            ->addColumn('foto', function ($siswa) {
+            $siswa->foto = $siswa->foto ? $siswa->foto : 'we.jpg';
+                        return $siswa;
+    });
+
+    return DataTables::of($siswa)
+                ->addColumn('foto', function ($siswa) {
                 return $siswa->foto;
             })
-            ->rawColumns(['action','checkbox'])
-            ->make(true);
-    }
+        ->rawColumns(['checkbox', 'action'])
+        ->make(true);
+}
+
+    // public function getDatasiswa()
+    // {
+    //     $query = Siswa::with(['Guru', 'Matapelajaran'])
+    //     ->select(['id', 'matapelajaran_id', 'guru_id', 'hari', 'awalpel', 'akhirpel', 'awalis', 'akhiris', 'ket']);
+
+    // // Filter berdasarkan hari
+   
+    //     $siswa = Siswa::select(['siswa_id', 'foto', 'NamaLengkap', 'Agama', 'NomorTelephone', 'Alamat', 'Email','status'])
+    //         ->get()
+    //         ->map(function ($siswa) {
+    //             $siswa->id_hashed = substr(hash('sha256', $siswa->siswa_id . env('APP_KEY')), 0, 8);
+    //             $siswa->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $siswa->siswa_id . '">';
+    //             $siswa->action = '
+    //         <a href="' . route('Datasiswa.edit', $siswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+    //             <i class="fas fa-user-edit text-secondary"></i>
+    //         </a>';
+    //             $siswa->foto = $siswa->foto ? $siswa->foto : 'we.jpg';
+    //             return $siswa;
+    //         });
+    //     return DataTables::of($siswa)
+    //         ->addColumn('foto', function ($siswa) {
+    //             return $siswa->foto;
+    //         })
+    //         ->rawColumns(['action','checkbox'])
+    //         ->make(true);
+    // }
     public function edit($hashedId)
     {
         $siswa = Siswa::get()->first(function ($u) use ($hashedId) {

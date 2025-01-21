@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">
+   
     <title>Ekstrakulikuler {{ e($ekstrasiswa->Ekstrakulikuler->namaekstra) }} </title>
     <style>
-    
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+
             
         }
         .watermark {
@@ -17,8 +19,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('assets/img/50204458.jpg'))) }}') center center no-repeat;
-            background-size: 400px;
+            background: url('data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png'))) }}') center center no-repeat;
+            background-size: 500px;
             opacity: 0.1;
             z-index: 0; /* Make sure it stays behind content */
             pointer-events: none; /* Prevent it from interfering with interactions */

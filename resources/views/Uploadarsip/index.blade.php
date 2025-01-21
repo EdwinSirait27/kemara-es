@@ -44,15 +44,15 @@
                                 </div>
                                
                                
-                                <div class="form-group mb-0">
+                                <div class="form-group mb-0 d-flex justify-content-between align-items-center">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
                                         {{ __('Upload') }}
                                     </button>
-
-                                    {{-- <a href="{{ route('Siswaarsip.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('Siswaarsip.indexArsipall') }}" class="btn btn-secondary">
                                         {{ __('Cancel') }}
-                                    </a> --}}
+                                    </a>
                                 </div>
+                                
                         </form>
                         
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

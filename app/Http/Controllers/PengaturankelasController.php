@@ -169,7 +169,7 @@ public function update(Request $request, $hashedId)
         }),
                     ],
         'ket' => ['required', 'max:50', new NoXSSInput()],
-        'status' => ['required', 'in:Aktif,NonAktif', new NoXSSInput()],
+        'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
     ], [
         'kelas_id.unique' => 'Kombinasi Kelas  sudah ada.',
         'tahunakademik_id.unique' => 'Kombinasi Tahunakademik  sudah ada.',
@@ -289,7 +289,7 @@ public function store(Request $request)
         }
     ],
         'ket' => ['required','max:50', new NoXSSInput()],
-        'status' => ['required','in:Aktif,NonAktif', new NoXSSInput()],
+        'status' => ['required','in:Aktif,Tidak Aktif', new NoXSSInput()],
     ]);
     // dd($request->all());
     try {

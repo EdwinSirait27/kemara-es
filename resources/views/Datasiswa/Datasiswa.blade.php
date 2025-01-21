@@ -16,6 +16,16 @@
                     <h6><i class="fas fa-user-shield"></i>Data Siswa</h6>
 
                 </div>
+                <div class="mb-1 col-1">
+                    <label for="filter-status" class="form-label">Status</label>
+                    <select id="filter-status" class="form-select">
+                        <option value="">Semua</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                        <option value="Lulus">Lulus</option>
+                        <option value="Alumni">Alumni</option>
+                    </select>
+                </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0"id="users-table">
@@ -82,25 +92,97 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
+            // $(document).ready(function() {
+            //     let table = $('#users-table').DataTable({
+            //         processing: true,
+            //         serverSide: true,
+            //         ajax: '{{ route('datasiswa.datadatasiswa') }}',
+            //         lengthMenu: [
+            //             [10, 25, 50, 100, -1],
+            //             [10, 25, 50, 100, "All"]
+            //         ],
+            //         columns: [
+            //             {
+            //                 data: 'siswa_id',
+            //                 name: 'siswa_id',
+            //                 className: 'text-center',
+            //                 render: function(data, type, row, meta) {
+            //                     return meta.row + 1;
+            //                 },
+            //             },
+            //             {
+            //                 data: 'foto',
+            //                 name: 'foto',
+            //                 className: 'text-center',
+            //                 render: function(data, type, full, meta) {
+            //                     if (data) {
+            //                         return '<img src="' + '{{ asset('storage/fotosiswa') }}/' + data +
+            //                             '" width="100" />';
+            //                     } else {
+            //                         return '<span>Foto tidak tersedia</span>';
+            //                     }
+            //                 },
+            //             },
+            //             {
+            //                 data: 'NamaLengkap',
+            //                 name: 'NamaLengkap',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'Agama',
+            //                 name: 'Agama',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'NomorTelephone',
+            //                 name: 'NomorTelephone',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'Alamat',
+            //                 name: 'Alamat',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'Email',
+            //                 name: 'Email',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'status',
+            //                 name: 'status',
+            //                 className: 'text-center'
+            //             },
+            //             {
+            //                 data: 'action',
+            //                 name: 'action',
+            //                 orderable: false,
+            //                 searchable: false,
+            //                 className: 'text-center'
+            //             },
+            //             { data: 'checkbox', orderable: false, searchable: false, className: 'text-center' }
+            //         ]
+            //     });
+            // });
             $(document).ready(function() {
-                let table = $('#users-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{{ route('datasiswa.datadatasiswa') }}',
-                    lengthMenu: [
-                        [10, 25, 50, 100, -1],
-                        [10, 25, 50, 100, "All"]
-                    ],
-                    columns: [
-                        {
-                            data: 'siswa_id',
-                            name: 'siswa_id',
-                            className: 'text-center',
-                            render: function(data, type, row, meta) {
-                                return meta.row + 1;
-                            },
+            let table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+            url: "{{ route('datasiswa.datadatasiswa') }}",
+            data: function (d) {
+                d.status = $('#filter-status').val(); // Tambahkan parameter hari
+            }
+        },
+                columns: [{
+                        data: 'siswa_id', // Kolom indeks
+                        name: 'siswa_id',
+                        className: 'text-center',
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
                         },
-                        {
+                    },
+                    {
                             data: 'foto',
                             name: 'foto',
                             className: 'text-center',
@@ -151,9 +233,89 @@
                             className: 'text-center'
                         },
                         { data: 'checkbox', orderable: false, searchable: false, className: 'text-center' }
-                    ]
-                });
+                ]
+    //             $('#filter-status').change(function () {
+    //     table.draw(); // Refresh tabel setelah filter diubah
+    // });
             });
+
+
+            $('#select-all').on('click', function() {
+                let checkboxes = $('.user-checkbox');
+                let allChecked = checkboxes.filter(':checked').length === checkboxes.length;
+                checkboxes.prop('checked', !allChecked);
+            });
+            $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function() {
+                $(this).tooltip();
+            });
+            $('#filter-status').change(function () {
+        table.draw(); // Refresh tabel setelah filter diubah
+    });
+
+            // Delete Selected Users
+            $('#delete-selected').on('click', function() {
+                let selectedIds = $('.user-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
+
+                if (selectedIds.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Tidak Ada Osis Yang Dipilih',
+                        text: 'Tolong Pilih Salah Satu.'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Iya, Delete!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('datamengajar.delete') }}',
+                            method: 'POST',
+                            data: {
+                                ids: selectedIds,
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        response.message,
+                                        'success'
+                                    );
+                                    table.ajax.reload();
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete Osis.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting Osis.',
+                                    'error'
+                                );
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+
+            });
+
+        });
         
         $('#users-table').on('click', '.edit-datasiswa', function(e) {
             e.preventDefault();

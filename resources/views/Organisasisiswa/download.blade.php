@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">
  
-    <title>Ekstrakulikuler {{ e($ekstrasiswa->Ekstrakulikuler->namaekstra) }} </title>
+    <title>Organisasi {{ e($organisasisiswa->Organisasi->namaorganisasi) }} </title>
+    
     <style>
     
         body {
@@ -99,23 +100,23 @@
 
     <div class="watermark"></div>
     <div class="class-info">
-        @if($ekstrasiswa)
+        @if($organisasisiswa)
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
             <div style="flex: 1;">
-                <h3>Daftar Absensi Ekstrakulikuler : {{ e($ekstrasiswa->Ekstrakulikuler->namaekstra) }}</h3>
+                <h3>Daftar Absensi Organisasi : {{ e($organisasisiswa->Organisasi->namaorganisasi) }}</h3>
                 <table style="border: none; width: 100%; margin-bottom: 10px;">
                 
                         <tr style="border: none;">
                             <td style="border: none; width: 150px;">Tahun Ajaran</td>
-                            <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Tahunakademik->tahunakademik) }}</td>
+                            <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Tahunakademik->tahunakademik) }}</td>
                             <td style="border: none; text-align: right;">Semester</td>
-                            <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Tahunakademik->semester) }}</td>
+                            <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Tahunakademik->tahunakademik) }}</td>
                         </tr>
                         <tr style="border: none;">
                             <td style="border: none; width: 150px;">Guru Pembina</td>
-                            <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Guru->Nama) }}</td>
+                            <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Guru->Nama) }}</td>
                             <td style="border: none; text-align: right;">Kapasitas Ekstrakulikuler</td>
-                            <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->kapasitas) }} Siswa</td>
+                            <td style="border: none;">: {{ e($organisasisiswa->Organisasi->kapasitas) }}  Siswa</td>
                         </tr>
                     
                 </table>
@@ -167,22 +168,36 @@
             <br>
             <br>
             <br>
-            <h3> {{ e($ekstrasiswa->Ekstrakulikuler->Guru->Nama) }} </h3>
+            <h3> {{ e($organisasisiswa->Organisasi->Guru->Nama) }} </h3>
         </div>
         </div>
 </body>
 </html>
-
 {{-- <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Absensi Ekstrakulikuler</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">
+  
+    <title>Organisasi {{ e($organisasisiswa->Organisasi->namaorganisasi) }} </title>
     <style>
+    
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
         }
-        
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 125%;
+            background: url('/assets/img/50204458.jpg') center center no-repeat;
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: 0;
+        }
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -233,47 +248,57 @@
             font-size: 12px;
             margin-top: 20px;
         }
+        .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%; 
+    }
+
+    .navbar-brand-img {
+        max-height: 100%;
+    }
+    .bold-hr {
+    border: 0;
+    border-top: 5px solid #000;
+    margin: 20px 0; 
+}
     </style>
 </head>
 <body>
+    <div class="logo-container">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/kopsurat.png'))) }}" class="navbar-brand-img h-100 me-2" alt="Logo">
+
+    </div>
+    <hr class="bold-hr">
+
+    <div class="watermark"></div>
     <div class="class-info">
-        @if($ekstrasiswa)
+        @if($organisasisiswa)
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <!-- Bagian Tabel -->
             <div style="flex: 1;">
-                <h3>Daftar Absensi Ekstrakulikuler : {{ e($ekstrasiswa->Ekstrakulikuler->namaekstra) }}</h3>
+                <h3>Daftar Absensi Organisasi : {{ e($organisasisiswa->Organisasi->namaorganisasi) }}</h3>
                 <table style="border: none; width: 100%; margin-bottom: 10px;">
                     <tr style="border: none;">
                         <td style="border: none; width: 150px;">Tahun Ajaran</td>
-                        <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Tahunakademik->tahunakademik) }}</td>
+                        <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Tahunakademik->tahunakademik) }}</td>
                     </tr>
                     <tr style="border: none;">
                         <td style="border: none; width: 150px;">Semester</td>
-                        <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Tahunakademik->semester) }}</td>
+                        <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Tahunakademik->semester) }}</td>
                     </tr>
                     <tr style="border: none;">
                         <td style="border: none;">Guru Pembina</td>
-                        <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->Guru->Nama) }} </td>
+                        <td style="border: none;">: {{ e($organisasisiswa->Organisasi->Guru->Nama) }} </td>
                     </tr>
                     <tr style="border: none;">
-                        <td style="border: none;">Kapasitas Ekstrakulikuler</td>
-                        <td style="border: none;">: {{ e($ekstrasiswa->Ekstrakulikuler->kapasitas) }} Siswa </td>
+                        <td style="border: none;">Kapasitas Organisasi</td>
+                        <td style="border: none;">: {{ e($organisasisiswa->Organisasi->kapasitas) }} Siswa </td>
                     </tr>
                 </table>
             </div>
-    
-            <!-- Bagian Gambar -->
-            <div style="margin-left: 20px;">
-                <img src="{{ asset('assets/img/50204458.jpg') }}" alt="Gambar Kelas" style="max-width: 125px; ">
-            </div>
         </div>
     @endif
-
-
-
-   
-   
-
     @if ($jumlahsiswa > 0)
     <table>
         <thead>
@@ -285,44 +310,42 @@
             </tr>
         </thead>
         <tbody>
-            
-        @foreach($siswasProcessed as $siswa)
-        <tr>
-            <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
-            <td style="text-align: center; vertical-align: middle;">{{ $siswa->NamaLengkap }}</td>
-            <td style="text-align: center; vertical-align: middle;">{{ $siswa->Kelas }}</td>
-            @for($i = 1; $i <= 20; $i++)
-                <td class="absen-cell"></td>
-            @endfor
-        </tr>
-    @endforeach
-        </tbody>
-    </table>
-
-    <div class="total-info">
-        <strong>Total : {{ e($jumlahsiswa) }} Siswa</strong>
-    </div>
-    @else
-    <div class="alert">
-        <p>Tidak ada siswa terdaftar dalam kelas ini.</p>
-    </div>
-    @endif
-
-    <div class="page-number">
-        Dicetak pada: {{ date('d/m/Y H:i') }}
-        <br>
-        <br>
-        <h3 style="margin-right: 50px;">Guru Pembina</h3>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h3> {{ e($ekstrasiswa->Ekstrakulikuler->Guru->Nama) }} </h3>
-    </div>
-    </div>
+            @foreach($siswasProcessed as $siswa)
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">{{ $loop->iteration }}</td>
+                <td style="text-align: center; vertical-align: middle;">{{ $siswa->NamaLengkap }}</td>
+                <td style="text-align: center; vertical-align: middle;">{{ $siswa->Kelas }}</td>
+                @for($i = 1; $i <= 20; $i++)
+                    <td class="absen-cell"></td>
+                @endfor
+            </tr>
+        @endforeach
+            </tbody>
+        </table>
     
+        <div class="total-info">
+            <strong>Total : {{ e($jumlahsiswa) }} Siswa</strong>
+        </div>
+        @else
+        <div class="alert">
+            <p>Tidak ada siswa terdaftar dalam kelas ini.</p>
+        </div>
+        @endif
+    
+        <div class="page-number">
+            Dicetak pada: {{ date('d/m/Y H:i') }}
+            <br>
+            <br>
+            <h3 style="margin-right: 50px;">Guru Pembina</h3>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h3> {{ e($organisasisiswa->Organisasi->Guru->Nama) }} </h3>
+        </div>
+        </div>
 </body>
 </html> --}}

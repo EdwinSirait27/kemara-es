@@ -24,4 +24,13 @@ class Organisasisiswa extends Model
     public function Organisasi(){
         return $this->belongsTo(Organisasi::class,'organisasi_id','id');
     }
+    public function Pengaturankelassiswa()
+    {
+        return $this->hasMany(Pengaturankelassiswa::class, 'siswa_id', 'siswa_id');
+    }
+    public function Pengaturankelas()
+    {
+        return $this->hasMany(Pengaturankelas::class, 'siswa_id', 'siswa_id');
+    }
+    
 }

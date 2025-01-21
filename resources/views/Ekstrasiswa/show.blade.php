@@ -32,9 +32,7 @@
                                           <th
                                               class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                               Nama Siswa</th>
-                                          <th
-                                              class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                              Kelas</th>
+                                      
                                               <th>
                                                 <button type="button" id="select-all" class="btn btn-primary btn-sm">
                                                     Select All
@@ -98,12 +96,7 @@
                         className: 'text-center',
                         defaultContent: '-'
                     },
-                    {
-                        data: 'kelas',
-                        name: 'kelas',
-                        className: 'text-center',
-                        defaultContent: '-'
-                    },
+                   
                     {
                         data: 'id',
                         name: 'checkbox',

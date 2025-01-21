@@ -139,7 +139,7 @@ class KelassiswaController extends Controller
 
         // Generate PDF
         $pdf = PDF::loadView('Kelassiswa.download', compact( 'siswas','jumlahsiswa', 'kelassiswa'))
-            ->setPaper('f4', 'potrait'); // Atur ukuran kertas dan orientasi
+            ->setPaper('a4', 'landscape'); // Atur ukuran kertas dan orientasi
 
                    $fileName = 'data-absensi-siswa-kelas-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '-tahun akademik-' . $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik .  '.pdf';
 
@@ -169,13 +169,18 @@ class KelassiswaController extends Controller
                 ->get()
                 ->unique('datamengajar_id');
             
+            
+        $jumlahmata = Kelassiswa::where('pengaturankelas_id', $kelassiswa->pengaturankelas_id)
+        ->get()
+        ->unique('datamengajar_id') // Memastikan hanya siswa_id unik yang diambil
+        ->count();
             // Urutkan berdasarkan hari
             $datamengajars = $datamengajars->sortBy(function ($item) use ($hariUrut) {
                 // Mendapatkan hari dari relasi Datamengajar
                 return $hariUrut[$item->Datamengajar->hari] ?? 999; // Jika hari tidak ada, beri nilai tinggi
             });
         // Generate PDF
-        $pdf = PDF::loadView('Kelassiswa.downloadmatapelajaran', compact('datamengajars', 'kelassiswa'))
+        $pdf = PDF::loadView('Kelassiswa.downloadmatapelajaran', compact('datamengajars', 'kelassiswa','jumlahmata'))
             ->setPaper('a4', 'landscape'); 
 
         $fileName = 'data-jadwal-kelas-' . $kelassiswa->Pengaturankelas->Kelas->kelas . '-tahun akademik-' . $kelassiswa->Pengaturankelas->Tahunakademik->tahunakademik .  '.pdf';
@@ -363,12 +368,28 @@ $datamengajars = $datamengajars->sortBy(function ($item) use ($hariUrut) {
                 <a href="' . route('Kelassiswa.showmatapelajaran', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Lihat Detail Matapelajran">
                     <i class="fas fa-eye text-success"></i>
                 </a>
-                <a href="' . route('Kelassiswa.download', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Preview Absen">
-                    <i class="fas fa-upload text-primary"></i>
-                </a>
-                <a href="' . route('Kelassiswa.downloadmata', $kelassiswa->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Preview Mata Pelajaran">
-                    <i class="fas fa-upload text-primary"></i>
-                </a>
+ <a href="' . route('Kelassiswa.download', $kelassiswa->id_hashed) . '" 
+   class="mx-3" 
+   data-bs-toggle="tooltip" 
+   data-bs-original-title="Preview Absen" 
+   target="_blank" 
+   rel="noopener noreferrer">
+   <i class="fas fa-upload text-primary"></i>
+</a>
+ <a href="' . route('Kelassiswa.downloadmata', $kelassiswa->id_hashed) . '" 
+   class="mx-3" 
+   data-bs-toggle="tooltip" 
+   data-bs-original-title="Preview Absen" 
+   target="_blank" 
+   rel="noopener noreferrer">
+   <i class="fas fa-upload text-primary"></i>
+</a>
+
+
+
+
+
+                
                 <a href="' . route('Kelassiswa.downloadkelas', $kelassiswa->id_hashed) . '"  
                         class="btn btn-primary btn-sm">
                         <i class="fas fa-download"></i> Download Absen

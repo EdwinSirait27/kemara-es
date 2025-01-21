@@ -312,8 +312,13 @@ Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->nam
     Route::get('/organisasisiswa/downloadorganisasisiswa/{hashedId}', [OrganisasisiswaController::class, 'previeweOrganisasisiswa'])
     ->name('Organisasisiswa.previeworganisasisiswa');
     Route::get('/Organisasisiswa/{hashedId}', [OrganisasisiswaController::class, 'downloadorganisasisiswa'])->name('Organisasisiswa.downloadorganisasisiswa');
-    Route::get('/Organisasisiswa/show/{hashedId}', [OrganisasisiswaController::class, 'previeworganisasisiswa'])
+    Route::get('/Organisasisiswa/show/{hashedId}', [OrganisasisiswaController::class, 'show'])
     ->name('Organisasisiswa.show');
+    Route::get('/getorganisasisiswadetail/{hashedId}', [OrganisasisiswaController::class, 'getOrganisasi'])->name('getorganisasisiswadetail.getorganisasisiswadetail');
+    Route::delete('/Organisasisiswashow/hapus', [OrganisasisiswaController::class, 'deleteSiswadarikelas'])->name('organisasisiswashow.hapus');
+    Route::delete('/Organisasisiswa/delete', [OrganisasisiswaController::class, 'deleteOrganisasisiswa'])->name('organisasisiswa.delete');
+    Route::get('/Organisasisiswa/download/{hashedId}', [OrganisasisiswaController::class, 'previeworganisasisiswa'])
+    ->name('Organisasisiswa.download');
     // siswa baru
     Route::get('/Siswabaru', [PpdbController::class, 'indexppdb'])->name('Siswabaru.indexppdb');
     Route::get('/siswabaru/siswabaru', [PpdbController::class, 'getPpdbs'])->name('siswabaru.siswabaru');
