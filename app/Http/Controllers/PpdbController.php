@@ -7,6 +7,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Validation\Rule;
 
 use App\Models\Siswa;
+use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -54,10 +55,7 @@ class PpdbController extends Controller
                 'max:12',
                 'confirmed'
             ],
-            'current_password' => [
-                'nullable',
-                'string',
-            ],
+
             'NamaLengkap' => [
                 'required',
                 'string',
@@ -93,7 +91,7 @@ class PpdbController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-                
+
             ],
             'NomorTelephone' => [
                 'nullable',
@@ -138,6 +136,17 @@ class PpdbController extends Controller
                 'Role' => 'NonSiswa',
                 'siswa_id' => $siswa->siswa_id,
             ]);
+            
+
+            $pembayaran = Pembayaran::updateOrCreate(
+                ['siswa_id' => $siswa->siswa_id], // Kondisi pencarian
+                [
+                    'status' => 'Menunggu Pembayaran',  // Nilai kolom status
+                    'tanggalbukti' => Carbon::now()    // Nilai tanggalbukti menggunakan Carbon
+                ]
+            );
+            
+            
             DB::commit();
             return redirect()->route('login')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
         } catch (\Exception $e) {
@@ -147,56 +156,56 @@ class PpdbController extends Controller
                 ->withInput();
         }
     }
-    
+
     public function updateStatus(Request $request)
-{
-    try {
-        // Log request
-        Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
+    {
+        try {
+            // Log request
+            Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
 
-        // Validasi input
-        $request->validate([
-            'ids' => ['required', 'array'],
-            'ids.*' => ['string', 'exists:users,id'],
-        ]);
-
-        // Log siswa IDs
-        Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
-
-        // Perbarui status user
-        $affectedRows = User::whereIn('id', $request->ids)
-            ->update(['hakakses' => 'Siswa', 'role' => 'Siswa']);
-
-        // Log jumlah baris yang diperbarui
-        Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
-
-        // Response sukses
-        if ($affectedRows > 0) {
-            return response()->json([
-                'message' => 'Status berhasil diperbarui!',
-                'updated_rows' => $affectedRows,
+            // Validasi input
+            $request->validate([
+                'ids' => ['required', 'array'],
+                'ids.*' => ['string', 'exists:users,id'],
             ]);
+
+            // Log siswa IDs
+            Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
+
+            // Perbarui status user
+            $affectedRows = User::whereIn('id', $request->ids)
+                ->update(['hakakses' => 'Siswa', 'role' => 'Siswa']);
+
+            // Log jumlah baris yang diperbarui
+            Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
+
+            // Response sukses
+            if ($affectedRows > 0) {
+                return response()->json([
+                    'message' => 'Status berhasil diperbarui!',
+                    'updated_rows' => $affectedRows,
+                ]);
+            }
+
+            // Jika tidak ada baris yang diperbarui
+            return response()->json([
+                'message' => 'Tidak ada perubahan yang diterapkan.',
+            ], 400);
+
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Terjadi kesalahan saat update status:', [
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTraceAsString(),
+            ]);
+
+            // Response error
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui status!',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        // Jika tidak ada baris yang diperbarui
-        return response()->json([
-            'message' => 'Tidak ada perubahan yang diterapkan.',
-        ], 400);
-
-    } catch (\Exception $e) {
-        // Log error
-        Log::error('Terjadi kesalahan saat update status:', [
-            'error_message' => $e->getMessage(),
-            'error_trace' => $e->getTraceAsString(),
-        ]);
-
-        // Response error
-        return response()->json([
-            'message' => 'Terjadi kesalahan saat memperbarui status!',
-            'error' => $e->getMessage(),
-        ], 500);
     }
-}
 
     // public function updateStatus(Request $request)
     // {
@@ -257,9 +266,9 @@ class PpdbController extends Controller
                 return $user;
             });
         return DataTables::of($users)
-        ->addColumn('created_at', function ($user) {
-            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-        })
+            ->addColumn('created_at', function ($user) {
+                return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+            })
             ->addColumn('Role', function ($user) {
                 return $user->Role;
             })
@@ -275,10 +284,10 @@ class PpdbController extends Controller
     public function deletesiswabaru(Request $request)
     {
         $request->validate([
-            
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],  
-            'ids.*' => ['uuid', new NoXSSInput()],  
-           
+
+            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+            'ids.*' => ['uuid', new NoXSSInput()],
+
         ]);
         User::whereIn('id', $request->ids)->delete();
         return response()->json([
@@ -286,17 +295,17 @@ class PpdbController extends Controller
             'message' => 'Selected users and their related data deleted successfully.'
         ]);
     }
-    public function update(Request $request, $hashedId) 
+    public function update(Request $request, $hashedId)
     {
         $user = User::with('Siswa')->get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8);
             return $expectedHash === $hashedId;
         });
-    
+
         if (!$user) {
             return redirect()->route('Siswabaru.indexppdb')->with('error', 'ID tidak valid.');
         }
-    
+
         $validatedData = $request->validate([
             'username' => [
                 'required',
@@ -307,31 +316,32 @@ class PpdbController extends Controller
                 Rule::unique('users')->ignore($user->id),
                 new NoXSSInput()
             ],
-            'password' => ['nullable', 'string', 'min:7', 'max:12', 'confirmed', new NoXSSInput()],
+            'password' => ['nullable', 'string', 'min:7', 'max:12', new NoXSSInput()],
             'hakakses' => ['required', 'string', 'in:Siswa,NonSiswa', new NoXSSInput()],
             'Role' => ['required', 'array', 'min:1', 'in:Siswa,NonSiswa', new NoXSSInput()],
             'NamaLengkap' => ['required', 'string', 'max:255', new NoXSSInput()],
         ]);
-    
+
         $roles = implode(',', $validatedData['Role']);
         $userData = [
             'username' => $validatedData['username'],
             'hakakses' => $validatedData['hakakses'],
             'Role' => $roles,
         ];
-    
+
         if (!empty($validatedData['password'])) {
             $userData['password'] = bcrypt($validatedData['password']);
         }
-    
+
         $user->update($userData);
-    
+
         if ($user->Siswa) {
             $user->Siswa->update([
                 'NamaLengkap' => $validatedData['NamaLengkap'],
             ]);
         }
-    
+
+
         return redirect()->route('Siswabaru.indexppdb')->with('success', 'User Berhasil Diupdate.');
     }
 }

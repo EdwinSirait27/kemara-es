@@ -16,12 +16,25 @@
      
         
         {{-- <li class="nav-item ms-auto">
-          <a class="nav-link me-2" href="{{ auth()->user() ? url('static-sign-in') : url('login') }}">
-              <i class="fas fa-key opacity-6 me-1 {{ (Request::is('static-sign-up') ? '' : 'text-dark') }}"></i>
-              About
+          <a class="nav-link me-2" href="{{  ? url('') : url('') }}">
+              <i class="fas fa-key opacity-6 me-1 {{ (Request::is('') ? '' : 'text-dark') }}"></i>
+              Profile
           </a>
-      </li>
-       --}}
+      </li> --}}
+      <li class="nav-item ms-auto">
+        <a class="nav-link me-2" href="{{ url('/Profile') }}">
+            <i class="fas fa-users opacity-6 me-1 {{ Request::is('Profile') ? '' : 'text-dark' }}"></i>
+            Beranda
+        </a>
+    </li>
+      <li class="nav-item ms-auto">
+        <a class="nav-link me-2" href="{{ url('/Profile') }}">
+            <i class="fas fa-news opacity-6 me-1 {{ Request::is('Profile') ? '' : 'text-dark' }}"></i>
+            Profile
+        </a>
+    </li>
+    
+      
       
         {{-- <li class="nav-item">
           <a class="nav-link me-2" href="{{ auth()->user() ? url('static-sign-in') : url('login') }}">

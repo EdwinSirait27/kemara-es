@@ -23,6 +23,8 @@ use App\Http\Controllers\TahunakademikController;
 use App\Http\Controllers\TombolController;
 use App\Http\Controllers\MatapelajaranController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\ProfileSekolahController;
+
 use App\Http\Controllers\DatamengajarController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
@@ -210,8 +212,8 @@ Route::put('/Dataguru/{hashedId}', [DataguruController::class, 'update'])->name(
 Route::get('/Dataguruall', [DataguruController::class, 'indexGuruall'])->name('Dataguruall.index');
 Route::get('/dataguruall/datadataguruall', [DataguruController::class, 'getDataguruall'])->name('dataguruall.datadataguruall');
 // datasiswa
-Route::get('/Datasiswa', [DatasiswaController::class, 'index'])->name('Datasiswa.index');
 Route::get('/datasiswa/datadatasiswa', [DatasiswaController::class, 'getDatasiswa'])->name('datasiswa.datadatasiswa');
+Route::get('/Datasiswa', [DatasiswaController::class, 'index'])->name('Datasiswa.index');
 Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->name('Datasiswa.edit');
 Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
 Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
@@ -464,10 +466,16 @@ Route::delete('/Organisasi-ku/hapus', [OrganisasikuController::class, 'deleteOrg
 });
 Route::middleware(['auth','can:isNonSiswa','prevent.xss'])->group(function () {
     Route::get('/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'index'])->name('dashboardNonSiswa.index');
-
-    Route::get('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'create']);
-    Route::post('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'store']);
     
+    Route::get('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'create'])->name('user-profileNonSiswa.create');
+    Route::put('/user-profileNonSiswa', [InfoUserControllerNonSiswa::class, 'store'])->name('user-profileNonSiswa.store');
+    Route::get('/pengumumannonsiswa/data', [DashboardControllerNonSiswa::class, 'getPengumuman'])->name('pengumumannonsiswa.data');
+Route::post('/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'store'])->name('dashboardNonSiswa.store');
+Route::get('/dashboardNonSiswa/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'getPembayaran'])->name('pembayaran.pembayaran');
+// Route::get('/dashboard-nonsiswa/{id_hashed}/edit', [DashboardControllerNonSiswa::class, 'edit'])->name('dashboardNonSiswa.edit');
+Route::get('/dashboardNonSiswa/edit/{hashedId}', [DashboardControllerNonSiswa::class, 'edit'])->name('dashboardNonSiswa.edit');
+
+Route::put('/dashboardNonSiswa/{id_hashed}', [DashboardControllerNonSiswa::class, 'update'])->name('dashboardNonSiswa.update');
 });
 
 // Halaman login hanya dapat diakses oleh pengguna yang belum login
@@ -480,6 +488,10 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
+
+Route::get('/Profile', [ProfileSekolahController::class, 'profile'])->name('Profile');
+Route::get('/Beranda', [ProfileSekolahController::class, 'beranda'])->name('Beranda');
+
 });
 
 // Route::middleware('guest')->group(function () {

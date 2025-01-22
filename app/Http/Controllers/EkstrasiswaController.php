@@ -229,26 +229,43 @@ public function show($hashedId)
         return view('Ekstrasiswa.show', compact( 'jumlahsiswa', 'ekstrasiswa','hashedId'));
     }
     
+    // public function deleteEkstrasiswa(Request $request)
+    // {
+    //     $request->validate([
+    //         'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+    //     ]);
+    
+    //     $duplicateIds = Ekstrasiswa::select('ekstrakulikuler_id')
+    //         ->groupBy('ekstrakulikuler_id')
+    //         ->havingRaw('COUNT(*) > 1')
+    //         ->pluck('ekstrakulikuler_id');
+    
+    //     Ekstrasiswa::whereIn('ekstrakulikuler_id', $duplicateIds)->delete();
+    
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'All duplicate Ekstrakulikuler entries have been deleted successfully.'
+    //     ]);
+    // }
     public function deleteEkstrasiswa(Request $request)
-    {
-        $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
-        ]);
-    
-        // Cari semua ekstrakulikuler_id yang memiliki duplikat
-        $duplicateIds = Ekstrasiswa::select('ekstrakulikuler_id')
-            ->groupBy('ekstrakulikuler_id')
-            ->havingRaw('COUNT(*) > 1')
-            ->pluck('ekstrakulikuler_id');
-    
-        // Hapus semua entri yang memiliki ekstrakulikuler_id duplikat
-        Ekstrasiswa::whereIn('ekstrakulikuler_id', $duplicateIds)->delete();
-    
-        return response()->json([
-            'success' => true,
-            'message' => 'All duplicate Ekstrakulikuler entries have been deleted successfully.'
-        ]);
-    }
+{
+    // Validasi input
+    $request->validate([
+        'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+    ]);
+
+    // Pastikan ids tidak kosong
+    $ids = $request->input('ids');
+
+    // Hapus data berdasarkan ids
+    Ekstrasiswa::whereIn('id', $ids)->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Selected Ekstrakulikuler entries have been deleted successfully.'
+    ]);
+}
+
     
 
 

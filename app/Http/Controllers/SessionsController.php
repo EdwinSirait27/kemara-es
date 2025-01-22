@@ -112,4 +112,10 @@ class SessionsController extends Controller
 
         return redirect('/login')->with(['success' => 'You\'ve been logged out.']);
     }
+    public function index()
+    {
+        return view('profile/user-profileSU', compact('user', 'roles'));
+
+    }
+
 }

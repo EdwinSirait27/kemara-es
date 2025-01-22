@@ -231,31 +231,49 @@ class OrganisasisiswaController extends Controller
     }
 
         
+        // public function deleteOrganisasisiswa(Request $request)
+        // {
+        //     $request->validate([
+        //         'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+        //     ]);
+        
+        //     // Cari semua ekstrakulikuler_id yang memiliki duplikat
+        //     $duplicateIds = Organisasisiswa::select('organisasi_id')
+        //         ->groupBy('organisasi_id')
+        //         ->havingRaw('COUNT(*) > 1')
+        //         ->pluck('organisasi_id');
+        
+        //     // Hapus semua entri yang memiliki ekstrakulikuler_id duplikat
+        //     Organisasisiswa::whereIn('organisasi_id', $duplicateIds)->delete();
+        
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'All duplicate organisasisiswa entries have been deleted successfully.'
+        //     ]);
+        // }
+        
+        
+    
+    
+    
         public function deleteOrganisasisiswa(Request $request)
         {
+            // Validasi input
             $request->validate([
                 'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
             ]);
         
-            // Cari semua ekstrakulikuler_id yang memiliki duplikat
-            $duplicateIds = Organisasisiswa::select('organisasi_id')
-                ->groupBy('organisasi_id')
-                ->havingRaw('COUNT(*) > 1')
-                ->pluck('organisasi_id');
+            // Pastikan ids tidak kosong
+            $ids = $request->input('ids');
         
-            // Hapus semua entri yang memiliki ekstrakulikuler_id duplikat
-            Organisasisiswa::whereIn('organisasi_id', $duplicateIds)->delete();
+            // Hapus data berdasarkan ids
+            Organisasisiswa::whereIn('id', $ids)->delete();
         
             return response()->json([
                 'success' => true,
-                'message' => 'All duplicate organisasisiswa entries have been deleted successfully.'
+                'message' => 'Selected Ekstrakulikuler entries have been deleted successfully.'
             ]);
         }
-        
-    
-    
-    
-    
     
     
     

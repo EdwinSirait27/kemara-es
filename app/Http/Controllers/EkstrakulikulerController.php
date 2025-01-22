@@ -54,6 +54,9 @@ class EkstrakulikulerController extends Controller
         ->addColumn('Nama', function ($ekstrakulikuler) {
             return $ekstrakulikuler->Guru->Nama;
         })
+        ->addColumn('foto', function ($ekstrakulikuler) {
+            return $ekstrakulikuler->foto;
+        })
         ->addColumn('tahunakademik', function ($ekstrakulikuler) {
             return $ekstrakulikuler->Tahunakademik->tahunakademik;
         })
@@ -62,9 +65,6 @@ class EkstrakulikulerController extends Controller
         })
         ->addColumn('created_at', function ($ekstrakulikuler) {
             return Carbon::parse($ekstrakulikuler->created_at)->format('d-m-Y H:i:s');
-        })
-        ->addColumn('foto', function ($ekstrakulikuler) {
-            return $ekstrakulikuler->foto;
         })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);

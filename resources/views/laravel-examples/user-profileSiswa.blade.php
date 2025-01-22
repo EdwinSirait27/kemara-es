@@ -511,8 +511,8 @@
                     <span class="text-white">-
                         <strong class="fa fa-lock"></strong>
                         <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
-                        <strong>- Upload Foto Ekstensi .JPEG</strong> <br>
-                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> 
+                        <strong>- Upload Foto Ekstensi jpeg,png,jpg</strong> <br>
+                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong>  <br>
                         <strong>- Jika ingin mengubah password, silahkan input password anda yang sekarang di kolom Password
                             Lama, setelah itu baru input password baru anda dan password baru harus sama dengan password
                             konfirmasi.</strong>

@@ -105,6 +105,7 @@
                     <div class="col-md-4 col-sm-6">
                         <div class="osis-card">
                             <div class="image view view-first">
+                                
                                 <img src="{{ asset('storage/fotosiswa/' . $osis->siswa->foto) }}"
                                     alt="Foto {{ $osis->siswa->NamaLengkap }}" />
                             </div>
