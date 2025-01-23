@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->text('header')->nullable(); 
             $table->text('body')->nullable(); 
-            $table->foreign('osis_id')->references('id')->on('tb_osis')->onDelete('set null'); 
             $table->timestamps();
         });
     }

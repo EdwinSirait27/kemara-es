@@ -494,7 +494,7 @@ html, body {
                     </a>
                 </li>
                 @endif
-                @if (Gate::allows('isKepalaSekolah'))
+                {{-- @if (Gate::allows('isKepalaSekolah'))
 
 <li class="nav-item">
     <a class="nav-link {{ Request::is('kepsek') ? 'active' : '' }}"
@@ -506,8 +506,8 @@ html, body {
         <span class="nav-link-text ms-1">Data Kepala Sekolah</span>
     </a>
 </li>
-@endif
-            @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+@endif --}}
+            {{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples1" role="button"
                   aria-expanded="false" aria-controls="laravelExamples1">
@@ -562,7 +562,7 @@ html, body {
                   </ul>
               </div>
           </li>
-          @endif
+          @endif --}}
             @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples2" role="button"
@@ -584,7 +584,33 @@ html, body {
               </div>
           </li>
           @endif
-          @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+            @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples8" role="button"
+                  aria-expanded="false" aria-controls="laravelExamples2">
+                  <div
+                      class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="fas fa-cloud"></i> 
+                  </div>
+                  <span class="nav-link-text ms-1">PPDB</span>
+              </a>
+              <div class="collapse" id="laravelExamples8">
+                  <ul class="nav ms-4">
+                      <li class="nav-item">
+                          <a class="nav-link {{ Request::is('Siswabaru') ? 'active' : '' }}" href="{{ url('Siswabaru') }}">
+                              <span class="nav-link-text ms-1">Data Siswa Baru</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link {{ Request::is('Validasi') ? 'active' : '' }}" href="{{ url('Validasi') }}">
+                              <span class="nav-link-text ms-1">Validasi</span>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+          </li>
+          @endif
+          {{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples3" role="button"
                 aria-expanded="false" aria-controls="laravelExamples3">
@@ -611,8 +637,9 @@ html, body {
                 </ul>
             </div>
         </li>
-        @endif
-        @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+        @endif --}}
+        {{-- ini ppdb tok --}}
+        {{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('Siswabaru') ? 'active' : '' }}"
@@ -642,7 +669,7 @@ html, body {
                         <span class="nav-link-text ms-1">PPDB</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
       @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
     <li class="nav-item">
@@ -656,7 +683,7 @@ html, body {
         </a>
     </li>
     @endif
-    @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+    {{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples4" role="button"
@@ -698,8 +725,8 @@ html, body {
           </ul>
       </div>
   </li>
-@endif
-@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+@endif --}}
+{{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 <li class="nav-item">
     <a class="nav-link {{ Request::is('Datamengajar') ? 'active' : '' }}"
         href="{{ url('Datamengajar') }}">
@@ -710,8 +737,8 @@ html, body {
         <span class="nav-link-text ms-1">Data Mengajar</span>
     </a>
 </li>
-@endif
-@if (Gate::allows('isGuru')|| Gate::allows('isKurikulum')|| Gate::allows('isSiswa'))
+@endif --}}
+{{-- @if (Gate::allows('isGuru')|| Gate::allows('isKurikulum')|| Gate::allows('isSiswa'))
     <li class="nav-item">
         <a class="nav-link {{ Request::is('DatasiswaKGS') ? 'active' : '' }}"
             href="{{ url('DatasiswaKGS') }}">
@@ -815,8 +842,8 @@ html, body {
         <span class="nav-link-text ms-1">Menu Mengajar</span>
     </a>
 </li>
-@endif
-@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah')|| Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))
+@endif --}}
+{{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah')|| Gate::allows('isKurikulum')|| Gate::allows('isGuru')|| Gate::allows('isSiswa'))
 
 <li class="nav-item">
     <a class="nav-link {{ Request::is('tugas') ? 'active' : '' }}"
@@ -841,8 +868,8 @@ html, body {
         <span class="nav-link-text ms-1">Identitas Sekolah</span>
     </a>
 </li>
-@endif
-@if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+@endif --}}
+{{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
 <li class="nav-item">
   <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples5" role="button"
@@ -871,7 +898,7 @@ html, body {
       
   </div>
 </li>
-@endif
+@endif --}}
               </aside> 
 
 {{-- <style>
