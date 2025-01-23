@@ -192,20 +192,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert alert-secondary mx-4" role="alert">
-                    <span class="text-white">
-                        <strong>Keterangan</strong> <br>
-                    </span>
-                    <span class="text-white">-
-                        <strong class="fa fa-lock"></strong>
-                        <strong> Silahkan menekan choose file untuk mengupload</strong> <br>
-                        <strong>- Upload Foto berupa Ekstensi jpeg,png,jpg</strong> <br>
-                        <strong>- Upload Foto Ukuran Kurang Dari 1024 KB.</strong> <br>
-                        <strong>- Save jika foto sudah terpilih dengan cara menekan save changes.</strong> 
-                      
-
-                    </span>
-                </div>
+               
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
                 </div>

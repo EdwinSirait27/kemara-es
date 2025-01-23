@@ -29,6 +29,7 @@ use App\Http\Controllers\DatamengajarController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\KGSNController;
 use App\Http\Controllers\KGSController;
+use App\Http\Controllers\ValidasiController;
 use App\Http\Controllers\DatasiswaController;
 use App\Http\Controllers\ArsipSiswaController;
 use App\Http\Controllers\DataguruController;
@@ -328,6 +329,12 @@ Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->nam
     Route::get('/Siswabaru/edit/{hashedId}', [PpdbController::class, 'edit'])->name('Siswabaru.edit');
     Route::put('/Siswabaru/{hashedId}', [PpdbController::class, 'update'])->name('Siswabaru.update');
     Route::post('/Siswabaru/updatestatus', [PpdbController::class, 'updateStatus'])->name('siswabaru.updateStatus');
+// validasi
+    Route::get('/Validasi', [ValidasiController::class, 'index'])->name('Validasi.index');
+    Route::get('/validasi/validasi', [ValidasiController::class, 'getValidasi'])->name('validasi.validasi');
+    Route::get('/Validasi/edit/{hashedId}', [ValidasiController::class, 'edit'])->name('Validasi.edit');
+    Route::put('/Validasi/{hashedId}', [ValidasiController::class, 'update'])->name('Validasi.update');
+    
 
 });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {

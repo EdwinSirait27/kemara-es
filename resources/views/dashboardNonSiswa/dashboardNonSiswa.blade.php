@@ -354,10 +354,10 @@
       <span class="text-black">-
           {{-- <strong class="fa fa-lock"></strong> --}}
           <strong>
-            <i class="fas fa-user-edit" style="color: black;"></i>
-        </strong>
-      <strong>  silahkan menekan icon tersebut di tabel bukti pembayaran agar anda bisa mengupload foto pembayaran.</strong><br>
-         
+              <i class="fas fa-user-edit" style="color: black;"></i>
+            </strong>
+            <strong>  Jika ingin mengupdate biodata, silahkan ke menu sidebar profile dan edit profile anda.</strong><br>-
+            <strong>  Silahkan menekan icon tersebut di tabel bukti pembayaran agar anda bisa mengupload foto pembayaran.</strong><br>
 
       </span>
   </div>

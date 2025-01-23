@@ -26,7 +26,6 @@ class ValidasiController extends Controller
             ->map(function ($user) {
                 $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
                 // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y'); $user->Role = implode(', ', explode(',', $user->Role));
-                $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
                 $user->action = '
             <a href="' . route('Validasi.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                 <i class="fas fa-user-edit text-secondary"></i>
@@ -41,7 +40,7 @@ class ValidasiController extends Controller
         ->addColumn('foto', function ($pembayaran) {
             return $pembayaran->foto;
         })
-            ->rawColumns(['checkbox', 'action'])
+            ->rawColumns([ 'action'])
             ->make(true);
 
     }   
