@@ -50,7 +50,9 @@ use App\Http\Controllers\KelassiswaController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\EkstrakuController;
 use App\Http\Controllers\PengaturankelasController;
+use App\Http\Controllers\BeritaController;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
