@@ -1,235 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+@extends('layouts.user_type.guest')
+@section('title', 'SMAK KESUMA MATARAM')
 
-    <title>SMA KATOLIK KESUMA MATARAM</title>
-    {{-- <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+@section('content')
 
-        .top-bar {
-            background-color: #004b93;
-            color: white;
-            padding: 8px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .social-icons a {
-            color: white;
-            margin-left: 15px;
-            text-decoration: none;
-        }
-
-        .header {
-            background: white;
-            padding: 15px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo-section img {
-            width: 60px;
-        }
-
-        .school-title {
-            color: #004b93;
-        }
-
-        .school-title p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-box input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .search-box button {
-            background: #004b93;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 4px;
-        }
-
-        .nav {
-            background: #004b93;
-            padding: 0 50px;
-        }
-
-        .nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        .nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 20px;
-            display: block;
-        }
-
-        .slider {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-        }
-
-        .slider img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .slider-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .slider-content h3 {
-            color: #004b93;
-            margin-bottom: 10px;
-        }
-
-        .slider-button {
-            background: #004b93;
-            color: white;
-            padding: 8px 20px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
-
-        .profile {
-            padding: 50px;
-            text-align: center;
-        }
-
-        .profile h2 {
-            color: #004b93;
-            margin-bottom: 30px;
-        }
-
-        .profile-content {
-            display: flex;
-            gap: 30px;
-            align-items: start;
-        }
-
-        .video-container {
-            flex: 1;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            aspect-ratio: 16/9;
-        }
-
-        .welcome-text {
-            flex: 1;
-            text-align: left;
-            line-height: 1.6;
-        }
-
-        .gallery {
-            padding: 50px;
-            text-align: center;
-        }
-
-        .gallery h2 {
-            color: #004b93;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .gallery-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 3px;
-        }
-
-        .gallery-item p {
-            margin-top: 10px;
-            color: #666;
-        }
-
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-
-        .slider-nav button {
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .profile-content {
-                flex-direction: column;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav ul {
-                flex-direction: column;
-            }
-        }
-    </style> --}}
-    
         <style>
             * {
                 margin: 0;
@@ -449,10 +222,66 @@
                     font-size: 0.8rem;
                 }
             }
+            footer {
+    background-color: #004b93;
+    color: white;
+    padding: 50px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+}
+@media (max-width: 768px) {
+    .top-bar, header, nav, main, footer {
+        padding: 15px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .search-bar {
+        margin-top: 15px;
+    }
+}
+.school-description img {
+    width: 100px;
+    margin-bottom: 5px;
+}
+.school-description p {
+    color: white;
+}
+.school-description h2 {
+    color: white;
+}
+.contact-section h3 {
+    color: white;
+}
+.navigation-section  ul li a {
+            color: white; /* Mengganti warna link menjadi putih */
+            text-decoration: none; /* Menghilangkan garis bawah pada link */
+        }
+.navigation-section  h3 {
+            color: white; /* Mengganti warna link menjadi putih */
+
+        }
+
         </style>
-   
+{{--    
 </head>
-<body>
+<body> --}}
+
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="contact">
@@ -485,14 +314,14 @@
                 <p>DISIPLIN-JUJUR-TERAMPIL-MANDIRI</p>
             </div>
         </div>
-        <div class="search-box">
+        {{-- <div class="search-box">
             <input type="text" disabled>
             <button>Login</button>
-        </div>
+        </div> --}}
     </header>
 
     <!-- Navigation -->
-    <nav class="nav">
+    {{-- <nav class="nav">
         <ul>
             <li><a href="#">BERANDA</a></li>
             <li><a href="#">PROFIL</a></li>
@@ -503,7 +332,7 @@
             <li><a href="#">INFORMASI</a></li>
             <li><a href="#">KONTAK</a></li>
         </ul>
-    </nav>
+    </nav> --}}
 
     <!-- Slider -->
     <br>
@@ -525,11 +354,22 @@
         <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
         <div class="profile-content">
             <div class="video-container">
+              
+                @if ($youtubeVideos->isEmpty())
+                <p>Tidak ada video yang aktif.</p>
+                <!-- Iframe kosong -->
+                <iframe src="" frameborder="0" allowfullscreen></iframe>
+    @else
+        @foreach ($youtubeVideos as $video)
+            <div>
                 <iframe 
-                    src="https://www.youtube.com/embed/Cfv19SQd11w?si=2FlbXMhS1NpjjIdg&autoplay=1&mute=0"
-                    frameborder="0"
+                  src="{{ ($video->url) }}" 
+                    frameborder="0" 
                     allowfullscreen>
                 </iframe>
+            </div>
+        @endforeach
+    @endif
             </div>
             <div class="welcome-text">
                 <h3>Sambutan Kepala Sekolah</h3>
@@ -557,5 +397,34 @@
             </div>
         </div>
     </section>
-</body>
-</html>
+{{-- </body>
+</html> --}}
+<footer>
+    <div class="footer-content">
+        <div class="school-description">
+            {{-- <img src="logo.png" alt="Logo Footer"> --}}
+        <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
+
+            <h2>SMA KATOLIK KESUMA MATARAM</h2>
+            <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
+        </div>
+
+        <div class="contact-section">
+            <h3>HUBUNGI KAMI</h3>
+            <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
+            <p>Telepon/Fax : +62 370 645 695</p>
+            <p>Email : smak_kesuma@yahoo.com</p>
+        </div>
+
+        <div class="navigation-section">
+            <h3>NAVIGASI</h3>
+            <ul>
+                <li><a href="#">Profil Sekolah</a></li>
+                <li><a href="#">Informasi & Berita</a></li>
+                <li><a href="#">Galeri / Dokumentasi</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</footer>
+@endsection

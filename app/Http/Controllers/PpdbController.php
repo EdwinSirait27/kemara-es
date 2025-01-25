@@ -139,14 +139,12 @@ class PpdbController extends Controller
             
 
             $pembayaran = Pembayaran::updateOrCreate(
-                ['siswa_id' => $siswa->siswa_id], // Kondisi pencarian
+                ['siswa_id' => $siswa->siswa_id],
                 [
-                    'status' => 'Menunggu Pembayaran',  // Nilai kolom status
-                    'tanggalbukti' => Carbon::now()    // Nilai tanggalbukti menggunakan Carbon
+                    'status' => 'Menunggu Pembayaran',  
+                    'tanggalbukti' => Carbon::now()    
                 ]
-            );
-            
-            
+            );        
             DB::commit();
             return redirect()->route('login')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
         } catch (\Exception $e) {

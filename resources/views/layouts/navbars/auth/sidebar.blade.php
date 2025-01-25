@@ -683,6 +683,32 @@ html, body {
         </a>
     </li>
     @endif
+    @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples10" role="button"
+          aria-expanded="false" aria-controls="laravelExamples10">
+          <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fas fa-users"></i> 
+          </div>
+          <span class="nav-link-text ms-1">Beranda Sekolah</span>
+      </a>
+      <div class="collapse" id="laravelExamples10">
+          <ul class="nav ms-4">
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Youtube') ? 'active' : '' }}" href="{{ url('Youtube') }}">
+                      <span class="nav-link-text ms-1">Input Url Youtube</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Berita') ? 'active' : '' }}" href="{{ url('Berita') }}">
+                      <span class="nav-link-text ms-1">Berita</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </li>
+  @endif
     {{-- @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
     <li class="nav-item">

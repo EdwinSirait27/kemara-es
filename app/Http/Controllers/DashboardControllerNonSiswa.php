@@ -151,6 +151,9 @@ public function update(Request $request, $hashedId)
     ],
 [
     'foto.required' => 'foto wajib diisi',
+    'foto.mimes' => 'foto harus bertipe jpeg,png,jpg',
+    'foto.max' => 'foto harus kurang dari 1024 kb',
+    'foto.image' => 'foto harus berupa gambar',
     
 ]);
 

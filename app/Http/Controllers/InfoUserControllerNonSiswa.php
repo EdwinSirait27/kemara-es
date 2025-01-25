@@ -67,6 +67,14 @@ class InfoUserControllerNonSiswa extends Controller
                 'numeric',
                 'max:4',
             ],
+            'foto' => ['required','image','mimes:jpeg,png,jpg','max:1024'],
+        
+        ],
+    [
+        'foto.required' => 'foto wajib diisi',
+        'foto.mimes' => 'harus bertipe jpeg,png,jpg',
+        'foto.max' => 'foto harus kurang dari 1024 kb',
+        'foto.image' => 'harus berupa gambar',
             
         ]);
         

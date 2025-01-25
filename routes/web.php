@@ -17,6 +17,7 @@ use App\Http\Controllers\InfoUserControllerKepalaSekolah;
 use App\Http\Controllers\InfoUserControllerKurikulum;
 use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
+use App\Http\Controllers\YoutubeController;
 use App\Http\Controllers\InfoUserControllerNonSiswa;
 use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\TahunakademikController;
@@ -334,7 +335,23 @@ Route::get('/Organisasisiswa', [OrganisasisiswaController::class, 'index'])->nam
     Route::get('/validasi/validasi', [ValidasiController::class, 'getValidasi'])->name('validasi.validasi');
     Route::get('/Validasi/edit/{hashedId}', [ValidasiController::class, 'edit'])->name('Validasi.edit');
     Route::put('/Validasi/{hashedId}', [ValidasiController::class, 'update'])->name('Validasi.update');
-    
+    //url youtube
+Route::get('/Youtube', [YoutubeController::class, 'index'])->name('Youtube.index');
+Route::get('/youtube/youtube', [YoutubeController::class, 'getYoutube'])->name('youtube.youtube');
+Route::delete('/Youtube/delete', [YoutubeController::class, 'deleteYoutube'])->name('youtube.delete');
+Route::get('Youtube/create', [YoutubeController::class, 'create'])->name('Youtube.create');
+Route::post('/Youtube', [YoutubeController::class, 'store'])->name('Youtube.store');
+Route::get('/Youtube/edit/{hashedId}', [YoutubeController::class, 'edit'])->name('Youtube.edit');
+Route::put('/Youtube/{hashedId}', [YoutubeController::class, 'update'])->name('Youtube.update');
+    //url Berita
+Route::get('/Berita', [BeritaController::class, 'index'])->name('Berita.index');
+Route::get('/berita/berita', [BeritaController::class, 'getBerita'])->name('berita.berita');
+Route::delete('/Berita/delete', [BeritaController::class, 'deleteBerita'])->name('berita.delete');
+Route::get('Berita/create', [BeritaController::class, 'create'])->name('Berita.create');
+Route::post('/Berita', [BeritaController::class, 'store'])->name('Berita.store');
+Route::get('/Berita/edit/{hashedId}', [BeritaController::class, 'edit'])->name('Berita.edit');
+Route::put('/Berita/{hashedId}', [BeritaController::class, 'update'])->name('Berita.update');
+
 
 });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
@@ -348,9 +365,9 @@ Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
         return view('billing');
     })->name('billing');
 
-    Route::get('profile', function () {
-        return view('profile');
-    })->name('profile');
+    // Route::get('profile', function () {
+    //     return view('profile');
+    // })->name('profile');
 
     Route::get('rtl', function () {
         return view('rtl');
@@ -401,9 +418,9 @@ Route::middleware(['auth','can:isAdmin','prevent.xss'])->group(function () {
     return view('billing');
 })->name('billing');
 
-Route::get('profile', function () {
-    return view('profile');
-})->name('profile');
+// Route::get('profile', function () {
+//     return view('profile');
+// })->name('profile');
 
 Route::get('rtl', function () {
     return view('rtl');

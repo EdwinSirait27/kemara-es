@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Youtube;
+
 
 class ProfileSekolahController extends Controller
 {
@@ -13,7 +15,10 @@ class ProfileSekolahController extends Controller
     }
     public function beranda()
     {
-        return view('Beranda/index');
-
+        $youtubeVideos = Youtube::where('status', 'Aktif')->get();
+    
+        // Kirim data ke view
+        return view('Beranda/index', compact('youtubeVideos'));
     }
+    
 }

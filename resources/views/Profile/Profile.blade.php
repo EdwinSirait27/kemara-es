@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMA KATOLIK KESUMA MATARAM</title>
+    <title>pepeKATOLIK KESUMA MATARAM</title>
     <style>
         * {
             margin: 0;

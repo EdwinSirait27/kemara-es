@@ -125,7 +125,7 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Nama Panggilan Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaPanggilan"
-                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}">
+                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20"  oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}" required>
                                         @error('NamaPanggilan')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -136,7 +136,7 @@
                                         <label><i class="fas fa-user"></i> Tempat Lahir Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="TempatLahir"
                                             id="TempatLahir" placeholder="TempatLahir" aria-label="TempatLahir"
-                                            aria-describedby="TempatLahir-addon" maxlength="50" required oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" value="{{ old('TempatLahir') }}">
+                                            aria-describedby="TempatLahir-addon" maxlength="50"  oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" value="{{ old('TempatLahir') }}"required>
                                         {{-- oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')" --}}
                                         @error('TempatLahir')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -148,7 +148,7 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Tanggal Lahir Siswa</label>
                                         <input type="date" class="form-control form-control-sm" name="TanggalLahir"
-                                            id="TanggalLahir" aria-label="TanggalLahir" required value="{{ old('TanggalLahir') }}">
+                                            id="TanggalLahir" aria-label="TanggalLahir"  value="{{ old('TanggalLahir') }}"required>
                                         @error('TanggalLahir')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -157,7 +157,7 @@
                                     <!-- Email -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"> </i> Jenis Kelamin Siswa</label>
-                                        <select class="form-control" name="JenisKelamin" id="JenisKelamin" required >
+                                        <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
                                             <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
                                             </option>
                                             @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
@@ -173,7 +173,7 @@
                                     <!-- Username -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i>Agama Siswa</label>
-                                        <select class="form-control" name="Agama" id="Agama" required value="{{ old('Agama') }}">
+                                        <select class="form-control" name="Agama" id="Agama" value="{{ old('Agama') }}"required>
                                             <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                             @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
                                             <option value="{{ e($agama) }}" {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}</option>
@@ -191,7 +191,7 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Alamat Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="Alamat"
-                                            id="Alamat" placeholder="Alamat" aria-label="Alamat"required maxlength="100" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}">
+                                            id="Alamat" placeholder="Alamat" aria-label="Alamat" maxlength="100" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}"required>
                                         @error('Alamat')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -201,7 +201,7 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Nomor Telephone Siswa</label>
                                         <input type="phone" class="form-control form-control-sm" name="NomorTelephone"
-                                            id="NomorTelephone" placeholder="NomorTelephone"required maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}">
+                                            id="NomorTelephone" placeholder="NomorTelephone" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}"required>
                                         @error('NomorTelephone')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -213,7 +213,7 @@
                                         <input type="phone" class="form-control form-control-sm"
                                             name="NomorTelephoneAyah" id="NomorTelephoneAyah"
                                             placeholder="NomorTelephone" aria-label="NomorTelephoneAyah"
-                                            aria-describedby="NomorTelephoneAyah-addon" required maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('NomorTelephoneAyah') }}">
+                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('NomorTelephoneAyah') }}"required>
                                         @error('NomorTelephoneAyah')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -227,7 +227,7 @@
                                             id="username"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
                                             placeholder="Masukkan Username" aria-label="username" maxlength="12"
-                                            required oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" value="{{ old('username') }}">
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" value="{{ old('username') }}"required>
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -239,7 +239,7 @@
                                         <div
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password" placeholder="Masukkan Password"
-                                                id="password" name="password" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')">
+                                                id="password" name="password" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')" required>
                                             <span
                                                 class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
                                                 onclick="togglePasswordVisibility('password')">
@@ -271,7 +271,7 @@
                                             class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password"
                                                 placeholder="Konfirmasi Password Baru" id="password_confirmation"
-                                                name="password_confirmation" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')">
+                                                name="password_confirmation" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')"required>
                                             <span
                                                 class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
                                                 onclick="togglePasswordVisibility('password_confirmation')">
