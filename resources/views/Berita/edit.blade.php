@@ -45,7 +45,7 @@
             </div>
         @endif --}}
 
-        <form action="{{ route('Berita.update', $hashedId) }}" method="POST">
+        <form action="{{ route('Berita.update', $hashedId) }}" method="POST"enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="container-fluid py-4">
@@ -96,13 +96,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="url" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Header') }}
+                                    <label for="body" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Body') }}
                                     </label>
                                     <div>
-                                        <input type="text" class="form-control" id="header" name="header"
-                                            value="{{ old('header', $berita->header) }}" required maxlength="255">
-                                        <p class="text-muted text-xs mt-2">Contoh : masukkan header</p>
+                                        <input type="text" class="form-control" id="body" name="body"
+                                            value="{{ old('body', $berita->body) }}" required>
+                                        <p class="text-muted text-xs mt-2">Contoh : isi dari konten</p>
 
 
 

@@ -26,12 +26,12 @@
                         @endif
 
                         {{-- Form untuk membuat user --}}
-                        <form method="POST" id="create-user-form" action="{{ route('Berita.store') }}">
+                        <form method="POST" id="create-user-form" action="{{ route('Berita.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="url" class="form-control-label">
+                                        <label for="header" class="form-control-label">
                                             <i class="fas fa-lock"></i> {{ __('Buat Header') }}
                                         </label>
                                         <div class="@error('header')border border-danger rounded-3 @enderror">
@@ -48,25 +48,44 @@
                                     </div>
                                 </div>
                            
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="url" class="form-control-label">
-                                            <i class="fas fa-lock"></i> {{ __('Buat Header') }}
+                                        <label for="body" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Body') }}
                                         </label>
-                                        <div class="@error('header')border border-danger rounded-3 @enderror">
+                                        <div>
                                             <input class="form-control"
-                                            value="{{ e($header ?? '') }}"
+                                            value="{{ e($body ?? '') }}"
                                             type="text"
-                                                id="header" name="header" aria-describedby="info-header"
-                                                maxlength="255" required>
-                                                @error('header')
+                                                id="body" name="body" aria-describedby="info-body"
+maxlength="255" required>
+                                                @error('body')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
-                                            <p class="text-muted text-xs mt-2">Contoh : SMAK KESUMA MATARAM MEMENANGKAN blablabla</p>
+    
                                         </div>
                                     </div>
                                 </div>
+                            </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="body" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Body') }}
+                                    </label>
+                                    <div>
+                                        <textarea 
+                                            class="form-control"
+                                            id="body" name="body" aria-describedby="info-body"
+                                             required
+                                            style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
+                                        @error('body')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
+                                                        
+                            
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -230,7 +249,7 @@
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
                                     title: 'Apakah Yakin?',
-                                    text: "Buat Kelas?",
+                                    text: "Buat Berita?",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',

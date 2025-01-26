@@ -354,7 +354,8 @@ Route::post('/Berita', [BeritaController::class, 'store'])->name('Berita.store')
 Route::get('/Berita/edit/{hashedId}', [BeritaController::class, 'edit'])->name('Berita.edit');
 Route::put('/Berita/{hashedId}', [BeritaController::class, 'update'])->name('Berita.update');
 
-
+// Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
+// ->name('Kelassiswa.showmatapelajaran');
 });
 Route::middleware(['auth','can:isSU','prevent.xss'])->group(function () {
     Route::get('/', [HomeController::class, 'home']);
@@ -516,10 +517,11 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 
 Route::get('/Profile', [ProfileSekolahController::class, 'profile'])->name('Profile');
-Route::get('/Beranda', [ProfileSekolahController::class, 'beranda'])->name('Beranda');
-
+Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+// Route::get('/Berita/show/{hashedId}', [ProfileSekolahController::class, 'show'])->name('Berita.show');
+// routes/web.php
+Route::get('/Berita/show/{hashedId}', [BeritaController::class, 'show'])->name('Berita.show');
 });
-
 // Route::middleware('guest')->group(function () {
 //     // Registrasi
     

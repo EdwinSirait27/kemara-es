@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | berita')
+@section('title', ' | berita')
 
 @section('content')
     <style>
@@ -273,7 +273,7 @@
                 if (selectedIds.length === 0) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Tidak Ada Kelas Yang Dipilih',
+                        title: 'Tidak Ada Berita Yang Dipilih',
                         text: 'Tolong Pilih Salah Satu.'
                     });
                     return;
@@ -316,7 +316,7 @@
                             error: function(xhr) {
                                 Swal.fire(
                                     'Error!',
-                                    'An error occurred while deleting Kelas.',
+                                    'An error occurred while deleting berita.',
                                     'error'
                                 );
                                 console.error(xhr.responseText);

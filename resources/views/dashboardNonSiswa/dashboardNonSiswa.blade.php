@@ -235,36 +235,12 @@
                           </tr>
                       </thead>
                   </table>
-               
               </div>
           </div>
       </div>
       </div>
   </div>
-  
-    {{-- <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="osis-card">
-                    <div class="image view view-first">
-                      <br>
-                      <img src="{{ auth()->check() && optional(auth()->user()->Siswa)->foto 
-                            ? asset('storage/fotosiswa/' . auth()->user()->Siswa->foto) 
-                            : asset('storage/fotosiswa/we.jpg') }}"
-                            alt="Foto" 
-                           >
-                    </div>
-                    <div class="caption">
-                         - <p><strong>Nama Lengkap:</strong> {{ e(optional(auth()->user())->Siswa->NamaLengkap ?? '') }}</p> 
-                         - <p><strong>Username:</strong> {{ e(optional(auth()->user())->username ?? '') }}</p> 
-                        
-                        <div class="form-check text-center">
-      
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-    </div> --}}
+
 </form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

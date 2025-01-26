@@ -68,7 +68,6 @@ class EkstrakulikulerController extends Controller
         })
                         ->rawColumns(['checkbox', 'action'])
             ->make(true);
-
     }
     public function edit($hashedId)
     {
@@ -81,7 +80,6 @@ class EkstrakulikulerController extends Controller
         }
         $gurus = Guru::select('guru_id','Nama')->get();
         $tahuns = Tahunakademik::select('id','tahunakademik','semester')->get();
-
         return view('Ekstrakulikuler.edit', compact('ekstrakulikuler','tahuns' ,'hashedId','gurus'));
     }
     public function update(Request $request, $hashedId)

@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 class Berita extends Model
 {
@@ -29,5 +30,6 @@ class Berita extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }
 

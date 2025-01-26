@@ -1,6 +1,5 @@
 @extends('layouts.user_type.guest')
-@section('title', 'SMAK KESUMA MATARAM')
-
+@section('title', 'KESUMA MATARAM')
 @section('content')
     <style>
         * {
@@ -9,8 +8,6 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-
-        /* Top Bar */
         .top-bar {
             background: #004d99;
             color: white;
@@ -19,31 +16,25 @@
             justify-content: space-between;
             flex-wrap: wrap;
         }
-
         .contact span {
             margin-right: 15px;
             font-size: 14px;
         }
-
         .social-icons a {
             color: white;
             margin-left: 10px;
             text-decoration: none;
         }
-
-        /* Header */
         .header {
             padding: 15px;
             background: white;
         }
-
         .logo-section {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 15px;
         }
-
         .logo-section img {
             width: 80px;
             height: auto;
@@ -101,22 +92,13 @@
             font-size: 0.9rem;
         }
 
+        /* Slider */
         .slider {
             position: relative;
             max-height: 800px;
             overflow: hidden;
         }
-        .slider h2 {
-            color: #004d99;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .slider-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+
         .slider img {
             width: 60%;
             height: auto;
@@ -173,11 +155,7 @@
             padding-bottom: 56.25%;
             height: 0;
         }
-ini dia
-.welcome-text {
-    flex: 1; /* Mengambil setengah ruang */
-    max-width: 50%;
-}
+
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -320,7 +298,7 @@ ini dia
             transform: translateY(-50%);
         }
 
-        /* .prev,
+        .prev,
         .next {
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
@@ -343,23 +321,73 @@ ini dia
 
         .next {
             right: 10px;
-        } */
-        .prev,
-    .next {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 50%;
-        transition: background-color 0.3s;
-    }
-    .prev:hover,
-    .next:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
+        }
+        .berita-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+        .berita-detail h1{
+            color: #004d99;
+            margin-bottom: 20px;
+            text-align: center;
+    /* font-family: Arial, sans-serif; */
+}
+
+.image-slider {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.slider-images {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slider-images img {
+    width: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.slider-nav {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+}
+
+.slider-nav button {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* .berita-content {
+    padding: 20px;
+    line-height: 1.6;
+}
+.berita-content p{
+    padding: 20px;
+    line-height: 1.6;
+} */
+.berita-content {
+    padding: 15px;
+}
+
+.berita-content p {
+    text-align: justify;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
     </style>
-    <!-- Top Bar -->
     <div class="top-bar">
         <div class="contact">
             <span>📞 +62 370 645 695</span>
@@ -390,174 +418,125 @@ ini dia
             </div>
         </div>
     </header>
-    <br>
-    {{-- <div class="slider">
-        <div class="slider-item" id="slider-item-1">
-            <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}">
-            <div class="slider-content">
-                <h3>{{ $beritas[0]->header }}</h3>
-                <p>{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-              
-@foreach ($beritas as $berita)
-    <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="btn btn-primary">
-        Lihat Berita
-    </a>
-@endforeach
-
-            </div>
+    <br> 
+    {{-- <div class="below-header">
+        <div class="announcement">
+            <h2>Pengumuman</h2>
+            <p>Kunjungi halaman <a href="/pengumuman">Pengumuman</a> untuk informasi terbaru mengenai kegiatan sekolah, penerimaan siswa baru, dan lainnya.</p>
         </div>
-        <div class="slider-nav">
-            <button class="prev" onclick="moveSlider(-1)">❮</button>
-            <button class="next" onclick="moveSlider(1)">❯</button>
-        </div> --}}
-        @if($beritas->isNotEmpty())
-        <div class="slider">
-        <h2>BERITA SMAK KESUMA MATARAM</h2>
-
-            <div class="slider-item" id="slider-item-1">
-                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}" class="slider-image">
-                <div class="slider-content">
-                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
-                    <p class="slider-body">{{ str($beritas[0]->body)->limit(100) }}</p>
-                    <a href="{{ route('Berita.show', ['hashedId' => $beritas[0]->hashedId]) }}" class="btn btn-primary slider-link">
-                        Lihat Berita
-                    </a>
-                </div>
-            </div>
-            <div class="slider-nav">
-                <button class="prev" onclick="moveSlider(-1)">❮</button>
-                <button class="next" onclick="moveSlider(1)">❯</button>
-            </div>
+        <div class="important-links">
+            <h2>Link Penting</h2>
+            <ul>
+                <li><a href="/kurikulum">Kurikulum</a></li>
+                <li><a href="/ekstrakurikuler">Ekstrakurikuler</a></li>
+                <li><a href="/prestasi">Prestasi</a></li>
+                <li><a href="/galeri">Galeri</a></li>
+            </ul>
         </div>
-    @endif
-    <br>
-    <br>
-    <br>
-    <br>
-    <script>
-        let currentIndex = 0;
-        const beritas = @json($beritas);
-    
-        function updateSlider() {
-            if (beritas.length === 0) return;
+    </div> --}}
+    <div class="berita-detail">
+        <h1>{{ $berita->header }}</h1>
+        
+        <div class="image-slider">
+            <div class="slider-images" id="slider-images">
+                @php
+                    $images = [];
+                    for ($i = 1; $i <= 8; $i++) {
+                        $imageKey = 'gambar' . $i;
+                        if ($berita->$imageKey) {
+                            $images[] = $berita->$imageKey;
+                        }
+                    }
+                @endphp
+                
+                @foreach($images as $image)
+                    <img src="{{ asset('storage/berita/' . $image) }}" alt="{{ $berita->header }}">
+                @endforeach
+            </div>
             
-            const sliderItem = document.getElementById('slider-item-1');
-            const berita = beritas[currentIndex];
-    
-            if (!berita.hashedId) {
-                console.error('hashedId tidak tersedia');
-                return;
-            }
-    
-            sliderItem.querySelector('.slider-image').src = '/storage/berita/' + berita.gambar1;
-            sliderItem.querySelector('.slider-title').innerText = berita.header;
-            sliderItem.querySelector('.slider-body').innerText = berita.body.substring(0, 100) + '...';
-            sliderItem.querySelector('.slider-link').href = "{{ route('Berita.show', ':hashedId') }}".replace(':hashedId', berita.hashedId);
-        }
-    
-        function moveSlider(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) {
-                currentIndex = beritas.length - 1;
-            } else if (currentIndex >= beritas.length) {
-                currentIndex = 0;
-            }
-            updateSlider();
-        }
-    
-        updateSlider();
-    </script>
-        
-        {{-- <div class="slider">
-            <div class="slider-item" id="slider-item-1">
-                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}" class="slider-image">
-                <div class="slider-content">
-                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
-                    <p class="slider-body">{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-                    <a href="{{ route('Berita.show', ['hashedId' => $beritas[0]->hashedId]) }}" class="btn btn-primary slider-link">
-                        Lihat Berita
-                    </a>
-                </div>
-            </div>
+            @if(count($images) > 1)
             <div class="slider-nav">
-                <button class="prev" onclick="moveSlider(-1)">❮</button>
-                <button class="next" onclick="moveSlider(1)">❯</button>
+                <button onclick="moveSlider(-1)">❮</button>
+                <button onclick="moveSlider(1)">❯</button>
             </div>
+            @endif
         </div>
+    
+        {{-- <div class="berita-content">
+            <p>{{ $berita->body }}</p>
+        </div> --}}
+        @php
+function splitTextIntoParagraphs($text, $wordsPerParagraph = 150) {
+    $words = explode(' ', $text);
+    $paragraphs = [];
+    $currentParagraph = [];
+
+    foreach ($words as $word) {
+        $currentParagraph[] = $word;
         
-        <script>
-            let currentIndex = 0;
-            const beritas = @json($beritas);
-        
-            function updateSlider() {
-                const sliderItem = document.getElementById('slider-item-1');
-                const berita = beritas[currentIndex];
-        
-                sliderItem.querySelector('.slider-image').src = '/storage/berita/' + berita.gambar1;
-                sliderItem.querySelector('.slider-title').innerText = berita.header;
-                sliderItem.querySelector('.slider-body').innerText = berita.body.substring(0, 100) + '...';
-        
-                sliderItem.querySelector('.slider-link').href = "{{ route('Berita.show', ':hashedId') }}".replace(':hashedId', berita.hashedId);
-            }
-        
-            function moveSlider(direction) {
-                currentIndex += direction;
-                if (currentIndex < 0) {
-                    currentIndex = beritas.length - 1;
-                } else if (currentIndex >= beritas.length) {
-                    currentIndex = 0;
-                }
-                updateSlider();
-            }
-        
-            updateSlider();
-        </script>
-         --}}
-        {{-- <div class="slider">
-            <div class="slider-item" id="slider-item-1">
-                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}" class="slider-image">
-                <div class="slider-content">
-                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
-                    <p class="slider-body">{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-                    <a href="{{ route('Berita.show', ['id' => $beritas[0]->id]) }}" class="btn btn-primary slider-link">
-                        Lihat Berita
-                    </a>
-                </div>
-            </div>
-            <div class="slider-nav">
-                <button class="prev" onclick="moveSlider(-1)">❮</button>
-                <button class="next" onclick="moveSlider(1)">❯</button>
-            </div>
-        </div>
-        
+        if (count($currentParagraph) >= $wordsPerParagraph) {
+            $paragraphs[] = implode(' ', $currentParagraph);
+            $currentParagraph = [];
+        }
+    }
+
+    // Tambahkan sisa paragraf
+    if (!empty($currentParagraph)) {
+        $paragraphs[] = implode(' ', $currentParagraph);
+    }
+
+    return $paragraphs;
+}
+
+$textParagraphs = splitTextIntoParagraphs($berita->body);
+@endphp
+
+<div class="berita-content">
+    @foreach($textParagraphs as $paragraph)
+        <p>{{ $paragraph }}</p>
+    @endforeach
+</div>
+    </div>
+    
     <script>
         let currentIndex = 0;
-        const beritas = @json($beritas);
-    
-        function updateSlider() {
-            const sliderItem = document.getElementById('slider-item-1');
-            const berita = beritas[currentIndex];
-    
-            sliderItem.querySelector('.slider-image').src = '/storage/berita/' + berita.gambar1;
-            sliderItem.querySelector('.slider-title').innerText = berita.header;
-            sliderItem.querySelector('.slider-body').innerText = berita.body.substring(0, 100) + '...';
-    
-            sliderItem.querySelector('.slider-link').href = "{{ route('Berita.show', ':id') }}".replace(':id', berita.id);
-        }
+        const sliderImages = document.getElementById('slider-images');
+        const images = sliderImages.querySelectorAll('img');
     
         function moveSlider(direction) {
             currentIndex += direction;
+            
             if (currentIndex < 0) {
-                currentIndex = beritas.length - 1;
-            } else if (currentIndex >= beritas.length) {
+                currentIndex = images.length - 1;
+            } else if (currentIndex >= images.length) {
                 currentIndex = 0;
             }
-            updateSlider();
-        }
     
-        updateSlider();
-    </script> --}}
-    <section class="profile">
+            const offset = -currentIndex * 100;
+            sliderImages.style.transform = `translateX(${offset}%)`;
+        }
+    </script>
+    <br> 
+    <footer>
+        <div class="footer-content">
+            <div class="school-description">
+                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
+                <h2>SMA KATOLIK KESUMA MATARAM</h2>
+                <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan
+                    dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada
+                    masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
+            </div>
+            <div class="contact-section">
+                <h3>HUBUNGI KAMI</h3>
+                <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
+                <p>Telepon/Fax : +62 370 645 695</p>
+                <p>Email : smak_kesuma@yahoo.com</p>
+            </div>
+        </div>
+    </footer>
+@endsection
+<!-- Profile Section -->
+    {{-- <section class="profile">
         <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
         <div class="profile-content">
             <div class="video-container">
@@ -580,40 +559,5 @@ ini dia
                 <a href="#" class="slider-button">Selengkapnya</a>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Gallery Section -->
-    <section class="gallery">
-        <h2>GALERI & DOKUMENTASI</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="gallery1.jpg" alt="Foto Siswa dan Guru">
-                <p>Foto Siswa dan Guru</p>
-            </div>
-            <div class="gallery-item">
-                <img src="gallery2.jpg" alt="Dokumentasi">
-                <p>Dokumentasi</p>
-            </div>
-            <div class="gallery-item">
-                <img src="gallery3.jpg" alt="Acara Murid">
-                <p>Acara Murid</p>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <div class="footer-content">
-            <div class="school-description">
-                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
-                <h2>SMA KATOLIK KESUMA MATARAM</h2>
-                <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan
-                    dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada
-                    masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
-            </div>
-            <div class="contact-section">
-                <h3>HUBUNGI KAMI</h3>
-                <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
-                <p>Telepon/Fax : +62 370 645 695</p>
-                <p>Email : smak_kesuma@yahoo.com</p>
-            </div>
-        </div>
-    </footer>
-@endsection

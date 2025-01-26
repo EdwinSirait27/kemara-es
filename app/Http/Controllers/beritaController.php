@@ -13,15 +13,10 @@ class beritaController extends Controller
     {
         $this->middleware('prevent.xss');
     }
-    public function index()
-    {
-        return view('Youtube.index');
-
-    }
     public function create()
     {
         
-        return view('Youtube.create');
+        return view('Berita.create');
     }
     public function getBerita()
     {
@@ -66,13 +61,38 @@ class beritaController extends Controller
         }
         return view('Berita.edit', compact('berita','hashedId'));
     }
-    public function update(Request $request, $hashedId)
+    public function index()
+    {
+        return view('Berita.index');
+
+    }
+    public function show($hashedId)
+    {
+        $berita = Berita::all()->first(function ($u) use ($hashedId) {
+            return substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8) === $hashedId;
+        });
+    
+        abort_if(!$berita, 404, 'Data tidak ditemukan');
+        
+        return view('Berita.show', compact('berita', 'hashedId'));
+    }
+    // public function show($id)
+    // {
+    //     $berita = Berita::find($id);
+        
+    //     if (!$berita) {
+        //         abort(404, 'Berita not found.');
+    //     }
+    
+    //     return view('Berita.show', compact('berita'));
+    // }
+        public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([
             'header' => ['required', 'string', 'max:255', new NoXSSInput()],
             'body' => ['required', 'string', new NoXSSInput()],
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
-            'gambar1' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
+            'gambar1' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
             'gambar2' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
             'gambar3' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
             'gambar4' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
@@ -81,7 +101,7 @@ class beritaController extends Controller
             'gambar7' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
             'gambar8' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
         ], [
-                 'gambar1.required' => 'foto pertama wajib diisi',
+             
             'gambar1.mimes' => 'foto pertama harus bertipe jpeg, png, atau jpg',
             'gambar1.max' => 'foto pertama harus kurang dari 1024 KB',
             'gambar1.image' => 'foto pertama harus berupa gambar',
