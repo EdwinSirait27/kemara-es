@@ -369,7 +369,18 @@
     padding: 10px;
     cursor: pointer;
 }
+.berita-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 0.9em;
+}
 
+.berita-meta .author,
+.berita-meta .timestamp {
+    font-style: italic;
+}
 /* .berita-content {
     padding: 20px;
     line-height: 1.6;
@@ -495,6 +506,10 @@ $textParagraphs = splitTextIntoParagraphs($berita->body);
     @foreach($textParagraphs as $paragraph)
         <p>{{ $paragraph }}</p>
     @endforeach
+</div>
+<div class="berita-meta">
+    <span class="author">Diunggah oleh: {{ $berita->User->Guru->Nama ?? 'Admin' }}</span>
+    <span class="timestamp">{{ $berita->created_at->diffForHumans() }}</span>
 </div>
     </div>
     

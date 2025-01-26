@@ -1,365 +1,633 @@
-@extends('layouts.user_type.guest')
-@section('title', 'SMAK KESUMA MATARAM')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMA KATOLIK KESUMA MATARAM</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #004b93;
+            --secondary-color: #159895;
+            --accent-color: #57c5b6;
+            --light-background: #f0f9ff;
+            --third-color: black;
+            --text-color: #333;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+
+        }
+       
 
         /* Top Bar */
         .top-bar {
-            background: #004d99;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            padding: 10px 0;
         }
 
-        .contact span {
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-info span {
             margin-right: 15px;
-            font-size: 14px;
+            font-size: 0.9rem;
         }
 
         .social-icons a {
             color: white;
             margin-left: 10px;
-            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
         }
 
         /* Header */
         .header {
-            padding: 15px;
             background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
+            justify-content: center;
+            gap: 20px;
         }
 
         .logo-section img {
-            width: 80px;
+            width: 100px;
             height: auto;
         }
 
         .school-title h1 {
-            font-size: 1.2rem;
-            color: #004d99;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
         }
 
         .school-title p {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .search-box button {
-            padding: 8px 15px;
-            background: #004d99;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* Navigation */
-        .nav {
-            background: #004d99;
-            padding: 10px;
-            overflow-x: auto;
-        }
-
-        .nav ul {
-            display: flex;
-            list-style: none;
-            white-space: nowrap;
-        }
-
-        .nav a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
+            color: var(--primary-color);
             font-size: 0.9rem;
         }
 
-        .slider {
-            position: relative;
-            max-height: 800px;
-            overflow: hidden;
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-color);
         }
-        .slider h2 {
-            color: #004d99;
-            margin-bottom: 20px;
-            text-align: center;
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
         }
-        .slider-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-        .slider img {
-            width: 60%;
-            height: auto;
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
             display: block;
-            margin: 0 auto;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Slider */
+        .slider {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .container h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center; /* Pusatkan teks secara horizontal */
+}
+
+
+        .slider-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-image {
+            width: 50%;
+            object-fit: cover;
         }
 
         .slider-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.1);
-            color: white;
-            padding: 15px;
-
+            padding: 20px;
+            width: 50%;
         }
 
-        .slider-content p h3 a {
-            align-items: center;
-
+        .slider-title {
+            color: var(--primary-color);
+            margin-bottom: 10px;
         }
 
-        /* Konten Slider */
-        .slider-button {
-            display: inline-block;
-            padding: 8px 15px;
-            background: #004d99;
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: var(--light-background);
+        }
+
+        .slider-nav button {
+            background-color: var(--secondary-color);
             color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 10px;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-nav button:hover {
+            background-color: var(--primary-color);
         }
 
         /* Profile Section */
         .profile {
-            padding: 20px;
+            padding: 40px 0;
+            text-align: center;
         }
 
         .profile h2 {
-            color: #004d99;
+            color: var(--primary-color);
             margin-bottom: 20px;
-            text-align: center;
         }
 
         .profile-content {
             display: flex;
-            flex-direction: column;
             gap: 20px;
         }
 
         .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
+            flex: 1;
         }
-ini dia
-.welcome-text {
-    flex: 1; /* Mengambil setengah ruang */
-    max-width: 50%;
-}
+
         .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            height: 300px;
+            border-radius: 10px;
         }
 
-        /* Gallery */
-        .gallery {
+        .welcome-text {
+            flex: 1;
+            background-color: white;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .gallery h2 {
-            color: #004d99;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .gallery-item p {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Media Queries */
-        @media (max-width: 768px) {
-            .top-bar {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .social-icons {
-                margin-top: 10px;
-            }
-
-            .logo-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .school-title h1 {
-                font-size: 1rem;
-            }
-
-            .nav ul {
-                gap: 5px;
-            }
-
-            .nav a {
-                padding: 8px 10px;
-                font-size: 0.8rem;
-            }
-        }
-
-        footer {
-            background-color: #004b93;
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
             color: white;
-            padding: 50px;
+            padding: 40px 0;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 768px) {
-
-            .top-bar,
-            header,
-            nav,
-            main,
-            footer {
-                padding: 15px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            nav ul {
-                flex-direction: column;
-            }
-
-            .logo-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .search-bar {
-                margin-top: 15px;
-            }
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
         }
 
         .school-description img {
             width: 100px;
-            margin-bottom: 5px;
-        }
-
-        .school-description p {
-            color: white;
+            margin-bottom: 15px;
         }
 
         .school-description h2 {
+            margin-bottom: 10px;
             color: white;
         }
 
         .contact-section h3 {
+            margin-bottom: 15px;
             color: white;
         }
 
-        .navigation-section ul li a {
-            color: white;
-            text-decoration: none;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-bar .container,
+            .logo-section,
+            .navbar ul,
+            .profile-content,
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .slider-item {
+                flex-direction: column;
+            }
+
+            .slider-image,
+            .slider-content {
+                width: 100%;
+            }
+
+            .video-container iframe {
+                height: 200px;
+            }
         }
-
-        .navigation-section h3 {
-            color: white;
-
-        }
-
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-
-        /* .prev,
-        .next {
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            font-size: 30px;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-
-        .prev:hover,
-        .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .prev {
-            left: 10px;
-        }
-
-        .next {
-            right: 10px;
-        } */
-        .prev,
-    .next {
-        background-color: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 50%;
-        transition: background-color 0.3s;
-    }
-    .prev:hover,
-    .next:hover {
-        background-color: rgba(0, 0, 0, 0.8);
-    }
     </style>
-    <!-- Top Bar -->
+</head>
+<body>
+    <div class="top-bar">
+        <div class="container">
+            <div class="contact-info">
+                <span>📞 +62 370 645 695</span>
+                <span>📧 SMAK_KESUMA@YAHOO.COM</span>
+            </div>
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo SMA Katolik Kesuma Mataram">
+                <div class="school-title">
+                    <h1>SMA KATOLIK KESUMA MATARAM</h1>
+                    <p>DISIPLIN-JUJUR-TERAMPIL-MANDIRI</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="#">BERANDA</a></li>
+                <li><a href="#">LOGIN</a></li>
+                <li><a href="#">PROFIL</a></li>
+                <li><a href="#">AKADEMIK</a></li>
+                <li><a href="#">KONTAK</a></li>
+            </ul>
+        </div>
+    </nav>
+@if($beritas->isNotEmpty())
+<div class="container">
+    <h1>BERITA TERKINI SMA KATOLIK KESUMA MATARAM</h1>
+    <div class="slider">
+            <div class="slider-item">
+                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}"  class="slider-image">
+                <div class="slider-content">
+                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
+                    <p>{{ str($beritas[0]->body)->limit(100) }}</p>
+                    <a href="{{ route('Berita.show', ['hashedId' => $beritas[0]->hashedId]) }}" class="btn btn-primary slider-link">
+                        Lihat Berita
+                    </a>
+
+                </div>
+            </div>
+            <div class="slider-nav">
+                <button class="prev">❮</button>
+                <button class="next">❯</button>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.slider');
+    const sliderItem = document.querySelector('.slider-item');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const beritas = @json($beritas);
+
+    if (beritas.length > 1) {
+        let currentIndex = 0;
+
+        function updateSlider() {
+            if (beritas.length > 0) {
+                const currentBerita = beritas[currentIndex];
+                
+                // Update image
+                sliderItem.querySelector('.slider-image').src = 
+                    `/storage/berita/${currentBerita.gambar1}`;
+                
+                // Update title
+                sliderItem.querySelector('.slider-title').textContent = 
+                    currentBerita.header;
+                
+                // Update body text (limit to 100 characters)
+                sliderItem.querySelector('.slider-content p').textContent = 
+                    currentBerita.body.length > 100 
+                        ? currentBerita.body.substring(0, 100) + '...' 
+                        : currentBerita.body;
+                
+                // Update link
+                const link = sliderItem.querySelector('.slider-link');
+                link.href = `/berita/${currentBerita.hashedId}`;
+            }
+        }
+
+        // Previous button functionality
+        prevButton.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + beritas.length) % beritas.length;
+            updateSlider();
+        });
+
+        // Next button functionality
+        nextButton.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % beritas.length;
+            updateSlider();
+        });
+    } else {
+        // Hide navigation buttons if only one news item
+        prevButton.style.display = 'none';
+        nextButton.style.display = 'none';
+    }
+});
+        </script>
+@endif
+        <section class="profile">
+            <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
+            <div class="profile-content">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="welcome-text">
+                    <h3>Sambutan Kepala Sekolah</h3>
+                    <p>Salam sejahtera... SMAK Kesuma Mataram adalah salah satu Satuan Pendidikan yang berkomitmen untuk menghasilkan lulusan berkualitas...</p>
+                    <a href="#" class="btn">Selengkapnya</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="school-description">
+                    <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
+                    <h2>SMA KATOLIK KESUMA MATARAM</h2>
+                    <p>SMAK Kesuma Mataram adalah lembaga pendidikan yang berdedikasi untuk mengembangkan potensi siswa melalui pendidikan berkualitas dan berkarakter.</p>
+                </div>
+                <div class="contact-section">
+                    <h3>HUBUNGI KAMI</h3>
+                    https://nlink.at/KHul
+
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Pejanggik No. 110 Cakra Negara</p>
+
+                    <p>Mataram, Nusa Tenggara Barat</p>
+                    <p><i class="fas fa-phone"></i>+62 370 645 695</p>
+                    <p>Email: smak_kesuma@yahoo.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+{{-- <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMA KATOLIK KESUMA MATARAM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.top-bar {
+    background-color: #004b93;
+    color: white;
+    padding: 8px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info span {
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.social-icons a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+header {
+    background: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo-container img {
+    width: 80px;
+    height: auto;
+}
+
+.school-info h1 {
+    color: #004b93;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.motto {
+    color: #666;
+    font-size: 14px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px;
+}
+
+.search-bar button {
+    background-color: #004b93;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+nav {
+    background-color: #004b93;
+    padding: 0 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #003972;
+}
+
+main {
+    padding: 30px 50px;
+    min-height: 400px;
+}
+
+.breadcrumb {
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.breadcrumb a {
+    color: #004b93;
+    text-decoration: none;
+}
+
+.search-results h2 {
+    color: #004b93;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+footer {
+    background-color: #004b93;
+    color: white;
+    padding: 50px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+}
+
+.school-description img {
+    width: 100px;
+    margin-bottom: 5px;
+}
+
+.school-description h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.school-description p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.contact-section h3,
+.navigation-section h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.contact-section p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.navigation-section ul {
+    list-style: none;
+}
+
+.navigation-section ul li {
+    margin-bottom: 10px;
+}
+
+.navigation-section ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .top-bar, header, nav, main, footer {
+        padding: 15px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    .logo-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .search-bar {
+        margin-top: 15px;
+    }
+}
+    </style>
     <div class="top-bar">
         <div class="contact">
             <span>📞 +62 370 645 695</span>
@@ -390,26 +658,15 @@ ini dia
             </div>
         </div>
     </header>
+    <nav>
+        <ul>
+            <li><a href="#">BERANDA</a></li>
+            <li><a href="#">LOGIN</a></li>
+           
+        </ul>
+    </nav>
     <br>
-    {{-- <div class="slider">
-        <div class="slider-item" id="slider-item-1">
-            <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}">
-            <div class="slider-content">
-                <h3>{{ $beritas[0]->header }}</h3>
-                <p>{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-              
-@foreach ($beritas as $berita)
-    <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="btn btn-primary">
-        Lihat Berita
-    </a>
-@endforeach
-
-            </div>
-        </div>
-        <div class="slider-nav">
-            <button class="prev" onclick="moveSlider(-1)">❮</button>
-            <button class="next" onclick="moveSlider(1)">❯</button>
-        </div> --}}
+    
         @if($beritas->isNotEmpty())
         <div class="slider">
         <h2>BERITA SMAK KESUMA MATARAM</h2>
@@ -430,7 +687,6 @@ ini dia
             </div>
         </div>
     @endif
-    <br>
     <br>
     <br>
     <br>
@@ -468,96 +724,51 @@ ini dia
         updateSlider();
     </script>
         
-        {{-- <div class="slider">
-            <div class="slider-item" id="slider-item-1">
-                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}" class="slider-image">
-                <div class="slider-content">
-                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
-                    <p class="slider-body">{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-                    <a href="{{ route('Berita.show', ['hashedId' => $beritas[0]->hashedId]) }}" class="btn btn-primary slider-link">
-                        Lihat Berita
-                    </a>
+        <section class="profile">
+            <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
+            <div class="profile-content">
+                <div class="video-container">
+                    @if ($youtubeVideos->isEmpty())
+                        <p>Tidak ada video yang aktif.</p>
+                        <iframe src="" frameborder="0" allowfullscreen></iframe>
+                    @else
+                        @foreach ($youtubeVideos as $video)
+                            <div>
+                                <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="welcome-text">
+                    <h3>Sambutan Kepala Sekolah</h3>
+                    <p>Salam sejahtera... SMAK Kesuma Mataram adalah salah satu dari Satuan Pendidikan yang berada di bawah...</p>
+                    <a href="#" class="slider-button">Selengkapnya</a>
                 </div>
             </div>
-            <div class="slider-nav">
-                <button class="prev" onclick="moveSlider(-1)">❮</button>
-                <button class="next" onclick="moveSlider(1)">❯</button>
+        </section>
+        
+  
+    <footer>
+        <div class="footer-content">
+            <div class="school-description">
+                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
+                <h2>SMA KATOLIK KESUMA MATARAM</h2>
+                <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan
+                    dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada
+                    masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
+            </div>
+            <div class="contact-section">
+                <h3>HUBUNGI KAMI</h3>
+                <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
+                <p>Telepon/Fax : +62 370 645 695</p>
+                <p>Email : smak_kesuma@yahoo.com</p>
             </div>
         </div>
-        
-        <script>
-            let currentIndex = 0;
-            const beritas = @json($beritas);
-        
-            function updateSlider() {
-                const sliderItem = document.getElementById('slider-item-1');
-                const berita = beritas[currentIndex];
-        
-                sliderItem.querySelector('.slider-image').src = '/storage/berita/' + berita.gambar1;
-                sliderItem.querySelector('.slider-title').innerText = berita.header;
-                sliderItem.querySelector('.slider-body').innerText = berita.body.substring(0, 100) + '...';
-        
-                sliderItem.querySelector('.slider-link').href = "{{ route('Berita.show', ':hashedId') }}".replace(':hashedId', berita.hashedId);
-            }
-        
-            function moveSlider(direction) {
-                currentIndex += direction;
-                if (currentIndex < 0) {
-                    currentIndex = beritas.length - 1;
-                } else if (currentIndex >= beritas.length) {
-                    currentIndex = 0;
-                }
-                updateSlider();
-            }
-        
-            updateSlider();
-        </script>
-         --}}
-        {{-- <div class="slider">
-            <div class="slider-item" id="slider-item-1">
-                <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}" alt="{{ $beritas[0]->header }}" class="slider-image">
-                <div class="slider-content">
-                    <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
-                    <p class="slider-body">{{ \Illuminate\Support\Str::limit($beritas[0]->body, 100) }}</p>
-                    <a href="{{ route('Berita.show', ['id' => $beritas[0]->id]) }}" class="btn btn-primary slider-link">
-                        Lihat Berita
-                    </a>
-                </div>
-            </div>
-            <div class="slider-nav">
-                <button class="prev" onclick="moveSlider(-1)">❮</button>
-                <button class="next" onclick="moveSlider(1)">❯</button>
-            </div>
-        </div>
-        
-    <script>
-        let currentIndex = 0;
-        const beritas = @json($beritas);
-    
-        function updateSlider() {
-            const sliderItem = document.getElementById('slider-item-1');
-            const berita = beritas[currentIndex];
-    
-            sliderItem.querySelector('.slider-image').src = '/storage/berita/' + berita.gambar1;
-            sliderItem.querySelector('.slider-title').innerText = berita.header;
-            sliderItem.querySelector('.slider-body').innerText = berita.body.substring(0, 100) + '...';
-    
-            sliderItem.querySelector('.slider-link').href = "{{ route('Berita.show', ':id') }}".replace(':id', berita.id);
-        }
-    
-        function moveSlider(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) {
-                currentIndex = beritas.length - 1;
-            } else if (currentIndex >= beritas.length) {
-                currentIndex = 0;
-            }
-            updateSlider();
-        }
-    
-        updateSlider();
-    </script> --}}
-    <section class="profile">
+    </footer>
+
+</body>
+</html> --}}
+  {{-- <section class="profile">
         <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
         <div class="profile-content">
             <div class="video-container">
@@ -580,9 +791,9 @@ ini dia
                 <a href="#" class="slider-button">Selengkapnya</a>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Gallery Section -->
-    <section class="gallery">
+    {{-- <section class="gallery">
         <h2>GALERI & DOKUMENTASI</h2>
         <div class="gallery-grid">
             <div class="gallery-item">
@@ -598,22 +809,4 @@ ini dia
                 <p>Acara Murid</p>
             </div>
         </div>
-    </section>
-    <footer>
-        <div class="footer-content">
-            <div class="school-description">
-                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
-                <h2>SMA KATOLIK KESUMA MATARAM</h2>
-                <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan
-                    dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada
-                    masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
-            </div>
-            <div class="contact-section">
-                <h3>HUBUNGI KAMI</h3>
-                <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
-                <p>Telepon/Fax : +62 370 645 695</p>
-                <p>Email : smak_kesuma@yahoo.com</p>
-            </div>
-        </div>
-    </footer>
-@endsection
+    </section> --}}

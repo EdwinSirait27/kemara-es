@@ -118,10 +118,28 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'body',
-                        name: 'body',
-                        className: 'text-center'
-                    },
+    data: 'body',
+    name: 'body',
+    className: 'text-center',
+    render: function (data, type, row) {
+        if (data) {
+            let words = data.split(' '); // Memecah teks menjadi array berdasarkan spasi
+            let formattedBody = ''; // Inisialisasi teks hasil format
+            for (let i = 0; i < words.length; i += 10) {
+                formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 25 kata dan tambahkan baris baru
+            }
+            return `<div style="text-align: justify;">${formattedBody}</div>`; // Tambahkan gaya justify
+        }
+        return data;
+    }
+},
+
+
+                    // {
+                    //     data: 'body',
+                    //     name: 'body',
+                    //     className: 'text-center'
+                    // },
                     {
                             data: 'gambar1',
                             name: 'gambar1',
