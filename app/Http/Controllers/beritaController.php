@@ -7,7 +7,7 @@ use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-class beritaController extends Controller
+class BeritaController extends Controller
 {
     public function __construct()
     {

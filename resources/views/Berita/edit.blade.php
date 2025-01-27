@@ -100,16 +100,20 @@
                                         <i class="fas fa-lock"></i> {{ __('Body') }}
                                     </label>
                                     <div>
-                                        <input type="text" class="form-control" id="body" name="body"
-                                            value="{{ old('body', $berita->body) }}" required>
-                                        <p class="text-muted text-xs mt-2">Contoh : isi dari konten</p>
-
-
-
+                                        <textarea 
+                                            class="form-control"
+                                            id="body" 
+                                            name="body" 
+                                            aria-describedby="info-body"
+                                            required
+                                            style="resize: both; overflow: auto;">{{ e($berita->body ?? '') }}</textarea>
+                                        @error('body')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

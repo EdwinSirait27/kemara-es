@@ -84,6 +84,7 @@ maxlength="255" required>
                                     </div>
                                 </div>
                             </div>
+                            </div>
                                                         
                             
                             <div class="row">

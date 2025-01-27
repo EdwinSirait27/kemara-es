@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
 use Illuminate\Support\Facades\Log;
-class youtubeController extends Controller
+class YoutubeController extends Controller
 {
     public function __construct()
     {

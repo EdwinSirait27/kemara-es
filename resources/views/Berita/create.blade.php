@@ -56,14 +56,15 @@
                                             <textarea 
                                                 class="form-control"
                                                 id="body" name="body" aria-describedby="info-body"
-                                                required
+                                                 required
                                                 style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
                                             @error('body')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+                                </div>
                                 
                                 <script>
                                     ClassicEditor
