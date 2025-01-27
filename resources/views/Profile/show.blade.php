@@ -432,7 +432,7 @@
             <div class="article-container" style="font-family: Arial, sans-serif; line-height: 1.8; color: #333;">
                 <!-- Judul Artikel -->
                 <div class="article-header" style="margin-bottom: 20px; text-align: center;">
-                    <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">{{ $profile->title }}</h1>
+                    <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">{{ $profile->header }}</h1>
                     <p style="font-size: 14px; color: #777;">
                         <strong>Pembuat:</strong> {{ $profile->User->Guru->Nama }} |
                         <strong>Dipublikasikan:</strong> {{ \Carbon\Carbon::parse($profile->created_at)->diffForHumans() }}

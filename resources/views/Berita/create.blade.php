@@ -8,7 +8,6 @@
                     <div class="card-header">{{ __('Buat berita') }}</div>
 
                     <div class="card-body">
-                        {{-- Tampilkan pesan sukses --}}
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
@@ -24,8 +23,6 @@
                                 </ul>
                             </div>
                         @endif
-
-                        {{-- Form untuk membuat user --}}
                         <form method="POST" id="create-user-form" action="{{ route('Berita.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
@@ -48,44 +45,33 @@
                                     </div>
                                 </div>
                            
-                                {{-- <div class="col-md-6">
+                                <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="body" class="form-control-label">
                                             <i class="fas fa-lock"></i> {{ __('Body') }}
                                         </label>
                                         <div>
-                                            <input class="form-control"
-                                            value="{{ e($body ?? '') }}"
-                                            type="text"
+                                            <textarea 
+                                                class="form-control"
                                                 id="body" name="body" aria-describedby="info-body"
-maxlength="255" required>
-                                                @error('body')
-                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                required
+                                                style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
+                                            @error('body')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
-    
                                         </div>
                                     </div>
-                                </div>
-                            </div> --}}
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="body" class="form-control-label">
-                                        <i class="fas fa-lock"></i> {{ __('Body') }}
-                                    </label>
-                                    <div>
-                                        <textarea 
-                                            class="form-control"
-                                            id="body" name="body" aria-describedby="info-body"
-                                             required
-                                            style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
-                                        @error('body')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                                                        
-                            
+                                </div>  
+                                
+                                <script>
+                                    ClassicEditor
+                                        .create(document.querySelector('#body'))
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                </script>                            
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -245,6 +231,7 @@ maxlength="255" required>
                             </span>
                         </div>
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
                         <script>
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
@@ -263,6 +250,8 @@ maxlength="255" required>
                                 });
                             });
                         </script>
+                      
+
                     </div>
                 </div>
             </div>
