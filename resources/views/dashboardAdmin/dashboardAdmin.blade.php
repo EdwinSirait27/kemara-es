@@ -10,7 +10,7 @@
         }
     </style>
     <div class="row mt-2">
-        <div class="col-lg-12 mb-lg-0 mb-4"> <!-- Lebar kolom diperbesar dari col-lg-7 menjadi col-lg-9 -->
+        <div class="col-lg-12 mb-lg-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">

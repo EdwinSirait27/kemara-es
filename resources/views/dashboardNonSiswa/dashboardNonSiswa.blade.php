@@ -2,117 +2,126 @@
 @section('title', 'Kemara-ES | Dashboard')
 @section('content')
     <style>
-         .chart-canvas {
-            display: block;
-            width: 100%;
-            height: 300px;
-            z-index: 1;
-        }
+      /* Base styles */
+.chart-canvas {
+    display: block;
+    width: 100%;
+    height: 300px;
+    z-index: 1;
+}
 
-        .osis-card {
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
+.osis-card {
+    margin-bottom: 1.25rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
 
-        .osis-card:hover {
-            transform: scale(1.05);
-        }
+.osis-card:hover {
+    transform: scale(1.05);
+}
 
-        .osis-card img {
-            width: 80%;
-            height: 350px;
-            object-fit: cover;
-        }
+.osis-card img {
+    width: 80%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+}
 
-        .osis-card .caption {
-            padding: 5px;
-            background-color: #f8f9fa;
-        }
+.osis-card .caption {
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+}
 
-        .osis-card p {
-            margin: 5px 0;
-        }
+.osis-card p {
+    margin: 0.3125rem 0;
+}
 
-        .vote-button {
-            margin-top: 15px;
-        }
+.vote-button {
+    margin-top: 1rem;
+}
 
-        .card:hover {
-            transform: translateY(-10px);
-            transition: transform 0.3s ease;
-        }
+.card:hover {
+    transform: translateY(-0.625rem);
+    transition: transform 0.3s ease;
+}
 
-        .icon {
-            font-size: 32px;
-            /* Ukuran ikon lebih besar */
-            color: #fff;
-        }
+.icon {
+    font-size: 2rem;
+    color: #fff;
+}
 
-        .numbers h5 {
-            font-size: 1.5rem;
-        }  .chart-canvas {
-            display: block;
-            width: 100%;
-            height: 300px;
-            z-index: 1;
-        }
+.numbers h5 {
+    font-size: 1.5rem;
+}
 
-        .osis-card {
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
+/* Responsive breakpoints */
+@media screen and (max-width: 1200px) {
+    .osis-card img {
+        width: 90%;
+        max-height: 350px;
+    }
+}
 
-        .osis-card:hover {
-            transform: scale(1.05);
-        }
+@media screen and (max-width: 992px) {
+    .osis-card img {
+        width: 95%;
+        max-height: 300px;
+    }
+    
+    .numbers h5 {
+        font-size: 1.25rem;
+    }
+    
+    .icon {
+        font-size: 1.75rem;
+    }
+}
 
-        .osis-card img {
-            width: 80%;
-            height: 400px;
-            object-fit: cover;
-        }
+@media screen and (max-width: 768px) {
+    .chart-canvas {
+        height: 250px;
+    }
+    
+    .osis-card img {
+        width: 100%;
+        max-height: 250px;
+    }
+    
+    .col-4.text-center {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
 
-       
+@media screen and (max-width: 576px) {
+    .chart-canvas {
+        height: 200px;
+    }
+    
+    .osis-card {
+        margin-bottom: 1rem;
+    }
+    
+    .osis-card img {
+        max-height: 200px;
+    }
+    
+    .numbers h5 {
+        font-size: 1rem;
+    }
+    
+    .icon {
+        font-size: 1.5rem;
+    }
+}
 
-        .osis-card p {
-            margin: 0px 0;
-        }
-
-        .vote-button {
-            margin-top: 15px;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            transition: transform 0.3s ease;
-        }
-
-        .icon {
-            font-size: 32px;
-            color: #fff;
-        }
-
-        .numbers h5 {
-            font-size: 1.5rem;
-        }
-
-        .col-4.text-center {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-
-        .col-4.text-center {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
+/* Fix untuk spacing */
+.col-4.text-center {
+    padding: 0.5rem !important;
+}
     </style>
     <div class="row mt-2">
         <div class="col-lg-12 mb-lg-0 mb-4"> <!-- Lebar kolom diperbesar dari col-lg-7 menjadi col-lg-9 -->
