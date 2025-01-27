@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Rules\NoXSSInput;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Guru;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Hash;
@@ -42,8 +42,8 @@ class InfoUserControllerNonSiswa extends Controller
             
             'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
             'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
-            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
-            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
+            'TempatLahir' => ['nullable', 'string','max:30', new NoXSSInput()],
+            'TanggalLahir' => ['nullable', 'string', new NoXSSInput()],
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
             'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
             'NomorTelephone' => ['nullable', 'string','max:13', new NoXSSInput()],
@@ -67,13 +67,13 @@ class InfoUserControllerNonSiswa extends Controller
                 'numeric',
                 'max:4',
             ],
-            'foto' => ['required','image','mimes:jpeg,png,jpg','max:1024'],
+            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
         
         ],
     [
         'foto.required' => 'foto wajib diisi',
         'foto.mimes' => 'harus bertipe jpeg,png,jpg',
-        'foto.max' => 'foto harus kurang dari 1024 kb',
+        'foto.max' => 'foto harus kurang dari 512 kb',
         'foto.image' => 'harus berupa gambar',
             
         ]);
@@ -128,7 +128,8 @@ class InfoUserControllerNonSiswa extends Controller
                     'NamaPanggilan' => $request->NamaPanggilan,
                     'JenisKelamin' => $request->JenisKelamin,
                     'TempatLahir' => $request->TempatLahir,
-                    'TanggalLahir' => $request->TanggalLahir,
+                  'TanggalLahir' => $request->TanggalLahir ? Carbon::parse($request->TanggalLahir)->format('Y-m-d') : null, // Format tanggal diperbaiki
+                
                     'Agama' => $request->Agama,
                     'Alamat' => $request->Alamat,
                     'NomorTelephone' => $request->NomorTelephone,

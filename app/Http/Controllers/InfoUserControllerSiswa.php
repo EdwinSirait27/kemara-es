@@ -60,15 +60,14 @@ class InfoUserControllerSiswa extends Controller
             'Role' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string','max:12', new NoXSSInput()],
             'password' => ['nullable', 'string','max:12','min:7','confirmed', new NoXSSInput()],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg','max:512',],      
             
             'NamaLengkap' => ['nullable', 'string','max:100','min:10', new NoXSSInput()],
             'NomorInduk' => ['nullable', 'string','max:16', new NoXSSInput()],
             'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
             'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],
             'NISN' => ['nullable', 'string','max:16', new NoXSSInput()],
-            'TempatLakir' => ['nullable', 'string','max:30', new NoXSSInput()],
-            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],
+            'TempatLahir' => ['nullable', 'string','max:30', new NoXSSInput()],
+            'TanggalLahir' => ['nullable', 'string','max:30', new NoXSSInput()],
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
             'Alamat' => ['nullable', 'string','max:100', new NoXSSInput()],
             'Email' => ['nullable', 'string','max:100', new NoXSSInput()],
@@ -89,8 +88,18 @@ class InfoUserControllerSiswa extends Controller
                     }
                 }
             ],   
+            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+        
+        ],
+    [
+        'foto.required' => 'foto wajib diisi',
+        'foto.mimes' => 'harus bertipe jpeg,png,jpg',
+        'foto.max' => 'foto harus kurang dari 512 kb',
+        'foto.image' => 'harus berupa gambar',
             
-        ]);
+        ]
+            
+        );
         
     
         $filePath = null;
@@ -144,7 +153,8 @@ class InfoUserControllerSiswa extends Controller
                     'JenisKelamin' => $request->JenisKelamin,
                     'NISN' => $request->NISN,
                     'TempatLahir' => $request->TempatLahir,
-                    'TanggalLahir' => $request->TanggalLahir,
+                  'TanggalLahir' => $request->TanggalLahir ? Carbon::parse($request->TanggalLahir)->format('Y-m-d') : null, // Format tanggal diperbaiki
+                    
                     'Agama' => $request->Agama,
                     'Alamat' => $request->Alamat,
                     'Email' => $request->Email,

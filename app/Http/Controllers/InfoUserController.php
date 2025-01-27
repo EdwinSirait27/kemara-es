@@ -39,15 +39,10 @@ class InfoUserController extends Controller
             'Role' => ['nullable', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
             'current_password' => ['nullable', 'string', 'max:12', new NoXSSInput()],      
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
-           'foto' => [
-    'nullable', 
-    'image', 
-    'mimes:jpeg,png,jpg', 
-    'max:512'
-],
+         
 
             'TempatLahir' => ['nullable', 'string', 'max:255', new NoXSSInput()],      
-            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],      
+            'TanggalLahir' => ['nullable', 'string','max:30', new NoXSSInput()],      
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
             'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],      
             'StatusPegawai' => ['nullable', 'string','max:255', new NoXSSInput()],      
@@ -84,6 +79,15 @@ class InfoUserController extends Controller
                     }
                 }
             ],   
+            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+        
+        ],
+    [
+        'foto.required' => 'foto wajib diisi',
+        'foto.mimes' => 'harus bertipe jpeg,png,jpg',
+        'foto.max' => 'foto harus kurang dari 512 kb',
+        'foto.image' => 'harus berupa gambar',
+            
         ]);
        
     
@@ -128,7 +132,7 @@ class InfoUserController extends Controller
                                     'Nama' => $request->Nama,
                     'foto' => $filePath, 
                     'TempatLahir' => $request->TempatLahir,
-                    'TanggalLahir' => $request->TanggalLahir,
+                  'TanggalLahir' => $request->TanggalLahir ? Carbon::parse($request->TanggalLahir)->format('Y-m-d') : null, // Format tanggal diperbaiki
                     'Agama' => $request->Agama,
                     'JenisKelamin' => $request->JenisKelamin,
                     'StatusPegawai' => $request->StatusPegawai,
