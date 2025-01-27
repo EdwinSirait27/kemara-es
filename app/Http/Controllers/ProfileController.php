@@ -13,7 +13,7 @@ class ProfileController extends Controller
     }
     public function getProfile()
     {
-        $profile = Profile::with('User.Guru')->select(['id', 'user_id', 'header', 'body','gambar1','gambar1','gambar1','gambar1','gambar2','gambar3','gambar4','gambar5','gambar6','gambar7','gambar8','status'])
+        $profile = Profile::with('User.Guru')->select(['id', 'user_id', 'header', 'gambar1','gambar1','gambar1','gambar1','gambar2','gambar3','gambar4','gambar5','gambar6','gambar7','gambar8','status'])
             ->get()
             ->map(function ($profile) {
                 $profile->id_hashed = substr(hash('sha256', $profile->id . env('APP_KEY')), 0, 8);

@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\DashboardControllerNonSiswa;
 use App\Http\Controllers\DashboardControllerSU;
@@ -448,9 +447,6 @@ Route::get('tables', function () {
 });
 
 // kurikulum
-
-
-
 Route::middleware(['auth','can:isKepalaSekolah','prevent.xss'])->group(function () {
  // Kepala Sekolah
  Route::get('/dashboardKepalaSekolah', [DashboardControllerKepalaSekolah::class, 'index'])->name('dashboardKepalaSekolah.index');

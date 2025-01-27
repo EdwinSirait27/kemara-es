@@ -117,53 +117,30 @@
                         name: 'header',
                         className: 'text-center'
                     },
-                    {
-    data: 'body',
-    name: 'body',
-    className: 'text-center',
-    render: function (data, type, row) {
-        if (data) {
-            // Memecah teks menjadi array kata-kata berdasarkan spasi
-            let words = data.split(' ');
-            let formattedBody = ''; // Inisialisasi teks hasil format
-
-            // Loop untuk membagi teks menjadi grup 10 kata
-            for (let i = 0; i < words.length; i += 10) {
-                formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 10 kata dan tambahkan baris baru
-            }
-
-            // Mengembalikan teks terformat dengan gaya justify
-            return `<div style="text-align: justify;">${formattedBody}</div>`;
-        }
-
-        // Jika tidak ada data, kembalikan data apa adanya (null atau kosong)
-        return data || '';
-    }
-},
-
 //                     {
 //     data: 'body',
 //     name: 'body',
 //     className: 'text-center',
 //     render: function (data, type, row) {
 //         if (data) {
-//             let words = data.split(' '); // Memecah teks menjadi array berdasarkan spasi
+//             // Memecah teks menjadi array kata-kata berdasarkan spasi
+//             let words = data.split(' ');
 //             let formattedBody = ''; // Inisialisasi teks hasil format
+
+//             // Loop untuk membagi teks menjadi grup 10 kata
 //             for (let i = 0; i < words.length; i += 10) {
-//                 formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 25 kata dan tambahkan baris baru
+//                 formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 10 kata dan tambahkan baris baru
 //             }
-//             return `<div style="text-align: justify;">${formattedBody}</div>`; // Tambahkan gaya justify
+
+//             // Mengembalikan teks terformat dengan gaya justify
+//             return `<div style="text-align: justify;">${formattedBody}</div>`;
 //         }
-//         return data;
+
+//         // Jika tidak ada data, kembalikan data apa adanya (null atau kosong)
+//         return data || '';
 //     }
 // },
 
-
-                    // {
-                    //     data: 'body',
-                    //     name: 'body',
-                    //     className: 'text-center'
-                    // },
                     {
                             data: 'gambar1',
                             name: 'gambar1',

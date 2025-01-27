@@ -20,7 +20,7 @@ class BeritaController extends Controller
     }
     public function getBerita()
     {
-        $berita = Berita::with('User.Guru')->select(['id', 'user_id', 'header', 'body','gambar1','gambar1','gambar1','gambar1','gambar2','gambar3','gambar4','gambar5','gambar6','gambar7','gambar8','status'])
+        $berita = Berita::with('User.Guru')->select(['id', 'user_id', 'header','gambar1','gambar1','gambar1','gambar1','gambar2','gambar3','gambar4','gambar5','gambar6','gambar7','gambar8','status'])
             ->get()
             ->map(function ($berita) {
                 $berita->id_hashed = substr(hash('sha256', $berita->id . env('APP_KEY')), 0, 8);
