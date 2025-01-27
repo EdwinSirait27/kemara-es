@@ -37,6 +37,7 @@ use App\Http\Controllers\DataguruController;
 use App\Http\Controllers\OrganisasisiswaController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\PengaturankelasdatamengajarController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OsisController;
 use App\Http\Controllers\VotingController;
 use App\Http\Controllers\RegisterController;
@@ -353,6 +354,14 @@ Route::get('Berita/create', [BeritaController::class, 'create'])->name('Berita.c
 Route::post('/Berita', [BeritaController::class, 'store'])->name('Berita.store');
 Route::get('/Berita/edit/{hashedId}', [BeritaController::class, 'edit'])->name('Berita.edit');
 Route::put('/Berita/{hashedId}', [BeritaController::class, 'update'])->name('Berita.update');
+    //url profile
+Route::get('/Profile', [ProfileController::class, 'index'])->name('Profile.index');
+Route::get('/profile/profile', [ProfileController::class, 'getProfile'])->name('profile.profile');
+Route::delete('/Profile/delete', [ProfileController::class, 'deleteProfile'])->name('profile.delete');
+Route::get('Profile/create', [ProfileController::class, 'create'])->name('Profile.create');
+Route::post('/Profile', [ProfileController::class, 'store'])->name('Profile.store');
+Route::get('/Profile/edit/{hashedId}', [ProfileController::class, 'edit'])->name('Profile.edit');
+Route::put('/Profile/{hashedId}', [ProfileController::class, 'update'])->name('Profile.update');
 
 // Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
 // ->name('Kelassiswa.showmatapelajaran');
@@ -516,11 +525,12 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 
-Route::get('/Profile', [ProfileSekolahController::class, 'profile'])->name('Profile');
+// Route::get('/Profile', [ProfileSekolahController::class, 'profile'])->name('Profile');
 Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
 // Route::get('/Berita/show/{hashedId}', [ProfileSekolahController::class, 'show'])->name('Berita.show');
 // routes/web.php
-Route::get('/Berita/show/{hashedId}', [BeritaController::class, 'show'])->name('Berita.show');
+Route::get('/Berita/show/{id}', [BeritaController::class, 'show'])->name('Berita.show');
+Route::get('/Profile/show/{id}', [ProfileController::class, 'show'])->name('Profile.show');
 });
 // Route::middleware('guest')->group(function () {
 //     // Registrasi

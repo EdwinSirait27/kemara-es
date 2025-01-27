@@ -1,309 +1,377 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMA KATOLIK KESUMA MATARAM</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+@extends('layouts.user_type.auth')
+@section('title', 'Kemara-ES | Profile')
+
+@section('content')
     <style>
-        /* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background-color: #f5f5f5;
-}
-
-/* Top Bar Styles */
-.top-bar {
-    background-color: #004b93;
-    color: white;
-    padding: 8px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.contact-info span {
-    margin-right: 20px;
-    font-size: 14px;
-}
-
-.social-icons a {
-    color: white;
-    text-decoration: none;
-    margin-left: 15px;
-    font-size: 14px;
-}
-
-/* Header Styles */
-header {
-    background: white;
-    padding: 20px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.logo-container img {
-    width: 80px;
-    height: auto;
-}
-
-.school-info h1 {
-    color: #004b93;
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-.motto {
-    color: #666;
-    font-size: 14px;
-}
-
-.search-bar {
-    display: flex;
-    gap: 10px;
-}
-
-.search-bar input {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 250px;
-}
-
-.search-bar button {
-    background-color: #004b93;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Navigation Menu */
-nav {
-    background-color: #004b93;
-    padding: 0 50px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 15px 20px;
-    display: block;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-nav ul li a:hover {
-    background-color: #003972;
-}
-
-/* Main Content */
-main {
-    padding: 30px 50px;
-    min-height: 400px;
-}
-
-.breadcrumb {
-    margin-bottom: 30px;
-    color: #666;
-}
-
-.breadcrumb a {
-    color: #004b93;
-    text-decoration: none;
-}
-
-.search-results h2 {
-    color: #004b93;
-    margin-bottom: 15px;
-    font-size: 24px;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #004b93;
-    color: white;
-    padding: 50px;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px;
-}
-
-.school-description img {
-    width: 100px;
-    margin-bottom: 5px;
-}
-
-.school-description h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-.school-description p {
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.contact-section h3,
-.navigation-section h3 {
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.contact-section p {
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.navigation-section ul {
-    list-style: none;
-}
-
-.navigation-section ul li {
-    margin-bottom: 10px;
-}
-
-.navigation-section ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .top-bar, header, nav, main, footer {
-        padding: 15px;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-
-    nav ul {
-        flex-direction: column;
-    }
-
-    .logo-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .search-bar {
-        margin-top: 15px;
-    }
-}
+        .text-center {
+            text-align: center;
+        }
     </style>
-    <!-- Top Contact Bar -->
-    <div class="top-bar">
-        <div class="contact-info">
-            <span>📞 +62 370 645 695</span>
-            <span>📧 SMAK_KESUMA@YAHOO.COM</span>
-        </div>
-        <div class="social-icons">
-            <a href="#" class="facebook">Facebook</a>
-            <a href="#" class="instagram">Instagram</a>
-            <a href="#" class="youtube">YouTube</a>
-            <a href="#" class="whatsapp">WhatsApp</a>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0">
+                    {{-- <h6>Role & Hak Akses</h6> --}}
+                    <h6><i class="fas fa-user-shield"></i> Data Profile Sekolah</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0"id="users-table">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        No.</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Pembuat</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Header</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Body</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 1</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 2</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 3</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 4</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 5</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 6</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 7</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Gambar 8</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Status</th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Action</th>
+                                    <th>
+                                        <button type="button" id="select-all" class="btn btn-primary btn-sm">
+                                            Select All
+                                        </button>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                        <button type="button" onclick="window.location='{{ route('Profile.create') }}'"
+                            class="btn btn-primary btn-sm">
+                            Buat
+                        </button>
+                        <button type="button" id="delete-selected" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            let table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('profile.profile') }}',
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                columns: [{
+                        data: 'id', // Kolom indeks
+                        name: 'id',
+                        className: 'text-center',
+                        render: function(data, type, row, meta) {
+                            return meta.row + 1;
+                        },
+                    },
+                    {
+                        data: 'Guru_Nama',
+                        name: 'Guru_Nama',
+                        className: 'text-center'
+                    },
+                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
+                    {
+                        data: 'header',
+                        name: 'header',
+                        className: 'text-center'
+                    },
+                    {
+    data: 'body',
+    name: 'body',
+    className: 'text-center',
+    render: function (data, type, row) {
+        if (data) {
+            let words = data.split(' '); // Memecah teks menjadi array berdasarkan spasi
+            let formattedBody = ''; // Inisialisasi teks hasil format
+            for (let i = 0; i < words.length; i += 10) {
+                formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 25 kata dan tambahkan baris baru
+            }
+            return `<div style="text-align: justify;">${formattedBody}</div>`; // Tambahkan gaya justify
+        }
+        return data;
+    }
+},
 
-    <!-- Header -->
-    <header>
-        <div class="logo-container">
-            {{-- <img src="url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png')" alt="Logo SMA Katolik Kesuma Mataram"> --}}
-            <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo SMA Katolik Kesuma Mataram">
 
-            <div class="school-info">
-                <h1>SMA KATOLIK KESUMA MATARAM</h1>
-                <p class="motto">DISIPLIN-JUJUR-TERAMPIL-MANDIRI</p>
-            </div>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Cari sesuatu...">
-            <button type="submit">CARI</button>
-        </div>
-    </header>
+                    // {
+                    //     data: 'body',
+                    //     name: 'body',
+                    //     className: 'text-center'
+                    // },
+                    {
+                            data: 'gambar1',
+                            name: 'gambar1',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar2',
+                            name: 'gambar2',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar3',
+                            name: 'gambar3',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar4',
+                            name: 'gambar4',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar5',
+                            name: 'gambar5',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar6',
+                            name: 'gambar6',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar7',
+                            name: 'gambar7',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                    {
+                            data: 'gambar8',
+                            name: 'gambar8',
+                            className: 'text-center',
+                            render: function(data, type, full, meta) {
+                                if (data) {
+                                    return '<img src="' + '{{ asset('storage/profile') }}/' + data +
+                                        '" width="100" />';
+                                } else {
+                                    return '<span>Foto tidak tersedia</span>';
+                                }
+                            },
+                        },
+                   
 
-    <!-- Navigation Menu -->
-    <nav>
-        <ul>
-            <li><a href="#">BERANDA</a></li>
-            <li><a href="#">PROFIL</a></li>
-            <li><a href="#">SARANA & PRASARANA</a></li>
-            <li><a href="#">EKSTRAKURIKULER</a></li>
-            <li><a href="#">GURU / KARYAWAN</a></li>
-            <li><a href="#">GALERI</a></li>
-            <li><a href="#">INFORMASI</a></li>
-            <li><a href="#">KONTAK</a></li>
-        </ul>
-    </nav>
 
-    <!-- Main Content -->
-    <main>
-        <div class="breadcrumb">
-            <a href="#">Beranda</a> > Cari
-        </div>
-        
-        <section class="search-results">
-            <h2>Hasil Pencarian</h2>
-            <p>Dari kata kunci : gatau</p>
-            <!-- Search results content would go here -->
-        </section>
-    </main>
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'id',
+                        name: 'checkbox',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+                        render: function(data, type, row) {
+                            return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
+                        }
+                    }
+                ]
+            });
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="school-description">
-                {{-- <img src="logo.png" alt="Logo Footer"> --}}
-            <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
 
-                <h2>SMA KATOLIK KESUMA MATARAM</h2>
-                <p>SMAK Kesuma Mataram adalah singkatan dari Sekolah Menengah Atas Katolik Kesuma. Kata Kesuma singkatan dari Keerdasan Suluh Masyarakat. Dan adapun website ini dibikin sebagai media informaasi sekolah kepada masyarakat serta mempermudah dalam penerimaan siswa baru.</p>
-            </div>
+            $('#select-all').on('click', function() {
+                let checkboxes = $('.user-checkbox');
+                let allChecked = checkboxes.filter(':checked').length === checkboxes.length;
+                checkboxes.prop('checked', !allChecked);
+            });
+            $(document).on('mouseenter', '[data-bs-toggle="tooltip"]', function() {
+                $(this).tooltip();
+            });
 
-            <div class="contact-section">
-                <h3>HUBUNGI KAMI</h3>
-                <p>Jl.Pejanggik No.110 Cakra Negara Mataram-NTB</p>
-                <p>Telepon/Fax : +62 370 645 695</p>
-                <p>Email : smak_kesuma@yahoo.com</p>
-            </div>
+            // Delete Selected Users
+            $('#delete-selected').on('click', function() {
+                let selectedIds = $('.user-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
 
-            <div class="navigation-section">
-                <h3>NAVIGASI</h3>
-                <ul>
-                    <li><a href="#">Profil Sekolah</a></li>
-                    <li><a href="#">Informasi & Berita</a></li>
-                    <li><a href="#">Galeri / Dokumentasi</a></li>
-                    <li><a href="#">Hubungi Kami</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+                if (selectedIds.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Tidak Ada profile Yang Dipilih',
+                        text: 'Tolong Pilih Salah Satu.'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Tidak Bisa Diubah Lagi Jika di di Delete!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Iya, Delete!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '{{ route('profile.delete') }}',
+                            method: 'POST',
+                            data: {
+                                ids: selectedIds,
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        response.message,
+                                        'success'
+                                    );
+                                    table.ajax.reload();
+                                } else {
+                                    Swal.fire(
+                                        'Failed!',
+                                        'Failed to delete profile.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting profile.',
+                                    'error'
+                                );
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+
+            });
+
+        });
+      
+    </script>
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: '{{ session('warning') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Good...',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+@endsection

@@ -705,6 +705,11 @@ html, body {
                       <span class="nav-link-text ms-1">Berita</span>
                   </a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Profile') ? 'active' : '' }}" href="{{ url('Profile') }}">
+                      <span class="nav-link-text ms-1">Profile</span>
+                  </a>
+              </li>
           </ul>
       </div>
   </li>

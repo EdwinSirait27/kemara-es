@@ -5,27 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Youtube;
 use App\Models\Berita;
+use App\Models\Profile;
 
 use Illuminate\Support\Facades\Hash;
 
 
 class ProfileSekolahController extends Controller
 {
-    public function profile()
+    public function Profile()
     {
-        return view('Profile/index');
+        return view('Profile.index');
 
     }
     public function Beranda()
     {
         $youtubeVideos = Youtube::where('status', 'Aktif')->get();
+        $profiles = Profile::where('status', 'Aktif')->get();
         $beritas = Berita::latest()->take(5)->get();
     
         $beritas->transform(function ($berita) {
             $berita->hashedId = substr(hash('sha256', $berita->id . env('APP_KEY')), 0, 8);
             return $berita;
         });
-        return view('Beranda.index', compact('beritas','youtubeVideos'));
+        $profiles->transform(function ($profile) {
+            $profile->hashedId = substr(hash('sha256', $profile->id . env('APP_KEY')), 0, 8);
+            return $profile;
+        });
+        return view('Beranda.index', compact('beritas','profiles','youtubeVideos'));
     }
     
     // public function Beranda()

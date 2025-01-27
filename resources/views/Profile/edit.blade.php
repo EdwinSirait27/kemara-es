@@ -1,6 +1,6 @@
 @extends('layouts.user_type.auth')
 @section('content')
-@section('title', 'Kemara-ES | Edit berita')
+@section('title', 'Kemara-ES | Edit Profile')
 
 <style>
     .avatar {
@@ -45,13 +45,13 @@
             </div>
         @endif --}}
 
-        <form action="{{ route('Berita.update', $hashedId) }}" method="POST"enctype="multipart/form-data">
+        <form action="{{ route('Profile.update', $hashedId) }}" method="POST"enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="container-fluid py-4">
                 <div class="card">
                     <div class="card-header pb-0 px-3">
-                        <h6 class="mb-0">{{ __('Edit Berita') }}</h6>
+                        <h6 class="mb-0">{{ __('Edit Profile Sekolah') }}</h6>
                     </div>
                     <div class="card-body pt-4 p-3">
 
@@ -85,7 +85,7 @@
                                     </label>
                                     <div>
                                         <input type="text" class="form-control" id="header" name="header"
-                                            value="{{ old('header', $berita->header) }}" required maxlength="255">
+                                            value="{{ old('header', $profile->header) }}" required maxlength="255">
                                         <p class="text-muted text-xs mt-2">Contoh : masukkan header</p>
 
 
@@ -101,7 +101,7 @@
                                     </label>
                                     <div>
                                         <input type="text" class="form-control" id="body" name="body"
-                                            value="{{ old('body', $berita->body) }}" required>
+                                            value="{{ old('body', $profile->body) }}" required>
                                         <p class="text-muted text-xs mt-2">Contoh : isi dari konten</p>
 
 
@@ -247,13 +247,13 @@
                                     <div class="@error('status') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="status" id="status" required>
                                             <option value="" disabled
-                                                {{ old('status', $berita->status ?? '') == '' ? 'selected' : '' }}>
+                                                {{ old('status', $profile->status ?? '') == '' ? 'selected' : '' }}>
                                                 Pilih Status</option>
                                             <option value="Aktif"
-                                                {{ old('status', $berita->status ?? '') == 'Aktif' ? 'selected' : '' }}>
+                                                {{ old('status', $profile->status ?? '') == 'Aktif' ? 'selected' : '' }}>
                                                 Aktif</option>
                                             <option value="Tidak Aktif"
-                                                {{ old('status', $berita->status ?? '') == 'Tidak Aktif' ? 'selected' : '' }}>
+                                                {{ old('status', $profile->status ?? '') == 'Tidak Aktif' ? 'selected' : '' }}>
                                                 Tidak Aktif</option>
                                         </select>
                                         @error('status')
@@ -272,7 +272,7 @@
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4 me-2">
                             {{ __('Update') }}
                         </button>
-                        <a href="{{ route('Berita.index') }}" class="btn btn-secondary mt-4 mb-4">
+                        <a href="{{ route('Profile.index') }}" class="btn btn-secondary mt-4 mb-4">
                             {{ __('Cancel') }}
                         </a>
                     </div>

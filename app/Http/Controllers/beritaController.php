@@ -37,7 +37,7 @@ class beritaController extends Controller
             $berita->gambar5 = $berita->gambar5 ? $berita->gambar5 : 'we.jpg';
             $berita->gambar6 = $berita->gambar6 ? $berita->gambar6 : 'we.jpg';
             $berita->gambar7 = $berita->gambar7 ? $berita->gambar7 : 'we.jpg';
-            $berita->gambar8 = $berita->gambar8 ? $berita->gambar7 : 'we.jpg';
+            $berita->gambar8 = $berita->gambar8 ? $berita->gambar8 : 'we.jpg';
                 
                 return $berita;
             });
@@ -66,26 +66,26 @@ class beritaController extends Controller
         return view('Berita.index');
 
     }
-    public function show($hashedId)
-    {
-        $berita = Berita::all()->first(function ($u) use ($hashedId) {
-            return substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8) === $hashedId;
-        });
-    
-        abort_if(!$berita, 404, 'Data tidak ditemukan');
-        
-        return view('Berita.show', compact('berita', 'hashedId'));
-    }
-    // public function show($id)
+    // public function show($hashedId)
     // {
-    //     $berita = Berita::find($id);
-        
-    //     if (!$berita) {
-        //         abort(404, 'Berita not found.');
-    //     }
+    //     $berita = Berita::all()->first(function ($u) use ($hashedId) {
+    //         return substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8) === $hashedId;
+    //     });
     
-    //     return view('Berita.show', compact('berita'));
+    //     abort_if(!$berita, 404, 'Data tidak ditemukan');
+        
+    //     return view('Berita.show', compact('berita', 'hashedId'));
     // }
+    public function show($id)
+    {
+        $berita = Berita::find($id);
+        
+        if (!$berita) {
+                abort(404, 'Berita not found.');
+        }
+    
+        return view('Berita.show', compact('berita'));
+    }
         public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([

@@ -1,11 +1,11 @@
 @extends('layouts.user_type.auth')
-@section('title', 'Kemara-ES | Tambah berita')
+@section('title', 'Kemara-ES | Tambah Profile')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Buat berita') }}</div>
+                    <div class="card-header">{{ __('Buat Pofile Sekolah') }}</div>
 
                     <div class="card-body">
                         {{-- Tampilkan pesan sukses --}}
@@ -26,7 +26,7 @@
                         @endif
 
                         {{-- Form untuk membuat user --}}
-                        <form method="POST" id="create-user-form" action="{{ route('Berita.store') }}" enctype="multipart/form-data">
+                        <form method="POST" id="create-user-form" action="{{ route('Profile.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
@@ -225,10 +225,10 @@ maxlength="255" required>
                                 </div>
                                 <div class="form-group mb-0">
                                     <button type="button" id="submit-btn" class="btn btn-primary">
-                                        {{ __('Buat berita') }}
+                                        {{ __('Buat Profile') }}
                                     </button>
 
-                                    <a href="{{ route('Berita.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('Profile.index') }}" class="btn btn-secondary">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>
@@ -249,7 +249,7 @@ maxlength="255" required>
                             document.getElementById('submit-btn').addEventListener('click', function(e) {
                                 Swal.fire({
                                     title: 'Apakah Yakin?',
-                                    text: "Buat Berita?",
+                                    text: "Buat Profile Sekolah?",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#3085d6',

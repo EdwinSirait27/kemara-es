@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">
 
-    <title>{{$berita->header}}</title>
+    <title>{{$profile->header}}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
          :root {
@@ -386,14 +386,14 @@
         </div>
     </nav>
         {{-- <div class="container">
-            <h1>BERITA TERKINI SMA KATOLIK KESUMA MATARAM</h1>
+            <h1>profile TERKINI SMA KATOLIK KESUMA MATARAM</h1>
             <div class="slider">
                 <div class="slider-item">
-                    <img src="{{ asset('storage/berita/' . $berita->gambar1) }}" alt="{{ $berita->header }}"
+                    <img src="{{ asset('storage/profile/' . $profile->gambar1) }}" alt="{{ $profile->header }}"
                         class="slider-image">
                     <div class="slider-content">
-                        <h3 class="slider-title">{{ $berita->header }}</h3>
-                        <p>{{ str($berita->body)->limit(100) }}</p>
+                        <h3 class="slider-title">{{ $profile->header }}</h3>
+                        <p>{{ str($profile->body)->limit(100) }}</p>
                        
 
                     </div>
@@ -407,16 +407,16 @@
    
     </div> --}}
     <div class="container">
-        <h1>{{$berita->header}}</h1>
+        <h1>{{$profile->header}}</h1>
         <div class="slider-wrapper">
             <!-- Slider Section -->
             <div class="slider">
                 <!-- Dynamic Slider Items -->
                 @for ($i = 1; $i <= 8; $i++)
                     @php $gambar = 'gambar' . $i; @endphp
-                    @if (!empty($berita->$gambar))
+                    @if (!empty($profile->$gambar))
                         <div class="slider-item">
-                            <img src="{{ asset('storage/berita/' . $berita->$gambar) }}" alt="{{ $berita->header }}" class="slider-image">
+                            <img src="{{ asset('storage/profile/' . $profile->$gambar) }}" alt="{{ $profile->header }}" class="slider-image">
                         </div>
                     @endif
                 @endfor
@@ -429,27 +429,56 @@
             </div>
             
             <!-- Slider Content Section -->
-            <div class="slider-content" style="text-align: justify;">
-                @php
-                    // Memecah teks menjadi paragraf setiap 50 kata
-                    $bodyText = str($berita->body);
-                    $words = explode(' ', $bodyText);
-                    $chunks = array_chunk($words, 50);
-                @endphp
+            <div class="article-container" style="font-family: Arial, sans-serif; line-height: 1.8; color: #333;">
+                <!-- Judul Artikel -->
+                <div class="article-header" style="margin-bottom: 20px; text-align: center;">
+                    <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">{{ $profile->title }}</h1>
+                    <p style="font-size: 14px; color: #777;">
+                        <strong>Pembuat:</strong> {{ $profile->User->Guru->Nama }} |
+                        <strong>Dipublikasikan:</strong> {{ \Carbon\Carbon::parse($profile->created_at)->diffForHumans() }}
+                    </p>
+                </div>
             
-                @foreach ($chunks as $chunk)
-                    <p>{{ implode(' ', $chunk) }}</p>
-                @endforeach
-                <div class="author-info" style="margin-top: 20px; font-size: 14px; color: #555;">
-                    <p><strong>Pembuat:</strong> {{ $berita->User->Guru->Nama }}</p>
-                    <p><strong>Dipublikasikan:</strong> {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans() }}</p>
+                <!-- Konten Artikel -->
+                <div class="article-body" style="text-align: justify;">
+                    @php
+                        // Memecah teks menjadi paragraf setiap 50 kata
+                        $bodyText = str($profile->body);
+                        $words = explode(' ', $bodyText);
+                        $chunks = array_chunk($words, 50);
+                    @endphp
+            
+                    @foreach ($chunks as $chunk)
+                        <p style="margin-bottom: 15px;">{{ implode(' ', $chunk) }}</p>
+                    @endforeach
                 </div>
             </div>
+            
+          
             
             <style>
                 .slider-content p {
                     margin-bottom: 1em; /* Jarak antar-paragraf */
                 }
+                .article-container {
+                    max-width: 800px;
+                    margin: 0 auto; /* Pusatkan artikel di tengah halaman */
+                    padding: 20px;
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+            
+                .article-header h1 {
+                    color: #222;
+                }
+            
+                .article-body p {
+                    font-size: 16px;
+                    line-height: 1.8;
+                }
+            
             </style>
             
             
@@ -492,7 +521,7 @@
   
 </div>
 </div>
-
+<br>
 <footer class="footer">
     <div class="container">
         <div class="footer-content">
