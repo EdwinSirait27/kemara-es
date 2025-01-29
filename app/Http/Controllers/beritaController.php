@@ -368,21 +368,55 @@ class BeritaController extends Controller
     //     $berita->update($beritaData);
     //     return redirect()->route('Berita.index')->with('success', 'Berita Berhasil Diupdate.');
     // }
+    // public function deleteBerita(Request $request)
+    // {
+    //     $request->validate([
+
+    //         'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+
+
+    //     ]);
+    //     Berita::whereIn('id', $request->ids)->delete();
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Selected Berita and their related data deleted successfully.'
+    //     ]);
+    // }
     public function deleteBerita(Request $request)
     {
-        $request->validate([
-
+        $validated = $request->validate([
             'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
-
-
         ]);
-        Berita::whereIn('id', $request->ids)->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Selected Berita and their related data deleted successfully.'
-        ]);
+    
+        try {
+            // Ambil data berita yang akan dihapus
+            $beritas = Berita::whereIn('id', $validated['ids'])->get();
+    
+            foreach ($beritas as $berita) {
+                // Hapus gambar1 sampai gambar8 jika ada
+                for ($i = 1; $i <= 8; $i++) {
+                    $gambarField = 'gambar' . $i;
+                    if ($berita->$gambarField && Storage::exists('public/berita/' . $berita->$gambarField)) {
+                        Storage::delete('public/berita/' . $berita->$gambarField);
+                    }
+                }
+            }
+    
+            // Setelah menghapus file gambar, hapus record berita
+            $count = Berita::whereIn('id', $validated['ids'])->delete();
+            
+            return response()->json([
+                'success' => true,
+                'message' => $count . ' berita dan file gambar terkait berhasil dihapus.'
+            ]);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus berita: ' . $e->getMessage()
+            ], 500);
+        }
     }
-
     public function store(Request $request)
 {
     // Validasi input
