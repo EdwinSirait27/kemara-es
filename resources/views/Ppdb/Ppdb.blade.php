@@ -19,26 +19,21 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
         }
-
         .form-control:focus {
             border-color: #17a2b8;
             box-shadow: 0px 4px 8px rgba(23, 162, 184, 0.5);
         }
-
         .btn {
             border-radius: 0.75rem;
         }
-
         .card {
             border-radius: 1rem;
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
         }
-
         .card:hover {
             transform: translateY(-5px);
         }
-
         .page-header {
             background-size: cover;
             background-position: center;
@@ -206,13 +201,12 @@
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
-
                                     <!-- Username -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Nomor Telephone Orang Tua</label>
                                         <input type="phone" class="form-control form-control-sm"
                                             name="NomorTelephoneAyah" id="NomorTelephoneAyah"
-                                            placeholder="NomorTelephone" aria-label="NomorTelephoneAyah"
+                                            placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
                                             aria-describedby="NomorTelephoneAyah-addon" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('NomorTelephoneAyah') }}"required>
                                         @error('NomorTelephoneAyah')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>

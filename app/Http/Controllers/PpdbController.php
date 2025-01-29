@@ -55,7 +55,6 @@ class PpdbController extends Controller
                 'max:12',
                 'confirmed'
             ],
-
             'NamaLengkap' => [
                 'required',
                 'string',
@@ -76,7 +75,12 @@ class PpdbController extends Controller
                 'string',
                 'max:255',
             ],
-            'TanggalLahir' => ['nullable', 'date',],
+            'TanggalLahir' => [
+                'nullable',
+                'date',
+                'date_format:Y-m-d',
+                'before:today'
+            ],
             'Agama' => [
                 'required',
                 'string',
@@ -91,15 +95,18 @@ class PpdbController extends Controller
                 'nullable',
                 'string',
                 'max:255',
-
             ],
             'NomorTelephone' => [
-                'nullable',
-                'numeric',
+                'required',
+                'string',
+                'max:13',
+                'regex:/^[0-9]+$/'
             ],
             'NomorTelephoneAyah' => [
-                'nullable',
-                'numeric',
+                'required',
+                'string',
+                'max:13',
+                'regex:/^[0-9]+$/'
             ],
             'siswa_id' => [
                 'nullable',
@@ -114,21 +121,49 @@ class PpdbController extends Controller
                 'regex:/^[a-zA-Z0-9_-]+$/',
                 'unique:users,username',
             ],
+        ],
+        [
+            // Validation messages
+            'username.required' => 'username harus diisi seperti keterangan di bawah',
+            'username.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
+            'username.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
+            'username.unique' => 'username sudah ada yang memakai, silahkan pilih username yang lain',
+            'password.required' => 'password harus diisi seperti keterangan di bawah',
+            'password.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
+            'password.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
+            'password.confirmed' => 'password dan konfirmasi password harus sama',
+            'NomorTelephone.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123',
+            'NomorTelephoneAyah.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123',
+            'NomorTelephone.max' => 'nomor telephone maksimal 13 karakter',
+            'NomorTelephoneAyah.max' => 'nomor telephone orang tua maksimal 13 karakter',
+            'TanggalLahir.date_format' => 'Format tanggal lahir harus YYYY-MM-DD',
+            'TanggalLahir.before' => 'Tanggal lahir harus sebelum hari ini',
+            'NomorTelephone.regex' => 'Nomor telephone hanya boleh berisi angka',
+            'NomorTelephoneAyah.regex' => 'Nomor telephone ayah hanya boleh berisi angka',
         ]);
+    
         try {
             DB::beginTransaction();
+            
+            // Parse and format the date properly
+            $tanggalLahir = null;
+            if (!empty($validatedData['TanggalLahir'])) {
+                $tanggalLahir = Carbon::createFromFormat('Y-m-d', $validatedData['TanggalLahir'])->format('Y-m-d');
+            }
+    
             $siswa = Siswa::create([
                 'NamaLengkap' => $validatedData['NamaLengkap'],
                 'NamaPanggilan' => $validatedData['NamaPanggilan'],
                 'JenisKelamin' => $validatedData['JenisKelamin'],
                 'TempatLahir' => $validatedData['TempatLahir'],
-                'TanggalLahir' => $validatedData['TanggalLahir'],
+                'TanggalLahir' => $tanggalLahir,
                 'Agama' => $validatedData['Agama'],
                 'Alamat' => $validatedData['Alamat'],
                 'NomorTelephone' => $validatedData['NomorTelephone'],
                 'NomorTelephoneAyah' => $validatedData['NomorTelephoneAyah'],
                 'status' => 'Tidak Aktif',
             ]);
+    
             User::create([
                 'username' => $validatedData['username'],
                 'password' => Hash::make($validatedData['password']),
@@ -136,17 +171,17 @@ class PpdbController extends Controller
                 'Role' => 'NonSiswa',
                 'siswa_id' => $siswa->siswa_id,
             ]);
-            
-
+    
             $pembayaran = Pembayaran::updateOrCreate(
                 ['siswa_id' => $siswa->siswa_id],
                 [
-                    'status' => 'Menunggu Pembayaran',  
-                    'tanggalbukti' => Carbon::now()    
+                    'status' => 'Menunggu Pembayaran',
                 ]
-            );        
+            );
+    
             DB::commit();
             return redirect()->route('login')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
+    
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()
@@ -154,6 +189,145 @@ class PpdbController extends Controller
                 ->withInput();
         }
     }
+    // public function store(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'hakakses' => [
+    //             'nullable',
+    //             'string',
+    //             'in:NonSiswa',
+    //         ],
+    //         'Role' => [
+    //             'nullable',
+    //             'string',
+    //             'in:NonSiswa'
+    //         ],
+    //         'password' => [
+    //             'required',
+    //             'string',
+    //             'min:7',
+    //             'max:12',
+    //             'confirmed'
+    //         ],
+
+    //         'NamaLengkap' => [
+    //             'required',
+    //             'string',
+    //             'max:255',
+    //         ],
+    //         'NamaPanggilan' => [
+    //             'nullable',
+    //             'string',
+    //             'max:100',
+    //         ],
+    //         'JenisKelamin' => [
+    //             'required',
+    //             'string',
+    //             'in:Laki-Laki,Perempuan',
+    //         ],
+    //         'TempatLahir' => [
+    //             'nullable',
+    //             'string',
+    //             'max:255',
+    //         ],
+    //         'TanggalLahir' => ['nullable', 'date',],
+    //         'Agama' => [
+    //             'required',
+    //             'string',
+    //             'in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu',
+    //         ],
+    //         'status' => [
+    //             'nullable',
+    //             'string',
+    //             'in:Aktif,Tidak Aktif',
+    //         ],
+    //         'Alamat' => [
+    //             'nullable',
+    //             'string',
+    //             'max:255',
+
+    //         ],
+    //         'NomorTelephone' => [
+    //             'required',
+    //             'string',
+    //             'max:13',
+                
+
+    //         ],
+    //         'NomorTelephoneAyah' => [
+    //             'required',
+    //             'string',
+    //             'max:13',
+                
+    //         ],
+    //         'siswa_id' => [
+    //             'nullable',
+    //             'numeric',
+    //             'max:4',
+    //         ],
+    //         'username' => [
+    //             'required',
+    //             'string',
+    //             'min:7',
+    //             'max:12',
+    //             'regex:/^[a-zA-Z0-9_-]+$/',
+    //             'unique:users,username',
+    //         ], 
+    //     ],
+    // [
+    //     // username
+    //     'username.required' => 'username harus diisi seperti keterangan di bawah',
+    //     'username.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
+    //     'username.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
+    //     'username.unique' => 'username sudah ada yang memakai, silahkan pilih username yang lain',
+    //     'password.required' => 'password harus diisi seperti keterangan di bawah',
+    //     'password.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
+    //     'password.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
+    //     'password.confirmation' => 'password dan konfirmasi password harus sama ',
+    //     'NomorTelephone.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123 ',
+    //     'NomorTelephoneAyah.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123 ',
+    //     'NomorTelephone.max' => 'nomor telephone maksimal 13 karakter ',
+    //     'NomorTelephoneAyah.max' => 'nomor telephone orang tua maksimal 13 karakter ',
+    //     ]);
+    //     try {
+    //         DB::beginTransaction();
+    //         $siswa = Siswa::create([
+    //             'NamaLengkap' => $validatedData['NamaLengkap'],
+    //             'NamaPanggilan' => $validatedData['NamaPanggilan'],
+    //             'JenisKelamin' => $validatedData['JenisKelamin'],
+    //             'TempatLahir' => $validatedData['TempatLahir'],
+    //             'TanggalLahir' => $validatedData['TanggalLahir'],
+    //             'Agama' => $validatedData['Agama'],
+    //             'Alamat' => $validatedData['Alamat'],
+    //             'NomorTelephone' => $validatedData['NomorTelephone'],
+    //             'NomorTelephoneAyah' => $validatedData['NomorTelephoneAyah'],
+    //             'status' => 'Tidak Aktif',
+    //         ]);
+    //         User::create([
+    //             'username' => $validatedData['username'],
+    //             'password' => Hash::make($validatedData['password']),
+    //             'hakakses' => 'NonSiswa',
+    //             'Role' => 'NonSiswa',
+    //             'siswa_id' => $siswa->siswa_id,
+    //         ]);
+            
+
+    //         $pembayaran = Pembayaran::updateOrCreate(
+    //             ['siswa_id' => $siswa->siswa_id],
+    //             [
+    //                 'status' => 'Menunggu Pembayaran',  
+                      
+    //             ]
+    //         );        
+    //         DB::commit();
+    //         return redirect()->route('login')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return redirect()->back()
+    //             ->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])
+    //             ->withInput();
+    //     }
+    // }
 
     public function updateStatus(Request $request)
     {

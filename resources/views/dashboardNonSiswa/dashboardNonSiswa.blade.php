@@ -269,7 +269,33 @@
             },
         },
           { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
-            { data: 'foto', name: 'foto', className: 'text-center' },
+            // { data: 'foto', name: 'foto', className: 'text-center' },
+            // {
+            //                 data: 'foto',
+            //                 name: 'foto',
+            //                 className: 'text-center',
+            //                 render: function(data, type, full, meta) {
+            //                     if (data) {
+            //                         return '<img src="' + '{{ asset('storage/bukti_pembayaran') }}/' + data +
+            //                             '" width="100" />';
+            //                     } else {
+            //                         return data ? data : 'kosong';
+            //                     }
+            //                 },
+            //             },
+            {
+    data: 'foto',
+    name: 'foto',
+    className: 'text-center',
+    render: function(data, type, full, meta) {
+        if (data) {
+            return '<img src="' + '{{ asset('storage/bukti_pembayaran') }}/' + data + '" width="100" />';
+        } else {
+            return 'kosong'; // Tampilkan teks "kosong" jika foto bernilai NULL
+        }
+    },
+},
+
             { data: 'status', name: 'status', className: 'text-center' },
             { data: 'created_at', name: 'created_at', className: 'text-center' },
             // { data: 'tanggalbukti', name: 'tanggalbukti', className: 'text-center' },

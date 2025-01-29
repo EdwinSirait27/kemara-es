@@ -67,7 +67,7 @@ class DashboardControllerNonSiswa extends Controller
                     </a>';
             }
 
-            $pembayaran->foto = $pembayaran->foto ? $pembayaran->foto : 'we.jpg';
+            // $pembayaran->foto = $pembayaran->foto ? $pembayaran->foto : 'kosong';
             $pembayaran->Siswa_Nama = $pembayaran->Siswa ? $pembayaran->Siswa->NamaLengkap : '-';
 
             return $pembayaran;
@@ -77,9 +77,9 @@ class DashboardControllerNonSiswa extends Controller
     ->addColumn('NamaLengkap', function ($pembayaran) {
         return $pembayaran->Siswa->NamaLengkap;
     })
-    ->addColumn('foto', function ($pembayaran) {
-        return $pembayaran->foto;
-    })
+    // ->addColumn('foto', function ($pembayaran) {
+    //     return $pembayaran->foto;
+    // })
         ->rawColumns(['action'])
         ->make(true);
 }
