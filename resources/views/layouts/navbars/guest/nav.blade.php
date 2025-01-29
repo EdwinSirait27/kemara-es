@@ -33,12 +33,12 @@
             Profile
         </a>
     </li> --}}
-      <li class="nav-item ms-auto">
+      {{-- <li class="nav-item ms-auto">
         <a class="nav-link me-2" href="{{ url('/login') }}">
             <i class="fas fa-news opacity-6 me-1 {{ Request::is('login') ? '' : 'text-dark' }}"></i>
             Login
         </a>
-    </li>
+    </li> --}}
     
       
       

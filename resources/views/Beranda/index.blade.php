@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMA KATOLIK KESUMA MATARAM</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
+@extends('app2') 
+        {{-- <style>
+    :root {
             --primary-color: #004b93;
             --secondary-color: #159895;
             --accent-color: #57c5b6;
@@ -37,9 +28,8 @@
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-            width: 100%;
+    margin: 0 auto;
+    padding: 20px;
 
         }
 
@@ -119,7 +109,7 @@
             color: var(--primary-color);
             font-size: 0.9rem;
             font-weight: 500;
-        }
+            }
 
         .navbar {
             background-color: var(--primary-color);
@@ -136,9 +126,9 @@
         }
 
         .main-content {
-            display: flex;
-            gap: 30px;
-            margin: 30px 0;
+            background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .navbar ul li a {
@@ -146,7 +136,6 @@
             text-decoration: none;
             padding: 15px 20px;
             display: block;
-            /* transition: background-color 0.3s ease; */
             transition: var(--hover-transition);
             position: relative;
             font-weight: 500;
@@ -174,13 +163,10 @@
         }
 
         .slider {
-            height: 800px; 
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--soft-shadow);
-            transition: var(--hover-transition);
-            margin: 20px 0;
+            position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    height: 500px;
         }
 
         .slider:hover {
@@ -196,80 +182,94 @@
         }
 
         .slider-section {
-            flex: 3;
+            position: relative;
+            margin-bottom: 40px;
         }
 
         .news-list {
-            flex: ;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: var(--soft-shadow);
-            max-height: 800px;
-            overflow-y: auto;
+            padding: 30px;
         }
 
         .news-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            transition: var(--hover-transition);
-        }
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
 
         .news-item:hover {
             background-color: var(--light-background);
             transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
         }
 
         .news-item h4 {
             color: var(--primary-color);
-            margin-bottom: 5px;
-            font-size: 1.1rem;
+            font-size: 1.4rem;
+    margin-bottom: 10px;
+    
         }
 
-        .news-item .news-meta {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 8px;
+    .news-meta {
+        margin-bottom: 15px;
+    color: #666;
+    font-size: 0.9rem;
         }
+        .news-meta span {
+    margin-right: 20px;
+}
+.news-meta i {
+    margin-right: 5px;
+    color: #3498db;
+}
+
 
         .news-item p {
             font-size: 0.9rem;
             margin-bottom: 10px;
         }
 
-        .news-item .read-more {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: var(--hover-transition);
-        }
+        .read-more {
+    display: inline-block;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
 
-        .news-item .read-more:hover {
-            color: var(--primary-color);
-        }
+.read-more:hover {
+    color: #2980b9;
+}
 
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
+.read-more i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
 
-            .news-list {
-                max-height: 400px;
-            }
-        }
+.read-more:hover i {
+    transform: translateX(5px);
+}
+        news-list h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+     
 
         .slider-item {
-            height: 550px;
-            display: flex;
-            align-items: right;
-            flex-direction: column;
+            position: relative;
+    width: 100%;
+    height: 100%;
         }
 
         .slider-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+    height: 100%;
+    object-fit: cover;
             transition: transform 0.4s ease;
 
         }
@@ -279,14 +279,20 @@
         }
 
         .slider-content {
-            padding: 20px;
-            width: 50%;
+            position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: #fff;
         }
 
         .slider-title {
             color: var(--primary-color);
-            margin-bottom: 10px;
             font-size: 2rem;
+    margin-bottom: 15px;
+    
 
         }
 
@@ -298,13 +304,18 @@
         }
 
         .slider-nav button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            transition: var(--hover-transition);
+            position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+            
 
         }
 
@@ -313,7 +324,13 @@
             transform: translateY(-3px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .slider-nav .prev {
+    left: 20px;
+}
 
+.slider-nav .next {
+    right: 20px;
+}
         .profile {
             padding: 40px 0;
             text-align: center;
@@ -324,21 +341,23 @@
         .profile h2 {
             color: var(--primary-color);
             margin-bottom: 20px;
+            text-align: center;
+    font-size: 2rem;
         }
 
         .profile-content {
-            display: flex;
-            gap: 20px;
-            align-items: stretch;
+            display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
 
         }
 
         .video-container {
-            flex: 1;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--soft-shadow);
-            transition: var(--hover-transition);
+            position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
         }
 
         .video-container:hover {
@@ -346,21 +365,36 @@
         }
 
         .video-container iframe {
-            width: 100%;
-            height: 300px;
-            border-radius: 10px;
+            position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
         }
 
         .welcome-text {
-            flex: 1;
             background-color: white;
-            padding: 20px;
-            border-radius: 10px;
             box-shadow: var(--soft-shadow);
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 20px;
         }
-
+        .welcome-text h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #2980b9;
+}
         .footer {
             background-color: var(--primary-color);
             color: white;
@@ -387,6 +421,11 @@
             margin-bottom: 15px;
             color: white;
         }
+        .author-info {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
 
         @media (max-width: 768px) {
 
@@ -395,9 +434,17 @@
             .navbar ul,
             .profile-content,
             .footer-content {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
             }
+            .slider {
+        height: 400px;
+    }
+    .slider-title {
+        font-size: 1.5rem;
+    }
+    .news-item h4 {
+        font-size: 1.2rem;
+    }
 
             .slider-item {
                 flex-direction: column;
@@ -411,52 +458,364 @@
             .video-container iframe {
                 height: 200px;
             }
-        }
-    </style>
-</head>
+            }
+        </style> --}}
+        <style>
+            /* Main Container Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-<body>
-    <div class="top-bar">
-        <div class="container">
-            <div class="contact-info">
-                <span><i class="fas fa-phone"></i> +62 370 645 695</span>
-                <span><i class="fab fa-yahoo"></i> SMAK_KESUMA@YAHOO.COM</span>
+.main-content {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
 
-            </div>
-            <div class="social-icons">
-                <a href="https://web.facebook.com/SMAK.KESUMA.MATARAM/?_rdc=1&_rdr#" target="_blank"><i
-                        class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/smak.kesuma.mtr/" target="_blank"><i
-                        class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@smakkesumamataram" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://api.whatsapp.com/send/?phone=%2B6281353653008&text&type=phone_number&app_absent=0"
-                    target="_blank"><i class="fab fa-whatsapp"></i></a>
-            </div>
-        </div>
-    </div>
-    <header class="header">
-        <div class="container">
-            <div class="logo-section">
-                <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}"
-                    alt="Logo SMA Katolik Kesuma Mataram">
-                <div class="school-title">
-                    <h1>SMA KATOLIK KESUMA MATARAM</h1>
-                    <p>DISIPLIN-JUJUR-TERAMPIL-MANDIRI</p>
-                </div>
-            </div>
-        </div>
-    </header>
-    <nav class="navbar">
-        <div class="container">
-            <ul>
-                <li><a href="{{ route('Beranda.index') }}">BERANDA</a></li>
-                <li><a href="#">BERITA</a></li>
-                <li><a href="{{ route('login') }}">LOGIN</a></li>
+/* Slider Section */
+.slider-section {
+    position: relative;
+    margin-bottom: 40px;
+}
 
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
+.slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    height: 500px;
+}
+
+.slider:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.slider-item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.slider-image:hover {
+    transform: scale(1.05);
+}
+
+.slider-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: #fff;
+}
+
+.slider-title {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.slider-nav {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: var(--light-background);
+}
+
+.slider-nav button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.slider-nav button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slider-nav .prev {
+    left: 20px;
+}
+
+.slider-nav .next {
+    right: 20px;
+}
+
+/* News List Section */
+.news-list {
+    padding: 30px;
+}
+
+.news-list h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.news-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+.news-item:hover {
+    background-color: var(--light-background);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.news-item h4 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.news-meta {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.news-meta span {
+    margin-right: 20px;
+}
+
+.news-meta i {
+    margin-right: 5px;
+    color: #3498db;
+}
+
+.news-item p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* Profile Section */
+.profile {
+    padding: 40px 0;
+    text-align: center;
+    background-color: var(--white);
+}
+
+.profile h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container:hover {
+    transform: scale(1.02);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.welcome-text {
+    background-color: white;
+    box-shadow: var(--soft-shadow);
+    padding: 20px;
+}
+
+.welcome-text h3 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* Common Components */
+.read-more {
+    display: inline-block;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.read-more:hover {
+    color: #2980b9;
+}
+
+.read-more i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.read-more:hover i {
+    transform: translateX(5px);
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.author-info {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .slider {
+        height: 400px;
+    }
+    
+    .slider-title {
+        font-size: 1.5rem;
+    }
+    
+    .news-item h4 {
+        font-size: 1.2rem;
+    }
+
+    .slider-item {
+        flex-direction: column;
+    }
+
+    .slider-image,
+    .slider-content {
+        width: 100%;
+    }
+
+    .video-container iframe {
+        height: 200px;
+    }
+}
+.pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.pagination > li {
+    display: inline;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #007bff;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    z-index: 2;
+    color: #0056b3;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    z-index: 3;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    cursor: default;
+}
+
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #777;
+  background-color: #fff;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+        </style>
+       
+{{-- <div class="container">
         <div class="main-content">
             <div class="slider-section">
                 @if ($beritas->isNotEmpty())
@@ -496,7 +855,6 @@
                     const nextButton = document.querySelector('.next');
                     const beritas = @json($beritas);
 
-                    // Early return if not enough items
                     if (beritas.length <= 1) {
                         prevButton.style.display = 'none';
                         nextButton.style.display = 'none';
@@ -505,7 +863,6 @@
 
                     let currentIndex = 0;
 
-                    // Cache DOM elements to avoid repeated querying
                     const sliderImage = sliderItem.querySelector('.slider-image');
                     const sliderTitle = sliderItem.querySelector('.slider-title');
                     const sliderContent = sliderItem.querySelector('.slider-content p');
@@ -514,36 +871,29 @@
                     function updateSlider() {
                         const currentBerita = beritas[currentIndex];
 
-                        // Optimize image path
                         sliderImage.src = `/storage/berita/${currentBerita.gambar1 || 'default.jpg'}`;
 
-                        // Safely set text content
                         sliderTitle.textContent = currentBerita.header || 'Judul Berita';
 
-                        // Improved text truncation
                         sliderContent.textContent = currentBerita.body ?
                             (currentBerita.body.length > 100 ?
                                 currentBerita.body.substring(0, 100) + '...' :
                                 currentBerita.body) :
                             'Tidak ada konten';
 
-                        // Update link with error handling
                         sliderLink.href = currentBerita.id ?
                             `/Berita/show/${currentBerita.id}` :
                             '#';
                     }
 
-                    // Optimize navigation with modulo arithmetic
                     function navigateSlider(direction) {
                         currentIndex = (currentIndex + direction + beritas.length) % beritas.length;
                         updateSlider();
                     }
 
-                    // Event listeners with more robust handling
                     prevButton.addEventListener('click', () => navigateSlider(-1));
                     nextButton.addEventListener('click', () => navigateSlider(1));
 
-                    // Initial render
                     updateSlider();
                 });
             </script>
@@ -598,35 +948,172 @@
                     </div>
                 </div>
             </section>
-        </div>
+        </div>  --}}
+        {{-- @extends('app2') --}}
 
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="school-description">
-                        <img src="{{ url('/assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}" alt="Logo Footer">
-                        <h2>SMA KATOLIK KESUMA MATARAM</h2>
-                        <p>SMAK Kesuma Mataram adalah lembaga pendidikan yang berdedikasi untuk mengembangkan potensi
-                            siswa melalui pendidikan berkualitas dan berkarakter.</p>
+        @section('content')
+        <div class="container">
+            <div class="main-content">
+                <div class="slider-section">
+                    @if ($beritas->isNotEmpty())
+                    <div class="slider">
+                        <div class="slider-item">
+                            <img src="{{ asset('storage/berita/' . $beritas[0]->gambar1) }}"
+                                alt="{{ $beritas[0]->header }}" class="slider-image">
+                            <div class="slider-content">
+                                <h3 class="slider-title">{{ $beritas[0]->header }}</h3>
+                                <p>{{ str($beritas[0]->body)->limit(100) }}</p>
+
+                                <p class="author-info">
+                                    Ditulis oleh: <strong>{{ $beritas[0]->User->Guru->Nama }}</strong>
+                                    <span style="color: gray;">{{ $beritas[0]->created_at->diffForHumans() }}</span>
+                                </p>
+
+                                <a href="{{ route('Berita.show', ['id' => $beritas[0]->id]) }}"
+                                    class="btn btn-primary slider-link">
+                                    Lihat Berita
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="contact-section">
-                        <h3>HUBUNGI KAMI</h3>
-
-                        <p>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <a href="https://nlink.at/KHul" target="_blank" style="color: white;">
-                                Jl. Pejanggik No. 110 Cakra Negara
-                            </a>
-                        </p>
-
-
-                        <p>Mataram, Nusa Tenggara Barat</p>
-                        <p><i class="fas fa-phone"></i>+62 370 645 695</p>
-                        <p>Email: smak_kesuma@yahoo.com</p>
+                    @endif
+                    <div class="slider-nav">
+                        <button class="prev">❮</button>
+                        <button class="next">❯</button>
                     </div>
                 </div>
-            </div>
-        </footer>
-</body>
+        
+                {{-- <div class="news-list">
+                    <!-- News list content tetap sama -->
+                    <h3>Berita Terbaru</h3>
+                    @foreach($beritas as $berita)
+                    <div class="news-item">
+                        <h4>{{ $berita->header }}</h4>
+                        <div class="news-meta">
+                            <span><i class="fas fa-user"></i> {{ $berita->User->Guru->Nama }}</span>
+                            <span><i class="fas fa-clock"></i> {{ $berita->created_at->diffForHumans() }}</span>
+                        </div>
+                        <p>{{ str($berita->body)->limit(50) }}</p>
+                        <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="read-more">
+                            Baca selengkapnya <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    @endforeach
+                </div> --}}
+                <div class="news-list">
+                    <h3>Berita Terbaru</h3>
+                    @if($beritass->isEmpty())
+                        <p>Belum ada berita terbaru.</p>
+                    @else
+                        @foreach($beritass as $berita)
+                            <div class="news-item">
+                                <h4>{{ $berita->header }}</h4>
+                                <div class="news-meta">
+                                    <span><i class="fas fa-user"></i> {{ $berita->User->Guru->Nama }}</span>
+                                    <span><i class="fas fa-clock"></i> {{ $berita->created_at->diffForHumans() }}</span>
+                                </div>
+                                <p>{{ str($berita->body)->limit(50) }}</p>
+                                <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="read-more">
+                                    Baca selengkapnya <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endif
+                
+                    {{-- Pagination Links --}}
+                    <div class="pagination-container">
+                        {{ $beritass->links('vendor.pagination.custom') }}
+                    </div>
+                </div>
+               
 
-</html>
+        
+                <section class="profile">
+                    <!-- Profile section tetap sama -->
+                    <h2>PROFIL SMA KATOLIK KESUMA MATARAM</h2>
+                    <div class="profile-content">
+                        <div class="video-container">
+                            @if ($youtubeVideos->isEmpty())
+                                <p>Tidak ada video yang aktif.</p>
+                                <iframe src="" frameborder="0" allowfullscreen></iframe>
+                            @else
+                                @foreach ($youtubeVideos as $video)
+                                    <div>
+                                        <iframe src="{{ $video->url }}" frameborder="0" allowfullscreen></iframe>
+                                    </div>
+                                @endforeach
+                            @endif
+    
+                        </div>
+                        <div class="welcome-text">
+                            @if ($profiles->isEmpty())
+                            <p>Tidak ada Profile.</p>
+                            
+                        @else
+                            @foreach ($profiles as $profile)
+                            <h3>{{$profile->header}}</h3>
+                            
+                            <p>{{ str($berita->body)->limit(100) }}</p>
+                            <a href="{{ route('Profile.show', ['id' => $profile->id]) }}" class="read-more">
+                                Baca selengkapnya <i class="fas fa-arrow-right"></i>
+                            </a>
+                            @endforeach
+                        @endif
+                         
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const slider = document.querySelector('.slider');
+                    const sliderItem = document.querySelector('.slider-item');
+                    const prevButton = document.querySelector('.prev');
+                    const nextButton = document.querySelector('.next');
+                    const beritas = @json($beritas);
+
+                    if (beritas.length <= 1) {
+                        prevButton.style.display = 'none';
+                        nextButton.style.display = 'none';
+                        return;
+                    }
+
+                    let currentIndex = 0;
+
+                    const sliderImage = sliderItem.querySelector('.slider-image');
+                    const sliderTitle = sliderItem.querySelector('.slider-title');
+                    const sliderContent = sliderItem.querySelector('.slider-content p');
+                    const sliderLink = sliderItem.querySelector('.slider-link');
+
+                    function updateSlider() {
+                        const currentBerita = beritas[currentIndex];
+
+                        sliderImage.src = `/storage/berita/${currentBerita.gambar1 || 'default.jpg'}`;
+
+                        sliderTitle.textContent = currentBerita.header || 'Judul Berita';
+
+                        sliderContent.textContent = currentBerita.body ?
+                            (currentBerita.body.length > 100 ?
+                                currentBerita.body.substring(0, 100) + '...' :
+                                currentBerita.body) :
+                            'Tidak ada konten';
+
+                        sliderLink.href = currentBerita.id ?
+                            `/Berita/show/${currentBerita.id}` :
+                            '#';
+                    }
+
+                    function navigateSlider(direction) {
+                        currentIndex = (currentIndex + direction + beritas.length) % beritas.length;
+                        updateSlider();
+                    }
+
+                    prevButton.addEventListener('click', () => navigateSlider(-1));
+                    nextButton.addEventListener('click', () => navigateSlider(1));
+
+                    updateSlider();
+                });
+            </script>
+        
+        @endsection

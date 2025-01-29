@@ -51,7 +51,7 @@
             <div class="container-fluid py-4">
                 <div class="card">
                     <div class="card-header pb-0 px-3">
-                        <h6 class="mb-0">{{ __('Edit Kelas') }}</h6>
+                        <h6 class="mb-0">{{ __('Edit Url Youtube') }}</h6>
                     </div>
                     <div class="card-body pt-4 p-3">
 
@@ -125,7 +125,7 @@
                             <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4 me-2">
                                 {{ __('Update') }}
                             </button> 
-                            <a href="{{ route('Kelas.index') }}" class="btn btn-secondary mt-4 mb-4">
+                            <a href="{{ route('Youtube.index') }}" class="btn btn-secondary mt-4 mb-4">
                                 {{ __('Cancel') }}
                             </a>
                         </div>

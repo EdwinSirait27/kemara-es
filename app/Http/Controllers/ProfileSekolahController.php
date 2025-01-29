@@ -22,6 +22,7 @@ class ProfileSekolahController extends Controller
         $youtubeVideos = Youtube::where('status', 'Aktif')->get();
         $profiles = Profile::where('status', 'Aktif')->get();
         $beritas = Berita::latest()->take(5)->get();
+        $beritass = Berita::latest()->paginate(5);
     
         $beritas->transform(function ($berita) {
             $berita->hashedId = substr(hash('sha256', $berita->id . env('APP_KEY')), 0, 8);
@@ -31,7 +32,7 @@ class ProfileSekolahController extends Controller
             $profile->hashedId = substr(hash('sha256', $profile->id . env('APP_KEY')), 0, 8);
             return $profile;
         });
-        return view('Beranda.index', compact('beritas','profiles','youtubeVideos'));
+        return view('Beranda.index', compact('beritas','profiles','youtubeVideos','beritass'));
     }
     
     // public function Beranda()
