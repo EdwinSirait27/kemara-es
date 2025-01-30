@@ -1001,7 +1001,7 @@
                     @endforeach
                 </div> --}}
                 <div class="news-list">
-                    <h3>Berita Terbaru</h3>
+                    <h3>Berita & Artikel</h3>
                     @if($beritass->isEmpty())
                         <p>Belum ada berita terbaru.</p>
                     @else

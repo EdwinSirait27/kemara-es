@@ -24,7 +24,7 @@
       <li class="nav-item ms-auto">
         <a class="nav-link me-2" href="{{ url('/Beranda') }}">
             <i class="fas fa-users opacity-6 me-1 {{ Request::is('Beranda') ? '' : 'text-dark' }}"></i>
-            Beranda
+            Beranda Sekolah
         </a>
     </li>
       {{-- <li class="nav-item ms-auto">
