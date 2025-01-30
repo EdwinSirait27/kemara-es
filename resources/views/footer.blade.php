@@ -11,7 +11,7 @@
                 <p>
                     <i class="fas fa-map-marker-alt"></i>
                     <a href="https://nlink.at/KHul" target="_blank" style="color: white;">
-                        Jl. Pejanggik No. 110 CakraNegara
+                        Jl. Pejanggik No. 110 Cakranegara
                     </a>
                 </p>
                 <p>Mataram, Nusa Tenggara Barat</p>
