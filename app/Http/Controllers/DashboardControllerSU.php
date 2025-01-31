@@ -79,16 +79,6 @@ class DashboardControllerSU extends Controller
     }
 
     $validatedData = $request->validate([
-        'username' => [
-            'required',
-            'string',
-            'max:12',
-            'min:7',
-            'regex:/^[a-zA-Z0-9_-]+$/',
-            Rule::unique('users')->ignore($user->id), // Gunakan ID asli
-            new NoXSSInput()
-        ],
-        'password' => ['nullable', 'string', 'min:7', 'max:12', new NoXSSInput()],
         'hakakses' => ['required', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
         'Role' => ['required', 'array', 'min:1', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum', new NoXSSInput()],
         'Nama' => ['required', 'string', 'max:255', new NoXSSInput()],
@@ -101,6 +91,66 @@ class DashboardControllerSU extends Controller
         'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
         'jadwalkenaikanpangkat' => ['nullable', 'date', new NoXSSInput()],      
         'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+        
+        'password' => ['nullable', 'string', 'min:7', 'max:12', new NoXSSInput()],
+        'username' => [
+            'required',
+            'string',
+            'max:12',
+            'min:7',
+            'regex:/^[a-zA-Z0-9_-]+$/',
+            Rule::unique('users')->ignore($user->id), // Gunakan ID asli
+            new NoXSSInput()
+        ],
+    ],
+        [
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username hanya boleh berupa teks.',
+            'username.max' => 'Username maksimal terdiri dari 12 karakter.',
+            'username.min' => 'Username minimal terdiri dari 7 karakter.',
+            'username.regex' => 'Username hanya boleh mengandung huruf, angka, tanda hubung, atau underscore.',
+            'username.unique' => 'Username sudah terdaftar. Silakan pilih username lain.',
+
+            'hakakses.required' => 'Hak akses wajib dipilih.',
+    'hakakses.string' => 'Hak akses harus berupa teks.',
+    'hakakses.in' => 'Pilih hak akses yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+    
+    'Role.required' => 'Setidaknya satu peran harus dipilih.',
+    'Role.array' => 'Peran harus dalam format array.',
+    'Role.min' => 'Setidaknya satu peran harus dipilih.',
+    'Role.in' => 'Pilih peran yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+    
+    'Nama.required' => 'Nama wajib diisi.',
+    'Nama.string' => 'Nama hanya boleh berupa teks.',
+    'Nama.max' => 'Nama maksimal terdiri dari 255 karakter.',
+    
+    'TempatLahir.string' => 'Tempat lahir hanya boleh berupa teks.',
+    'TempatLahir.max' => 'Tempat lahir maksimal terdiri dari 255 karakter.',
+    
+    'TanggalLahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+    
+    'Agama.string' => 'Agama harus berupa teks.',
+    'Agama.in' => 'Pilih agama yang valid: Katolik, Kristen Protestan, Islam, Hindu, Buddha, atau Konghucu.',
+    
+    'JenisKelamin.string' => 'Jenis kelamin harus berupa teks.',
+    'JenisKelamin.in' => 'Pilih jenis kelamin yang valid: Laki-Laki atau Perempuan.',
+    
+    'StatusPegawai.string' => 'Status pegawai hanya boleh berupa teks.',
+    'StatusPegawai.max' => 'Status pegawai maksimal terdiri dari 255 karakter.',
+    
+    'Pangkat.string' => 'Pangkat hanya boleh berupa teks.',
+    'Pangkat.max' => 'Pangkat maksimal terdiri dari 50 karakter.',
+    
+    'jadwalkenaikangaji.date' => 'Tanggal kenaikan gaji harus berupa tanggal yang valid.',
+    
+    'jadwalkenaikanpangkat.date' => 'Tanggal kenaikan pangkat harus berupa tanggal yang valid.',
+    
+    'Jabatan.string' => 'Jabatan hanya boleh berupa teks.',
+    'Jabatan.max' => 'Jabatan maksimal terdiri dari 50 karakter.',
+    
+    'password.string' => 'Password harus berupa teks.',
+    'password.min' => 'Password minimal terdiri dari 7 karakter.',
+    'password.max' => 'Password maksimal terdiri dari 12 karakter.',
     ]);
 
     $roles = implode(',', $validatedData['Role']);
@@ -172,6 +222,54 @@ class DashboardControllerSU extends Controller
             'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
             'jadwalkenaikanpangkat' => ['nullable', 'date', new NoXSSInput()],      
             'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+        ], [
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username hanya boleh berupa teks.',
+            'username.max' => 'Username maksimal terdiri dari 12 karakter.',
+            'username.min' => 'Username minimal terdiri dari 7 karakter.',
+            'username.regex' => 'Username hanya boleh mengandung huruf, angka, tanda hubung, atau underscore.',
+            'username.unique' => 'Username sudah terdaftar. Silakan pilih username lain.',
+            
+            'password.string' => 'Password harus berupa teks.',
+            'password.min' => 'Password minimal terdiri dari 7 karakter.',
+            'password.max' => 'Password maksimal terdiri dari 12 karakter.',
+            
+            'hakakses.required' => 'Hak akses wajib dipilih.',
+            'hakakses.string' => 'Hak akses harus berupa teks.',
+            'hakakses.in' => 'Pilih hak akses yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+            
+            'Role.required' => 'Setidaknya satu peran harus dipilih.',
+            'Role.array' => 'Peran harus dalam format array.',
+            'Role.min' => 'Setidaknya satu peran harus dipilih.',
+            'Role.in' => 'Pilih peran yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+            
+            'Nama.required' => 'Nama wajib diisi.',
+            'Nama.string' => 'Nama hanya boleh berupa teks.',
+            'Nama.max' => 'Nama maksimal terdiri dari 100 karakter.',
+            
+            'TempatLahir.string' => 'Tempat lahir hanya boleh berupa teks.',
+            'TempatLahir.max' => 'Tempat lahir maksimal terdiri dari 255 karakter.',
+            
+            'TanggalLahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+            
+            'Agama.string' => 'Agama harus berupa teks.',
+            'Agama.in' => 'Pilih agama yang valid: Katolik, Kristen Protestan, Islam, Hindu, Buddha, atau Konghucu.',
+            
+            'JenisKelamin.string' => 'Jenis kelamin harus berupa teks.',
+            'JenisKelamin.in' => 'Pilih jenis kelamin yang valid: Laki-Laki atau Perempuan.',
+            
+            'StatusPegawai.string' => 'Status pegawai hanya boleh berupa teks.',
+            'StatusPegawai.max' => 'Status pegawai maksimal terdiri dari 255 karakter.',
+            
+            'Pangkat.string' => 'Pangkat hanya boleh berupa teks.',
+            'Pangkat.max' => 'Pangkat maksimal terdiri dari 50 karakter.',
+            
+            'jadwalkenaikangaji.date' => 'Tanggal kenaikan gaji harus berupa tanggal yang valid.',
+            
+            'jadwalkenaikanpangkat.date' => 'Tanggal kenaikan pangkat harus berupa tanggal yang valid.',
+            
+            'Jabatan.string' => 'Jabatan hanya boleh berupa teks.',
+            'Jabatan.max' => 'Jabatan maksimal terdiri dari 50 karakter.',
         ]);
     
         try {
@@ -181,7 +279,7 @@ class DashboardControllerSU extends Controller
                     $tanggalLahir = Carbon::createFromFormat('Y-m-d', $request['TanggalLahir'])->format('Y-m-d');
                 }
                 $guru = Guru::create([
-                    'Nama' => $request->Nama, // Sesuaikan dengan struktur tabel siswa
+                    'Nama' => $request['Nama'], // Sesuaikan dengan struktur tabel siswa
                     'TempatLahir' => $request['TempatLahir'],
                     'TanggalLahir' => $tanggalLahir,
                     'Agama' => $request['Agama'],

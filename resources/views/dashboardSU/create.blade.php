@@ -417,6 +417,8 @@
             </span>
             <span class="text-white">-
                 <strong> Jika sudah ada Username yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br>
+                -<strong> Isi semua datanya </strong> <br>
+                {{-- <strong>  </strong> <br> --}}
                 {{-- <strong> Pemberian hakakses itu hanya diperbolehkan 1, dan usahakan pemilihan role itu harus sama dengan pemberian hakakses contoh, hakakses Admin dipilih maka Role yang dipilih harus ada Jika sudah ada Username yang sudah terdaftar, maka tidak bisa menginputkan data kembali </strong> <br> --}}
                
                     <br>

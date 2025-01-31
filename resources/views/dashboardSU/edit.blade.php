@@ -109,10 +109,163 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="TempatLahir" class="form-control-label">
+                                        <i class="fas fa-lock"></i> {{ __('Tempat Lahir') }}
+                                    </label>
+                                    <div>
+                                        <input class="form-control" value="{{ old('TempatLahir', $user->Guru->TempatLahir ?? '') }}"
+                                            type="text" id="TempatLahir" placeholder="Tempat Lahir" name="TempatLahir" aria-describedby="info-TempatLahir"
+                                             maxlength="255">
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="TanggalLahir" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Tanggal Lahir') }}
+                                        </label>
+                                        <div>
+                                            <input class="form-control" value="{{ old('TanggalLahir', $user->Guru->TanggalLahir ?? '') }}"
+                                                type="date" id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir"
+                                                 required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="Agama" class="form-control-label">
+                                            <i class="fas fa-lock"></i> {{ __('Agama') }}
+                                        </label>
+                                        <div>
+                                            <select class="form-control" name="Agama" id="Agama" value="{{ old('Agama', $user->Guru->Agama ?? '') }}" required>
+                                                <option value="" disabled {{ old('Agama', $user->Guru->Agama) ? '' : 'selected' }}>{{ __('Pilih Agama') }}</option>
+                                                @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
+                                                    <option value="{{ e($agama) }}" 
+                                                        {{ old('Agama', $user->Guru->Agama) == $agama ? 'selected' : '' }}>
+                                                        {{ $agama }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('Agama')
+                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>                                
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="JenisKelamin" class="form-control-label">
+                                                <i class="fas fa-lock"></i> {{ __('Jenis Kelamin') }}
+                                            </label>
+                                            <div>
+                                                <select class="form-control" name="JenisKelamin" id="JenisKelamin" value="{{ old('JenisKelamin', $user->Guru->JenisKelamin ?? '') }}" required>
+                                                    <option value="" disabled {{ old('JenisKelamin', $user->Guru->JenisKelamin) ? '' : 'selected' }}>{{ __('Pilih Jenis Kelamin') }}</option>
+                                                    @foreach (['Laki-Laki', 'Perempuan'] as $JenisKelamin)
+                                                        <option value="{{ e($JenisKelamin) }}" 
+                                                            {{ old('JenisKelamin', $user->Guru->JenisKelamin) == $JenisKelamin ? 'selected' : '' }}>
+                                                            {{ $JenisKelamin }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('JenisKelamin')
+                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="StatusPegawai" class="form-control-label">
+                                                <i class="fas fa-lock"></i> {{ __('Status Pegawai') }}
+                                            </label>
+                                            <div>
+                                                <select class="form-control" name="StatusPegawai" id="StatusPegawai" value="{{ old('StatusPegawai', $user->Guru->StatusPegawai ?? '') }}" required>
+                                                    <option value="" disabled {{ old('StatusPegawai', $user->Guru->StatusPegawai) ? '' : 'selected' }}>{{ __('Pilih Status Pegawai') }}</option>
+                                                    @foreach (['GT', 'GTT', 'Honorer', 'PNS YDP', 'PT', 'PTT'] as $StatusPegawai)
+
+                                                        <option value="{{ e($StatusPegawai) }}" 
+                                                            {{ old('StatusPegawai', $user->Guru->StatusPegawai) == $StatusPegawai ? 'selected' : '' }}>
+                                                            {{ $StatusPegawai }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('StatusPegawai')
+                                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="Pangkat" class="form-control-label">
+                                                    <i class="fas fa-lock"></i> {{ __('Pangkat') }}
+                                                </label>
+                                                <div>
+                                                    <input class="form-control" value="{{ old('Pangkat', $user->Guru->Pangkat ?? '') }}"
+                                                    type="text" id="Pangkat" placeholder="Pangkat" name="Pangkat" aria-describedby="info-Pangkat"
+                                                     maxlength="255" required>
+                                                    @error('Pangkat')
+                                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="jadwalkenaikangaji" class="form-control-label">
+                                                    <i class="fas fa-lock"></i> {{ __('Jadwal Kenaikan Gaji') }}
+                                                </label>
+                                                <div>
+                                                    <input class="form-control" value="{{ old('jadwalkenaikangaji', $user->Guru->jadwalkenaikangaji ?? '') }}"
+                                                        type="date" id="jadwalkenaikangaji" name="jadwalkenaikangaji" aria-describedby="info-jadwalkenaikangaji"
+                                                         >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="jadwalkenaikanpangkat" class="form-control-label">
+                                                        <i class="fas fa-lock"></i> {{ __('Jadwal Kenaikan Pangkat') }}
+                                                    </label>
+                                                    <div>
+                                                        <input class="form-control" value="{{ old('jadwalkenaikanpangkat', $user->Guru->jadwalkenaikanpangkat  ?? '') }}"
+                                                            type="date" id="jadwalkenaikanpangkat" name="jadwalkenaikanpangkat" aria-describedby="info-jadwalkenaikanpangkat"
+                                                             >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="Jabatan" class="form-control-label">
+                                                        <i class="fas fa-lock"></i> {{ __('Jabatan') }}
+                                                    </label>
+                                                    <div>
+                                                        <input class="form-control" value="{{ old('Jabatan', $user->Guru->Jabatan ?? '') }}"
+                                                        type="text" id="Jabatan" placeholder="Jabatan" name="Jabatan" aria-describedby="info-Jabatan"
+                                                         maxlength="255">
+                                                        @error('Jabatan')
+                                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
 
 {{-- @php
                                 $oldRoles = old('hakakses', $hakakses); 
                             @endphp --}}
+                            <div class="row">
+
                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="hakakses" class="form-control-label">{{ __('Hak Akses') }}</label>
@@ -135,8 +288,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @php
