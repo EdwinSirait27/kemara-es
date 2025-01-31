@@ -42,6 +42,30 @@
             </div>
         </div>
     </div>
+<br>
+<form method="GET" action="{{ route('dashboardAdmin.index') }}" class="mb-3">
+    <div class="form-group">
+        <label for="tahun" class="fw-bold">Filter Tahun Ajaran :</label>
+        <select name="tahun" id="tahun" class="form-select" onchange="this.form.submit()">
+            <option value="">Semua Tahun</option>
+            @foreach ($tahunList as $t)
+                <option value="{{ $t }}" {{ request('tahun') == $t ? 'selected' : '' }}>{{ $t }}</option>
+            @endforeach
+        </select>
+    </div>
+</form>
+
+{{-- <form method="GET" action="{{ route('dashboardAdmin.index') }}"class="mb-3">
+    <div class="form-group">
+        <label for="tahun" class="fw-bold">Filter Tahun Ajaran :</label>
+        <select name="tahun" id="tahun" class="form-select" onchange="this.form.submit()">
+            @foreach ($tahunList as $t)
+                <option value="{{ $t }}" {{ $tahunDipilih == $t ? 'selected' : '' }}>{{ $t }}</option>
+            @endforeach
+        </select>
+    </div>
+</form> --}}
+
 
 
     <div class="row mt-4">
@@ -110,15 +134,16 @@
               </div>
           </div>
       </div>
+     
       <div class="col-xl-3 col-sm-6">
           <div class="card shadow-lg border-0 rounded-lg">
               <div class="card-body p-4">
                   <div class="row">
                       <div class="col-8">
                           <div class="numbers">
-                              <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Guru</p>
+                              <p class="text-sm mb-0 text-capitalize font-weight-bold">PPDB</p>
                               <h5 class="font-weight-bolder mb-0 text-info">
-                                  {{ e($totalguru) }}
+                                  {{ e($ppdb) }} siswa
                               </h5>
                           </div>
                       </div>
@@ -126,7 +151,6 @@
                           <div class="icon icon-shape bg-gradient-secondary shadow-sm text-center border-radius-md p-3">
                             <i class="ni ni-circle-08 text-lg opacity-10" aria-hidden="true" style="position: relative; top: -20px;"></i>
   
-                            {{-- <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i> --}}
                           </div>
                       </div>
                   </div>

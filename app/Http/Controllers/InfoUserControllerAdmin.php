@@ -53,13 +53,13 @@ class InfoUserControllerAdmin extends Controller
             'Npwp' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'NomorSertifikatPendidik' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'TahunSertifikasi' => ['nullable', 'date', new NoXSSInput()],      
-            'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
             'PendidikanAkhir' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TahunTamat' => ['nullable', 'date', new NoXSSInput()],      
             'Jurusan' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TugasMengajar' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TahunPensiun' => ['nullable', 'date', new NoXSSInput()],      
             'Pangkat' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+            'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
             'jadwalkenaikanpangkat' => ['nullable', 'date', new NoXSSInput()],      
             'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
             'NomorTelephone' => ['nullable', 'string', 'max:13', new NoXSSInput()],      
@@ -80,11 +80,10 @@ class InfoUserControllerAdmin extends Controller
                     }
                 }
             ],   
-            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+            'foto' => ['nullable','image','mimes:jpeg,png,jpg','max:512'],
         
         ],
     [
-        'foto.required' => 'foto wajib diisi',
         'foto.mimes' => 'harus bertipe jpeg,png,jpg',
         'foto.max' => 'foto harus kurang dari 512 kb',
         'foto.image' => 'harus berupa gambar',

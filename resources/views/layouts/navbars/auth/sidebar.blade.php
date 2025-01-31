@@ -707,7 +707,12 @@ html, body {
               </li>
               <li class="nav-item">
                   <a class="nav-link {{ Request::is('Profile') ? 'active' : '' }}" href="{{ url('Profile') }}">
-                      <span class="nav-link-text ms-1">Profile</span>
+                      <span class="nav-link-text ms-1">Sambutan Kepala Sekolah</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Sekolah') ? 'active' : '' }}" href="{{ url('Sekolah') }}">
+                      <span class="nav-link-text ms-1">Profile Sekolah</span>
                   </a>
               </li>
           </ul>

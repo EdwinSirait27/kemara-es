@@ -80,7 +80,6 @@ class DataguruController extends Controller
 
         $validatedData = $request->validate([
             'Nama' => ['required', 'string', 'max:50', new NoXSSInput()],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:512', new NoXssInput()],
             'TempatLahir' => ['required', 'string', 'max:255', new NoXSSInput()],
             'TanggalLahir' => ['required', 'date', new NoXSSInput()],
             'Agama' => ['required', 'string', 'in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],
@@ -105,6 +104,15 @@ class DataguruController extends Controller
             'Alamat' => ['required', 'string', 'max:100', new NoXSSInput()],
             'Email' => ['required', 'string', 'max:100', new NoXSSInput()],
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+        
+        ],
+    [
+        'foto.required' => 'foto wajib diisi',
+        'foto.mimes' => 'harus bertipe jpeg,png,jpg',
+        'foto.max' => 'foto harus kurang dari 512 kb',
+        'foto.image' => 'harus berupa gambar',
+            
         ]);
         $guru = Guru::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->guru_id . env('APP_KEY')), 0, 8);

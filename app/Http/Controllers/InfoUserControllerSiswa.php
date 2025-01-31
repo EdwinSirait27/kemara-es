@@ -88,11 +88,10 @@ class InfoUserControllerSiswa extends Controller
                     }
                 }
             ],   
-            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+            'foto' => ['nullable','image','mimes:jpeg,png,jpg','max:512'],
         
         ],
     [
-        'foto.required' => 'foto wajib diisi',
         'foto.mimes' => 'harus bertipe jpeg,png,jpg',
         'foto.max' => 'foto harus kurang dari 512 kb',
         'foto.image' => 'harus berupa gambar',

@@ -64,10 +64,10 @@
     <script>
         let timeout = setTimeout(function() {
             window.history.back();
-        }, 10000); // 30 detik
+        }, 5000); 
 
         function goBack() {
-            clearTimeout(timeout); // Batalkan timer jika tombol ditekan
+            clearTimeout(timeout); 
             window.history.back();
         }
     </script>

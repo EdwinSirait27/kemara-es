@@ -84,7 +84,7 @@ class DashboardControllerAdmin extends Controller
             'message' => 'Selected pengumuman and their related files deleted successfully.',
         ]);
     }
-    public function index()
+    public function index(Request $request)
     {
         $pengumuman = Pengumuman::all();
         $totaluser = User::count();
@@ -94,22 +94,67 @@ class DashboardControllerAdmin extends Controller
         $totalperempuan = User::whereHas('Siswa', function ($query) {
             $query->where('JenisKelamin', 'Perempuan');
         })->count();
-        $totalguru = User::whereIn('hakakses', ['SU', 'Guru', 'Admin', 'KepalaSekolah', 'Kurikulum'])
-            ->count();
-        $katolik = Siswa::whereIn('Agama', ['Katolik'])
-            ->count();
-        $kristen = Siswa::whereIn('Agama', ['Kristen Protestan'])
-            ->count();
-        $islam = Siswa::whereIn('Agama', ['Islam'])
-            ->count();
-        $hindu = Siswa::whereIn('Agama', ['Hindu'])
-            ->count();
-        $buddha = Siswa::whereIn('Agama', ['Buddha'])
-            ->count();
-        $kong = Siswa::whereIn('Agama', ['Konghucu'])
-            ->count();
+       
+        $katolik = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Katolik');
+        })->count();
+        $kristen = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Kristen Protestan');
+        })->count();
+        $islam = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Islam');
+        })->count();
+        $hindu = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Hindu');
+        })->count();
+        $buddha = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Buddha');
+        })->count();
+        $kong = User::whereHas('Siswa', function ($query) {
+            $query->where('Agama', 'Konghucu');
+        })->count();
+        // $katolik = Siswa::whereIn('Agama', ['Katolik'])
+        //     ->count();
+        // $kristen = Siswa::whereIn('Agama', ['Kristen Protestan'])
+        //     ->count();
+        // $islam = Siswa::whereIn('Agama', ['Islam'])
+        //     ->count();
+        // $hindu = Siswa::whereIn('Agama', ['Hindu'])
+        //     ->count();
+        // $buddha = Siswa::whereIn('Agama', ['Buddha'])
+        //     ->count();
+        // $kong = Siswa::whereIn('Agama', ['Konghucu'])
+        //     ->count();
+            $tahunDipilih = $request->input('tahun');
 
-        return view('dashboardAdmin.dashboardAdmin', compact('totaluser', 'totallaki', 'totalperempuan', 'totalguru', 'katolik', 'kristen', 'islam', 'hindu', 'buddha', 'kong','pengumuman'));
+            // Query untuk menghitung jumlah user
+            $query = User::whereIn('hakakses', ['NonSiswa', 'Siswa']);
+        
+            if ($tahunDipilih) {
+                $query->whereYear('created_at', $tahunDipilih);
+            }
+        
+            // Hitung jumlah pengguna berdasarkan filter
+            $ppdb = $query->count();
+        
+            // Ambil daftar tahun unik untuk dropdown filter
+            $tahunList = User::selectRaw('YEAR(created_at) as tahun')
+                             ->distinct()
+                             ->orderBy('tahun', 'desc')
+                             ->pluck('tahun');
+            // $tahunDipilih = $request->input('tahun', date('Y'));
+
+            // // Query untuk menghitung jumlah user berdasarkan tahun yang dipilih
+            // $ppdb = User::whereIn('hakakses', ['NonSiswa', 'Siswa'])
+            //             ->whereYear('created_at', $tahunDipilih)
+            //             ->count();
+        
+            // // Ambil daftar tahun unik untuk dropdown filter
+            // $tahunList = User::selectRaw('YEAR(created_at) as tahun')
+            //                  ->distinct()
+            //                  ->orderBy('tahun', 'desc')
+            //                  ->pluck('tahun');
+        return view('dashboardAdmin.dashboardAdmin', compact('totaluser', 'totallaki', 'totalperempuan', 'katolik', 'kristen', 'islam', 'hindu', 'buddha', 'kong','pengumuman','ppdb', 'tahunDipilih', 'tahunList'));
     }
     
 

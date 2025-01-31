@@ -49,8 +49,8 @@
     }
 </style>
 <section class="min-vh-100 mb-8">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 mx-3 border-radius-lg"
-        style="background-image: url('{{ asset('assets/img/DSC00004.jpg') }}');">
+    <div class="page-header align-items-start min-vh-75 pt-5 pb-11 mx-3 border-radius-lg"
+        style="background-image: url('{{ asset('assets/img/Picture1.png') }}');">
         {{-- style="background-image: url('{{ asset('assets/img/curved-images/white-curved.jpeg') }}');"> --}}
         <span class="mask bg-gradient-dark opacity-6"></span>
         <div class="container">

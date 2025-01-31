@@ -361,6 +361,14 @@ Route::get('Profile/create', [ProfileController::class, 'create'])->name('Profil
 Route::post('/Profile', [ProfileController::class, 'store'])->name('Profile.store');
 Route::get('/Profile/edit/{hashedId}', [ProfileController::class, 'edit'])->name('Profile.edit');
 Route::put('/Profile/{hashedId}', [ProfileController::class, 'update'])->name('Profile.update');
+    //url profile sekolah
+Route::get('/Sekolah', [ProfilesekolahController::class, 'index'])->name('Sekolah.index');
+Route::get('/sekolah/sekolah', [ProfilesekolahController::class, 'getSekolah'])->name('sekolah.sekolah');
+Route::delete('/Sekolah/delete', [ProfilesekolahController::class, 'deleteSekolah'])->name('sekolah.delete');
+Route::get('Sekolah/create', [ProfilesekolahController::class, 'create'])->name('Sekolah.create');
+Route::post('/Sekolah', [ProfilesekolahController::class, 'store'])->name('Sekolah.store');
+Route::get('/Sekolah/edit/{hashedId}', [ProfilesekolahController::class, 'edit'])->name('Sekolah.edit');
+Route::put('/Sekolah/{hashedId}', [ProfilesekolahController::class, 'update'])->name('Sekolah.update');
 
 // Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
 // ->name('Kelassiswa.showmatapelajaran');
