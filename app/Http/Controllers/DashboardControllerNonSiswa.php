@@ -49,7 +49,7 @@ class DashboardControllerNonSiswa extends Controller
         ->whereHas('Siswa', function ($query) use ($user) {
             $query->where('siswa_id', $user->siswa_id);
         })
-        ->select(['id', 'siswa_id', 'status', 'foto', 'tanggalbukti', 'created_at'])
+        ->select(['id', 'siswa_id', 'status', 'foto', 'tanggalbukti', 'ket','created_at'])
         ->get()
         ->map(function ($pembayaran) {
             $pembayaran->id_hashed = substr(hash('sha256', $pembayaran->id . env('APP_KEY')), 0, 8);

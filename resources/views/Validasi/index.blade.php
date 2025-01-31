@@ -36,6 +36,9 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Tanggal Pembuatan Akun</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Keterangan</th>
                                  
                                         <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -83,6 +86,7 @@
           // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'tanggalbukti', name: 'tanggalbukti', className: 'text-center' },
           { data: 'created_at', name: 'created_at', className: 'text-center' },
+          { data: 'ket', name: 'ket', className: 'text-center' },
             {
                 data: 'action',
                 name: 'action',

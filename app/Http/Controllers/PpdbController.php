@@ -61,7 +61,7 @@ class PpdbController extends Controller
                 'max:255',
             ],
             'NamaPanggilan' => [
-                'nullable',
+                'required',
                 'string',
                 'max:100',
             ],
@@ -71,12 +71,12 @@ class PpdbController extends Controller
                 'in:Laki-Laki,Perempuan',
             ],
             'TempatLahir' => [
-                'nullable',
+                'required',
                 'string',
                 'max:255',
             ],
             'TanggalLahir' => [
-                'nullable',
+                'required',
                 'date',
                 'date_format:Y-m-d',
                 'before:today'
@@ -92,7 +92,12 @@ class PpdbController extends Controller
                 'in:Aktif,Tidak Aktif',
             ],
             'Alamat' => [
-                'nullable',
+                'required',
+                'string',
+                'max:255',
+            ],
+            'AsalSD' => [
+                'required',
                 'string',
                 'max:255',
             ],
@@ -121,25 +126,78 @@ class PpdbController extends Controller
                 'regex:/^[a-zA-Z0-9_-]+$/',
                 'unique:users,username',
             ],
-        ],
-        [
-            // Validation messages
-            'username.required' => 'username harus diisi seperti keterangan di bawah',
-            'username.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
-            'username.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
-            'username.unique' => 'username sudah ada yang memakai, silahkan pilih username yang lain',
-            'password.required' => 'password harus diisi seperti keterangan di bawah',
-            'password.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
-            'password.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
-            'password.confirmed' => 'password dan konfirmasi password harus sama',
-            'NomorTelephone.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123',
-            'NomorTelephoneAyah.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123',
-            'NomorTelephone.max' => 'nomor telephone maksimal 13 karakter',
-            'NomorTelephoneAyah.max' => 'nomor telephone orang tua maksimal 13 karakter',
-            'TanggalLahir.date_format' => 'Format tanggal lahir harus YYYY-MM-DD',
-            'TanggalLahir.before' => 'Tanggal lahir harus sebelum hari ini',
-            'NomorTelephone.regex' => 'Nomor telephone hanya boleh berisi angka',
-            'NomorTelephoneAyah.regex' => 'Nomor telephone ayah hanya boleh berisi angka',
+        ], [
+            'hakakses.nullable' => 'Hak akses tidak wajib diisi.',
+            'hakakses.string' => 'Hak akses harus berupa teks.',
+            'hakakses.in' => 'Pilih hak akses yang valid: NonSiswa.',
+            
+            'Role.nullable' => 'Peran tidak wajib diisi.',
+            'Role.string' => 'Peran harus berupa teks.',
+            'Role.in' => 'Pilih peran yang valid: NonSiswa.',
+            
+            'password.required' => 'Password wajib diisi.',
+            'password.string' => 'Password harus berupa teks.',
+            'password.min' => 'Password minimal terdiri dari 7 karakter.',
+            'password.max' => 'Password maksimal terdiri dari 12 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+            
+            'NamaLengkap.required' => 'Nama lengkap wajib diisi.',
+            'NamaLengkap.string' => 'Nama lengkap harus berupa teks.',
+            'NamaLengkap.max' => 'Nama lengkap maksimal terdiri dari 255 karakter.',
+            
+            'NamaPanggilan.required' => 'Nama panggilan wajib diisi.',
+            'NamaPanggilan.string' => 'Nama panggilan harus berupa teks.',
+            'NamaPanggilan.max' => 'Nama panggilan maksimal terdiri dari 100 karakter.',
+            
+            'JenisKelamin.required' => 'Jenis kelamin wajib diisi.',
+            'JenisKelamin.string' => 'Jenis kelamin harus berupa teks.',
+            'JenisKelamin.in' => 'Pilih jenis kelamin yang valid: Laki-Laki atau Perempuan.',
+            
+            'TempatLahir.required' => 'Tempat lahir wajib diisi.',
+            'TempatLahir.string' => 'Tempat lahir harus berupa teks.',
+            'TempatLahir.max' => 'Tempat lahir maksimal terdiri dari 255 karakter.',
+            
+            'TanggalLahir.required' => 'Tanggal lahir wajib diisi.',
+            'TanggalLahir.date' => 'Tanggal lahir harus berupa tanggal.',
+            'TanggalLahir.date_format' => 'Tanggal lahir harus dalam format: Y-m-d.',
+            'TanggalLahir.before' => 'Tanggal lahir harus sebelum hari ini.',
+            
+            'Agama.required' => 'Agama wajib diisi.',
+            'Agama.string' => 'Agama harus berupa teks.',
+            'Agama.in' => 'Pilih agama yang valid: Katolik, Kristen Protestan, Islam, Hindu, Buddha, atau Konghucu.',
+            
+            'status.nullable' => 'Status tidak wajib diisi.',
+            'status.string' => 'Status harus berupa teks.',
+            'status.in' => 'Pilih status yang valid: Aktif atau Tidak Aktif.',
+            
+            'Alamat.required' => 'Alamat wajib diisi.',
+            'Alamat.string' => 'Alamat harus berupa teks.',
+            'Alamat.max' => 'Alamat maksimal terdiri dari 255 karakter.',
+            
+            'AsalSD.required' => 'Asal SD wajib diisi.',
+            'AsalSD.string' => 'Asal SD harus berupa teks.',
+            'AsalSD.max' => 'Asal SD maksimal terdiri dari 255 karakter.',
+            
+            'NomorTelephone.required' => 'Nomor telepon wajib diisi.',
+            'NomorTelephone.string' => 'Nomor telepon harus berupa teks.',
+            'NomorTelephone.max' => 'Nomor telepon maksimal terdiri dari 13 karakter.',
+            'NomorTelephone.regex' => 'Nomor telepon hanya boleh mengandung angka.',
+            
+            'NomorTelephoneAyah.required' => 'Nomor telepon ayah wajib diisi.',
+            'NomorTelephoneAyah.string' => 'Nomor telepon ayah harus berupa teks.',
+            'NomorTelephoneAyah.max' => 'Nomor telepon ayah maksimal terdiri dari 13 karakter.',
+            'NomorTelephoneAyah.regex' => 'Nomor telepon ayah hanya boleh mengandung angka.',
+            
+            'siswa_id.nullable' => 'ID siswa tidak wajib diisi.',
+            'siswa_id.numeric' => 'ID siswa harus berupa angka.',
+            'siswa_id.max' => 'ID siswa maksimal terdiri dari 4 angka.',
+            
+            'username.required' => 'Username wajib diisi.',
+            'username.string' => 'Username harus berupa teks.',
+            'username.min' => 'Username minimal terdiri dari 7 karakter.',
+            'username.max' => 'Username maksimal terdiri dari 12 karakter.',
+            'username.regex' => 'Username hanya boleh mengandung huruf, angka, tanda hubung, atau underscore.',
+            'username.unique' => 'Username sudah terdaftar. Silakan pilih username lain.',
         ]);
     
         try {
@@ -160,6 +218,7 @@ class PpdbController extends Controller
                 'Agama' => $validatedData['Agama'],
                 'Alamat' => $validatedData['Alamat'],
                 'NomorTelephone' => $validatedData['NomorTelephone'],
+                'AsalSD' => $validatedData['AsalSD'],
                 'NomorTelephoneAyah' => $validatedData['NomorTelephoneAyah'],
                 'status' => 'Tidak Aktif',
             ]);
@@ -176,6 +235,7 @@ class PpdbController extends Controller
                 ['siswa_id' => $siswa->siswa_id],
                 [
                     'status' => 'Menunggu Pembayaran',
+                    'ket' => 'Kosong',
                 ]
             );
     

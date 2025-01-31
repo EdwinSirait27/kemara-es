@@ -19,6 +19,7 @@ class Pembayaran extends Model
         'status',
         'foto',
         'tanggalbukti',
+        'ket',
             ];
             public function Siswa()
             {

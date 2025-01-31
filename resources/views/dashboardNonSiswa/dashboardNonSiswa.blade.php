@@ -237,6 +237,9 @@
                                   Tanggal Upload</th>
                               <th
                                   class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                  Keterangan</th>
+                              <th
+                                  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                   Action</th>
                               <th>
                              
@@ -308,6 +311,7 @@
     }
 },
 
+            { data: 'ket', name: 'ket', className: 'text-center' },
             { data: 'action', name: 'action', orderable: false, searchable: false,  className: 'text-center' }
            
           ]

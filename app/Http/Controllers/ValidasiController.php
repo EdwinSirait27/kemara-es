@@ -21,7 +21,7 @@ class ValidasiController extends Controller
     public function getValidasi()
     {
         $pembayaran = Pembayaran::with('Siswa')
-            ->select(['id', 'siswa_id', 'status', 'tanggalbukti', 'created_at'])
+            ->select(['id', 'siswa_id', 'status', 'tanggalbukti', 'ket','created_at'])
             ->get()
             ->map(function ($user) {
                 $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
