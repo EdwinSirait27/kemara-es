@@ -216,6 +216,20 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Asal SMP</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                            name="AsalSD" id="AsalSD"
+                                            placeholder="Asal SMP" aria-label="AsalSD"
+                                            aria-describedby="AsalSD-addon" maxlength="255" value="{{ old('AsalSD') }}"required>
+                                        @error('AsalSD')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Username Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="username"
                                             id="username"
@@ -259,6 +273,9 @@
                                             </script>
                                         </div>
                                     </div>
+                                    
+                                </div>
+                                <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Konfirmasi Password</label>
                                         <div
@@ -293,6 +310,25 @@
                                     </div>
                                 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               
                                 <!-- Submit -->
                                 <div class="text-center">
                                     <!-- Tombol Daftar -->

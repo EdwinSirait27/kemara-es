@@ -100,6 +100,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Siswa::class, 'siswa_id','siswa_id');
     }
+    public function Pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'id');
+    }
     public function Pengaturankelassiswa()
 {
     return $this->hasOne(Pengaturankelassiswa::class, 'siswa_id', 'siswa_id');

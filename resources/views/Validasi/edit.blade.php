@@ -178,7 +178,7 @@
                         <div class="@error('status') border border-danger rounded-3 @enderror">
                             <select class="form-control" name="status" id="status" required>
                                 <option value="" disabled selected>{{ __('Pilih Status ') }}</option>
-                                @foreach (['Dalam Antrian', 'Lunas'] as $status)
+                                @foreach (['Dalam Antrian', 'Lunas','Menyicil'] as $status)
                                     <option value="{{ e($status) }}"
                                         {{ $pembayaran->status == $status ? 'selected' : '' }}>
                                         {{ e($status) }}
@@ -191,6 +191,23 @@
 
                         </div>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ket" class="form-control-label"><i class="fas fa-lock"></i>
+                            {{ __('Keterangan') }}</label>
+
+                        <div class="@error('ket') border border-danger rounded-3 @enderror">
+                            <input class="form-control" value="{{ $pembayaran->ket ?? ''}}"
+                            type="text" id="ket" name="ket" aria-describedby="info-ket" maxlength="255">
+                   
+                            @error('ket')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
+
+                        </div>
+                    </div>
+                </div>
                 </div>
                
                 <div class="d-flex justify-content-between">

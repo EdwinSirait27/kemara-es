@@ -100,6 +100,10 @@ class Siswa extends Model
     {
         return $this->belongsTo(Siswa::class, 'siswa_id');
     }
+    public function Pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'siswa_id', 'siswa_id');
+    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d');

@@ -69,7 +69,12 @@ public function update(Request $request, $hashedId)
 
     // Validate request
     $request->validate([
-        'status' => ['required','in:Dalam Antrian,Lunas'], 
+        'status' => ['required','in:Dalam Antrian,Lunas,Menyicil'], 
+        'ket' => ['required','string','max:255'], 
+    ], [
+        'ket.required' => 'keterangan wajib diisi.',
+       
+        
 ]);
     $pembayaran->update([
         

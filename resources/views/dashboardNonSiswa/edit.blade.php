@@ -40,7 +40,7 @@
                                 @csrf
                                 @method('PUT')
                     
-                                @if ($pembayaran->Siswa && $pembayaran->Siswa->foto)
+                                {{-- @if ($pembayaran->Siswa && $pembayaran->Siswa->foto)
                                 <img src="{{ asset('storage/fotosiswa/' . $pembayaran->Siswa->foto) }}"
                                      alt="Foto siswa" width="100" height="100"
                                      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
@@ -48,7 +48,17 @@
                                 <img src="{{ asset('img/default-avatar.png') }}"
                                      alt="Foto siswa" width="100" height="100"
                                      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-                            @endif
+                            @endif --}}
+                            @if ($pembayaran->Siswa && $pembayaran->Siswa->foto)
+    <img src="{{ asset('storage/fotosiswa/' . ($pembayaran->Siswa->foto ?? 'we.jpg')) }}"
+         alt="Foto siswa" width="100" height="100"
+         class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+@else
+    <img src="{{ asset('storage/fotosiswa/we.jpg') }}"
+         alt="Foto siswa" width="100" height="100"
+         class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+@endif
+
                             
                             <a href="javascript:;"
                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
