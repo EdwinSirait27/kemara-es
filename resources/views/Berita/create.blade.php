@@ -36,7 +36,7 @@
                                             value="{{ e($header ?? '') }}"
                                             type="text"
                                                 id="header" name="header" aria-describedby="info-header"
-                                                maxlength="255" required>
+                                                maxlength="255" value="{{ old('header') }}"required>
                                                 @error('header')
                                                 <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
@@ -55,7 +55,7 @@
                                         <div>
                                             <textarea 
                                                 class="form-control"
-                                                id="body" name="body" aria-describedby="info-body"
+                                                id="body" name="body"value="{{ old('body') }}" aria-describedby="info-body"
                                                  required
                                                 style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
                                             @error('body')
@@ -66,13 +66,7 @@
                                 </div>
                                 </div>
                                 
-                                <script>
-                                    ClassicEditor
-                                        .create(document.querySelector('#body'))
-                                        .catch(error => {
-                                            console.error(error);
-                                        });
-                                </script>                            
+                                                    
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

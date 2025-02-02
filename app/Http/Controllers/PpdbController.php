@@ -536,6 +536,7 @@ class PpdbController extends Controller
 
             $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
             $user->Status = optional($pembayaran)->status ?? '-';
+            $user->Ket = optional($pembayaran)->ket ?? '-';
 
             return $user;
         });
@@ -552,6 +553,9 @@ class PpdbController extends Controller
         })
         ->addColumn('status', function ($user) {
             return $user->Status; // Pakai nilai yang sudah diproses di map()
+        })
+        ->addColumn('ket', function ($user) {
+            return $user->Ket; // Pakai nilai yang sudah diproses di map()
         })
         ->rawColumns(['checkbox', 'action'])
         ->make(true);

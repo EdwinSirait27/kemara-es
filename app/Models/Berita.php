@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class Berita extends Model
 {
@@ -15,6 +15,7 @@ class Berita extends Model
         'id',
         'user_id',
         'header',
+        'slug',
         'body',
         'gambar1',
         'gambar2',
@@ -30,6 +31,20 @@ class Berita extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function setHeaderAttribute($value)
+    {
+        $this->attributes['header'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
 
+    // Method untuk mendapatkan berita berdasarkan slug
+    public static function findBySlug($slug)
+    {
+        return static::where('slug', $slug)->firstOrFail();
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
 

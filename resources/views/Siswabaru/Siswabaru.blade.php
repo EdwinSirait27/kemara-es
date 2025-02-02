@@ -49,6 +49,9 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Status Pembayaran</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Keterangan</th>
                                         <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action</th>
@@ -102,6 +105,7 @@
                 { data: 'created_at', name: 'created_at', className: 'text-center' },
                 { data: 'Tanggal', name: 'Tanggal', className: 'text-center' },
                 { data: 'Status', name: 'Status', className: 'text-center' },
+                { data: 'Ket', name: 'Ket', className: 'text-center' },
                 {
                     data: 'action',
                     name: 'action',

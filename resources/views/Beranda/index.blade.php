@@ -609,9 +609,15 @@
     }
 
     .news-item p {
-        font-size: 0.9rem;
-        margin-bottom: 10px;
+        /* font-size: 1.9rem;
+        margin-bottom: 10px; */
+        font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    text-align: justify;
+
     }
+
 
     /* Profile Section */
     .profile {
@@ -635,10 +641,9 @@
     }
 
     .video-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 0;
-        overflow: hidden;
+        text-align: center;
+    margin-bottom: 20px;
+    position: relative;
     }
 
     .video-container:hover {
@@ -646,14 +651,43 @@
     }
 
     .video-container iframe {
-        position: absolute;
+        /* position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border-radius: 8px;
+        border-radius: 8px; */
+        width: 100%;
+    max-width: 560px;
+    height: 315px;
+    display: block;
+    margin: 0 auto;
+    z-index: 1; 
     }
+    .video-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    position: relative;
+    z-index: 2; /* Pastikan tombol muncul di atas iframe */
+}
+.video-controls button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 3; /* Tombol harus di atas iframe */
+    position: relative;
+}
 
+.video-controls button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
     .welcome-text {
         background-color: white;
         box-shadow: var(--soft-shadow);
@@ -909,9 +943,9 @@
                 <button class="next-btn" onclick="nextImage('{{ $sekolah->id }}')">❯</button>
             </div>
 <br>
-            <div class="news-meta">
-                <span><i class="fas fa-user"></i> {{ $sekolah->User->Guru->Nama }}</span>
-            </div>
+            {{-- <div class="news-meta">
+                <span><i class="fas fa-user"></i> Ditulis Oleh : {{ $sekolah->User->Guru->Nama }}</span>
+            </div> --}}
 
             @php
                 $words = explode(' ', strip_tags($sekolah->body)); // Memecah teks menjadi array kata
@@ -1046,8 +1080,11 @@
                                     Ditulis oleh: <strong>{{ $beritas[0]->User->Guru->Nama }}</strong>
                                     <span style="color: gray;">{{ $beritas[0]->created_at->diffForHumans() }}</span>
                                 </p>
-                                <a href="{{ route('Berita.show', ['id' => $beritas[0]->id]) }}"
+                                {{-- <a href="{{ route('Berita.show', ['id' => $beritas[0]->id]) }}"
                                     class="btn btn-primary slider-link">
+                                    Lihat Berita
+                                </a> --}}
+                                <a href="{{ route('Berita.show', ['slug' => $beritas[0]->slug]) }}" class="btn btn-primary slider-link">
                                     Lihat Berita
                                 </a>
                             </div>
@@ -1072,9 +1109,13 @@
                                 <span><i class="fas fa-clock"></i> {{ $berita->created_at->diffForHumans() }}</span>
                             </div>
                             <p>{{ str($berita->body)->limit(50) }}</p>
-                            <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="read-more">
+                            {{-- <a href="{{ route('Berita.show', ['id' => $berita->id]) }}" class="read-more">
+                                Baca selengkapnya <i class="fas fa-arrow-right"></i>
+                            </a> --}}
+                            <a href="{{ route('Berita.show', ['slug' => $berita->slug]) }}" class="read-more">
                                 Baca selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
+                            
                         </div>
                     @endforeach
                 @endif
@@ -1087,8 +1128,7 @@
 
 
 
-            <section class="profile">
-                <!-- Profile section tetap sama -->
+            {{-- <section class="profile">
                 <h2>Informasi</h2>
                 <div class="profile-content">
                     <div class="video-container">
@@ -1120,7 +1160,61 @@
 
                     </div>
                 </div>
+            </section> --}}
+            <section class="profile">
+                <h2>Informasi</h2>
+                <div class="profile-content">
+                    <div class="video-container">
+                        @if ($youtubeVideos->isEmpty())
+                            <p>Tidak ada video yang aktif.</p>
+                            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+                        @else
+                            <iframe id="videoFrame" src="{{ $youtubeVideos->first()->url }}" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-controls">
+                                <button id="prevBtn" onclick="changeVideo(-1)" disabled>⏪ Prev</button>
+                                <button id="nextBtn" onclick="changeVideo(1)">Next ⏩</button>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="welcome-text">
+                        @if ($profiles->isEmpty())
+                            <p>Tidak ada Profile.</p>
+                        @else
+                            @foreach ($profiles as $profile)
+                                <h3>{{ $profile->header }}</h3>
+                                <p>{{ str($profile->body)->limit(100) }}</p>
+                                <a href="{{ route('Profile.show', ['id' => $profile->id]) }}" class="read-more">
+                                    Baca selengkapnya <i class="fas fa-arrow-right"></i>
+                                </a>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
             </section>
+            
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    let videos = @json($youtubeVideos->pluck('url'));
+                    let currentIndex = 0;
+            
+                    function updateButtons() {
+                        document.getElementById("prevBtn").disabled = (currentIndex === 0);
+                        document.getElementById("nextBtn").disabled = (currentIndex === videos.length - 1);
+                    }
+            
+                    window.changeVideo = function (step) {
+                        currentIndex += step;
+                        document.getElementById("videoFrame").src = videos[currentIndex];
+                        updateButtons();
+                    };
+            
+                    updateButtons();
+                });
+            </script>
+            
+          
+           
+            
         </div>
     </div> 
     <script>

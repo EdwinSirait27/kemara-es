@@ -15,7 +15,7 @@ class BeritaController extends Controller
     }
     public function create()
     {
-        
+         
         return view('Berita.create');
     }
     public function getBerita()
@@ -76,16 +76,21 @@ class BeritaController extends Controller
         
     //     return view('Berita.show', compact('berita', 'hashedId'));
     // }
-    public function show($id)
-    {
-        $berita = Berita::find($id);
+    // public function show($id)
+    // {
+    //     $berita = Berita::find($id);
         
-        if (!$berita) {
-                abort(404, 'Berita not found.');
-        }
+    //     if (!$berita) {
+    //             abort(404, 'Berita not found.');
+    //     }
     
-        return view('Berita.show', compact('berita'));
-    }
+    //     return view('Berita.show', compact('berita'));
+    // }
+    public function show($slug)
+{
+    $berita = Berita::findBySlug($slug);
+    return view('berita.show', compact('berita'));
+}
         public function update(Request $request, $hashedId)
     {
         $validatedData = $request->validate([

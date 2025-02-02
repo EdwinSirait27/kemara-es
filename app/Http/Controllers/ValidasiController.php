@@ -79,6 +79,7 @@ public function update(Request $request, $hashedId)
     $pembayaran->update([
         
         'status' => $request->status,
+        'ket' => $request->ket,
     ]);
 
     return redirect()

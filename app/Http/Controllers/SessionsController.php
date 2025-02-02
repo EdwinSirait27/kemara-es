@@ -53,6 +53,10 @@ class SessionsController extends Controller
                 'max:12',
             ],
         ], [
+            'username.required' => 'Username harus diisi.',
+            'username.max' => 'Username tidak boleh lebih dari 12 karakter.',
+            'password.min' => 'Username tidak boleh lebih dari 7 karakter.',
+            'password.required' => 'Password harus diisi.',
             'password.max' => 'Password tidak boleh lebih dari 12 karakter.',
             'password.min' => 'Password tidak boleh kurang dari 7 karakter.',
         ]);
