@@ -9,6 +9,7 @@
             <a href="https://www.instagram.com/smak.kesuma.mtr/" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.youtube.com/@smakkesumamataram" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://api.whatsapp.com/send/?phone=%2B6281353653008&text&type=phone_number&app_absent=0" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.tiktok.com/@smakkesuma.mtr" target="_blank"><i class="fab fa-tiktok"></i></a>
         </div>
     </div>
 </div>

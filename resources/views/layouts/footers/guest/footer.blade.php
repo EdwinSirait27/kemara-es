@@ -17,6 +17,9 @@
               <a href="https://api.whatsapp.com/send/?phone=%2B6281353653008&text&type=phone_number&app_absent=0" target="_blank" class="text-secondary me-xl-4 me-4">
                   <span class="text-lg fab fa-whatsapp" aria-hidden="true"></span>
               </a>
+              <a href="https://www.tiktok.com/@smakkesuma.mtr" target="_blank" class="text-secondary me-xl-4 me-4">
+                  <span class="text-lg fab fa-tiktok" aria-hidden="true"></span>
+              </a>
           </div>
         @endif
       </div>
@@ -26,7 +29,7 @@
             <p class="mb-0 text-secondary">
               Copyright © <script>
                 document.write(new Date().getFullYear())
-              </script> SMAK KESUMA MATARAM 
+              </script> SMAK KESUMA MATARAM
             </p>
           </div>
         </div>
