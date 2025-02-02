@@ -3,6 +3,8 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 class Profile extends Model
 {
     use HasFactory;
@@ -26,5 +28,20 @@ class Profile extends Model
     public function User()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function setHeaderAttribute($value)
+    {
+        $this->attributes['header'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    // Method untuk mendapatkan berita berdasarkan slug
+    public static function findBySlug($slug)
+    {
+        return static::where('slug', $slug)->firstOrFail();
+    }
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

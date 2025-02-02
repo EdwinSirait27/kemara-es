@@ -69,9 +69,9 @@ class ProfileController extends Controller
         
     //     return view('profile.show', compact('profile', 'hashedId'));
     // }
-    public function show($id)
+    public function show($slug)
     {
-        $profile = Profile::find($id);
+        $profile = Profile::findBySlug($slug);
         
         if (!$profile) {
                 abort(404, 'profile not found.');

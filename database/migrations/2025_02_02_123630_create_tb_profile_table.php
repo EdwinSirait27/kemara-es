@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->string('header')->nullable(); 
+            $table->string('slug')->unique();
             $table->text('body')->nullable(); 
             $table->string('gambar1')->nullable(); 
             $table->string('gambar2')->nullable(); 
@@ -28,7 +29,7 @@ return new class extends Migration
             $table->enum('status', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();
                 });
-
+        
     }
 
     /**

@@ -532,7 +532,7 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::get('/Ppdb', [PpdbController::class, 'index'])->middleware('throttle:10,1')->name('Ppdb.index');
     Route::post('/Ppdb', [PpdbController::class, 'store'])->middleware('throttle:5,1')->name('Ppdb.store');
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->middleware('throttle:10,1')->name('Berita.show');
-    Route::get('/Profile/show/{id}', [ProfileController::class, 'show'])->middleware('throttle:10,1')->name('Profile.show');
+    Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->middleware('throttle:10,1')->name('Profile.show');
 });
 // Route::middleware('guest')->group(function () {
 //     // Registrasi

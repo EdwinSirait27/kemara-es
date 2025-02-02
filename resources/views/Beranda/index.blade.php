@@ -491,19 +491,37 @@
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
     }
 
-    .slider-item {
+    /* .slider-item {
         position: relative;
         width: 100%;
         height: 100%;
-    }
+    } */
 
-    .slider-image {
-        width: 100%;
-        height: 100%;
+    /* .slider-image {
+        width: 50%;
+        height: 150%;
         object-fit: cover;
         transition: transform 0.4s ease;
     }
-   
+    */
+    .slider-item {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Mencegah gambar keluar dari container */
+}
+
+.slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar memenuhi container tanpa distorsi */
+    transition: transform 0.4s ease;
+}
+
+
 
     .slider-image:hover {
         transform: scale(1.05);
@@ -1182,8 +1200,8 @@
                         @else
                             @foreach ($profiles as $profile)
                                 <h3>{{ $profile->header }}</h3>
-                                <p>{{ str($profile->body)->limit(100) }}</p>
-                                <a href="{{ route('Profile.show', ['id' => $profile->id]) }}" class="read-more">
+                                <p>{{ str($profile->body)->limit(250) }}</p>
+                                <a href="{{ route('Profile.show', ['slug' => $profile->slug]) }}" class="read-more">
                                     Baca selengkapnya <i class="fas fa-arrow-right"></i>
                                 </a>
                             @endforeach
