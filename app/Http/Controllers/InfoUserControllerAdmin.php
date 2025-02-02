@@ -119,7 +119,6 @@ class InfoUserControllerAdmin extends Controller
 
             // Update data user
             $updateData = [
-                'username' => $request->username,
                 'hakakses' => $request->Role,
             ];
 
@@ -134,28 +133,17 @@ class InfoUserControllerAdmin extends Controller
             $guru = Guru::updateOrCreate(
                 ['guru_id' => $user->guru_id],
                 [
-                    'Nama' => $request->Nama,
                     'foto' => $filePath, 
-                    'TempatLahir' => $request->TempatLahir,
-                    'TanggalLahir' => $request->TanggalLahir,
-                    'Agama' => $request->Agama,
-                    'JenisKelamin' => $request->JenisKelamin,
-                    'StatusPegawai' => $request->StatusPegawai,
                     'NipNips' => $request->NipNips,
                     'Nuptk' => $request->Nuptk,
                     'Nik' => $request->Nik,
                     'Npwp' => $request->Npwp,
                     'NomorSertifikatPendidik' => $request->NomorSertifikatPendidik,
-                    'TahunSertifikasi' => $request->TahunSertifikasi,
-                    'jadwalkenaikangaji' => $request->jadwalkenaikangaji,
                     'PendidikanAkhir' => $request->PendidikanAkhir,
                     'TahunTamat' => $request->TahunTamat,
                     'Jurusan' => $request->Jurusan,
                     'TugasMengajar' => $request->TugasMengajar,
                     'TahunPensiun' => $request->TahunPensiun,
-                    'Pangkat' => $request->Pangkat,
-                    'jadwalkenaikanpangkat' => $request->jadwalkenaikanpangkat,
-                    'Jabatan' => $request->Jabatan,
                     'NomorTelephone' => $request->NomorTelephone,
                     'Alamat' => $request->Alamat,
                     'Email' => $request->Email,

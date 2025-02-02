@@ -379,7 +379,7 @@
                                 <input class="form-control"
                                     value="{{ old('TahunSertifikasi', optional(auth()->user()->Guru)->TahunSertifikasi) }}"
                                     type="date" placeholder="TahunSertifikasi" id="TahunSertifikasi"
-                                    name="TahunSertifikasi" required>
+                                    name="TahunSertifikasi" readonly>
                                 @error('TahunSertifikasi')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror

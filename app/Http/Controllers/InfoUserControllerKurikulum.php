@@ -33,8 +33,6 @@ class InfoUserControllerKurikulum extends Controller
 
     public function store(Request $request)
     {
-    // dd($request->all());
-
         $user = Auth::user();
 
         $this->validate($request, [
@@ -42,10 +40,10 @@ class InfoUserControllerKurikulum extends Controller
             'Role' => ['nullable', 'string', 'in:SU,KepalaSekolah,Admin,Guru,Kurikulum,Siswa,NonSiswa', new NoXSSInput()],
             'current_password' => ['nullable', 'string', 'max:12', new NoXSSInput()],      
             'password' => ['nullable', 'string', 'min:7','max:12','confirmed', new NoXSSInput()],      
-           
+            
            
             'TempatLahir' => ['nullable', 'string', 'max:255', new NoXSSInput()],      
-            'TanggalLahir' => ['nullable', 'string','max:30', new NoXSSInput()],      
+            'TanggalLahir' => ['nullable', 'date', new NoXSSInput()],      
             'Agama' => ['nullable', 'string','in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu', new NoXSSInput()],      
             'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],      
             'StatusPegawai' => ['nullable', 'string','max:255', new NoXSSInput()],      
@@ -55,13 +53,13 @@ class InfoUserControllerKurikulum extends Controller
             'Npwp' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'NomorSertifikatPendidik' => ['nullable', 'string','max:16', new NoXSSInput()],      
             'TahunSertifikasi' => ['nullable', 'date', new NoXSSInput()],      
-            'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
             'PendidikanAkhir' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TahunTamat' => ['nullable', 'date', new NoXSSInput()],      
             'Jurusan' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TugasMengajar' => ['nullable', 'string', 'max:100', new NoXSSInput()],      
             'TahunPensiun' => ['nullable', 'date', new NoXSSInput()],      
             'Pangkat' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
+            'jadwalkenaikangaji' => ['nullable', 'date', new NoXSSInput()],      
             'jadwalkenaikanpangkat' => ['nullable', 'date', new NoXSSInput()],      
             'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],      
             'NomorTelephone' => ['nullable', 'string', 'max:13', new NoXSSInput()],      
@@ -81,12 +79,11 @@ class InfoUserControllerKurikulum extends Controller
                         $fail("Input $attribute mengandung tag HTML yang tidak diperbolehkan.");
                     }
                 }
-            ],    
-            'foto' => ['required','image','mimes:jpeg,png,jpg','max:512'],
+            ],   
+            'foto' => ['nullable','image','mimes:jpeg,png,jpg','max:512'],
         
         ],
     [
-        'foto.required' => 'foto wajib diisi',
         'foto.mimes' => 'harus bertipe jpeg,png,jpg',
         'foto.max' => 'foto harus kurang dari 512 kb',
         'foto.image' => 'harus berupa gambar',
@@ -100,15 +97,14 @@ class InfoUserControllerKurikulum extends Controller
             $file = $request->file('foto');
             $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
             $file->storeAs('public/fotoguru', $fileName); // Simpan file ke folder public/fotosiswa
-        
             // Simpan hanya nama file ke database
             $filePath = $fileName;
-        
             // Hapus file lama jika ada
             if ($user->guru && $user->guru->foto && Storage::exists('public/fotoguru/' . $user->guru->foto)) {
                 Storage::delete('public/fotoguru/' . $user->guru->foto);
             }
         }
+
         try {
             DB::beginTransaction();
 
@@ -123,7 +119,6 @@ class InfoUserControllerKurikulum extends Controller
 
             // Update data user
             $updateData = [
-                'username' => $request->username,
                 'hakakses' => $request->Role,
             ];
 
@@ -138,29 +133,17 @@ class InfoUserControllerKurikulum extends Controller
             $guru = Guru::updateOrCreate(
                 ['guru_id' => $user->guru_id],
                 [
-                    'Nama' => $request->Nama,
                     'foto' => $filePath, 
-                    'TempatLahir' => $request->TempatLahir,
-                  'TanggalLahir' => $request->TanggalLahir ? Carbon::parse($request->TanggalLahir)->format('Y-m-d') : null, // Format tanggal diperbaiki
-                    
-                    'Agama' => $request->Agama,
-                    'JenisKelamin' => $request->JenisKelamin,
-                    'StatusPegawai' => $request->StatusPegawai,
                     'NipNips' => $request->NipNips,
                     'Nuptk' => $request->Nuptk,
                     'Nik' => $request->Nik,
                     'Npwp' => $request->Npwp,
                     'NomorSertifikatPendidik' => $request->NomorSertifikatPendidik,
-                    'TahunSertifikasi' => $request->TahunSertifikasi,
-                    'jadwalkenaikangaji' => $request->jadwalkenaikangaji,
                     'PendidikanAkhir' => $request->PendidikanAkhir,
                     'TahunTamat' => $request->TahunTamat,
                     'Jurusan' => $request->Jurusan,
                     'TugasMengajar' => $request->TugasMengajar,
                     'TahunPensiun' => $request->TahunPensiun,
-                    'Pangkat' => $request->Pangkat,
-                    'jadwalkenaikanpangkat' => $request->jadwalkenaikanpangkat,
-                    'Jabatan' => $request->Jabatan,
                     'NomorTelephone' => $request->NomorTelephone,
                     'Alamat' => $request->Alamat,
                     'Email' => $request->Email,
