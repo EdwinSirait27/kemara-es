@@ -42,11 +42,16 @@ class PpdbController extends Controller
                 'nullable',
                 'string',
                 'in:NonSiswa',
+                
+
+                
             ],
             'Role' => [
                 'nullable',
                 'string',
-                'in:NonSiswa'
+                'in:NonSiswa',
+                
+
             ],
             'password' => [
                 'required',
@@ -59,21 +64,32 @@ class PpdbController extends Controller
                 'required',
                 'string',
                 'max:255',
+               'regex:/^[a-zA-Z\s]+$/',
+
+
             ],
             'NamaPanggilan' => [
                 'required',
                 'string',
                 'max:100',
+               'regex:/^[a-zA-Z\s]+$/',
+
+
             ],
             'JenisKelamin' => [
                 'required',
                 'string',
                 'in:Laki-Laki,Perempuan',
+                
+
             ],
             'TempatLahir' => [
                 'required',
                 'string',
                 'max:255',
+              'regex:/^[a-zA-Z\s]+$/',
+
+
             ],
             'TanggalLahir' => [
                 'required',
@@ -95,28 +111,43 @@ class PpdbController extends Controller
                 'required',
                 'string',
                 'max:255',
+              'regex:/^[a-zA-Z0-9\s,.]+$/',
+
+
             ],
             'AsalSD' => [
                 'required',
                 'string',
                 'max:255',
+                'regex:/^[a-zA-Z0-9\s.]+$/',
+
+
             ],
             'NomorTelephone' => [
                 'required',
                 'string',
                 'max:13',
-                'regex:/^[0-9]+$/'
+                'regex:/^[0-9]+$/',
             ],
             'NomorTelephoneAyah' => [
                 'required',
                 'string',
                 'max:13',
-                'regex:/^[0-9]+$/'
+                'regex:/^[0-9]+$/',
             ],
             'siswa_id' => [
                 'nullable',
                 'numeric',
                 'max:4',
+                'regex:/^[0-9]+$/',
+
+            ],
+            'nis' => [
+                'nullable',
+                'string',
+                'max:255',
+                'regex:/^[0-9]+$/',
+
             ],
             'username' => [
                 'required',
@@ -221,6 +252,7 @@ class PpdbController extends Controller
                 'AsalSD' => $validatedData['AsalSD'],
                 'NomorTelephoneAyah' => $validatedData['NomorTelephoneAyah'],
                 'status' => 'Tidak Aktif',
+              'nis' => Siswa::generateNIS(),
             ]);
     
             User::create([
@@ -249,146 +281,7 @@ class PpdbController extends Controller
                 ->withInput();
         }
     }
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'hakakses' => [
-    //             'nullable',
-    //             'string',
-    //             'in:NonSiswa',
-    //         ],
-    //         'Role' => [
-    //             'nullable',
-    //             'string',
-    //             'in:NonSiswa'
-    //         ],
-    //         'password' => [
-    //             'required',
-    //             'string',
-    //             'min:7',
-    //             'max:12',
-    //             'confirmed'
-    //         ],
-
-    //         'NamaLengkap' => [
-    //             'required',
-    //             'string',
-    //             'max:255',
-    //         ],
-    //         'NamaPanggilan' => [
-    //             'nullable',
-    //             'string',
-    //             'max:100',
-    //         ],
-    //         'JenisKelamin' => [
-    //             'required',
-    //             'string',
-    //             'in:Laki-Laki,Perempuan',
-    //         ],
-    //         'TempatLahir' => [
-    //             'nullable',
-    //             'string',
-    //             'max:255',
-    //         ],
-    //         'TanggalLahir' => ['nullable', 'date',],
-    //         'Agama' => [
-    //             'required',
-    //             'string',
-    //             'in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu',
-    //         ],
-    //         'status' => [
-    //             'nullable',
-    //             'string',
-    //             'in:Aktif,Tidak Aktif',
-    //         ],
-    //         'Alamat' => [
-    //             'nullable',
-    //             'string',
-    //             'max:255',
-
-    //         ],
-    //         'NomorTelephone' => [
-    //             'required',
-    //             'string',
-    //             'max:13',
-                
-
-    //         ],
-    //         'NomorTelephoneAyah' => [
-    //             'required',
-    //             'string',
-    //             'max:13',
-                
-    //         ],
-    //         'siswa_id' => [
-    //             'nullable',
-    //             'numeric',
-    //             'max:4',
-    //         ],
-    //         'username' => [
-    //             'required',
-    //             'string',
-    //             'min:7',
-    //             'max:12',
-    //             'regex:/^[a-zA-Z0-9_-]+$/',
-    //             'unique:users,username',
-    //         ], 
-    //     ],
-    // [
-    //     // username
-    //     'username.required' => 'username harus diisi seperti keterangan di bawah',
-    //     'username.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
-    //     'username.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
-    //     'username.unique' => 'username sudah ada yang memakai, silahkan pilih username yang lain',
-    //     'password.required' => 'password harus diisi seperti keterangan di bawah',
-    //     'password.min' => 'username harus diisi minimal 7 karakter bebas seperti keterangan di bawah',
-    //     'password.max' => 'username harus diisi maximal 12 karakter seperti keterangan di bawah',
-    //     'password.confirmation' => 'password dan konfirmasi password harus sama ',
-    //     'NomorTelephone.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123 ',
-    //     'NomorTelephoneAyah.string' => 'nomor telephone diawali dengan angka 0 contoh 086616273123 ',
-    //     'NomorTelephone.max' => 'nomor telephone maksimal 13 karakter ',
-    //     'NomorTelephoneAyah.max' => 'nomor telephone orang tua maksimal 13 karakter ',
-    //     ]);
-    //     try {
-    //         DB::beginTransaction();
-    //         $siswa = Siswa::create([
-    //             'NamaLengkap' => $validatedData['NamaLengkap'],
-    //             'NamaPanggilan' => $validatedData['NamaPanggilan'],
-    //             'JenisKelamin' => $validatedData['JenisKelamin'],
-    //             'TempatLahir' => $validatedData['TempatLahir'],
-    //             'TanggalLahir' => $validatedData['TanggalLahir'],
-    //             'Agama' => $validatedData['Agama'],
-    //             'Alamat' => $validatedData['Alamat'],
-    //             'NomorTelephone' => $validatedData['NomorTelephone'],
-    //             'NomorTelephoneAyah' => $validatedData['NomorTelephoneAyah'],
-    //             'status' => 'Tidak Aktif',
-    //         ]);
-    //         User::create([
-    //             'username' => $validatedData['username'],
-    //             'password' => Hash::make($validatedData['password']),
-    //             'hakakses' => 'NonSiswa',
-    //             'Role' => 'NonSiswa',
-    //             'siswa_id' => $siswa->siswa_id,
-    //         ]);
-            
-
-    //         $pembayaran = Pembayaran::updateOrCreate(
-    //             ['siswa_id' => $siswa->siswa_id],
-    //             [
-    //                 'status' => 'Menunggu Pembayaran',  
-                      
-    //             ]
-    //         );        
-    //         DB::commit();
-    //         return redirect()->route('login')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         return redirect()->back()
-    //             ->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()])
-    //             ->withInput();
-    //     }
-    // }
-
+   
     public function updateStatus(Request $request)
     {
         try {
@@ -439,35 +332,7 @@ class PpdbController extends Controller
         }
     }
 
-    // public function updateStatus(Request $request)
-    // {
-    //     try {
-    //         Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
-    //         $request->validate([
-    //             'ids' => ['required', 'array', new NoXSSInput()],
-    //             'ids.*' => ['string', 'exists:users,id', new NoXSSInput()],
-    //         ]);
-    //         Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
-
-    //         $affectedRows = User::whereIn('id', $request->ids)
-    //             ->update(['hakakses' => 'Siswa','role'=> 'Siswa']);
-
-    //         Log::info('Jumlah baris yang diperbarui:',['affected_rows' => $affectedRows]);
-
-    //         return response()->json([
-    //             'message' => 'Status berhasil diperbarui!',
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         Log::error('Terjadi kesalahan saat update status:', [
-    //             'error_message' => $e->getMessage(),
-    //             'error_trace' => $e->getTraceAsString(),
-    //         ]);
-    //         return response()->json([
-    //             'message' => 'Terjadi kesalahan saat memperbarui status!',
-    //             'error' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
+   
     public function edit($hashedId)
     {
         $user = User::with('Siswa')->get()->first(function ($u) use ($hashedId) {
@@ -480,41 +345,7 @@ class PpdbController extends Controller
         }
         return view('Siswabaru.edit', compact('user', 'hashedId', 'roles'));
     }
-    // public function getPpdbs()
-    // {
-    //     $users = User::with('Siswa.Pembayaran')
-    //         ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
-    //         ->whereIn('hakakses', ['Nonsiswa'])
-    //         ->get()
-    //         ->map(function ($user) {
-    //             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-    //             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
-    //             $user->action = '
-    //         <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-    //             <i class="fas fa-user-edit text-secondary"></i>
-    //         </a>';
-    //             $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
-    //             $user->Tanggal = $user->Siswa->Pembayaran ? $user->Siswa->Pembayaran->tanggalbukti : '-';
-    //             $user->Status = $user->Siswa->Pembayaran ? $user->Siswa->Pembayaran->status : '-';
-    //             return $user;
-    //         });
-    //     return DataTables::of($users)
-    //         ->addColumn('created_at', function ($user) {
-    //             return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-    //         })
-    //         ->addColumn('Role', function ($user) {
-    //             return $user->Role;
-    //         })
-    //         ->addColumn('tanggalbukti', function ($user) {
-    //             return $user->Siswa->Pembayaran->tanggalbukti;
-    //         })
-    //         ->addColumn('status', function ($user) {
-    //             return $user->Siswa->Pembayaran->status;
-    //         })
-    //         ->rawColumns(['checkbox', 'action'])
-    //         ->make(true);
-
-    // }
+   
     public function getPpdbs()
 {
     $users = User::with('Siswa.Pembayaran')

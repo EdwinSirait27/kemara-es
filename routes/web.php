@@ -33,6 +33,7 @@ use App\Http\Controllers\ValidasiController;
 use App\Http\Controllers\DatasiswaController;
 use App\Http\Controllers\ArsipSiswaController;
 use App\Http\Controllers\DataguruController;
+use App\Http\Controllers\InformasippdbController;
 use App\Http\Controllers\OrganisasisiswaController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\PengaturankelasdatamengajarController;
@@ -369,7 +370,14 @@ Route::middleware(['auth', 'can:isAdminKepalaSekolah', 'prevent.xss'])->group(fu
     Route::post('/Sekolah', [ProfilesekolahController::class, 'store'])->name('Sekolah.store');
     Route::get('/Sekolah/edit/{hashedId}', [ProfilesekolahController::class, 'edit'])->name('Sekolah.edit');
     Route::put('/Sekolah/{hashedId}', [ProfilesekolahController::class, 'update'])->name('Sekolah.update');
-
+ //Informasi
+ Route::get('/Informasi', [InformasippdbController::class, 'index'])->name('Informasi.index');
+ Route::get('/informasi/informasi', [InformasippdbController::class, 'getInformasippdb'])->name('informasi.informasi');
+ Route::delete('/Informasi/delete', [InformasippdbController::class, 'deleteInformasippdb'])->name('informasi.delete');
+ Route::get('Informasi/create', [InformasippdbController::class, 'create'])->name('Informasi.create');
+ Route::post('/Informasi', [InformasippdbController::class, 'store'])->name('Informasi.store');
+ Route::get('/Informasi/edit/{hashedId}', [InformasippdbController::class, 'edit'])->name('Informasi.edit');
+ Route::put('/Informasi/{hashedId}', [InformasippdbController::class, 'update'])->name('Informasi.update');
     // Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
 // ->name('Kelassiswa.showmatapelajaran');
 });
@@ -519,21 +527,35 @@ Route::middleware(['auth', 'can:isNonSiswa', 'prevent.xss'])->group(function () 
 });
 
 // Halaman login hanya dapat diakses oleh pengguna yang belum login
-// Route::middleware(['guest','prevent.xss'])->group(function () {
-//     Route::get('/Login', [SessionsController::class, 'create'])->name('Login.create');
-//     // return view('session/login-session');
+
+// Route::middleware(['guest', 'prevent.xss'])->group(function () {
+//     Route::get('/login', [SessionsController::class, 'create'])->name('login');
+//     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
+//     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
+
+//     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+//     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
+//     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
+//     Route::get('/', function () {
+//         return redirect()->route('Beranda.index');
+//     });
 // });
+Route::middleware(['guest', 'prevent.xss', 'throttle:5,1'])->group(function () {
+    Route::get('/login', [SessionsController::class, 'create'])->name('login');
+    Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
+    Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 
-Route::middleware(['guest', 'prevent.xss'])->group(function () {
+    Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+    Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
+    Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
+    // Route::get('/Informasi/show/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
+    Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
 
-    Route::get('/login', [SessionsController::class, 'create'])->middleware('throttle:5,1')->name('login');
-    Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->middleware('throttle:10,1')->name('Beranda.index');
-    Route::redirect('/', '/Beranda');
-    Route::get('/Ppdb', [PpdbController::class, 'index'])->middleware('throttle:10,1')->name('Ppdb.index');
-    Route::post('/Ppdb', [PpdbController::class, 'store'])->middleware('throttle:5,1')->name('Ppdb.store');
-    Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->middleware('throttle:10,1')->name('Berita.show');
-    Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->middleware('throttle:10,1')->name('Profile.show');
+    Route::get('/', function () {
+        return redirect()->route('Beranda.index');
+    });
 });
+
 // Route::middleware('guest')->group(function () {
 //     // Registrasi
 

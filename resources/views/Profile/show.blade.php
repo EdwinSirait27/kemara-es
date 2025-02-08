@@ -20,7 +20,6 @@
     padding: 20px;
     box-shadow: var(--soft-shadow);
 }
-
 .slider {
     position: relative;
     margin-bottom: 30px;

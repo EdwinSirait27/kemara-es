@@ -1269,8 +1269,8 @@
                         currentBerita.body) :
                     'Tidak ada konten';
 
-                sliderLink.href = currentBerita.id ?
-                    `/Berita/show/${currentBerita.id}` :
+                sliderLink.href = currentBerita.slug ?
+                    `/Berita/show/${currentBerita.slug}` :
                     '#';
             }
 

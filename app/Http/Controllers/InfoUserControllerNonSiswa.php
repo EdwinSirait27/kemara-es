@@ -38,7 +38,7 @@ class InfoUserControllerNonSiswa extends Controller
         $user = Auth::user();
         $this->validate($request, [
             'NamaLengkap' => ['nullable', 'string','max:100','min:10', new NoXSSInput()],
-            'Role' => ['nullable', 'string','in:NonSiswa,Siswa', new NoXSSInput()],
+            'Role' => ['nullable', 'string','in:NonSiswa', new NoXSSInput()],
             
             'NamaPanggilan' => ['nullable', 'string','max:50','min:3', new NoXSSInput()],
             'JenisKelamin' => ['nullable', 'string','in:Laki-Laki,Perempuan', new NoXSSInput()],

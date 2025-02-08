@@ -58,17 +58,20 @@
     <div class="error-container">
         <div class="error-code">429</div>
         <div class="error-message">Anda terlalu banyak meminta ke web arghh.</div>
-        <a href="javascript:void(0);" onclick="goBack();" class="back-link">Kembali lagi dalam 1-5 menit</a>
+        <a href="javascript:void(0);" class="back-link">Silahkan menunggu 1 menit saja yeah setelah itu akan refresh otomatis</a>
     </div>
 
     <script>
-        
+      
+    let timeout = setTimeout(function() {
+        window.location.href = "{!! route('Beranda.index') !!}";
+    }, 60000); // 1 menit
+</script>
 
-        function goBack() {
-            clearTimeout(timeout); 
-            window.history.back();
-        }
-    </script>
+
+
+     
+    
 </body>
 </html>
 

@@ -715,6 +715,11 @@ html, body {
                       <span class="nav-link-text ms-1">Profile Sekolah</span>
                   </a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link {{ Request::is('Informasi') ? 'active' : '' }}" href="{{ url('Informasi') }}">
+                      <span class="nav-link-text ms-1">Informasi PPDB</span>
+                  </a>
+              </li>
           </ul>
       </div>
   </li>

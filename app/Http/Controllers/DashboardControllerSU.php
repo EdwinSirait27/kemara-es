@@ -115,10 +115,10 @@ class DashboardControllerSU extends Controller
     'hakakses.string' => 'Hak akses harus berupa teks.',
     'hakakses.in' => 'Pilih hak akses yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
     
-    'Role.required' => 'Setidaknya satu peran harus dipilih.',
-    'Role.array' => 'Peran harus dalam format array.',
-    'Role.min' => 'Setidaknya satu peran harus dipilih.',
-    'Role.in' => 'Pilih peran yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+    'Role.required' => 'Setidaknya satu Role harus dipilih.',
+    'Role.array' => 'Role harus dalam format array.',
+    'Role.min' => 'Setidaknya satu Role harus dipilih.',
+    'Role.in' => 'Pilih role yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
     
     'Nama.required' => 'Nama wajib diisi.',
     'Nama.string' => 'Nama hanya boleh berupa teks.',
@@ -172,8 +172,23 @@ class DashboardControllerSU extends Controller
     if (!empty($validatedData['TanggalLahir'])) {
         $tanggalLahir = Carbon::createFromFormat('Y-m-d', $validatedData['TanggalLahir'])->format('Y-m-d');
     }
-    if ($user->Guru) {
+    // if ($user->Guru) {
 
+    //     $user->Guru->update([
+    //         'Nama' => $validatedData['Nama'],
+    //         'TempatLahir' => $validatedData['TempatLahir'],
+    //         'TanggalLahir' => $tanggalLahir,
+    //         'Agama' => $validatedData['Agama'],
+    //         'JenisKelamin' => $validatedData['JenisKelamin'],
+    //         'StatusPegawai' => $validatedData['StatusPegawai'],
+    //         'jadwalkenaikangaji' => $validatedData['jadwalkenaikangaji'],
+    //         'Pangkat' => $validatedData['Pangkat'],
+    //         'jadwalkenaikanpangkat' => $validatedData['jadwalkenaikanpangkat'],
+    //         'Jabatan' => $validatedData['Jabatan'],
+    //         'status' => 'Aktif',
+    //     ]);
+    // }
+    if ($user->Guru) {
         $user->Guru->update([
             'Nama' => $validatedData['Nama'],
             'TempatLahir' => $validatedData['TempatLahir'],
@@ -181,9 +196,10 @@ class DashboardControllerSU extends Controller
             'Agama' => $validatedData['Agama'],
             'JenisKelamin' => $validatedData['JenisKelamin'],
             'StatusPegawai' => $validatedData['StatusPegawai'],
-            'jadwalkenaikangaji' => $validatedData['jadwalkenaikangaji'],
             'Pangkat' => $validatedData['Pangkat'],
-            'jadwalkenaikanpangkat' => $validatedData['jadwalkenaikanpangkat'],
+           'jadwalkenaikangaji' => !empty($validatedData['jadwalkenaikangaji']) ? $validatedData['jadwalkenaikangaji'] : null,
+'jadwalkenaikanpangkat' => !empty($validatedData['jadwalkenaikanpangkat']) ? $validatedData['jadwalkenaikanpangkat'] : null,
+
             'Jabatan' => $validatedData['Jabatan'],
             'status' => 'Aktif',
         ]);
@@ -238,10 +254,10 @@ class DashboardControllerSU extends Controller
             'hakakses.string' => 'Hak akses harus berupa teks.',
             'hakakses.in' => 'Pilih hak akses yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
             
-            'Role.required' => 'Setidaknya satu peran harus dipilih.',
-            'Role.array' => 'Peran harus dalam format array.',
-            'Role.min' => 'Setidaknya satu peran harus dipilih.',
-            'Role.in' => 'Pilih peran yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
+            'Role.required' => 'Setidaknya satu Role harus dipilih.',
+            'Role.array' => 'Role harus dalam format array.',
+            'Role.min' => 'Setidaknya satu Role harus dipilih.',
+            'Role.in' => 'Pilih Role yang valid: SU, KepalaSekolah, Admin, Guru, atau Kurikulum.',
             
             'Nama.required' => 'Nama wajib diisi.',
             'Nama.string' => 'Nama hanya boleh berupa teks.',
@@ -285,9 +301,10 @@ class DashboardControllerSU extends Controller
                     'Agama' => $request['Agama'],
                     'JenisKelamin' => $request['JenisKelamin'],
                     'StatusPegawai' => $request['StatusPegawai'],
-                    'jadwalkenaikangaji' => $request['jadwalkenaikangaji'],
                     'Pangkat' => $request['Pangkat'],
-                    'jadwalkenaikanpangkat' => $request['jadwalkenaikanpangkat'],
+                   'jadwalkenaikangaji' => !empty($request['jadwalkenaikangaji']) ? $request['jadwalkenaikangaji'] : '1965-08-05',
+'jadwalkenaikanpangkat' => !empty($request['jadwalkenaikanpangkat']) ? $request['jadwalkenaikanpangkat'] : '1965-08-05',
+
                     'Jabatan' => $request['Jabatan'],
                     'status' => 'Aktif',
                     
@@ -305,9 +322,9 @@ class DashboardControllerSU extends Controller
                 ]);
             });
     
-            return redirect()->route('dashboardSU.index')->with('success', 'User dan Siswa berhasil dibuat!');
+            return redirect()->route('dashboardSU.index')->with('success', 'User Guru berhasil dibuat!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal membuat User dan Siswa: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal membuat User Guru: ' . $e->getMessage());
         }
     }
 }

@@ -1,30 +1,3 @@
-# <IfModule mod_rewrite.c>
-#     <IfModule mod_negotiation.c>
-#         Options -MultiViews -Indexes
-#     </IfModule>
-
-#     RewriteEngine On
-
-#     # Handle Authorization Header
-#     RewriteCond %{HTTP:Authorization} .
-#     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-#     # Redirect Trailing Slashes If Not A Folder...
-#     RewriteCond %{REQUEST_FILENAME} !-d
-#     RewriteCond %{REQUEST_URI} (.+)/$
-#     RewriteRule ^ %1 [L,R=301]
-
-#     # Send Requests To Front Controller...
-#     RewriteCond %{REQUEST_FILENAME} !-d
-#     RewriteCond %{REQUEST_FILENAME} !-f
-#     RewriteRule ^ index.php [L]
-
-#     # Increase upload and POST size limits
-#     php_value upload_max_filesize 50M
-#     php_value post_max_size 50M
-#     php_value max_execution_time 30
-#     php_value max_input_time 30
-# </IfModule>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -32,37 +5,24 @@
 
     RewriteEngine On
 
-    # Redirect HTTPS secara otomatis
-    RewriteCond %{HTTPS} !=on
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder
+    # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Kirim semua request ke index.php jika bukan file atau folder
+    # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    # Blok akses ke file sensitif
-    <FilesMatch "(\.env|\.git|\.htaccess|composer\.(json|lock)|artisan)">
-        Order allow,deny
-        Deny from all
-    </FilesMatch>
-
-    # Batasi akses langsung ke direktori tertentu
-    RedirectMatch 403 ^/(storage|bootstrap|config|database|resources|tests|vendor)/
-
-    # Tingkatkan batas unggahan file dan eksekusi script
-    php_value upload_max_filesize 100M
-    php_value post_max_size 100M
-    php_value max_execution_time 60
-    php_value max_input_time 60
+    # Increase upload and POST size limits
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    php_value max_execution_time 30
+    php_value max_input_time 30
 </IfModule>
 

@@ -55,9 +55,10 @@ class DashboardControllerNonSiswa extends Controller
             $pembayaran->id_hashed = substr(hash('sha256', $pembayaran->id . env('APP_KEY')), 0, 8);
 
             // Cek status pembayaran
-            if ($pembayaran->status === 'Lunas') {
+            if ($pembayaran->status === 'Lunas' || $pembayaran->status === 'Menyicil') 
+            {
                 $pembayaran->action = '
-                    <span class="text-muted" data-bs-toggle="tooltip" data-bs-original-title="Action terkunci karena status Lunas">
+                    <span class="text-muted" data-bs-toggle="tooltip" data-bs-original-title="Action terkunci karena status Lunas atau Menyicil">
                         <i class="fas fa-lock text-secondary"></i>
                     </span>';
             } else {

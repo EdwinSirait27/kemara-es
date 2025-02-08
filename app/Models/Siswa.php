@@ -88,6 +88,7 @@ class Siswa extends Model
         'TamatBelajarTahun',
         'InformasiLain',
         'status',
+        'nis',
     ];
     
     public function Guru()
@@ -129,5 +130,19 @@ class Siswa extends Model
     {
         return $this->hasMany(Pengaturankelas::class, 'siswa_id', 'siswa_id');
     }
+    public static function generateNIS()
+{
+    $tahun = date('Y'); // Ambil tahun saat ini
+    $lastNIS = self::where('nis', 'LIKE', "{$tahun}%")->orderBy('nis', 'desc')->first();
+
+    if ($lastNIS) {
+        $lastNumber = intval(substr($lastNIS->nis, -4)) + 1; // Ambil angka terakhir, tambah 1
+    } else {
+        $lastNumber = 1; // Jika belum ada, mulai dari 0001
+    }
+
+    return $tahun . str_pad($lastNumber, 4, '0', STR_PAD_LEFT);
+}
+
 
 }

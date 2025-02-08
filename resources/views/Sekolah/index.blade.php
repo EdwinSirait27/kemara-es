@@ -1,5 +1,5 @@
 @extends('layouts.user_type.auth')
-@section('title', ' Kemara| sekolah')
+@section('title', ' Kemara-ES | profile')
 
 @section('content')
     <style>

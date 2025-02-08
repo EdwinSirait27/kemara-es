@@ -66,30 +66,11 @@ class BeritaController extends Controller
         return view('Berita.index');
 
     }
-    // public function show($hashedId)
-    // {
-    //     $berita = Berita::all()->first(function ($u) use ($hashedId) {
-    //         return substr(hash('sha256', $u->id . env('APP_KEY')), 0, 8) === $hashedId;
-    //     });
     
-    //     abort_if(!$berita, 404, 'Data tidak ditemukan');
-        
-    //     return view('Berita.show', compact('berita', 'hashedId'));
-    // }
-    // public function show($id)
-    // {
-    //     $berita = Berita::find($id);
-        
-    //     if (!$berita) {
-    //             abort(404, 'Berita not found.');
-    //     }
-    
-    //     return view('Berita.show', compact('berita'));
-    // }
     public function show($slug)
 {
     $berita = Berita::findBySlug($slug);
-    return view('berita.show', compact('berita'));
+    return view('Berita.show', compact('berita'));
 }
         public function update(Request $request, $hashedId)
     {

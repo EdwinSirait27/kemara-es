@@ -224,6 +224,8 @@
                                         @error('AsalSD')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
+                                    <p class="text-muted text-xs mt-2">Contoh: SMPK Kesuma Mataram atau SMPN 2 Mataram</p>
+
                                     </div>
 
 

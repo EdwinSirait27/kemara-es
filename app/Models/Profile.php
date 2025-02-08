@@ -14,6 +14,7 @@ class Profile extends Model
         'id',
         'user_id',
         'header',
+        'slug',
         'body',
         'gambar1',
         'gambar2',

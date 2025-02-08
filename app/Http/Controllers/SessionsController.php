@@ -96,7 +96,7 @@ class SessionsController extends Controller
                 }
         
                 Auth::logout();
-                return redirect('Login.create')->with(['error' => 'Akses tidak diizinkan.']);
+                return redirect('login')->with(['error' => 'Akses tidak diizinkan.']);
             }
         
             Log::warning("Failed login attempt for username: {$request->username}");
@@ -114,7 +114,7 @@ class SessionsController extends Controller
 
         Auth::logout();
 
-        return redirect('/login')->with(['success' => 'You\'ve been logged out.']);
+        return redirect('/login');
     }
     public function index()
     {
