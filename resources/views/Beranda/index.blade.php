@@ -1,4 +1,6 @@
 @extends('app2')
+@section('meta_description', 'Profil lengkap SMA Katolik Kesuma Mataram, sejarah, visi, dan misi sekolah.')
+@section('meta_keywords', 'profil sekolah, sejarah SMAK Kesuma, pendidikan')
 {{-- <style>
     :root {
             --primary-color: #004b93;
@@ -1285,5 +1287,14 @@
             updateSlider();
         });
     </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('warning'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: '{{ session('warning') }}',
+        });
+    </script>
+@endif
 @endsection

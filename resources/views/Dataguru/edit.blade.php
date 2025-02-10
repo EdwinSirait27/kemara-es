@@ -37,14 +37,8 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            {{-- @if ($guru->foto)
-   
-         <img src="{{ asset('storage/fotoguru/we.jpg') }}" 
-     alt="Foto Guru Default" 
-     width="100" 
-     height="100"
-     class="w-100 border-radius-lg shadow-sm"> --}}
-     @if ($guru->foto && $guru->foto)
+                          
+     {{-- @if ($guru->foto && $guru->foto)
      <img src="{{ asset('storage/fotoguru/' . $guru->foto) }}"
           alt="Foto siswa" width="100" height="100"
           class="w-100 border-radius-lg shadow-sm" id="imagePopup">
@@ -52,10 +46,17 @@
      <img src="{{ asset('img/we.jpg') }}"
           alt="Foto siswa" width="100" height="100"
           class="w-100 border-radius-lg shadow-sm" id="imagePopup">
- @endif
-    
+ @endif --}}
+ @if (!empty($guru->foto) && Storage::exists('fotoguru/' . $guru->foto))
+ <img src="{{ asset('storage/fotoguru/' . $guru->foto) }}"
+      alt="Foto guru" width="100" height="100"
+      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+@else
+ <img src="{{ asset('storage/fotoguru/we.jpg') }}"
+      alt="Foto default" width="100" height="100"
+      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+@endif
 
-{{-- @endif --}}
 <a href="javascript:;"
    class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
    id="uploadBtn">
@@ -603,6 +604,8 @@
                     <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
                     <strong>- Upload file type JPEG</strong> <br>
                     <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+                    <strong>- Tolong diisi semua.</strong> <br>
+                    <strong>- Data NULL harap diisi.</strong> <br>
 
                 </span>
             </div>

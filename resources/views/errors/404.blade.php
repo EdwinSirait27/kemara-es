@@ -58,10 +58,10 @@
     <div class="error-container">
         <div class="error-code">404</div>
         <div class="error-message">Disini tidak ada apa apa ya adik adik balik yeah.</div>
-        <a href="javascript:void(0);" onclick="goBack();" class="back-link">Kembali</a>
+        {{-- <a href="javascript:void(0);" onclick="goBack();" class="back-link">Kembali</a> --}}
     </div>
 
-    <script>
+    {{-- <script>
         let timeout = setTimeout(function() {
             window.history.back();
         }, 5000); 
@@ -70,7 +70,7 @@
             clearTimeout(timeout); 
             window.history.back();
         }
-    </script>
+    </script> --}}
 </body>
 </html>
 

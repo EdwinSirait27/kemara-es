@@ -26,6 +26,7 @@ class Berita extends Model
         'gambar7',
         'gambar8',
         'status',
+        'views',
     ];
     public function User()
     {

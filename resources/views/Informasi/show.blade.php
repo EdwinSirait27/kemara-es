@@ -22,27 +22,29 @@
 }
 
 .slider {
-    position: relative;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    overflow: hidden;
+    min-height: 700px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .slider-item {
     display: none;
 }
 
 .slider-item img.slider-image {
-    width: 100%;
+    width: 120%; 
+    max-height: 100vh;
     height: auto;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 8px;
+    width: auto;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
+
 .slider-item img.slider-image:hover {
-    transform: scale(1.02);
+    transform: scale(5.02);
 }
 
 .slider-nav {
@@ -532,12 +534,23 @@
 {{-- <p style="margin-bottom: 5px;">
     <a href="{{ url($ppdb->url) }}" style="text-decoration: none; color: inherit;">Daftar PPDB</a>
 </p> --}}
-<p style="margin-bottom: 5px;">
+{{-- <p style="margin-bottom: 5px;">
     <a href="{{ url($ppdb->url) }}" 
        style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease;">
        Daftar PPDB
     </a>
-</p>
+</p> --}}
+@if (!empty($ppdb->url))
+    <p style="margin-bottom: 5px;">
+        <a href="{{ url($ppdb->url) }}" 
+           style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s ease;">
+           Daftar PPDB
+        </a>
+    </p>
+    @else 
+    <p style="margin-bottom: 5px;">Sudah Tertutup</p>
+@endif
+
 
 
 

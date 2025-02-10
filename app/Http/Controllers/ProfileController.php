@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Profile;
+use App\Models\Informasippdb;
+use App\Models\Tombol;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
@@ -76,8 +78,12 @@ class ProfileController extends Controller
         if (!$profile) {
                 abort(404, 'profile not found.');
         }
+        $informasippdb = Informasippdb::where('status', 'Aktif')->first();
+  
+       
     
-        return view('Profile.show', compact('profile'));
+    
+        return view('Profile.show', compact('profile','informasippdb'));
     }
         public function update(Request $request, $hashedId)
     {

@@ -358,11 +358,14 @@
                     <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">{{ $berita->header }}</h1>
                     <p style="font-size: 14px; color: #777;">
                         <strong>Pembuat:</strong> {{ $berita->User->Guru->Nama }} |
-                        <strong>Dipublikasikan:</strong> {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans() }}
+                        <strong>Dipublikasikannnnnn:</strong> {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans() }}
+                        <strong><i class="fas fa-eye"></i> Dilihat :</strong> {{ $berita->views }} 
+    
+
                     </p>
                 </div>
             
-                <div class="article-body" style="text-align: justify;">
+                {{-- <div class="article-body" style="text-align: justify;">
                     @php
                         $bodyText = str($berita->body);
                         $words = explode(' ', $bodyText);
@@ -372,7 +375,17 @@
                     @foreach ($chunks as $chunk)
                         <p style="margin-bottom: 15px;">{{ implode(' ', $chunk) }}</p>
                     @endforeach
-                </div>
+                </div> --}}
+                @php
+    $paragraphs = explode("\n", trim($berita->body));
+@endphp
+
+<div class="article-body" style="text-align: justify; font-family: 'Arial', sans-serif; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+    @foreach ($paragraphs as $paragraph)
+        <p>{{ $paragraph }}</p>
+    @endforeach
+</div>
+
             </div>
             
           

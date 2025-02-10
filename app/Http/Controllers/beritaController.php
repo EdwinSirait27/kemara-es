@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Berita;
+use App\Models\Informasippdb;
+use App\Models\Tombol;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
@@ -70,7 +72,19 @@ class BeritaController extends Controller
     public function show($slug)
 {
     $berita = Berita::findBySlug($slug);
-    return view('Berita.show', compact('berita'));
+    $berita->increment('views');
+    $informasippdb = Informasippdb::where('status', 'Aktif')->first();
+  
+    // $informasippdb = Informasippdb::findBySlug($slug);
+        
+    // if (!$informasippdb) {
+    //         abort(404, 'informasippdb not found.');
+    // }
+    // $ppdb = Tombol::where('url', 'Ppdb')
+    // ->where('start_date', '<=', now())
+    // ->where('end_date', '>=', now())
+    // ->first();
+    return view('Berita.show', compact('berita','informasippdb'));
 }
         public function update(Request $request, $hashedId)
     {
