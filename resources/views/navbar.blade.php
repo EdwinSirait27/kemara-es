@@ -22,9 +22,14 @@
                 <li>
                     <a href="{{ route('Informasi.show', ['slug' => $informasippdb->slug]) }}">
                         INFORMASI PPDB
-                    </a>
+                     </a>
                 </li>
             @endif
+            <li>
+                <a href="{{ route('Alumni.index')}}">
+                    DAFTAR ALUMNI
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

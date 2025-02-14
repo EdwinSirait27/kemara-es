@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\InfoUserControllerAdmin;
 use App\Http\Controllers\InfoUserControllerKepalaSekolah;
+use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\InfoUserControllerKurikulum;
 use App\Http\Controllers\InfoUserControllerGuru;
 use App\Http\Controllers\InfoUserControllerSiswa;
@@ -546,6 +547,7 @@ Route::middleware(['guest', 'prevent.xss', 'throttle:5,1'])->group(function () {
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+    Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
     // Route::get('/Informasi/show/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
