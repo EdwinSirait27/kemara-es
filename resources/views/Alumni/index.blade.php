@@ -439,9 +439,8 @@
         <h1>Daftar Alumni</h1>
 </div>
 <div class="card-body">
-                            <form id="ppdb-form" role="form" method="POST" >
-                            {{-- <form id="ppdb-form" role="form" method="POST" action="{{ route('Ppdb.store') }}"> --}}
-                                @csrf
+    <form id="alumni-form" method="POST" action="{{ route('Alumni.store') }}" enctype="multipart/form-data">
+        @csrf
                                 @if ($errors->has('throttle'))
                                     <div class="alert alert-danger">
                                         {{ $errors->first('throttle') }}
@@ -457,168 +456,123 @@
                                     </div>
                                 @endif
 
-                                {{-- <!-- Nama Lengkap --> tidak boleh angka dan simbol --}}
                                 <div class="row mb-3">
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nama Lengkap Alumni</label>
-                                        <input type="text" class="form-control form-control-sm" name="NamaLengkap"
-                                            id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
-                                            maxlength="100" required
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                                            value="{{ old('NamaLengkap') }}">
+                                        <label class="form-label"><i class="fas fa-user"></i> Nama Lengkap</label>
+                       
+                                        <input type="text" class="form-control @error('NamaLengkap') is-invalid @enderror" 
+                               name="NamaLengkap" value="{{ old('NamaLengkap') }}"
+                               oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
+                        @error('NamaLengkap')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                                        @error('NamaLengkap')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Nama Panggilan Siswa</label>
-                                        <input type="text" class="form-control form-control-sm" name="NamaPanggilan"
-                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}"
-                                            required>
-                                        @error('NamaPanggilan')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
+                                        <label class="form-label"><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                        <select class="form-control @error('JenisKelamin') is-invalid @enderror" name="JenisKelamin">
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="Laki-Laki" {{ old('JenisKelamin') == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+                            <option value="Perempuan" {{ old('JenisKelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        </select>
+                        @error('JenisKelamin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                                    <!-- Username -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tempat Lahir Siswa</label>
-                                        <input type="text" class="form-control form-control-sm" name="TempatLahir"
-                                            id="TempatLahir" placeholder="TempatLahir" aria-label="TempatLahir"
-                                            aria-describedby="TempatLahir-addon" maxlength="50"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
-                                            value="{{ old('TempatLahir') }}"required>
-                                        {{-- oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')" --}}
+                                        <label class="form-label"><i class="fas fa-map-marker"></i> Tempat Lahir</label>
+                                        <input type="text" class="form-control @error('TempatLahir') is-invalid @enderror" 
+                                               name="TempatLahir" value="{{ old('TempatLahir') }}"
+                                               oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                                         @error('TempatLahir')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tanggal Lahir Siswa</label>
-                                        <input type="date" class="form-control form-control-sm" name="TanggalLahir"
-                                            id="TanggalLahir" aria-label="TanggalLahir"
-                                            value="{{ old('TanggalLahir') }}"required>
+                                        <label class="form-label"><i class="fas fa-calendar"></i> Tanggal Lahir</label>
+                                        <input type="date" class="form-control @error('TanggalLahir') is-invalid @enderror" 
+                                               name="TanggalLahir" value="{{ old('TanggalLahir') }}" max="{{ date('Y-m-d') }}">
                                         @error('TanggalLahir')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
 
-                                    <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"> </i> Jenis Kelamin Siswa</label>
-                                        <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
-                                            <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
-                                            </option>
-                                            @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
-                                                <option value="{{ e($jenis) }}"
-                                                    {{ old('JenisKelamin') == $jenis ? 'selected' : '' }}>
-                                                    {{ $jenis }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('JenisKelamin')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-
-                                    <!-- Username -->
-                                    <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i>Agama Siswa</label>
-                                        <select class="form-control" name="Agama" id="Agama"
-                                            value="{{ old('Agama') }}"required>
-                                            <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
-                                            @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
-                                                <option value="{{ e($agama) }}"
-                                                    {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}
-                                                </option>
-
-                                                {{-- <option value="{{ e($agama) }}">{{ $agama }}</option> --}}
+                                        <label class="form-label"><i class="fas fa-pray"></i> Agama</label>
+                                        <select class="form-control @error('Agama') is-invalid @enderror" name="Agama">
+                                            <option value="">Pilih Agama</option>
+                                            @foreach(['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
+                                                <option value="{{ $agama }}" {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}</option>
                                             @endforeach
                                         </select>
                                         @error('Agama')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+
+                                    <div class="col-md-4">
+                                        <label class="form-label"><i class="fas fa-phone"></i> Nomor Telepon</label>
+                        <input type="number" class="form-control @error('NomorTelephone') is-invalid @enderror" 
+                               name="NomorTelephone" value="{{ old('NomorTelephone') }}"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="13">
+                        @error('NomorTelephone')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Alamat Siswa</label>
-                                        <input type="text" class="form-control form-control-sm" name="Alamat"
-                                            id="Alamat" placeholder="Alamat" aria-label="Alamat" maxlength="100"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}"
-                                            required>
+                                        <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                                        <input type="email" class="form-control @error('Email') is-invalid @enderror" 
+                                               name="Email" value="{{ old('Email') }}">
+                                        @error('Email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label"><i class="fas fa-home"></i> Alamat</label>
+                                        <input type="text" class="form-control @error('Alamat') is-invalid @enderror" 
+                                               name="Alamat" value="{{ old('Alamat') }}">
                                         @error('Alamat')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Nomor Telephone Siswa</label>
-                                        <input type="phone" class="form-control form-control-sm" name="NomorTelephone"
-                                            id="NomorTelephone" placeholder="NomorTelephone" maxlength="13"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}"
-                                            required>
-                                        @error('NomorTelephone')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <!-- Username -->
-                                    <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nomor Telephone Orang Tua</label>
-                                        <input type="phone" class="form-control form-control-sm"
-                                            name="NomorTelephoneAyah" id="NomorTelephoneAyah"
-                                            placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
-                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                            value="{{ old('NomorTelephoneAyah') }}"required>
-                                        @error('NomorTelephoneAyah')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        <label class="form-label"><i class="fas fa-graduation-cap"></i> Tahun Lulus</label>
+                                        <input type="number" class="form-control @error('TahunLulus') is-invalid @enderror" 
+                                               name="TahunLulus" value="{{ old('TahunLulus') }}" min="1900" max="{{ date('Y') }}">
+                                        @error('TahunLulus')
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Asal SMP</label>
-                                        <input type="text" class="form-control form-control-sm" name="AsalSD"
-                                            id="AsalSD" placeholder="Asal SMP" aria-label="AsalSD"
-                                            aria-describedby="AsalSD-addon" maxlength="255"
-                                            value="{{ old('AsalSD') }}"required>
-                                        @error('AsalSD')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                        <p class="text-muted text-xs mt-2">Contoh: SMPK Kesuma Mataram atau SMPN 2 Mataram
-                                        </p>
-
-                                    </div>
+                                        <label class="form-label"><i class="fas fa-book"></i> Jurusan</label>
+                        <input type="text" class="form-control @error('Jurusan') is-invalid @enderror" 
+                               name="Jurusan" value="{{ old('Jurusan') }}">
+                        @error('Jurusan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
 
 
 
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Username Siswa</label>
-                                        <input type="text" class="form-control form-control-sm" name="username"
-                                            id="username"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
-                                            placeholder="Masukkan Username" aria-label="username" maxlength="12"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
-                                            value="{{ old('username') }}"required>
-                                        @error('username')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        <label class="form-label"><i class="fas fa-book"></i> Program Studi</label>
+                                        <input type="text" class="form-control @error('ProgramStudi') is-invalid @enderror" 
+                                               name="ProgramStudi" value="{{ old('ProgramStudi') }}">
+                                        @error('ProgramStudi')
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
 
-                                    <!-- Email -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Password</label>
                                         <div
@@ -707,13 +661,10 @@
 
 
                                
-                                <!-- Submit -->
                                 <div class="text-center">
-                                                    <!-- Tombol Daftar -->
                                                     <button type="submit" id="daftar-btn"
                                                         class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
 
-                                                    <!-- Tombol Cancel -->
                                                     <a href="/login" id="cancel-btn"
                                                         class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
                                                 </div>

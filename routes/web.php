@@ -527,30 +527,37 @@ Route::middleware(['auth', 'can:isNonSiswa', 'prevent.xss'])->group(function () 
     Route::put('/dashboardNonSiswa/{id_hashed}', [DashboardControllerNonSiswa::class, 'update'])->name('dashboardNonSiswa.update');
 });
 
-// Halaman login hanya dapat diakses oleh pengguna yang belum login
-
-// Route::middleware(['guest', 'prevent.xss'])->group(function () {
+// Route::middleware(['guest', 'prevent.xss', 'throttle:10,1'])->group(function () {
 //     Route::get('/login', [SessionsController::class, 'create'])->name('login');
 //     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
 //     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
 
 //     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+//     Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
+//     Route::get('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
 //     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
 //     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
+//     Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
+
 //     Route::get('/', function () {
 //         return redirect()->route('Beranda.index');
 //     });
 // });
-Route::middleware(['guest', 'prevent.xss', 'throttle:10,1'])->group(function () {
-    Route::get('/login', [SessionsController::class, 'create'])->name('login');
-    Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
-    Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
+Route::middleware(['guest', 'prevent.xss'])->group(function () {
+    // Halaman login dengan throttle (karena rentan brute force)
+    Route::middleware(['throttle:10,1'])->group(function () {
+        Route::get('/login', [SessionsController::class, 'create'])->name('login');
+        Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store'); 
+        Route::post('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
+        // Pastikan ini adalah POST, bukan GET
+    });
 
+    // Route tanpa throttle
+    Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
     Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
-    // Route::get('/Informasi/show/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
     Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
 
     Route::get('/', function () {
@@ -558,14 +565,7 @@ Route::middleware(['guest', 'prevent.xss', 'throttle:10,1'])->group(function () 
     });
 });
 
-// Route::middleware('guest')->group(function () {
-//     // Registrasi
 
-//     Route::get('/login', [SessionsController::class, 'create'])->name('login');
-//     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
-//     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
-
-// });
 
 Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
     ->name('logout')
