@@ -19,21 +19,26 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
         }
+
         .form-control:focus {
             border-color: #17a2b8;
             box-shadow: 0px 4px 8px rgba(23, 162, 184, 0.5);
         }
+
         .btn {
             border-radius: 0.75rem;
         }
+
         .card {
             border-radius: 1rem;
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
         }
+
         .card:hover {
             transform: translateY(-5px);
         }
+
         .page-header {
             background-size: cover;
             background-position: center;
@@ -63,7 +68,8 @@
                         <h2 class="text-white mb-2 mt-5">Selamat Datang Calon Peserta Didik SMAK Kesuma Mataram </h2>
                         <p class="text-lead text-white">
                             Silahkan diisi format berikut dengan benar<br>
-                            jika belum paham, silahkan kunjungi Instagram dari SMAK Kesuma Mataram untuk melihat tutorial pendaftaran siswa baru.
+                            jika belum paham, silahkan kunjungi Instagram dari SMAK Kesuma Mataram untuk melihat tutorial
+                            pendaftaran siswa baru.
                         </p>
                     </div>
                 </div>
@@ -101,15 +107,11 @@
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Nama Lengkap Siswa</label>
-                                        <input type="text" 
-       class="form-control form-control-sm" 
-       name="NamaLengkap" 
-       id="NamaLengkap" 
-       placeholder="Nama Lengkap" 
-       aria-label="NamaLengkap" 
-       maxlength="100" 
-       required 
-       oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" value="{{ old('NamaLengkap') }}">
+                                        <input type="text" class="form-control form-control-sm" name="NamaLengkap"
+                                            id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
+                                            maxlength="100" required
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('NamaLengkap') }}">
 
                                         @error('NamaLengkap')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -120,7 +122,9 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Nama Panggilan Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaPanggilan"
-                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20"  oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}" required>
+                                            id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20"
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}"
+                                            required>
                                         @error('NamaPanggilan')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -131,7 +135,9 @@
                                         <label><i class="fas fa-user"></i> Tempat Lahir Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="TempatLahir"
                                             id="TempatLahir" placeholder="TempatLahir" aria-label="TempatLahir"
-                                            aria-describedby="TempatLahir-addon" maxlength="50"  oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" value="{{ old('TempatLahir') }}"required>
+                                            aria-describedby="TempatLahir-addon" maxlength="50"
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('TempatLahir') }}"required>
                                         {{-- oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')" --}}
                                         @error('TempatLahir')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -143,7 +149,8 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Tanggal Lahir Siswa</label>
                                         <input type="date" class="form-control form-control-sm" name="TanggalLahir"
-                                            id="TanggalLahir" aria-label="TanggalLahir"  value="{{ old('TanggalLahir') }}"required>
+                                            id="TanggalLahir" aria-label="TanggalLahir"
+                                            value="{{ old('TanggalLahir') }}"required>
                                         @error('TanggalLahir')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -156,7 +163,9 @@
                                             <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
                                             </option>
                                             @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
-                                            <option value="{{ e($jenis) }}" {{ old('JenisKelamin') == $jenis ? 'selected' : '' }}>{{ $jenis }}</option>
+                                                <option value="{{ e($jenis) }}"
+                                                    {{ old('JenisKelamin') == $jenis ? 'selected' : '' }}>
+                                                    {{ $jenis }}</option>
                                             @endforeach
                                         </select>
                                         @error('JenisKelamin')
@@ -168,10 +177,13 @@
                                     <!-- Username -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i>Agama Siswa</label>
-                                        <select class="form-control" name="Agama" id="Agama" value="{{ old('Agama') }}"required>
+                                        <select class="form-control" name="Agama" id="Agama"
+                                            value="{{ old('Agama') }}"required>
                                             <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                             @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
-                                            <option value="{{ e($agama) }}" {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}</option>
+                                                <option value="{{ e($agama) }}"
+                                                    {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}
+                                                </option>
 
                                                 {{-- <option value="{{ e($agama) }}">{{ $agama }}</option> --}}
                                             @endforeach
@@ -186,7 +198,9 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Alamat Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="Alamat"
-                                            id="Alamat" placeholder="Alamat" aria-label="Alamat" maxlength="100" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}"required>
+                                            id="Alamat" placeholder="Alamat" aria-label="Alamat" maxlength="100"
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}"
+                                            required>
                                         @error('Alamat')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -196,7 +210,9 @@
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Nomor Telephone Siswa</label>
                                         <input type="phone" class="form-control form-control-sm" name="NomorTelephone"
-                                            id="NomorTelephone" placeholder="NomorTelephone" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}"required>
+                                            id="NomorTelephone" placeholder="NomorTelephone" maxlength="13"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}"
+                                            required>
                                         @error('NomorTelephone')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -207,7 +223,9 @@
                                         <input type="phone" class="form-control form-control-sm"
                                             name="NomorTelephoneAyah" id="NomorTelephoneAyah"
                                             placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
-                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="{{ old('NomorTelephoneAyah') }}"required>
+                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            value="{{ old('NomorTelephoneAyah') }}"required>
                                         @error('NomorTelephoneAyah')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -217,14 +235,15 @@
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Asal SMP</label>
-                                        <input type="text" class="form-control form-control-sm"
-                                            name="AsalSD" id="AsalSD"
-                                            placeholder="Asal SMP" aria-label="AsalSD"
-                                            aria-describedby="AsalSD-addon" maxlength="255" value="{{ old('AsalSD') }}"required>
+                                        <input type="text" class="form-control form-control-sm" name="AsalSD"
+                                            id="AsalSD" placeholder="Asal SMP" aria-label="AsalSD"
+                                            aria-describedby="AsalSD-addon" maxlength="255"
+                                            value="{{ old('AsalSD') }}"required>
                                         @error('AsalSD')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
-                                    <p class="text-muted text-xs mt-2">Contoh: SMPK Kesuma Mataram atau SMPN 2 Mataram</p>
+                                        <p class="text-muted text-xs mt-2">Contoh: SMPK Kesuma Mataram atau SMPN 2 Mataram
+                                        </p>
 
                                     </div>
 
@@ -237,7 +256,8 @@
                                             id="username"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
                                             placeholder="Masukkan Username" aria-label="username" maxlength="12"
-                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" value="{{ old('username') }}"required>
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+                                            value="{{ old('username') }}"required>
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
@@ -249,65 +269,66 @@
                                         <div
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password" placeholder="Masukkan Password"
-                                                id="password" name="password" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')" required>
-                                            <span
-                                                class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
-                                                onclick="togglePasswordVisibility('password')">
-                                                <i id="eye-icon-password" class="fas fa-eye"></i>
-                                            </span>
-                                            @error('password')
-                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                            @enderror
-                                            <script>
-                                                function togglePasswordVisibility(inputId) {
-                                                    const input = document.getElementById(inputId);
-                                                    const icon = document.getElementById(`eye-icon-${inputId}`);
-                                                    if (input.type === "password") {
-                                                        input.type = "text";
-                                                        icon.classList.remove("fa-eye");
-                                                        icon.classList.add("fa-eye-slash");
-                                                    } else {
-                                                        input.type = "password";
-                                                        icon.classList.remove("fa-eye-slash");
-                                                        icon.classList.add("fa-eye");
-                                                    }
-                                                }
-                                            </script>
+                                                id="password" name="password" maxlength="12"
+                                                oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '')" required>
+                                                        <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                                            onclick="togglePasswordVisibility('password')">
+                                                            <i id="eye-icon-password" class="fas fa-eye"></i>
+                                                        </span>
+                                                        @error('password')
+                                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                        @enderror
+                                                        <script>
+                                                            function togglePasswordVisibility(inputId) {
+                                                                const input = document.getElementById(inputId);
+                                                                const icon = document.getElementById(`eye-icon-${inputId}`);
+                                                                if (input.type === "password") {
+                                                                    input.type = "text";
+                                                                    icon.classList.remove("fa-eye");
+                                                                    icon.classList.add("fa-eye-slash");
+                                                                } else {
+                                                                    input.type = "password";
+                                                                    icon.classList.remove("fa-eye-slash");
+                                                                    icon.classList.add("fa-eye");
+                                                                }
+                                                            }
+                                                        </script>
                                         </div>
                                     </div>
                                     
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Konfirmasi Password</label>
-                                        <div
-                                            class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
-                                            <input class="form-control" type="password"
-                                                placeholder="Konfirmasi Password Baru" id="password_confirmation"
-                                                name="password_confirmation" maxlength="12" oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '')"required>
-                                            <span
-                                                class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
-                                                onclick="togglePasswordVisibility('password_confirmation')">
-                                                <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
-                                            </span>
-                                            @error('password_confirmation')
-                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                            @enderror
-                                            <script>
-                                                function togglePasswordVisibility(inputId) {
-                                                    const input = document.getElementById(inputId);
-                                                    const icon = document.getElementById(`eye-icon-${inputId}`);
-                                                    if (input.type === "password") {
-                                                        input.type = "text";
-                                                        icon.classList.remove("fa-eye");
-                                                        icon.classList.add("fa-eye-slash");
-                                                    } else {
-                                                        input.type = "password";
-                                                        icon.classList.remove("fa-eye-slash");
-                                                        icon.classList.add("fa-eye");
-                                                    }
-                                                }
-                                            </script>
+                                <div class="row
+                                                mb-3">
+                                            <div class="col-md-4">
+                                                <label><i class="fas fa-user"></i> Konfirmasi Password</label>
+                                                <div
+                                                    class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
+                                                    <input class="form-control" type="password"
+                                                        placeholder="Konfirmasi Password Baru" id="password_confirmation"
+                                                        name="password_confirmation" maxlength="12"
+                                                        oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '')"required>
+                                                                <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                                                    onclick="togglePasswordVisibility('password_confirmation')">
+                                                                    <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
+                                                                </span>
+                                                                @error('password_confirmation')
+                                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                                @enderror
+                                                                <script>
+                                                                    function togglePasswordVisibility(inputId) {
+                                                                        const input = document.getElementById(inputId);
+                                                                        const icon = document.getElementById(`eye-icon-${inputId}`);
+                                                                        if (input.type === "password") {
+                                                                            input.type = "text";
+                                                                            icon.classList.remove("fa-eye");
+                                                                            icon.classList.add("fa-eye-slash");
+                                                                        } else {
+                                                                            input.type = "password";
+                                                                            icon.classList.remove("fa-eye-slash");
+                                                                            icon.classList.add("fa-eye");
+                                                                        }
+                                                                    }
+                                                                </script>
                                         </div>
                                     </div>
                                 </div>
@@ -333,14 +354,14 @@
                                
                                 <!-- Submit -->
                                 <div class="text-center">
-                                    <!-- Tombol Daftar -->
-                                    <button type="submit" id="daftar-btn"
-                                        class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
+                                                    <!-- Tombol Daftar -->
+                                                    <button type="submit" id="daftar-btn"
+                                                        class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
 
-                                    <!-- Tombol Cancel -->
-                                    <a href="/login" id="cancel-btn"
-                                        class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
-                                </div>
+                                                    <!-- Tombol Cancel -->
+                                                    <a href="/login" id="cancel-btn"
+                                                        class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
+                                                </div>
 
                             </form>
                         </div>

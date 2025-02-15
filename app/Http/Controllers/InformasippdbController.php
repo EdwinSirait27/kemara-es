@@ -85,7 +85,7 @@ class InformasippdbController extends Controller
         ->where('end_date', '>=', now())
         ->first();
     
-        return view('informasi.show', compact('informasippdb','ppdb'));
+        return view('Informasi.show', compact('informasippdb','ppdb'));
     }
         public function update(Request $request, $hashedId)
     {

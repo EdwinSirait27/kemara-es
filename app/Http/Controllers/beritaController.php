@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Informasippdb;
-use App\Models\Tombol;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 class BeritaController extends Controller
 {

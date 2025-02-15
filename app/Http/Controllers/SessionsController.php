@@ -64,7 +64,7 @@ class SessionsController extends Controller
         
         $rateLimiterKey = "login:{$request->ip()}:{$request->username}";
     
-        if (RateLimiter::tooManyAttempts($rateLimiterKey, 5)) {
+        if (RateLimiter::tooManyAttempts($rateLimiterKey, 10)) {
             Log::warning("Rate limiter triggered for username: {$request->username}");
             return back()->withErrors(['login' => 'Terlalu banyak percobaan login. Silakan coba lagi nanti.']);
         }

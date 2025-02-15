@@ -541,7 +541,7 @@ Route::middleware(['auth', 'can:isNonSiswa', 'prevent.xss'])->group(function () 
 //         return redirect()->route('Beranda.index');
 //     });
 // });
-Route::middleware(['guest', 'prevent.xss', 'throttle:5,1'])->group(function () {
+Route::middleware(['guest', 'prevent.xss', 'throttle:10,1'])->group(function () {
     Route::get('/login', [SessionsController::class, 'create'])->name('login');
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
