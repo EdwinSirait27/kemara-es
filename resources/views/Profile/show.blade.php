@@ -12,6 +12,7 @@
     padding: 20px;
 }
 
+
 .container h1 {
     color: var(--primary-color);
     margin-bottom: 20px;
