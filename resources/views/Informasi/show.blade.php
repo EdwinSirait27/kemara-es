@@ -486,7 +486,7 @@
         @endphp
 
         {{-- Render tabel --}}
-        <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; margin-top: 10px;">
+        {{-- <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; margin-top: 10px;">
             <thead>
                 <tr>
                     @foreach ($headers as $header)
@@ -503,7 +503,60 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
+        <style>
+            .table-responsive {
+                width: 100%;
+                overflow-x: auto; /* Aktifkan scroll horizontal jika perlu */
+                -webkit-overflow-scrolling: touch; /* Agar smooth scrolling di iOS */
+            }
+        
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+        
+            th, td {
+                padding: 8px;
+                text-align: center;
+                border: 1px solid #ddd;
+                white-space: nowrap; /* Mencegah pemotongan teks */
+            }
+        
+            th {
+                background-color: #f2f2f2;
+            }
+        
+            /* Untuk layar kecil, teks dibuat lebih kecil */
+            @media screen and (max-width: 600px) {
+                th, td {
+                    padding: 6px;
+                    font-size: 12px;
+                }
+            }
+        </style>
+        
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        @foreach ($headers as $header)
+                            <th>{{ $header }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tableData as $row)
+                        <tr>
+                            @foreach ($row as $cell)
+                                <td>{{ $cell }}</td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        
     @elseif (Str::startsWith($trimmedLine, 'II. KETENTUAN LAIN'))
         {{-- Menampilkan judul "KETENTUAN LAIN" --}}
         <h4 style="margin-top: 20px;">{{ $trimmedLine }}</h4>
