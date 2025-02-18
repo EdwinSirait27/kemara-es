@@ -195,8 +195,8 @@ class AlumniController extends Controller
                     
                         'StatusPekerja.in' => 'Status Pekerja harus salah satu dari: Bekerja, Wirausaha, atau Belum Bekerja.',
                     
-                        'Testimoni.required' => 'Testimoni wajib diisi.',
-                        'Testimoni.string' => 'Testimoni harus berupa teks.',
+                        'Testimoni.required' => 'Kesan dan Pesan wajib diisi.',
+                        'Testimoni.string' => 'Kesan dan Pesan harus berupa teks.',
                     ]);
       
         
