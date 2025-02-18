@@ -1,6 +1,12 @@
 @extends('app2')
-@section('meta_description', 'Profil lengkap SMA Katolik Kesuma Mataram, sejarah, visi, dan misi sekolah.')
-@section('meta_keywords', 'profil sekolah, sejarah SMAK Kesuma, pendidikan')
+
+
+@section('title', 'Beranda - SMA KATOLIK KESUMA MATARAM')
+
+@section('meta_description', 'Selamat datang di SMA KATOLIK KESUMA MATARAM. Sistem Informasi Akademik terpadu untuk pendidikan yang lebih baik.')
+
+@section('meta_keywords', 'Beranda SMAK Kesuma Mataram, Sekolah Katolik Mataram, Berita, Informasi PPDB, Daftar Alumni')
+
 {{-- <style>
     :root {
             --primary-color: #004b93;

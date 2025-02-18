@@ -76,6 +76,11 @@ class AlumniController extends Controller
                 'integer',
                 'digits:4',
             ],
+            'TahunMasuk' => [
+                'required',
+                'integer',
+                'digits:4',
+            ],
             'Jurusan' => [
                 'nullable',
                 'string',
@@ -122,18 +127,8 @@ class AlumniController extends Controller
                 'max:255',
                 new NoXSSInput(),
             ],
-            'Tiktok' => [
-                'nullable',
-                'string',
-                'max:255',
-                new NoXSSInput(),
-            ],
-            'Instagram' => [
-                'nullable',
-                'string',
-                'max:255',
-                new NoXSSInput(),
-            ],
+          
+           
             'Facebook' => [
                 'nullable',
                 'string',
@@ -143,6 +138,7 @@ class AlumniController extends Controller
             'Testimoni' => [
                 'required',
                 'string',
+                'max:400',
                 new NoXSSInput(),
             ],
         ], [
@@ -191,6 +187,9 @@ class AlumniController extends Controller
                         'TahunLulus.required' => 'Tahun Lulus wajib diisi.',
                         'TahunLulus.integer' => 'Tahun Lulus harus berupa angka.',
                         'TahunLulus.digits' => 'Tahun Lulus harus terdiri dari 4 digit.',
+                        'TahunMasuk.required' => 'Tahun Masuk wajib diisi.',
+                        'TahunMasuk.integer' => 'Tahun Masuk harus berupa angka.',
+                        'TahunMasuk.digits' => 'Tahun Masuk harus terdiri dari 4 digit.',
                     
                         'Gelar.in' => 'Gelar harus salah satu dari: D1, D2, D3, D4, S1, S2, Prof, atau Tidak Ada.',
                     
@@ -226,6 +225,7 @@ class AlumniController extends Controller
                 'Email' => $validatedData['Email'],
                 'NomorTelephone' => $validatedData['NomorTelephone'],
                 'TahunLulus' => $validatedData['TahunLulus'],
+                'TahunMasuk' => $validatedData['TahunMasuk'],
                 'Jurusan' => $validatedData['Jurusan'],
                 'ProgramStudi' => $validatedData['ProgramStudi'],
                 'Gelar' => $validatedData['Gelar'],
@@ -234,14 +234,12 @@ class AlumniController extends Controller
                 'NamaPerusahaan' => $validatedData['NamaPerusahaan'],
                 'Ig' => $validatedData['Ig'],
                 'Linkedin' => $validatedData['Linkedin'],
-                'Tiktok' => $validatedData['Tiktok'],
-                'Instagram' => $validatedData['Instagram'],
                 'Facebook' => $validatedData['Facebook'],
                 'Testimoni' => $validatedData['Testimoni'],
             ]);
     
             DB::commit();
-            return redirect()->route('Alumni.index')->with('success', 'Pendaftaran berhasil dibuat, Silahkan Login');
+            return redirect()->route('Alumni.index')->with('success', 'Pendaftaran Alumni berhasil, Semoga anda bisa berkontribusi kepada almamater anda:)');
     
         } catch (\Exception $e) {
             DB::rollBack();
