@@ -1,5 +1,10 @@
 @extends('app2') 
 @section('content')
+@section('title', 'Berita - SMA KATOLIK KESUMA MATARAM')
+
+@section('meta_description', 'Berita SMA Kesuma Mataram.')
+
+@section('meta_keywords', 'Berita,SMA Katolik Kesuma Mataram')
 <style>
 .container {
     max-width: 1200px;

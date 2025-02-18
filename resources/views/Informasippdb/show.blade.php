@@ -1,5 +1,10 @@
 @extends('app2') 
 @section('content')
+@section('title', 'Informasi PPDB - SMA KATOLIK KESUMA MATARAM')
+
+@section('meta_description', 'Selamat datang di SMA KATOLIK KESUMA MATARAM. Sistem Informasi Akademik terpadu untuk pendidikan yang lebih baik.')
+
+@section('meta_keywords', 'Informasi PPDB, Sekolah Menengah Atas  Katolik Kesuma Mataram, Berita, Informasi PPDB')
 <style>
 .container {
     max-width: 1200px;
