@@ -21,7 +21,8 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="@yield('title', 'SMA KATOLIK KESUMA MATARAM')">
     <meta property="og:description" content="@yield('meta_description', 'Sistem Informasi Akademik Kemara-ES adalah platform...')">
-    <meta property="og:image" content="@yield('meta_image', asset('assets/img/default.jpg'))">
+    <meta property="og:image" content="{{ asset('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}">
+<meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -31,7 +32,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', 'SMA KATOLIK KESUMA MATARAM')">
     <meta name="twitter:description" content="@yield('meta_description', 'Sistem Informasi Akademik Kemara-ES adalah platform...')">
-    <meta name="twitter:image" content="@yield('meta_image', asset('assets/img/default.jpg'))">
+    <meta name="twitter:image" content="@yield('meta_image', asset('assets/img/Shield_Logos__SMAK_KESUMA-ConvertImage_55x55.jpg'))">
     
     <!-- PWA -->
     <meta name="theme-color" content="#4a90e2">
@@ -41,7 +42,9 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico') }}">
-    
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/apple-touch-icon.png') }}">
+
+<link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <!-- Structured Data -->
   <!-- Di dalam tag <head> di app2.blade.php -->
 <script type="application/ld+json">
@@ -59,9 +62,29 @@
             "addressCountry": "ID"
         },
         "url": "{{ url()->current() }}",
-        "logo": "{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico') }}"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ asset('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}",
+            "width": "1200",
+            "height": "630",
+            "caption": "Logo SMA KATOLIK KESUMA MATARAM"
+        },
+        "image": {
+            "@type": "ImageObject",
+            "url": "{{ asset('assets/img/Shield_Logos__SMAK_KESUMAaaaa.png') }}",
+            "width": "1200",
+            "height": "630"
+        },
+        "sameAs": [
+            "https://www.facebook.com/SMAK.KESUMA.MATARAM/?_rdc=2&_rdr#",
+            "https://www.instagram.com/smak.kesuma.mtr/",
+            "https://www.youtube.com/@smakkesumamataram",
+            https://www.tiktok.com/@smakkesuma.mtr
+
+        ]
     }
     </script>
+
     <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
