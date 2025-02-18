@@ -804,9 +804,9 @@
 
                    <br>
                 <div class="col-md-4">
-                    <label class="form-label"><i class="fas fa-male"></i> Testimoni</label>
+                    <label class="form-label"><i class="fas fa-male"></i> Kesan & Pesan</label>
                     <textarea type="text" class="form-control @error('Testimoni') is-invalid @enderror" name="Testimoni"
-                        value="{{ old('Testimoni') }}"placeholder="Silahkan anda menuliskan testimoni anda" required></textarea>
+                        value="{{ old('Testimoni') }}"placeholder="Silahkan anda menuliskan kesan dan pesan anda" required></textarea>
                     @error('Testimoni')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
