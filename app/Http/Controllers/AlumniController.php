@@ -106,7 +106,7 @@ class AlumniController extends Controller
             ],
             'Gelar' => [
                 'nullable',
-                'string',
+                
                 'in:D1,D2,D3,D4,S1,S2,Prof,Tidak Ada',
             ],
             'PerguruanTinggi' => [
