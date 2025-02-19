@@ -391,19 +391,27 @@
 </div> --}}
 <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
+
+    <!-- 🔍 Search Box -->
+    <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+            <input type="text" id="searchAlumni" class="form-control shadow-sm" placeholder="🔍 Cari berdasarkan Nama Lengkap...">
+        </div>
+    </div>
+
     <div id="alumniCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             @foreach ($listalumni->chunk(5) as $index => $alumniChunk)
                 <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                     <div class="row justify-content-center">
                         @foreach ($alumniChunk as $listalumn)
-                            <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="col-md-4 col-sm-6 mb-4 alumni-item">
                                 <div class="card alumni-card shadow-sm border-0 h-100">
                                     <img src="{{ asset('storage/alumni/' . $listalumn->foto) }}"
                                         alt="Foto {{ $listalumn->NamaLengkap }}"
                                         class="card-img-top alumni-img">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title">{{ $listalumn->NamaLengkap }}</h5>
+                                        <h5 class="card-title alumni-name">{{ $listalumn->NamaLengkap }}</h5>
                                         <p class="card-text"><i class="bi bi-calendar"></i> Masuk: {{ $listalumn->TahunMasuk }} | Lulus: {{ $listalumn->TahunLulus }}</p>
                                     </div>
                                 </div>
@@ -426,7 +434,25 @@
     </div>
 </div>
 
-<!-- 🌈 CSS Custom Modern -->
+
+
+<!-- 🎯 JavaScript Search Function -->
+<script>
+    document.getElementById('searchAlumni').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const alumniCards = document.querySelectorAll('.alumni-item');
+
+        alumniCards.forEach(card => {
+            const name = card.querySelector('.alumni-name').textContent.toLowerCase();
+            if (name.includes(searchValue)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 
 
 
