@@ -82,11 +82,15 @@ class AlumniController extends Controller
                 'required',
                 'integer',
                 'digits:4',
+                'min:1901',
+                'max:9999',
             ],
             'TahunMasuk' => [
                 'required',
                 'integer',
                 'digits:4',
+                'min:1901',
+                'max:9999',
             ],
             'Jurusan' => [
                 'nullable',
