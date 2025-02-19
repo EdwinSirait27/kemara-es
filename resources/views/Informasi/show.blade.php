@@ -22,15 +22,26 @@
 
 .slider-wrapper {
     background-color: white;
-    border-radius: 10px;
+    width: 100%;
+        max-width: 1200px; /* Perbesar ukuran slider */
+        margin: auto;
+        overflow: hidden;
+
+
+    /* border-radius: 10px;
     padding: 20px;
-    box-shadow: var(--soft-shadow);
+    box-shadow: var(--soft-shadow); */
 }
 
 .slider {
-    min-height: 700px; 
+    /* min-height: 700px; 
     display: flex;
     align-items: center;
+    justify-content: center; */
+    display: flex;
+        position: relative;
+        width: 100%;
+        align-items: center;
     justify-content: center;
 }
 
@@ -342,7 +353,7 @@
     }
 }
 </style>
-<  <div class="container">
+<div class="container">
         <h1>{{$informasippdb->header}}</h1>
         <div class="slider-wrapper">
             <div class="slider">

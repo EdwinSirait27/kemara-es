@@ -24,6 +24,7 @@
                         INFORMASI PPDB
                      </a>
                 </li>
+                @else
             @endif
             <li>
                 <a href="{{ route('Alumni.index')}}">

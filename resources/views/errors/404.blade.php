@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/Shield_Logos__SMAK_KESUMA (1).ico')}}">    
-    <title>Ups...</title>
+@extends('app2')
+
+
+@section('title', 'Ups...')
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -71,8 +68,7 @@
             window.history.back();
         }
     </script> --}}
-</body>
-</html>
+
 
 {{-- <!DOCTYPE html>
 <html lang="en">
