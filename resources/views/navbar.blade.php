@@ -31,6 +31,11 @@
                     DAFTAR ALUMNI
                 </a>
             </li>
+            <li>
+                <a href="{{ route('Listalumni.index')}}">
+                    List Alumni
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

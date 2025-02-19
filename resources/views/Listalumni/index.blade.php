@@ -341,8 +341,32 @@
         page-break-inside: avoid;
     }
 }
+
+    .alumni-card {
+        border-radius: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .alumni-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .alumni-img {
+        height: 250px;
+        object-fit: cover;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(1);
+    }
+    @media (max-width: 768px) {
+        .alumni-img {
+            height: 200px;
+        }
+    }
 </style>
-<div class="container">
+{{-- <div class="container">
         <h1>Alumni SMAKERZ</h1>
         <div class="row">
             @foreach ($listalumni as $listalumn)
@@ -364,5 +388,47 @@
                 </div>
             @endforeach
         </div>
+</div> --}}
+<div class="container my-5">
+    <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
+    <div id="alumniCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach ($listalumni->chunk(5) as $index => $alumniChunk)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <div class="row justify-content-center">
+                        @foreach ($alumniChunk as $listalumn)
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <div class="card alumni-card shadow-sm border-0 h-100">
+                                    <img src="{{ asset('storage/alumni/' . $listalumn->foto) }}"
+                                        alt="Foto {{ $listalumn->NamaLengkap }}"
+                                        class="card-img-top alumni-img">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $listalumn->NamaLengkap }}</h5>
+                                        <p class="card-text"><i class="bi bi-calendar"></i> Masuk: {{ $listalumn->TahunMasuk }} | Lulus: {{ $listalumn->TahunLulus }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Tombol Navigasi Slider -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#alumniCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Sebelumnya</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#alumniCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+            <span class="visually-hidden">Berikutnya</span>
+        </button>
+    </div>
 </div>
+
+<!-- 🌈 CSS Custom Modern -->
+
+
+
+
 @endsection

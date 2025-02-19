@@ -22,10 +22,12 @@ class AlumniController extends Controller
     }
     public function index()
     {
+        $informasippdb = Informasippdb::where('status', 'Aktif')->first();
+
         $listalumni = Alumni::paginate(5);
   
         
-        return view('Listalumni.index', compact('liatalumni'));
+        return view('Listalumni.index', compact('listalumni','informasippdb'));
     }
     public function store(Request $request)
     {

@@ -549,6 +549,7 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
         Route::get('/login', [SessionsController::class, 'create'])->name('login');
         Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store'); 
         Route::post('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
+        Route::get('/Listalumni', [AlumniController::class, 'index'])->name('Listalumni.index');
         // Pastikan ini adalah POST, bukan GET
     });
 
