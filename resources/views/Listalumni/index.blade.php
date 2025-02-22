@@ -365,6 +365,117 @@
             height: 200px;
         }
     }
+    /* Modern Search Box Styles */
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.search-box {
+    width: 100%;
+    padding: 1rem 1.5rem 1rem 3.5rem;
+    border: 2px solid rgba(37, 99, 235, 0.1);
+    border-radius: 1rem;
+    font-size: 1rem;
+    background: var(--white);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1),
+                0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.search-box:focus + .search-icon {
+    color: var(--secondary-color);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Search Animation */
+@keyframes searchPulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.2); }
+    70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.search-box:focus {
+    animation: searchPulse 2s infinite;
+}
+
+/* Search Results Highlight */
+.search-highlight {
+    background: linear-gradient(120deg, rgba(37, 99, 235, 0.2) 0%, rgba(96, 165, 250, 0.2) 100%);
+    padding: 0.2em 0;
+    border-radius: 3px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .search-container {
+        padding: 0 1rem;
+    }
+    
+    .search-box {
+        padding: 0.875rem 1.25rem 0.875rem 3rem;
+        font-size: 0.95rem;
+    }
+    
+    .search-icon {
+        left: 1.75rem;
+    }
+}
+/* Tombol navigasi slider modern */
+.carousel-control-prev, .carousel-control-next {
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Icon panah dengan warna putih dan ukuran lebih besar */
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-size: 100%, 100%;
+    width: 30px;
+    height: 30px;
+    filter: invert(1); /* Membuat ikon menjadi putih */
+}
+
+/* Efek bayangan halus saat tombol ditekan */
+.carousel-control-prev:active, .carousel-control-next:active {
+    transform: translateY(-50%) scale(0.95);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
 </style>
 {{-- <div class="container">
         <h1>Alumni SMAKERZ</h1>
@@ -393,30 +504,36 @@
     <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
 
     <!-- 🔍 Search Box -->
-    <div class="row mb-4">
-        <div class="col-md-6 mx-auto">
-            <input type="text" id="searchAlumni" class="form-control shadow-sm" placeholder="🔍 Cari berdasarkan Nama Lengkap...">
-        </div>
-    </div>
+   <!-- Modern Search Box -->
+<div class="search-container">
+    <input type="text" 
+           class="search-box" 
+           id="searchAlumni" 
+           placeholder="Cari berdasarkan Nama Lengkap..."
+           autocomplete="off">
+    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+</div>
 
     <div id="alumniCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            @foreach ($listalumni->chunk(5) as $index => $alumniChunk)
+            @foreach ($listalumni as $index => $alumni)
                 <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                     <div class="row justify-content-center">
-                        @foreach ($alumniChunk as $listalumn)
                             <div class="col-md-4 col-sm-6 mb-4 alumni-item">
                                 <div class="card alumni-card shadow-sm border-0 h-100">
-                                    <img src="{{ asset('storage/alumni/' . $listalumn->foto) }}"
-                                        alt="Foto {{ $listalumn->NamaLengkap }}"
+                                    <img src="{{ asset('storage/alumni/' . $alumni->foto) }}"
+                                        alt="Foto {{ $alumni->NamaLengkap }}"
                                         class="card-img-top alumni-img">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title alumni-name">{{ $listalumn->NamaLengkap }}</h5>
-                                        <p class="card-text"><i class="bi bi-calendar"></i> Masuk: {{ $listalumn->TahunMasuk }} | Lulus: {{ $listalumn->TahunLulus }}</p>
+                                        <h5 class="card-title alumni-name">{{ $alumni->NamaLengkap }}</h5>
+                                        <p class="card-text"><i class="bi bi-calendar"></i> Masuk: {{ $alumni->TahunMasuk }} | Lulus: {{ $alumni->TahunLulus }}</p>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        
                     </div>
                 </div>
             @endforeach
@@ -427,10 +544,15 @@
             <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
             <span class="visually-hidden">Sebelumnya</span>
         </button>
+    
+        <!-- Tombol Berikutnya -->
         <button class="carousel-control-next" type="button" data-bs-target="#alumniCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
             <span class="visually-hidden">Berikutnya</span>
         </button>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $listalumni->links() }}
     </div>
 </div>
 

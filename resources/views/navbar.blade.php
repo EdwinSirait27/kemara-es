@@ -33,7 +33,7 @@
             </li>
             <li>
                 <a href="{{ route('Listalumni.index')}}">
-                    List Alumni
+                    ALUMNI SMAKERZ
                 </a>
             </li>
         </ul>
