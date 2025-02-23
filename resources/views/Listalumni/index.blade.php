@@ -8,16 +8,92 @@
 
 <style>
 .container {
-    max-width: 1200px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    overflow-x: hidden;
 }
 
-.container h1 {
+/* Responsive Typography */
+:root {
+    --h1-font-size: clamp(1.5rem, 4vw, 2.2rem);
+    --body-font-size: clamp(0.875rem, 2vw, 0.9rem);
+}
+
+/* .container h1 {
     color: var(--primary-color);
     margin-bottom: 20px;
     text-align: center;
     font-size: 2rem;
+} */
+.container h1 {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: var(--h1-font-size);
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 0 1rem;
+    word-wrap: break-word;
+}
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    min-width: 800px; /* Minimum width before horizontal scroll */
+}
+
+.table th,
+.table td {
+    white-space: nowrap;
+    padding: clamp(0.5rem, 2vw, 1rem);
+    font-size: var(--body-font-size);
+}
+
+/* Responsive Images */
+.table img {
+    max-width: 100px;
+    height: auto;
+    width: clamp(50px, 15vw, 100px);
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* DataTables Responsive Styling */
+.dataTables_wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate {
+    padding: 1rem;
+    font-size: var(--body-font-size);
 }
 
 .slider-wrapper {
@@ -467,7 +543,7 @@
     background-size: 100%, 100%;
     width: 30px;
     height: 30px;
-    filter: invert(1); /* Membuat ikon menjadi putih */
+    filter: invert(1);
 }
 
 /* Efek bayangan halus saat tombol ditekan */
@@ -477,30 +553,8 @@
 }
 
 </style>
-{{-- <div class="container">
-        <h1>Alumni SMAKERZ</h1>
-        <div class="row">
-            @foreach ($listalumni as $listalumn)
-                <div class="col-md-4 col-sm-6">
-                    <div class="osis-card">
-                        <div class="image view view-first">
-                            
-                            <img src="{{ asset('storage/alumni/' . $listalumni->foto) }}"
-                                alt="Foto {{ $listalumni->NamaLengkap }}" />
-                        </div>
-                        <div class="caption">
-                            <p><strong>Nama Lengkap:</strong> {{ $listalumni->NamaLengkap }}</p>
-                            <p><strong>Visi:</strong> {{ $listalumni->TahunMasuk }}</p>
-                            <p><strong>Misi:</strong> {{ $listalumni->TahunLulus }}</p>
-                            
-                        </div>
-                    </div>
-                    <br>
-                </div>
-            @endforeach
-        </div>
-</div> --}}
-<div class="container my-5">
+
+{{-- <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
 
     <!-- 🔍 Search Box -->
@@ -577,6 +631,115 @@
 
 
 
+ --}}
+ <div class="container my-5">
+    <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
+    <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0"id="users-table">
+                <thead>
+                    <tr>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            No.</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Foto</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                            Nama Lengkap</th>
+                            <th
+                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Alamat</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Email</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Nomor Telephone</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Tahun Masuk</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Tahun Lulus</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Instagram</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            LinedIn</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            TikTok</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Facebook</th>
+                        <th
+                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            Testimoni</th>
+                          
+                       
+                    </tr>
+                </thead>
+            </table>
+           
+        
 
-
+        </div>
+    </div>
+ </div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+ <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+    $(document).ready(function() {
+    let table = $('#users-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('alumni.alumni') }}',
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+        columns: [
+          {
+            data: 'id',
+            name: 'id',
+            className: 'text-center',
+            render: function (data, type, row, meta) {
+                return meta.row + 1; 
+            },
+        },
+        {
+                          data: 'foto',
+                          name: 'foto',
+                          className: 'text-center',
+                          render: function(data, type, full, meta) {
+                              if (data) {
+                                  return '<img src="' + '{{ asset('storage/alumni') }}/' + data +
+                                      '" width="100" />';
+                              } else {
+                                  return '<span>Foto tidak tersedia</span>';
+                              }
+                          },
+                      },
+        { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
+          { data: 'Alamat', name: 'Alamat', className: 'text-center' },
+          { data: 'Email', name: 'Email', className: 'text-center' },
+          { data: 'NomorTelephone', name: 'NomorTelephone', className: 'text-center' },
+          { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
+          { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
+          { data: 'Ig', name: 'Ig', className: 'text-center' },
+          { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
+          { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
+          { data: 'Facebook', name: 'Tiktok', className: 'text-center' },
+          { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
+        ]
+    });
+});
+</script>
 @endsection

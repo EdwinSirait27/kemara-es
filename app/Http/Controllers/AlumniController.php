@@ -7,6 +7,8 @@ use App\Models\Informasippdb;
 use App\Models\Alumni;
 use App\Rules\NoXSSInput;
 use App\Models\Siswa;
+use Yajra\DataTables\DataTables;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -38,6 +40,7 @@ class AlumniController extends Controller
                 'string',
                 'max:255',
                 'regex:/^[a-zA-Z\s]+$/',
+                'unique:tb_alumni,NamaLengkap',
             ],
             'JenisKelamin' => [
                 'required',
@@ -267,5 +270,15 @@ class AlumniController extends Controller
                 ->withInput();
         }
     }
-   
+    public function getAlumni()
+    {
+        $alumni = Alumni::select(['id','foto', 'NamaLengkap', 'Alamat', 'Email','NomorTelephone','TahunMasuk','TahunLulus','Ig','Linkedin','Tiktok','Facebook','Testimoni'])
+            ->get()
+            ->map(function ($alumni) { 
+                return $alumni;
+            });
+        return DataTables::of($alumni)
+           
+            ->make(true);
+    }
 }

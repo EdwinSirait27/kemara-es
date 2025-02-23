@@ -549,7 +549,8 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
         Route::get('/login', [SessionsController::class, 'create'])->name('login');
         Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store'); 
         Route::post('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
-        Route::get('/Listalumni', [AlumniController::class, 'index'])->name('Listalumni.index');
+
+
         // Pastikan ini adalah POST, bukan GET
     });
 
@@ -560,7 +561,8 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
     Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
-
+    Route::get('/Listalumni', [AlumniController::class, 'index'])->name('Listalumni.index');
+    Route::get('/alumni/alumni', [AlumniController::class, 'getAlumni'])->name('alumni.alumni');
     Route::get('/', function () {
         return redirect()->route('Beranda.index');
     });
