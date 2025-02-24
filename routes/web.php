@@ -380,6 +380,11 @@ Route::middleware(['auth', 'can:isAdminKepalaSekolah', 'prevent.xss'])->group(fu
  Route::get('/Informasi/edit/{hashedId}', [InformasippdbController::class, 'edit'])->name('Informasi.edit');
  Route::put('/Informasi/{hashedId}', [InformasippdbController::class, 'update'])->name('Informasi.update');
     // Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
+ Route::get('/Alumniall', [AlumniController::class, 'Alumniall'])->name('Alumniall.index');
+ Route::get('/alumniall/alumniall', [AlumniController::class, 'getAlumniall'])->name('alumni.alumni');
+ Route::get('/Alumniall/edit/{hashedId}', [AlumniController::class, 'edit'])->name('Alumniall.edit');
+ Route::put('/Alumniall/{hashedId}', [AlumniController::class, 'update'])->name('Alumniall.update');
+    // Route::get('/Kelassiswa/showmatapelajaran/{hashedId}', [KelassiswaController::class, 'showmatapelajaran'])
 // ->name('Kelassiswa.showmatapelajaran');
 });
 Route::middleware(['auth', 'can:isSU', 'prevent.xss'])->group(function () {

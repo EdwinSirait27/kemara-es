@@ -730,22 +730,22 @@
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             Nama Lengkap</th>
-                            <th
+                            {{-- <th
                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Alamat</th>
-                                <th
+                                Alamat</th> --}}
+                                {{-- <th
                                     class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Email</th>
-                                    <th
+                                    Email</th> --}}
+                                    {{-- <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Nomor Telephone</th>
+                                        Nomor Telephone</th> --}}
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Tahun Masuk</th>
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Tahun Lulus</th>
-                        <th
+                        {{-- <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Instagram</th>
                         <th
@@ -756,7 +756,7 @@
                             TikTok</th>
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Facebook</th>
+                            Facebook</th> --}}
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Testimoni</th>
@@ -812,15 +812,15 @@
                           },
                       },
         { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
-          { data: 'Alamat', name: 'Alamat', className: 'text-center' },
-          { data: 'Email', name: 'Email', className: 'text-center' },
-          { data: 'NomorTelephone', name: 'NomorTelephone', className: 'text-center' },
+        //   { data: 'Alamat', name: 'Alamat', className: 'text-center' },
+        //   { data: 'Email', name: 'Email', className: 'text-center' },
+        //   { data: 'NomorTelephone', name: 'NomorTelephone', className: 'text-center' },
           { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
           { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
-          { data: 'Ig', name: 'Ig', className: 'text-center' },
-          { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
-          { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
-          { data: 'Facebook', name: 'Tiktok', className: 'text-center' },
+        //   { data: 'Ig', name: 'Ig', className: 'text-center' },
+        //   { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
+        //   { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
+        //   { data: 'Facebook', name: 'Tiktok', className: 'text-center' },
           { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
         ]
     });
