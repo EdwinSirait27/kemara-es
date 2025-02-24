@@ -18,14 +18,22 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{ route('Beranda.index') }}">BERANDA</a></li>
-            @if ($informasippdb)
+            {{-- @if ($informasippdb)
                 <li>
                     <a href="{{ route('Informasi.show', ['slug' => $informasippdb->slug]) }}">
                         INFORMASI PPDB
                      </a>
                 </li>
                 @else
-            @endif
+            @endif --}}
+            @if ($informasippdb && $informasippdb->status === 'Aktif')
+    <li>
+        <a href="{{ route('Informasi.show', ['slug' => $informasippdb->slug]) }}">
+            INFORMASI PPDB
+        </a>
+    </li>
+@endif
+
             <li>
                 <a href="{{ route('Alumni.index')}}">
                     DAFTAR ALUMNI
