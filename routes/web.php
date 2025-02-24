@@ -562,6 +562,8 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     // Route tanpa throttle
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
+    Route::get('/navbar', [ProfileSekolahController::class, 'Beranda2'])->name('navbar');
+
     Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');

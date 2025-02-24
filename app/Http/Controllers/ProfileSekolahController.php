@@ -43,6 +43,12 @@ class ProfileSekolahController extends Controller
         return view('Beranda.index', compact('beritas','profiles','youtubeVideos','beritass','sekolahh','informasippdb'));
     }
     
+    public function Beranda2(){
+        $informasippdb = Informasippdb::where('status', 'Aktif')->first();
+  
+        return view('navbar', compact('informasippdb'));
+    }
+    
     // public function Beranda()
     // {
     //     $youtubeVideos = Youtube::where('status', 'Aktif')->get();
