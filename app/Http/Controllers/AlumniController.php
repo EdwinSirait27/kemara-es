@@ -111,8 +111,9 @@ class AlumniController extends Controller
             ],
             'Gelar' => [
                 'nullable',
-                
-                'in:D1,D2,D3,D4,S1,S2,Prof,Tidak Ada',
+               'string',
+                'max:255',
+                new NoXSSInput(),
             ],
             'PerguruanTinggi' => [
                 'nullable',

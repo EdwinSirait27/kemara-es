@@ -660,25 +660,15 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label class="form-label"><i class="fas fa-venus-mars"></i> Gelar</label>
-                            <select class="form-control @error('Gelar') is-invalid @enderror" name="Gelar" id="Gelar">
-                                <option value="">Pilih Gelar</option>
-                                <option value="D1" {{ old('Gelar') == 'D1' ? 'selected' : '' }}>D1</option>
-                                <option value="D2" {{ old('Gelar') == 'D2' ? 'selected' : '' }}>D2</option>
-                                <option value="D3" {{ old('Gelar') == 'D3' ? 'selected' : '' }}>D3</option>
-                                <option value="D4" {{ old('Gelar') == 'D4' ? 'selected' : '' }}>D4</option>
-                                <option value="S1" {{ old('Gelar') == 'S1' ? 'selected' : '' }}>S1</option>
-                                <option value="S2" {{ old('Gelar') == 'S2' ? 'selected' : '' }}>S2</option>
-                                <option value="Prof" {{ old('Gelar') == 'Prof' ? 'selected' : '' }}>Prof</option>
-                                <option value="Tidak Ada" {{ old('Gelar') == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada
-                                </option>
-    
-                            </select>
-                            <p class="text-muted text-xs mt-2">Pilih Tidak Ada jika tidak melanjutkan ke perguruan tinggi.</p>
-    
-                            @error('Gelar')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="form-label"><i class="fas fa-book"></i> Gelar</label>
+                        <input type="text" class="form-control @error('Gelar') is-invalid @enderror"
+                            name="Gelar" id="Gelar"value="{{ old('Gelar') }}"
+                            placeholder="Gelar">
+                        <p class="text-muted text-xs mt-2">Diisi contoh S.Pd. kalau tidak ada cukup menginput - .</p>
+
+                        @error('Gelar')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         </div>
                         <div class="col-md-4">
                             <label class="form-label"><i class="fas fa-book"></i> Perguruan Tinggi</label>

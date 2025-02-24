@@ -12,9 +12,9 @@
     <meta name="keywords" content="@yield('meta_keywords', 'SMAK Kesuma Mataram, Sistem Informasi Akademik, Pendidikan')">
     <meta name="author" content="SMAK Kesuma Mataram">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="{{ url()->current() }}">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Language Alternatives -->
+    <link rel="canonical" href="{{ url()->current() }}">
     <link rel="alternate" hreflang="id" href="{{ url()->current() }}">
     <link rel="alternate" hreflang="en" href="{{ url()->current() }}/en">
     

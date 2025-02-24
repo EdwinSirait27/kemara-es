@@ -95,6 +95,88 @@
     padding: 1rem;
     font-size: var(--body-font-size);
 }
+@media screen and (max-width: 1200px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .table thead th {
+        padding: 0.75rem;
+    }
+}
+@media screen and (max-width: 992px) {
+    .dataTables_wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .dataTables_length,
+    .dataTables_filter {
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+    
+    .dataTables_paginate {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        border-radius: 10px;
+        margin: 0.5rem;
+    }
+    
+    .table-responsive {
+        border-radius: 8px;
+    }
+    
+    .dataTables_length select,
+    .dataTables_filter input {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* Stack Layout for Mobile */
+@media screen and (max-width: 576px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+    }
+    
+    .dataTables_wrapper .dataTables_filter input {
+        margin-left: 0;
+    }
+    
+    .container h1:after {
+        width: 60px;
+    }
+}
+
+/* Print Media Styles */
+@media print {
+    .container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .table img {
+        max-width: 60px;
+    }
+    
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_paginate {
+        display: none;
+    }
+}
 
 .slider-wrapper {
     background-color: white;
@@ -699,6 +781,8 @@
     $(document).ready(function() {
     let table = $('#users-table').DataTable({
         processing: true,
+        responsive: true,
+
         serverSide: true,
         ajax: '{{ route('alumni.alumni') }}',
         lengthMenu: [
