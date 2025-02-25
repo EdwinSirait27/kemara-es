@@ -708,7 +708,7 @@ html, body {
                 </li>
             </ul>
             <ul class="nav ms-4">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::is('Siswaarsip') ? 'active' : '' }}" href="{{ url('Siswaarsip') }}">
                         <span class="nav-link-text ms-1">Data Arsip</span>
                     </a>
@@ -720,7 +720,7 @@ html, body {
                         <span class="nav-link-text ms-1">Data Seluruh Arsip</span>
                     </a>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
     </li>
     @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))

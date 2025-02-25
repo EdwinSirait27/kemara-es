@@ -93,7 +93,7 @@
             let table = $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('profile.profile') }}',
+                ajax: '{{ route('alumniall.alumniall') }}',
                 lengthMenu: [
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
