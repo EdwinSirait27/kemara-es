@@ -824,20 +824,32 @@ $(document).ready(function() {
                     return meta.row + 1; 
                 },
             },
+            // {
+            //     data: 'foto',
+            //     name: 'foto',
+            //     className: 'text-center',
+            //     render: function(data, type, full, meta) {
+            //         if (data) {
+            //             return `<a href="#" class="open-image-modal" data-src="{{ asset('storage/alumni') }}/` + data + `">
+            //                         <img src="{{ asset('storage/alumni') }}/` + data + `" width="100" style="cursor:pointer;" />
+            //                     </a>`;
+            //         } else {
+            //             return '<span>Foto tidak tersedia</span>';
+            //         }
+            //     }
+            // },
             {
-                data: 'foto',
-                name: 'foto',
-                className: 'text-center',
-                render: function(data, type, full, meta) {
-                    if (data) {
-                        return `<a href="#" class="open-image-modal" data-src="{{ asset('storage/alumni') }}/` + data + `">
-                                    <img src="{{ asset('storage/alumni') }}/` + data + `" width="100" style="cursor:pointer;" />
-                                </a>`;
-                    } else {
-                        return '<span>Foto tidak tersedia</span>';
-                    }
-                }
-            },
+    data: 'foto',
+    name: 'foto',
+    className: 'text-center',
+    render: function(data, type, full, meta) {
+        let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` : `{{ asset('storage/alumni/we.jpg') }}`;
+        return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
+                    <img src="${imageUrl}" width="100" style="cursor:pointer;" />
+                </a>`;
+    }
+},
+
             { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
             { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
             { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
