@@ -633,87 +633,28 @@
     transform: translateY(-50%) scale(0.95);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
+/* Styling Search Box */
+.dataTables_filter input {
+    width: 250px; /* Lebar input */
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
 
+/* Styling Dropdown Length Menu */
+.dataTables_length select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+.text-center {
+            text-align: center;
+        }
 </style>
 
-{{-- <div class="container my-5">
-    <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
 
-    <!-- 🔍 Search Box -->
-   <!-- Modern Search Box -->
-<div class="search-container">
-    <input type="text" 
-           class="search-box" 
-           id="searchAlumni" 
-           placeholder="Cari berdasarkan Nama Lengkap..."
-           autocomplete="off">
-    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-</div>
-
-    <div id="alumniCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @foreach ($listalumni as $index => $alumni)
-                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                    <div class="row justify-content-center">
-                            <div class="col-md-4 col-sm-6 mb-4 alumni-item">
-                                <div class="card alumni-card shadow-sm border-0 h-100">
-                                    <img src="{{ asset('storage/alumni/' . $alumni->foto) }}"
-                                        alt="Foto {{ $alumni->NamaLengkap }}"
-                                        class="card-img-top alumni-img">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title alumni-name">{{ $alumni->NamaLengkap }}</h5>
-                                        <p class="card-text"><i class="bi bi-calendar"></i> Masuk: {{ $alumni->TahunMasuk }} | Lulus: {{ $alumni->TahunLulus }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        <!-- Tombol Navigasi Slider -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#alumniCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
-            <span class="visually-hidden">Sebelumnya</span>
-        </button>
-    
-        <!-- Tombol Berikutnya -->
-        <button class="carousel-control-next" type="button" data-bs-target="#alumniCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
-            <span class="visually-hidden">Berikutnya</span>
-        </button>
-    </div>
-    <div class="d-flex justify-content-center mt-4">
-        {{ $listalumni->links() }}
-    </div>
-</div>
-
-
-
-<!-- 🎯 JavaScript Search Function -->
-<script>
-    document.getElementById('searchAlumni').addEventListener('input', function() {
-        const searchValue = this.value.toLowerCase();
-        const alumniCards = document.querySelectorAll('.alumni-item');
-
-        alumniCards.forEach(card => {
-            const name = card.querySelector('.alumni-name').textContent.toLowerCase();
-            if (name.includes(searchValue)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-</script>
-
-
-
- --}}
  <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
     <div class="card-body px-0 pt-0 pb-2">
@@ -730,33 +671,14 @@
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                             Nama Lengkap</th>
-                            {{-- <th
-                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Alamat</th> --}}
-                                {{-- <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Email</th> --}}
-                                    {{-- <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Nomor Telephone</th> --}}
+                            
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Tahun Masuk</th>
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Tahun Lulus</th>
-                        {{-- <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Instagram</th>
-                        <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            LinedIn</th>
-                        <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            TikTok</th>
-                        <th
-                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            Facebook</th> --}}
+                        
                         <th
                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Testimoni</th>
@@ -771,13 +693,76 @@
         </div>
     </div>
  </div>
+ <div id="imageModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <iframe id="imageFrame" width="100%" height="400px"></iframe>
+    </div>
+</div>
+
+<style>
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 50%;
+    max-width: 600px; /* Maksimal lebar modal */
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tombol Close */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Responsif untuk Tablet */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 80%; /* Lebih besar di tablet */
+    }
+}
+
+/* Responsif untuk HP */
+@media screen and (max-width: 480px) {
+    .modal-content {
+        width: 90%; /* Hampir full screen di HP */
+        padding: 15px;
+    }
+    .close {
+        font-size: 20px; /* Ukuran tombol close lebih kecil */
+    }
+}
+
+</style>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
- <script>
+ {{-- <script>
     $(document).ready(function() {
     let table = $('#users-table').DataTable({
         processing: true,
@@ -812,18 +797,68 @@
                           },
                       },
         { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
-        //   { data: 'Alamat', name: 'Alamat', className: 'text-center' },
-        //   { data: 'Email', name: 'Email', className: 'text-center' },
-        //   { data: 'NomorTelephone', name: 'NomorTelephone', className: 'text-center' },
           { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
           { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
-        //   { data: 'Ig', name: 'Ig', className: 'text-center' },
-        //   { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
-        //   { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
-        //   { data: 'Facebook', name: 'Tiktok', className: 'text-center' },
           { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
         ]
     });
 });
+</script> --}}
+<script> 
+$(document).ready(function() {
+    let table = $('#users-table').DataTable({
+        processing: true,
+        responsive: true,
+        serverSide: true,
+        ajax: '{{ route('alumni.alumni') }}',
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+        columns: [
+            {
+                data: 'id',
+                name: 'id',
+                className: 'text-center',
+                render: function (data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+            },
+            {
+                data: 'foto',
+                name: 'foto',
+                className: 'text-center',
+                render: function(data, type, full, meta) {
+                    if (data) {
+                        return `<a href="#" class="open-image-modal" data-src="{{ asset('storage/alumni') }}/` + data + `">
+                                    <img src="{{ asset('storage/alumni') }}/` + data + `" width="100" style="cursor:pointer;" />
+                                </a>`;
+                    } else {
+                        return '<span>Foto tidak tersedia</span>';
+                    }
+                }
+            },
+            { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
+            { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
+            { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
+            { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
+        ]
+    });
+
+    // Event klik untuk membuka modal dengan gambar dalam iframe
+    $(document).on('click', '.open-image-modal', function(e) {
+        e.preventDefault();
+        let imageUrl = $(this).data('src');
+        
+        $('#imageFrame').attr('src', imageUrl);
+        $('#imageModal').fadeIn();
+    });
+
+    // Tutup modal saat klik tombol close atau di luar modal
+    $('.close, #imageModal').on('click', function() {
+        $('#imageModal').fadeOut();
+    });
+});
 </script>
+
 @endsection
