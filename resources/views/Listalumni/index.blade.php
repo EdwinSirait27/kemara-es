@@ -654,10 +654,56 @@
         }
 </style>
 
-
  <div class="container my-5">
     <h1 class="text-center mb-4">🎓 Alumni SMAKERZ 🎓</h1>
     <div class="card-body px-0 pt-0 pb-2">
+        {{-- <div class="mb-2">
+            <label for="filter-tahun" class="block text-sm font-medium text-gray-700">Filter Tahun Masuk:</label>
+            <select id="filter-tahun" class="form-select mt-1 block w-1/4 border-gray-300 rounded-md shadow-sm">
+                <option value="">Semua Tahun</option>
+                @foreach ($tahunMasuk as $tahun)
+                    <option value="{{ $tahun }}">{{ $tahun }}</option>
+                @endforeach
+            </select>
+        </div> --}}
+        <div class="mb-2">
+            <label for="filter-tahun" class="block text-sm font-semibold text-gray-800 mb-2">
+                🎓 Filter Tahun Masuk:
+            </label>
+            <select id="filter-tahun" 
+                    class="form-select mt-1 block w-full sm:w-1/3 border-gray-300 rounded-lg shadow-md p-2 bg-white focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-200 ease-in-out hover:border-blue-400">
+                <option value="">Semua Tahun</option>
+                @foreach ($tahunMasuk as $tahun)
+                    <option value="{{ $tahun }}">{{ $tahun }}</option>
+                @endforeach
+            </select>
+        </div>
+        <style>
+        #filter-tahun {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        #filter-tahun:hover {
+            border-color: #3b82f6;
+        }
+        
+        #filter-tahun:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        label[for="filter-tahun"] {
+            font-weight: 600;
+            color: #1f2937;
+        }
+    </style> 
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0"id="users-table">
                 <thead>
@@ -810,11 +856,16 @@ $(document).ready(function() {
         processing: true,
         responsive: true,
         serverSide: true,
-        ajax: '{{ route('alumni.alumni') }}',
-        lengthMenu: [
+        ajax: {
+            url: '{{ route("alumni.alumni") }}',
+            lengthMenu: [
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
+            data: function(d) {
+                d.TahunMasuk = $('#filter-tahun').val();
+            }
+        },
         columns: [
             {
                 data: 'id',
@@ -855,6 +906,9 @@ $(document).ready(function() {
             { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
             { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
         ]
+    });
+    $('#filter-tahun').change(function() {
+        table.ajax.reload();
     });
 
     // Event klik untuk membuka modal dengan gambar dalam iframe

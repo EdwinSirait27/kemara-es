@@ -18,7 +18,8 @@ class AlumniController extends Controller
     public function Alumni()
     {
         $informasippdb = Informasippdb::where('status', 'Aktif')->first();
-  
+       
+   
         
         return view('Alumni.index', compact('informasippdb'));
     }
@@ -28,12 +29,14 @@ class AlumniController extends Controller
     }
     public function index()
     {
+        // $tahunMasuk = Alumni::all();
+        $tahunMasuk = Alumni::select('TahunMasuk')->distinct()->pluck('TahunMasuk');
         $informasippdb = Informasippdb::where('status', 'Aktif')->first();
 
         $listalumni = Alumni::paginate(5);
   
         
-        return view('Listalumni.index', compact('listalumni','informasippdb'));
+        return view('Listalumni.index', compact('listalumni','informasippdb','tahunMasuk'));
     }
     public function store(Request $request)
     {
@@ -296,7 +299,7 @@ class AlumniController extends Controller
         // dd($request->all());
         
         $validatedData = $request->validate([
-            'foto' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:512'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:512'],
             'NamaLengkap' => [
                 'required',
                 'string',
@@ -309,12 +312,12 @@ class AlumniController extends Controller
                 'string',
                 'in:Laki-Laki,Perempuan',
             ],
-            'TempatLahir' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[a-zA-Z\s]+$/',
-            ],
+            // 'TempatLahir' => [
+            //     'required',
+            //     'string',
+            //     'max:255',
+            //     'regex:/^[a-zA-Z\s]+$/',
+            // ],
             'TanggalLahir' => [
                 'required',
                 'date',
@@ -400,6 +403,12 @@ class AlumniController extends Controller
                 'max:255',
                 new NoXSSInput(),
             ],
+            // 'Tiktok' => [
+            //     'nullable',
+            //     'string',
+            //     'max:255',
+            //     new NoXSSInput(),
+            // ],
             'Linkedin' => [
                 'nullable',
                 'string',
@@ -423,7 +432,6 @@ class AlumniController extends Controller
         ], [
         
                         // Pesan Custom
-                        'foto.required' => 'Foto wajib diunggah.',
                         'foto.image' => 'File harus berupa gambar.',
                         'foto.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
                         'foto.max' => 'Ukuran gambar tidak boleh lebih dari 512 KB.',
@@ -436,10 +444,10 @@ class AlumniController extends Controller
                         'JenisKelamin.required' => 'Jenis Kelamin wajib diisi.',
                         'JenisKelamin.in' => 'Jenis Kelamin harus Laki-Laki atau Perempuan.',
                     
-                        'TempatLahir.required' => 'Tempat Lahir wajib diisi.',
-                        'TempatLahir.string' => 'Tempat Lahir harus berupa teks.',
-                        'TempatLahir.max' => 'Tempat Lahir tidak boleh lebih dari 255 karakter.',
-                        'TempatLahir.regex' => 'Tempat Lahir hanya boleh mengandung huruf dan spasi.',
+                        // 'TempatLahir.required' => 'Tempat Lahir wajib diisi.',
+                        // 'TempatLahir.string' => 'Tempat Lahir harus berupa teks.',
+                        // 'TempatLahir.max' => 'Tempat Lahir tidak boleh lebih dari 255 karakter.',
+                        // 'TempatLahir.regex' => 'Tempat Lahir hanya boleh mengandung huruf dan spasi.',
                     
                         'TanggalLahir.required' => 'Tanggal Lahir wajib diisi.',
                         'TanggalLahir.date' => 'Tanggal Lahir harus berupa tanggal yang valid.',
@@ -513,7 +521,7 @@ class AlumniController extends Controller
                             'foto'          => $filePath,
                             'NamaLengkap'   => $validatedData['NamaLengkap'],
                             'JenisKelamin'   => $validatedData['JenisKelamin'],
-                            'TempatLahir'   => $validatedData['TempatLahir'],
+                            // 'TempatLahir'   => $validatedData['TempatLahir'],
                             'Agama'   => $validatedData['Agama'],
                             'Alamat'   => $validatedData['Alamat'],
                             'Email'   => $validatedData['Email'],
@@ -528,7 +536,7 @@ class AlumniController extends Controller
                             'NamaPerusahaan'   => $validatedData['NamaPerusahaan'],
                             'Ig'   => $validatedData['Ig'],
                             'Linkedin'   => $validatedData['Linkedin'],
-                            'Tiktok'   => $validatedData['Tiktok'],
+                            // 'Tiktok'   => $validatedData['Tiktok'],
                             'Facebook'   => $validatedData['Facebook'],
                             'Testimoni'   => $validatedData['Testimoni'],
                             
@@ -541,17 +549,36 @@ class AlumniController extends Controller
                     }
                     
     
-    public function getAlumni()
-    {
-        $alumni = Alumni::select(['id','foto', 'NamaLengkap', 'Alamat', 'Email','NomorTelephone','TahunMasuk','TahunLulus','Ig','Linkedin','Tiktok','Facebook','Testimoni'])
-            ->get()
-            ->map(function ($alumni) { 
-                return $alumni;
-            });
-        return DataTables::of($alumni)
+    // public function getAlumni()
+    // {
+    //     $alumni = Alumni::select(['id','foto', 'NamaLengkap', 'Alamat', 'Email','NomorTelephone','TahunMasuk','TahunLulus','Ig','Linkedin','Tiktok','Facebook','Testimoni'])
+    //         ->get()
+    //         ->map(function ($alumni) { 
+    //             return $alumni;
+    //         });
+    //     return DataTables::of($alumni)
            
-            ->make(true);
+    //         ->make(true);
+    // }
+    public function getAlumni(Request $request)
+{
+    $query = Alumni::select([
+        'id','foto', 'NamaLengkap', 'Alamat', 'Email','NomorTelephone','TahunMasuk','TahunLulus','Ig','Linkedin','Tiktok','Facebook','Testimoni'
+    ]);
+
+    // Filter berdasarkan status
+    if ($request->has('TahunMasuk') && !empty($request->TahunMasuk)) {
+        $query->where('TahunMasuk', $request->TahunMasuk);
     }
+
+    $alumni = $query->get()->map(function ($alumni) {
+        return $alumni;
+    });
+
+    return DataTables::of($alumni)
+              
+        ->make(true);
+}
     public function getAlumniall()
     {
         $alumni = Alumni::select(['id', 'foto','NamaLengkap', 'JenisKelamin', 'TempatLahir','TanggalLahir','Agama','Alamat','Email', 'NomorTelephone','TahunLulus','Jurusan','ProgramStudi','Gelar','PerguruanTinggi','StatusPekerja','NamaPerusahaan','Ig','Linkedin','Tiktok','Facebook','Testimoni','TahunMasuk','created_at'])

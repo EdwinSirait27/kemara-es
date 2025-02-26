@@ -1,4 +1,4 @@
-@extends('app2')
+{{-- @extends('app2')
 
 
 @section('title', 'Ups...')
@@ -55,8 +55,7 @@
     <div class="error-container">
         <div class="error-code">404</div>
         <div class="error-message">Disini tidak ada apa apa ya adik adik balik yeah.</div>
-        {{-- <a href="javascript:void(0);" onclick="goBack();" class="back-link">Kembali</a> --}}
-    </div>
+    </div> --}}
 
     {{-- <script>
         let timeout = setTimeout(function() {
@@ -70,7 +69,7 @@
     </script> --}}
 
 
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -134,4 +133,4 @@
 
     </div>
 </body>
-</html> --}}
+</html>

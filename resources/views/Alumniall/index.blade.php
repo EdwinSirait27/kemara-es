@@ -107,152 +107,29 @@
                         },
                     },
                     {
-                        data: 'Guru_Nama',
-                        name: 'Guru_Nama',
-                        className: 'text-center'
-                    },
+    data: 'foto',
+    name: 'foto',
+    className: 'text-center',
+    render: function(data, type, full, meta) {
+        let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` : `{{ asset('storage/alumni/we.jpg') }}`;
+        return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
+                    <img src="${imageUrl}" width="100" style="cursor:pointer;" />
+                </a>`;
+    }
+},
+{ data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
+{ data: 'Alamat', name: 'Alamat', className: 'text-center' },
+{ data: 'Email', name: 'Email', className: 'text-center' },
+{ data: 'NomorTelephone', name: 'NomorTelephone', className: 'text-center' },
+            { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
+            { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
+            { data: 'Ig', name: 'Ig', className: 'text-center' },
+            { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
+            { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
+            { data: 'Facebook', name: 'Facebook', className: 'text-center' },
+            { data: 'Testimoni', name: 'Testimoni', className: 'text-center' },
                     // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
-                    {
-                        data: 'header',
-                        name: 'header',
-                        className: 'text-center'
-                    },
-                    //                     {
-                    //     data: 'body',
-                    //     name: 'body',
-                    //     className: 'text-center',
-                    //     render: function (data, type, row) {
-                    //         if (data) {
-                    //             // Memecah teks menjadi array kata-kata berdasarkan spasi
-                    //             let words = data.split(' ');
-                    //             let formattedBody = ''; // Inisialisasi teks hasil format
-
-                    //             // Loop untuk membagi teks menjadi grup 10 kata
-                    //             for (let i = 0; i < words.length; i += 10) {
-                    //                 formattedBody += words.slice(i, i + 10).join(' ') + '<br>'; // Gabungkan setiap 10 kata dan tambahkan baris baru
-                    //             }
-
-                    //             // Mengembalikan teks terformat dengan gaya justify
-                    //             return `<div style="text-align: justify;">${formattedBody}</div>`;
-                    //         }
-
-                    //         // Jika tidak ada data, kembalikan data apa adanya (null atau kosong)
-                    //         return data || '';
-                    //     }
-                    // },
-
-                    {
-                        data: 'gambar1',
-                        name: 'gambar1',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar2',
-                        name: 'gambar2',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar3',
-                        name: 'gambar3',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar4',
-                        name: 'gambar4',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar5',
-                        name: 'gambar5',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar6',
-                        name: 'gambar6',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar7',
-                        name: 'gambar7',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-                    {
-                        data: 'gambar8',
-                        name: 'gambar8',
-                        className: 'text-center',
-                        render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/profile') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                            }
-                        },
-                    },
-
-
-
-                    {
-                        data: 'status',
-                        name: 'status',
-                        className: 'text-center'
-                    },
+                  
                     {
                         data: 'action',
                         name: 'action',
