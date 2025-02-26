@@ -46,7 +46,7 @@ class AlumniController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-zA-Z\s]+$/',
+              'regex:/^[a-zA-Z\s.,]+$/',
                 'unique:tb_alumni,NamaLengkap',
             ],
             'JenisKelamin' => [

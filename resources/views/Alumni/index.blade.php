@@ -529,7 +529,7 @@
 
                         <input type="text" class="form-control @error('NamaLengkap') is-invalid @enderror"
                             name="NamaLengkap" id="NamaLengkap" value="{{ old('NamaLengkap') }}"
-                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" placeholder="Nama Lengkap Alumni"
+                             placeholder="Nama Lengkap Alumni"
                             required>
                         <p class="text-muted text-xs mt-2">Silahkan isi nama lengkap anda.</p>
                         @error('NamaLengkap')
