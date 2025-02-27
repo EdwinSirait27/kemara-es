@@ -767,8 +767,8 @@ html, body {
   @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
 
   <li class="nav-item">
-    <a class="nav-link {{ Request::is('dashboardSU') ? 'active' : '' }}"
-        href="{{ url('dashboardSU') }}">
+    <a class="nav-link {{ Request::is('Alumniall') ? 'active' : '' }}"
+        href="{{ url('Alumniall') }}">
         <div
             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
