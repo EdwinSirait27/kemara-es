@@ -68,7 +68,7 @@
             window.history.back();
         }
     </script>
-@endsection
+{{-- @endsection --}}
 
 {{-- <!DOCTYPE html>
 <html lang="en">
