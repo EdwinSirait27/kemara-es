@@ -255,15 +255,16 @@
 
         // Handler untuk image modal
         $(document).on('click', '.open-image-modal', function(e) {
-            e.preventDefault();
-            let imgSrc = $(this).data('src');
-            Swal.fire({
-                imageUrl: imgSrc,
-                imageAlt: 'Alumni Photo',
-                showConfirmButton: false,
-                width: 'auto'
-            });
-        });
+    e.preventDefault();
+    let imgSrc = $(this).data('src');
+    Swal.fire({
+        imageUrl: imgSrc,
+        imageAlt: 'Alumni Photo',
+        showConfirmButton: false,
+        showCloseButton: true, // Tambahkan tombol close (X)
+        width: 'auto'
+    });
+});
     });
 </script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
