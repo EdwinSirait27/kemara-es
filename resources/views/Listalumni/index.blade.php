@@ -739,16 +739,15 @@
         </div>
     </div>
  </div>
- <div id="imageModal" class="modal" style="display: none;">
+ {{-- <div id="imageModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close">&times;</span>
         <iframe id="imageFrame" width="100%" height="400px"></iframe>
     </div>
-</div>
+</div> --}}
 
 <style>
-/* Modal Styling */
-.modal {
+/* .modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -762,26 +761,24 @@
     align-items: center;
 }
 
-/* Modal Content */
 .modal-content {
     background-color: #fff;
     padding: 20px;
     width: 50%;
-    max-width: 600px; /* Maksimal lebar modal */
+    max-width: 600px; 
     border-radius: 10px;
     text-align: center;
     position: relative;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Tombol Close */
 .close {
     position: absolute;
     top: 10px;
     right: 20px;
     font-size: 24px;
     cursor: pointer;
-}
+} */
 
 /* Responsif untuk Tablet */
 @media screen and (max-width: 768px) {
@@ -850,7 +847,7 @@
     });
 });
 </script> --}}
-<script> 
+<script>
 $(document).ready(function() {
     let table = $('#users-table').DataTable({
         processing: true,
@@ -858,14 +855,14 @@ $(document).ready(function() {
         serverSide: true,
         ajax: {
             url: '{{ route("alumni.alumni") }}',
-            lengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ],
             data: function(d) {
                 d.TahunMasuk = $('#filter-tahun').val();
             }
         },
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
         columns: [
             {
                 data: 'id',
@@ -875,55 +872,54 @@ $(document).ready(function() {
                     return meta.row + 1; 
                 },
             },
-            // {
-            //     data: 'foto',
-            //     name: 'foto',
-            //     className: 'text-center',
-            //     render: function(data, type, full, meta) {
-            //         if (data) {
-            //             return `<a href="#" class="open-image-modal" data-src="{{ asset('storage/alumni') }}/` + data + `">
-            //                         <img src="{{ asset('storage/alumni') }}/` + data + `" width="100" style="cursor:pointer;" />
-            //                     </a>`;
-            //         } else {
-            //             return '<span>Foto tidak tersedia</span>';
-            //         }
-            //     }
-            // },
             {
-    data: 'foto',
-    name: 'foto',
-    className: 'text-center',
-    render: function(data, type, full, meta) {
-        let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` : `{{ asset('storage/alumni/we.jpg') }}`;
-        return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
-                    <img src="${imageUrl}" width="100" style="cursor:pointer;" />
-                </a>`;
-    }
-},
-
+                data: 'foto',
+                name: 'foto',
+                className: 'text-center',
+                render: function(data, type, full, meta) {
+                    let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` : `{{ asset('storage/alumni/we.jpg') }}`;
+                    return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
+                                <img src="${imageUrl}" width="100" style="cursor:pointer;" />
+                            </a>`;
+                }
+            },
             { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
             { data: 'TahunMasuk', name: 'TahunMasuk', className: 'text-center' },
             { data: 'TahunLulus', name: 'TahunLulus', className: 'text-center' },
             { data: 'Testimoni', name: 'Testimoni', className: 'text-center' }
         ]
     });
+
     $('#filter-tahun').change(function() {
         table.ajax.reload();
     });
 
-    // Event klik untuk membuka modal dengan gambar dalam iframe
-    $(document).on('click', '.open-image-modal', function(e) {
-        e.preventDefault();
-        let imageUrl = $(this).data('src');
+    // // Event klik untuk membuka modal dengan gambar dalam iframe
+    // $(document).on('click', '.open-image-modal', function(e) {
+    //     e.preventDefault();
+    //     let imageUrl = $(this).data('src');
         
-        $('#imageFrame').attr('src', imageUrl);
-        $('#imageModal').fadeIn();
-    });
+    //     $('#imageFrame').attr('src', imageUrl);
+    //     $('#imageModal').fadeIn();
+    // });
 
-    // Tutup modal saat klik tombol close atau di luar modal
-    $('.close, #imageModal').on('click', function() {
-        $('#imageModal').fadeOut();
+    // // Tutup modal saat klik tombol close atau di luar modal
+    // $('.close, #imageModal').on('click', function() {
+    //     $('#imageModal').fadeOut();
+    // });
+   // Handler untuk image modal
+$(document).on('click', '.open-image-modal', function(e) {
+    e.preventDefault();
+    let imgSrc = $(this).data('src');
+    Swal.fire({
+        imageUrl: imgSrc,
+        imageAlt: 'Alumni Photo',
+        showConfirmButton: false,
+        showCloseButton: true, // Tambahkan tombol close (X)
+        width: 'auto'
     });
+});
+
 });
 </script>
 
