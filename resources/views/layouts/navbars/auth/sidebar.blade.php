@@ -791,7 +791,7 @@ html, body {
                 </g>
             </svg>
         </div>
-        <span class="nav-link-text ms-1">Dashboard Guru</span>
+        <span class="nav-link-text ms-1">Alumni</span>
     </a>
 </li>
 @endif
