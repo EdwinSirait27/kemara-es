@@ -53,6 +53,7 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\EkstrakuController;
 use App\Http\Controllers\PengaturankelasController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\StellaController;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Password;
@@ -560,6 +561,7 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     });
 
     // Route tanpa throttle
+    Route::get('/Stella', [StellaController::class, 'index'])->name('Stella.index');
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
     Route::get('/navbar', [ProfileSekolahController::class, 'Beranda2'])->name('navbar');

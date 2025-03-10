@@ -780,18 +780,6 @@
                                 }
                             }
                         </script>
-        
-        
-        
-        
-        
-
-    
-    
-
-
-
-
                    <br>
                 <div class="col-md-4">
                     <label class="form-label"><i class="fas fa-male"></i> Kesan & Pesan</label>
@@ -802,15 +790,10 @@
                     @enderror
                 </div>
         </div>
-
-
         <br>
         <br>
         <div class="text-center">
-            <!-- Tombol Daftar -->
             <button type="submit" id="daftar-btn">Daftar</button>
-
-            <!-- Tombol Cancel -->
             <a href="/Beranda" id="cancel-btn">Cancel</a>
         </div>
         <br>
@@ -840,15 +823,7 @@
                 });
             </script>
         @endif
-        {{-- @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: '{{ session('error') }}',
-                });
-            </script>
-        @endif --}}
+       
         <script>
             document.getElementById('daftar-btn').addEventListener('click', function(e) {
                 e.preventDefault(); // Mencegah pengiriman form langsung
@@ -863,7 +838,6 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Jika pengguna mengkonfirmasi, submit form
                         document.getElementById('alumni-form').submit();
                     }
                 });
