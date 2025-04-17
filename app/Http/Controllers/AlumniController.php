@@ -227,13 +227,20 @@ class AlumniController extends Controller
         try {
             DB::beginTransaction();
             
+            // $filePath = null;
+            // if ($request->hasFile('foto')) {
+            //     $file = $request->file('foto');
+            //     $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
+            //     $file->storeAs('public/alumni', $fileName);
+            //     $filePath = $fileName;
+            // }
             $filePath = null;
-            if ($request->hasFile('foto')) {
-                $file = $request->file('foto');
-                $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
-                $file->storeAs('public/alumni', $fileName);
-                $filePath = $fileName;
-            }
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '_', $file->getClientOriginalName());
+            $file->storeAs('public/alumni', $fileName); 
+            $filePath = $fileName;
+        }
             $tanggalLahir = null;
             if (!empty($validatedData['TanggalLahir'])) {
                 $tanggalLahir = Carbon::createFromFormat('Y-m-d', $validatedData['TanggalLahir'])->format('Y-m-d');
