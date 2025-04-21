@@ -363,7 +363,7 @@
                     <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">{{ $berita->header }}</h1>
                     <p style="font-size: 14px; color: #777;">
                         <strong>Pembuat:</strong> {{ $berita->User->Guru->Nama }} |
-                        <strong>Dipublikasikannnnnn:</strong> {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans() }}
+                        <strong>Dipublikasikan:</strong> {{ \Carbon\Carbon::parse($berita->created_at)->diffForHumans() }}
                         <strong><i class="fas fa-eye"></i> Dilihat :</strong> {{ $berita->views }} 
     
 

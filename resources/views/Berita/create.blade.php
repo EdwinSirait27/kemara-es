@@ -33,7 +33,6 @@
                                         </label>
                                         <div class="@error('header')border border-danger rounded-3 @enderror">
                                             <input class="form-control"
-                                            value="{{ e($header ?? '') }}"
                                             type="text"
                                                 id="header" name="header" aria-describedby="info-header"
                                                 maxlength="255" value="{{ old('header') }}"required>
@@ -57,7 +56,7 @@
                                                 class="form-control"
                                                 id="body" name="body"value="{{ old('body') }}" aria-describedby="info-body"
                                                  required
-                                                style="resize: both; overflow: auto;">{{ e($body ?? '') }}</textarea>
+                                                style="resize: both; overflow: auto;"></textarea>
                                             @error('body')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                             @enderror
@@ -186,9 +185,9 @@
                                         <label for="status" class="form-control-label">{{ __('Status') }}</label>
                                         <div class="@error('status')border border-danger rounded-3 @enderror">
                                             <select class="form-control" name="status" id="status" required>
-                                                <option value="" disabled selected>Pilih Status</option>
-                                                <option value="Aktif">Aktif</option>
-                                                <option value="Tidak Aktif">Tidak Aktif</option>
+                                                <option value="" disabled {{ old('status') == '' ? 'selected' : '' }}>Pilih Status</option>
+                                                <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                                <option value="Tidak Aktif" {{ old('status') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                                                 
                                             </select>
                                             @error('status')

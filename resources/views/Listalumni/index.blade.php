@@ -971,7 +971,7 @@
         e.preventDefault();
         let testimoni = $(this).data('testimoni');
         Swal.fire({
-            title: 'Testimoni Alumni',
+            title: 'Testimoni Alumni' + NamaLengkap,
             html: '<div style="text-align: left;">' + testimoni + '</div>',
             showConfirmButton: false,
             showCloseButton: true,

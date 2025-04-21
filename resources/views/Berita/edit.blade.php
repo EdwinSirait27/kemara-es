@@ -105,8 +105,9 @@
                                             id="body" 
                                             name="body" 
                                             aria-describedby="info-body"
+                                              value="{{ old('body', $berita->body) }}"
                                             required
-                                            style="resize: both; overflow: auto;">{{ e($berita->body ?? '') }}</textarea>
+                                            style="resize: both; overflow: auto;"></textarea>
                                         @error('body')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
