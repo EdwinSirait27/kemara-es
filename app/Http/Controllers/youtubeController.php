@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Youtube;
 use Illuminate\Http\Request;
+use App\Models\Youtube;
 use Yajra\DataTables\DataTables;
 use App\Rules\NoXSSInput;
 use Illuminate\Support\Facades\Log;
