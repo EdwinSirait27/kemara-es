@@ -217,22 +217,6 @@
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <!-- Username -->
-                                    <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nomor Telephone Orang Tua</label>
-                                        <input type="phone" class="form-control form-control-sm"
-                                            name="NomorTelephoneAyah" id="NomorTelephoneAyah"
-                                            placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
-                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                            value="{{ old('NomorTelephoneAyah') }}"required>
-                                        @error('NomorTelephoneAyah')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Asal SMP</label>
                                         <input type="text" class="form-control form-control-sm" name="AsalSD"
@@ -248,8 +232,165 @@
                                     </div>
 
 
+                                </div>
+                                <div class="row mb-3">
+                                    <!-- Nama Lengkap -->
+                                    <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Nama Lengkap Ayah</label>
+                                        <input type="text" class="form-control form-control-sm" name="NamaAyah"
+                                            id="NamaAyah" placeholder="Nama Lengkap Ayah" aria-label="NamaAyah"
+                                            maxlength="100" required
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('NamaAyah') }}">
 
+                                        @error('NamaAyah')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
+                                    <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Nomor Telephone Ayah/Ibu</label>
+                                        <input type="phone" class="form-control form-control-sm"
+                                            name="NomorTelephoneAyah" id="NomorTelephoneAyah"
+                                            placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
+                                            aria-describedby="NomorTelephoneAyah-addon" maxlength="13"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                            value="{{ old('NomorTelephoneAyah') }}"required>
+                                        @error('NomorTelephoneAyah')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Pekerjaan Ayah</label>
+                                        <select class="form-control" name="PekerjaanAyah" id="PekerjaanAyah" required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanAyah)
+                                                <option value="{{ e($PekerjaanAyah) }}"
+                                                    {{ old('PekerjaanAyah') == $PekerjaanAyah ? 'selected' : '' }}>
+                                                    {{ $PekerjaanAyah }}
+
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('PekerjaanAyah')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+
+                                        <label><i class="fas fa-user"></i> Penghasilan Ayah</label>
+                                        <select class="form-control" name="PenghasilanAyah" id="PenghasilanAyah"
+                                            required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanAyah)
+                                                <option value="{{ e($PenghasilanAyah) }}"
+                                                    {{ old('PenghasilanAyah') == $PenghasilanAyah ? 'selected' : '' }}>
+                                                    {{ $PenghasilanAyah }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('PenghasilanAyah')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <label><i class="fas fa-user"></i> Nama Lengkap Ibu</label>
+                                        <input type="text" class="form-control form-control-sm" name="NamaIbu"
+                                            id="NamaIbu" placeholder="Nama Lengkap Ibu" aria-label="NamaIbu"
+                                            maxlength="100" required
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('NamaIbu') }}">
+
+                                        @error('NamaIbu')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Pekerjaan Ibu</label>
+                                        <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanIbu)
+                                                <option value="{{ e($PekerjaanIbu) }}"
+                                                    {{ old('PekerjaanIbu') == $PekerjaanIbu ? 'selected' : '' }}>
+                                                    {{ $PekerjaanIbu }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('PekerjaanIbu')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+
+                                        <label><i class="fas fa-user"></i> Penghasilan Ibu</label>
+                                        <select class="form-control" name="PenghasilanIbu" id="PenghasilanIbu" required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanIbu)
+                                                <option value="{{ e($PenghasilanIbu) }}"
+                                                    {{ old('PenghasilanIbu') == $PenghasilanIbu ? 'selected' : '' }}>
+                                                    {{ $PenghasilanIbu }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('PenghasilanIbu')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <label><i class="fas fa-user"></i> Nama Lengkap Wali</label>
+                                        <input type="text" class="form-control form-control-sm" name="NamaWali"
+                                            id="NamaWali" placeholder="Nama Lengkap Wali" aria-label="NamaWali"
+                                            maxlength="100" required
+                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('NamaWali') }}">
+
+                                        @error('NamaWali')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label><i class="fas fa-user"></i> Pekerjaan Wali</label>
+                                        <select class="form-control" name="PekerjaanWali" id="PekerjaanWali" required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanWali)
+                                                <option value="{{ e($PekerjaanWali) }}"
+                                                    {{ old('PekerjaanWali') == $PekerjaanWali ? 'selected' : '' }}>
+                                                    {{ $PekerjaanWali }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('PekerjaanWali')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+
+                                        <label><i class="fas fa-user"></i>StatusHubunganWali</label>
+                                        <select class="form-control" name="StatusHubunganWali" id="StatusHubunganWali"
+                                            required>
+                                            <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                            {{-- @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $StatusHubunganWali) --}}
+                                            @foreach (['KAKEK/NENEK', 'SAUDARA KANDUNG', 'OM/TANTE/PAMAN/BIBI', 'KELUARGA LAINNYA'] as $StatusHubunganWali)
+                                                <option value="{{ e($StatusHubunganWali) }}"
+                                                    {{ old('StatusHubunganWali') == $StatusHubunganWali ? 'selected' : '' }}>
+                                                    {{ $StatusHubunganWali }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('StatusHubunganWali')
+                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Username Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="username"
@@ -264,14 +405,13 @@
                                         <p class="text-muted text-xs mt-2">Contoh: edwin12345
                                     </div>
 
-                                    <!-- Email -->
                                     <div class="col-md-4">
                                         <label><i class="fas fa-envelope"></i> Password</label>
                                         <div
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password" placeholder="Masukkan Password"
                                                 id="password" name="password" maxlength="12"
-                                                oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '').replace(/\s+/g, '')" required>
+                                                oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '').replace(/\s+/g, '')" required>
                                                         <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
                                                             onclick="togglePasswordVisibility('password')">
                                                             <i id="eye-icon-password" class="fas fa-eye"></i>
@@ -295,49 +435,50 @@
                                                                 }
                                                             }
                                                         </script>
-
-</div>
-<p class="text-muted text-xs mt-2">Buat Password yang susah ya adik-adik Contoh: edwin@@132
-                                    </div>
-                                    
-                                </div>
-                                <div class="row
-                                                mb-3">
-                                            <div class="col-md-4">
-                                                <label><i class="fas fa-user"></i> Konfirmasi Password</label>
-                                                <div
-                                                    class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
-                                                    <input class="form-control" type="password"
-                                                        placeholder="Konfirmasi Password Baru" id="password_confirmation"
-                                                        name="password_confirmation" maxlength="12"
-                                                        oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '')"required>
-                                                                <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
-                                                                    onclick="togglePasswordVisibility('password_confirmation')">
-                                                                    <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
-                                                                </span>
-                                                                @error('password_confirmation')
-                                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                                                @enderror
-                                                                <script>
-                                                                    function togglePasswordVisibility(inputId) {
-                                                                        const input = document.getElementById(inputId);
-                                                                        const icon = document.getElementById(`eye-icon-${inputId}`);
-                                                                        if (input.type === "password") {
-                                                                            input.type = "text";
-                                                                            icon.classList.remove("fa-eye");
-                                                                            icon.classList.add("fa-eye-slash");
-                                                                        } else {
-                                                                            input.type = "password";
-                                                                            icon.classList.remove("fa-eye-slash");
-                                                                            icon.classList.add("fa-eye");
-                                                                        }
-                                                                    }
-                                                                </script>
+                                                    </div>
+                                   <p class="text-muted
+                                                text-xs mt-2">Buat Password yang susah ya adik-adik Contoh:
+                                            edwin@@132
                                         </div>
-<p class="text-muted text-xs mt-2">Masukkan password yang tadi untuk konfirmasi
-
                                     </div>
-                                </div>
+                                    <div class="row
+                                                mb-3">
+                                        <div class="col-md-4">
+                                            <label><i class="fas fa-user"></i> Konfirmasi Password</label>
+                                            <div
+                                                class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
+                                                <input class="form-control" type="password"
+                                                    placeholder="Konfirmasi Password Baru" id="password_confirmation"
+                                                    name="password_confirmation" maxlength="12"
+                                                    oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '')"required>
+                                                            <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                                                onclick="togglePasswordVisibility('password_confirmation')">
+                                                                <i id="eye-icon-password_confirmation" class="fas fa-eye"></i>
+                                                            </span>
+                                                            @error('password_confirmation')
+                                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                                            @enderror
+                                                            <script>
+                                                                function togglePasswordVisibility(inputId) {
+                                                                    const input = document.getElementById(inputId);
+                                                                    const icon = document.getElementById(`eye-icon-${inputId}`);
+                                                                           if (input.type === "password") {
+                                                                        input.type = "text";
+                                                                        icon.classList.remove("fa-eye");
+                                                                        icon.classList.add("fa-eye-slash");
+                                                                    } else {
+                                                                        input.type = "password";
+                                                                        icon.classList.remove("fa-eye-slash");
+                                                                        icon.classList.add("fa-eye");
+                                                                    }
+                                                                }
+                                                            </script>
+                                        </div>
+<p class="text-muted
+                                                    text-xs mt-2">Masukkan password yang tadi untuk konfirmasi
+
+                                            </div>
+                                        </div>
 
 
 
@@ -357,17 +498,17 @@
 
 
 
-                               
-                                <!-- Submit -->
-                                <div class="text-center">
-                                                    <!-- Tombol Daftar -->
-                                                    <button type="submit" id="daftar-btn"
-                                                        class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
 
-                                                    <!-- Tombol Cancel -->
-                                                    <a href="/login" id="cancel-btn"
-                                                        class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
-                                                </div>
+                                        <!-- Submit -->
+                                        <div class="text-center">
+                                            <!-- Tombol Daftar -->
+                                            <button type="submit" id="daftar-btn"
+                                                class="btn bg-gradient-info w-35 mt-4 mb-0">Daftar</button>
+
+                                            <!-- Tombol Cancel -->
+                                            <a href="/login" id="cancel-btn"
+                                                class="btn bg-gradient-secondary w-35 mt-4 mb-0">Cancel</a>
+                                        </div>
 
                             </form>
                         </div>

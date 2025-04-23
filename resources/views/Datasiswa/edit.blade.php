@@ -829,7 +829,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PekerjaanAyah" class="form-control-label">
@@ -841,16 +841,49 @@
                                     aria-describedby="info-PekerjaanAyah" required>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PekerjaanAyah" class="form-control-label"><i class="fas fa-lock"></i>
+                                    {{ __('Pekerjaan Ayah') }}</label>
+                                    <div>
+    
+                                <div class="@error('PekerjaanAyah') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PekerjaanAyah" id="PekerjaanAyah" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN','PEGAWAI SWASTA','PETANI/NELAYAN'] as $PekerjaanAyah)
+                                            <option value="{{ e($PekerjaanAyah) }}"
+                                                {{ $siswa->PekerjaanAyah == $PekerjaanAyah ? 'selected' : '' }}>
+                                                {{ e($PekerjaanAyah) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('PekerjaanAyah')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PenghasilanAyah" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PenghasilanAyah ?? '' }}"
-                                    type="text" id="PenghasilanAyah" name="PenghasilanAyah"
-                                    aria-describedby="info-PenghasilanAyah" required>
+                                <div class="@error('PenghasilanAyah') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PenghasilanAyah" id="PenghasilanAyah" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanAyah)
+                                            <option value="{{ e($PenghasilanAyah) }}"
+                                                {{ $siswa->PenghasilanAyah == $PenghasilanAyah ? 'selected' : '' }}>
+                                                {{ e($PenghasilanAyah) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('PenghasilanAyah')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                     </div>
@@ -947,9 +980,19 @@
                                 <i class="fas fa-lock"></i> {{ __('Pekerjaan Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PekerjaanIbu ?? '' }}" type="text"
-                                    id="PekerjaanIbu" name="PekerjaanIbu" aria-describedby="info-PekerjaanIbu"
-                                    required>
+                                <div class="@error('PekerjaanIbu') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN','PEGAWAI SWASTA','PETANI/NELAYAN'] as $PekerjaanIbu)
+                                            <option value="{{ e($PekerjaanIbu) }}"
+                                                {{ $siswa->PekerjaanIbu == $PekerjaanIbu ? 'selected' : '' }}>
+                                                {{ e($PekerjaanIbu) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('PekerjaanIbu')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                     </div>
@@ -959,9 +1002,20 @@
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PenghasilanIbu ?? '' }}"
-                                    type="text" id="PenghasilanIbu" name="PenghasilanIbu"
-                                    aria-describedby="info-PenghasilanIbu" required>
+                                <div class="@error('PenghasilanIbu') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PenghasilanIbu" id="PenghasilanIbu" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanIbu)
+                                        
+                                        <option value="{{ e($PenghasilanIbu) }}"
+                                                {{ $siswa->PenghasilanIbu==$PenghasilanIbu ? 'selected' : '' }}>
+                                                {{ e($PenghasilanIbu) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('PenghasilanIbu')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                     </div>
@@ -1058,9 +1112,18 @@
                                 <i class="fas fa-lock"></i> {{ __('Pekerjaan Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PekerjaanWali ?? '' }}"
-                                    type="text" id="PekerjaanWali" name="PekerjaanWali"
-                                    aria-describedby="info-PekerjaanWali" required>
+                                <select class="form-control" name="PekerjaanWali" id="PekerjaanWali" required>
+                                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                    @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN','PEGAWAI SWASTA','PETANI/NELAYAN'] as $PekerjaanWali)
+                                        <option value="{{ e($PekerjaanWali) }}"
+                                            {{ $siswa->PekerjaanWali == $PekerjaanWali ? 'selected' : '' }}>
+                                            {{ e($PekerjaanWali) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('PekerjaanWali')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -1084,9 +1147,18 @@
                                 <i class="fas fa-lock"></i> {{ __('Status Hubungan Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->StatusHubunganWali ?? '' }}"
-                                    type="text" id="StatusHubunganWali" name="StatusHubunganWali"
-                                    aria-describedby="info-StatusHubunganWali">
+                                <select class="form-control" name="StatusHubunganWali" id="StatusHubunganWali" required>
+                                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                    @foreach (['KAKEK/NENEK', 'SAUDARA KANDUNG', 'OM/TANTE/PAMAN/BIBI', 'KELUARGA LAINNYA'] as $StatusHubunganWali)
+                                        <option value="{{ e($StatusHubunganWali) }}"
+                                            {{ $siswa->StatusHubunganWali == $StatusHubunganWali ? 'selected' : '' }}>
+                                            {{ e($StatusHubunganWali) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('StatusHubunganWali')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
