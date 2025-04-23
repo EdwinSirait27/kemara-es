@@ -56,10 +56,7 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Facebook</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Testimoni</th>
-
+                                
 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -155,7 +152,6 @@
                 { data: 'Linkedin', name: 'Linkedin', className: 'text-center' },
                 { data: 'Tiktok', name: 'Tiktok', className: 'text-center' },
                 { data: 'Facebook', name: 'Facebook', className: 'text-center' },
-                { data: 'Testimoni', name: 'Testimoni', className: 'text-center' },
                 {
                     data: 'action',
                     name: 'action',
