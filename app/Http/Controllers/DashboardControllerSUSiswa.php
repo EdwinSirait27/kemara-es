@@ -289,21 +289,32 @@ class DashboardControllerSUSiswa extends Controller
         }
     }
     public function deleteUsersSiswa(Request $request)
-    {
-        // Validasi UUID
-        $request->validate([
-            'ids' => ['required', 'array', 'min:1', new NoXSSInput()],  
-            'ids.*' => ['uuid', new NoXSSInput()],  
-        ]);
+{
+    // Validasi UUID
+    $request->validate([
+        'ids' => ['required', 'array', 'min:1', new NoXSSInput()],
+        'ids.*' => ['uuid', new NoXSSInput()],
+    ]);
 
-        // Hapus pengguna berdasarkan UUID
-        User::whereIn('id', $request->ids)->delete();
+    // Ambil daftar user berdasarkan UUID
+    $users = User::whereIn('id', $request->ids)->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Selected users and their related data deleted successfully.'
-        ]);
+    foreach ($users as $user) {
+        // Hapus siswa terkait jika ada
+        if ($user->siswa) {
+            $user->siswa->delete();
+        }
+
+        // Hapus user
+        $user->delete();
     }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Selected users and their related students deleted successfully.'
+    ]);
+}
+
 
 
 }
