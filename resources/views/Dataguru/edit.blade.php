@@ -37,48 +37,24 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                          
-     {{-- @if ($guru->foto && $guru->foto)
-     <img src="{{ asset('storage/fotoguru/' . $guru->foto) }}"
-          alt="Foto siswa" width="100" height="100"
-          class="w-100 border-radius-lg shadow-sm" id="imagePopup">
- @else
-     <img src="{{ asset('img/we.jpg') }}"
-          alt="Foto siswa" width="100" height="100"
-          class="w-100 border-radius-lg shadow-sm" id="imagePopup">
- @endif --}}
- @if (!empty($guru->foto) && Storage::exists('fotoguru/' . $guru->foto))
- <img src="{{ asset('storage/fotoguru/' . $guru->foto) }}"
-      alt="Foto guru" width="100" height="100"
-      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-@else
- <img src="{{ asset('storage/fotoguru/we.jpg') }}"
-      alt="Foto default" width="100" height="100"
-      class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-@endif
+                            @if (!empty($guru->foto) && Storage::exists('fotoguru/' . $guru->foto))
+                                <img src="{{ asset('storage/fotoguru/' . $guru->foto) }}" alt="Foto guru" width="100"
+                                    height="100" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            @else
+                                <img src="{{ asset('storage/fotoguru/we.jpg') }}" alt="Foto default" width="100"
+                                    height="100" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            @endif
 
-<a href="javascript:;"
-   class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-   id="uploadBtn">
-    <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-       title="Upload Gambar"></i>
-</a>
-<input type="file" id="foto" name="foto" style="display: none;"
-       class="form-control" accept="image/*">
+                            <a href="javascript:;"
+                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
+                                id="uploadBtn">
+                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Upload Gambar"></i>
+                            </a>
+                            <input type="file" id="foto" name="foto" style="display: none;"
+                                class="form-control" accept="image/*">
 
-                            {{-- // @if ($guru->foto) --}}
-                            
-                            {{-- // <img src="{{ $guru->foto ? asset('storage/fotoguru/'. $guru->foto" alt="Foto Guru" width="100" height="100"
-                            // alt="Foto Guru" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-                            // @endif
-                            // <a href="javascript:;"
-                            //     class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-                            //     id="uploadBtn">
-                            //     <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-                            //         title="Upload Gambar"></i>
-                            // </a>
-                            // <input type="file"  value="{{ $guru->foto }}"id="foto" name="foto" style="display: none;"
-                            //     class="form-control" accept="image/*"> --}}
+
                     </div>
                 </div>
                 <script>
@@ -155,8 +131,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $guru->Nama ?? ''}}"
-                                    type="text" id="Nama" name="Nama" aria-describedby="info-Nama" required>
+                                <input class="form-control" value="{{ $guru->Nama ?? '' }}" type="text"
+                                    id="Nama" name="Nama" aria-describedby="info-Nama" required>
 
                             </div>
                         </div>
@@ -168,8 +144,7 @@
                             </label>
                             {{-- <label for="TempatLahir" class="form-control-label">{{ __('Tempat Lahir') }}</label> --}}
                             <div class="@error('TempatLahir')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TempatLahir ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->TempatLahir ?? '' }}" type="text"
                                     id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir"
                                     oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"maxlength="30"
                                     required>
@@ -187,10 +162,8 @@
                                 {{ __('Tanggal Lahir') }}</label>
                             {{-- <label for="TanggalLahir" class="form-control-label">{{ __('Tanggal Lahir') }}</label> --}}
                             <div class="@error('TanggalLahir') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TanggalLahir }}"
-                                    type="date" placeholder="TanggalLahir" id="TanggalLahir" name="TanggalLahir"
-                                    required>
+                                <input class="form-control" value="{{ $guru->TanggalLahir }}" type="date"
+                                    placeholder="TanggalLahir" id="TanggalLahir" name="TanggalLahir" required>
                                 @error('TanggalLahir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -263,7 +236,7 @@
                                 @error('StatusPegawai')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                           
+
 
                             </div>
                         </div>
@@ -274,8 +247,7 @@
                         <div class="form-group">
                             <label for="NipNips" class="form-control-label">{{ __('NIP NIPS') }}</label>
                             <div class="@error('NipNips')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->NipNips ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->NipNips ?? '' }}" type="text"
                                     id="NipNips" name="NipNips" aria-describedby="info-NipNips"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
                                 @error('NipNips')
@@ -286,11 +258,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                          
+
                             <label for="Nuptk" class="form-control-label">{{ __('NUPTK') }}</label>
                             <div class="@error('Nuptk')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Nuptk ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Nuptk ?? '' }}" type="text"
                                     id="Nuptk" name="Nuptk" aria-describedby="info-Nuptk"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
                                 @error('Nuptk')
@@ -305,8 +276,7 @@
                         <div class="form-group">
                             <label for="Nik" class="form-control-label">{{ __('NIK') }}</label>
                             <div class="@error('Nik')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Nik ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Nik ?? '' }}" type="text"
                                     id="Nik" name="Nik" aria-describedby="info-Nik"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
                                 @error('Nik')
@@ -319,8 +289,7 @@
                         <div class="form-group">
                             <label for="Npwp" class="form-control-label">{{ __('NPWP') }}</label>
                             <div class="@error('Npwp')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Npwp ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Npwp ?? '' }}" type="text"
                                     id="Npwp" name="Npwp" aria-describedby="info-Npwp"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
                                 @error('Npwp')
@@ -334,16 +303,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NomorSertifikatPendidik"
-                            class="form-control-label">{{ __('Nomor Sertifikat Pendidik') }}</label>
-                        <div class="@error('NomorSertifikatPendidik')border border-danger rounded-3 @enderror">
-                            <input class="form-control"
-                                value="{{ $guru->NomorSertifikatPendidik ?? '' }}"
-                                type="text" id="NomorSertifikatPendidik" name="NomorSertifikatPendidik"
-                                aria-describedby="info-NomorSertifikatPendidik"
-                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
-                            @error('NomorSertifikatPendidik')
-                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                            @enderror
+                                class="form-control-label">{{ __('Nomor Sertifikat Pendidik') }}</label>
+                            <div class="@error('NomorSertifikatPendidik')border border-danger rounded-3 @enderror">
+                                <input class="form-control" value="{{ $guru->NomorSertifikatPendidik ?? '' }}"
+                                    type="text" id="NomorSertifikatPendidik" name="NomorSertifikatPendidik"
+                                    aria-describedby="info-NomorSertifikatPendidik"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                @error('NomorSertifikatPendidik')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -352,14 +320,13 @@
                             <label for="TahunSertifikasi"
                                 class="form-control-label">{{ __('Tahun Sertifikasi') }}</label>
                             <div class="@error('TahunSertifikasi') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TahunSertifikasi }}"
-                                    type="date" placeholder="TahunSertifikasi" id="TahunSertifikasi"
-                                    name="TahunSertifikasi" required>
+                                <input class="form-control" value="{{ $guru->TahunSertifikasi }}" type="date"
+                                    placeholder="TahunSertifikasi" id="TahunSertifikasi" name="TahunSertifikasi"
+                                    required>
                                 @error('TahunSertifikasi')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                             
+
                             </div>
                         </div>
                     </div>
@@ -371,9 +338,8 @@
                                 {{ __('Jadwal Kenaikan Gaji') }}</label>
 
                             <div class="@error('jadwalkenaikangaji') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->jadwalkenaikangaji }}"
-                                    type="date" placeholder="jadwalkenaikangaji" id="jadwalkenaikangaji"
+                                <input class="form-control" value="{{ $guru->jadwalkenaikangaji }}" type="date"
+                                    placeholder="jadwalkenaikangaji" id="jadwalkenaikangaji"
                                     name="jadwalkenaikangaji" required>
                                 @error('jadwalkenaikangaji')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -388,8 +354,7 @@
                             <label for="PendidikanAkhir"
                                 class="form-control-label">{{ __('Pendidikan Akhir') }}</label>
                             <div class="@error('PendidikanAkhir')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->PendidikanAkhir ?? '' }}"
+                                <input class="form-control" value="{{ $guru->PendidikanAkhir ?? '' }}"
                                     type="text" id="PendidikanAkhir" name="PendidikanAkhir"
                                     aria-describedby="info-PendidikanAkhir" maxlength="30" required>
                                 @error('PendidikanAkhir')
@@ -405,10 +370,8 @@
                         <div class="form-group">
                             <label for="TahunTamat" class="form-control-label">{{ __('Tahun Tamat') }}</label>
                             <div class="@error('TahunTamat') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TahunTamat }}"
-                                    type="date" placeholder="TahunTamat" id="TahunTamat" name="TahunTamat"
-                                    required>
+                                <input class="form-control" value="{{ $guru->TahunTamat }}" type="date"
+                                    placeholder="TahunTamat" id="TahunTamat" name="TahunTamat" required>
                                 @error('TahunTamat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -421,8 +384,7 @@
                         <div class="form-group">
                             <label for="Jurusan" class="form-control-label">{{ __('Jurusan') }}</label>
                             <div class="@error('Jurusan')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Jurusan ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Jurusan ?? '' }}" type="text"
                                     id="Jurusan" name="Jurusan" aria-describedby="info-Jurusan" maxlength="30"
                                     required>
                                 @error('Jurusan')
@@ -438,10 +400,9 @@
                         <div class="form-group">
                             <label for="TugasMengajar" class="form-control-label">{{ __('Tugas Mengajar') }}</label>
                             <div class="@error('TugasMengajar')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TugasMengajar ?? '' }}"
-                                    type="text" id="TugasMengajar" name="TugasMengajar"
-                                    aria-describedby="info-TugasMengajar" maxlength="50" required>
+                                <input class="form-control" value="{{ $guru->TugasMengajar ?? '' }}" type="text"
+                                    id="TugasMengajar" name="TugasMengajar" aria-describedby="info-TugasMengajar"
+                                    maxlength="50" required>
                                 @error('TugasMengajar')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -453,14 +414,12 @@
                             <label for="TahunPensiun" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Tahun Pensiun') }}</label>
                             <div class="@error('TahunPensiun') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->TahunPensiun }}"
-                                    type="date" placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun"
-                                    required>
+                                <input class="form-control" value="{{ $guru->TahunPensiun }}" type="date"
+                                    placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun" required>
                                 @error('TahunPensiun')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                                
+
                             </div>
                         </div>
                     </div>
@@ -471,8 +430,7 @@
                             <label for="Pangkat" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Pangkat') }}</label>
                             <div class="@error('Pangkat')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Pangkat ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Pangkat ?? '' }}" type="text"
                                     id="Pangkat" name="Pangkat" aria-describedby="info-Pangkat" maxlength="50"
                                     required>
                                 @error('Pangkat')
@@ -487,8 +445,7 @@
                                 {{ __('Jadwal Kenaikan Pangkat') }}</label>
 
                             <div class="@error('jadwalkenaikanpangkat') border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->jadwalkenaikanpangkat }}"
+                                <input class="form-control" value="{{ $guru->jadwalkenaikanpangkat }}"
                                     type="date" placeholder="jadwalkenaikanpangkat" id="jadwalkenaikanpangkat"
                                     name="jadwalkenaikanpangkat" required>
                                 @error('jadwalkenaikanpangkat')
@@ -506,8 +463,7 @@
                                 {{ __('Jabatan') }}</label>
 
                             <div class="@error('Jabatan')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Jabatan ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Jabatan ?? '' }}" type="text"
                                     id="Jabatan" name="Jabatan" aria-describedby="info-Jabatan" maxlength="30"
                                     required>
                                 @error('Jabatan')
@@ -521,11 +477,9 @@
                             <label for="NomorTelephone"
                                 class="form-control-label">{{ __('Nomor Telephone') }}</label>
                             <div class="@error('NomorTelephone')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->NomorTelephone ?? ''}}"
-                                    type="phone" id="NomorTelephone" name="NomorTelephone"
-                                    aria-describedby="info-NomorTelephone" maxlength="13"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                                <input class="form-control" value="{{ $guru->NomorTelephone ?? '' }}" type="phone"
+                                    id="NomorTelephone" name="NomorTelephone" aria-describedby="info-NomorTelephone"
+                                    maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                                 @error('NomorTelephone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -539,8 +493,7 @@
                         <div class="form-group">
                             <label for="Alamat" class="form-control-label">{{ __('Alamat') }}</label>
                             <div class="@error('Alamat')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Alamat ?? '' }}" type="text"
+                                <input class="form-control" value="{{ $guru->Alamat ?? '' }}" type="text"
                                     id="Alamat" name="Alamat" aria-describedby="info-Alamat" maxlength="50"
                                     required>
                                 @error('Alamat')
@@ -555,8 +508,7 @@
                         <div class="form-group">
                             <label for="Email" class="form-control-label">{{ __('Email') }}</label>
                             <div class="@error('Email')border border-danger rounded-3 @enderror">
-                                <input class="form-control"
-                                    value="{{ $guru->Email ?? '' }}" type="email"
+                                <input class="form-control" value="{{ $guru->Email ?? '' }}" type="email"
                                     id="Email" name="Email" aria-describedby="info-Email" maxlength="50"
                                     required>
                                 @error('Email')
@@ -570,7 +522,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                         
+
                             <label for="status" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Status') }}</label>
 
@@ -590,32 +542,33 @@
                             </div>
                         </div>
                     </div>
-                    
-                   
 
-            </div>
 
-            <div class="alert alert-secondary mx-4" role="alert">
-                <span class="text-white">
-                    <strong>Keterangan</strong> <br>
-                </span>
-                <span class="text-white">-
-                    <strong class="fa fa-lock"></strong>
-                    <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
-                    <strong>- Upload file type JPEG</strong> <br>
-                    <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
-                    <strong>- Tolong diisi semua.</strong> <br>
-                    <strong>- Data NULL harap diisi.</strong> <br>
 
-                </span>
+                </div>
+
+                <div class="alert alert-secondary mx-4" role="alert">
+                    <span class="text-white">
+                        <strong>Keterangan</strong> <br>
+                    </span>
+                    <span class="text-white">-
+                        <strong class="fa fa-lock"></strong>
+                        <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
+                        <strong>- Upload file type JPEG</strong> <br>
+                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+                        <strong>- Tolong diisi semua.</strong> <br>
+                        <strong>- Data NULL harap diisi.</strong> <br>
+
+                    </span>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit"
+                        class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+                </div>
+                </form>
             </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 </div>
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

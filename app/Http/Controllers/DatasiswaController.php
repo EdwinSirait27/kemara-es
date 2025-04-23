@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Siswa;
+use App\Models\Informasippdb;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Rules\NoXSSInput;
-use Carbon\Carbon;
 class DatasiswaController extends Controller
 {
     public function __construct()
@@ -15,7 +15,9 @@ class DatasiswaController extends Controller
     }
     public function index()
     {
-        return view('Datasiswa.Datasiswa');
+    $informasippdb = Informasippdb::where('status', 'Aktif')->first();
+
+        return view('Datasiswa.Datasiswa',compact('informasippdb'));
     }
     public function indexSiswaall()
     {

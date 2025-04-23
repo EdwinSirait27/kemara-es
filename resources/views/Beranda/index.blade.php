@@ -74,7 +74,8 @@
     }
 
     .slider-title {
-        color: var(--primary-color);
+        /* color: var(--primary-color); */
+        color: white; 
         font-size: 2rem;
         margin-bottom: 15px;
     }
@@ -257,7 +258,7 @@
     .container h3 {
         font-size: 1.6rem;
         margin-bottom: 15px;
-        color: #2c3e50;
+        /* color: #2c3e50; */
     text-align: center;
 
     }

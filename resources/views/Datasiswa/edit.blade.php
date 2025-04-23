@@ -37,33 +37,35 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            @if ($siswa->foto)
-    <img src="{{ $siswa->foto ? asset('storage/fotosiswa/' . $siswa->foto) : '' }}" 
-         alt="Foto siswa" width="100" height="100"
-         class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-@endif
-<a href="javascript:;"
-   class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-   id="uploadBtn">
-    <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-       title="Upload Gambar"></i>
-</a>
-<input type="file" id="foto" name="foto" style="display: none;"
-       class="form-control" accept="image/*">
+                            {{-- @if ($siswa->foto)
+                                <img src="{{ $siswa->foto ? asset('storage/fotosiswa/' . $siswa->foto) : '' }}"
+                                    alt="Foto siswa" width="100" height="100"
+                                    class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            @endif
+                            <a href="javascript:;"
+                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
+                                id="uploadBtn">
+                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Upload Gambar"></i>
+                            </a>
+                            <input type="file" id="foto" name="foto" style="display: none;"
+                                class="form-control" accept="image/*"> --}}
+                                @if (!empty($siswa->foto) && Storage::exists('fotosiswa/' . $siswa->foto))
+                                <img src="{{ asset('storage/fotosiswa/' . $siswa->foto) }}" alt="Foto guru" width="100"
+                                    height="100" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            @else
+                                <img src="{{ asset('storage/fotosiswa/we.jpg') }}" alt="Foto default" width="100"
+                                    height="100" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
+                            @endif
 
-                            {{-- // @if ($siswa->foto) --}}
-                            
-                            {{-- // <img src="{{ $siswa->foto ? asset('storage/fotosiswa/'. $siswa->foto" alt="Foto siswa" width="100" height="100"
-                            // alt="Foto siswa" class="w-100 border-radius-lg shadow-sm" id="imagePopup">
-                            // @endif
-                            // <a href="javascript:;"
-                            //     class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
-                            //     id="uploadBtn">
-                            //     <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
-                            //         title="Upload Gambar"></i>
-                            // </a>
-                            // <input type="file"  value="{{ $siswa->foto }}"id="foto" name="foto" style="display: none;"
-                            //     class="form-control" accept="image/*"> --}}
+                            <a href="javascript:;"
+                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
+                                id="uploadBtn">
+                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Upload Gambar"></i>
+                            </a>
+                            <input type="file" id="foto" name="foto" style="display: none;"
+                                class="form-control" accept="image/*">
                     </div>
                 </div>
                 <script>
@@ -140,8 +142,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaLengkap ?? ''}}"
-                                    type="text" id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" required>
+                                <input class="form-control" value="{{ $siswa->NamaLengkap ?? '' }}" type="text"
+                                    id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" required>
                             </div>
                         </div>
                     </div>
@@ -151,8 +153,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Induk') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorInduk ?? ''}}"
-                                    type="text" id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" required>
+                                <input class="form-control" value="{{ $siswa->NomorInduk ?? '' }}" type="text"
+                                    id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" required>
                             </div>
                         </div>
                     </div>
@@ -164,8 +166,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Panggilan') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaPanggilan ?? ''}}"
-                                    type="text" id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan" required>
+                                <input class="form-control" value="{{ $siswa->NamaPanggilan ?? '' }}" type="text"
+                                    id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -198,8 +201,8 @@
                                 <i class="fas fa-lock"></i> {{ __('NISN') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NISN ?? ''}}"
-                                    type="text" id="NISN" name="NISN" aria-describedby="info-NISN" required>
+                                <input class="form-control" value="{{ $siswa->NISN ?? '' }}" type="text"
+                                    id="NISN" name="NISN" aria-describedby="info-NISN" required>
                             </div>
                         </div>
                     </div>
@@ -209,8 +212,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Tempat Lahir') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TempatLahir ?? ''}}"
-                                    type="text" id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" required>
+                                <input class="form-control" value="{{ $siswa->TempatLahir ?? '' }}" type="text"
+                                    id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" required>
                             </div>
                         </div>
                     </div>
@@ -222,8 +225,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Tanggal Lahir') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TanggalLahir ?? ''}}"
-                                    type="date" id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir" required>
+                                <input class="form-control" value="{{ $siswa->TanggalLahir ?? '' }}" type="date"
+                                    id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -256,8 +260,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Alamat ?? ''}}"
-                                    type="text" id="Alamat" name="Alamat" aria-describedby="info-Alamat" required>
+                                <input class="form-control" value="{{ $siswa->Alamat ?? '' }}" type="text"
+                                    id="Alamat" name="Alamat" aria-describedby="info-Alamat" required>
                             </div>
                         </div>
                     </div>
@@ -267,8 +271,8 @@
                                 <i class="fas fa-lock"></i> {{ __('RT') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->RT ?? ''}}"
-                                    type="text" id="RT" name="RT" aria-describedby="info-RT" required>
+                                <input class="form-control" value="{{ $siswa->RT ?? '' }}" type="text"
+                                    id="RT" name="RT" aria-describedby="info-RT" required>
                             </div>
                         </div>
                     </div>
@@ -280,8 +284,8 @@
                                 <i class="fas fa-lock"></i> {{ __('RW') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->RW ?? ''}}"
-                                    type="text" id="RW" name="RW" aria-describedby="info-RW" required>
+                                <input class="form-control" value="{{ $siswa->RW ?? '' }}" type="text"
+                                    id="RW" name="RW" aria-describedby="info-RW" required>
                             </div>
                         </div>
                     </div>
@@ -291,8 +295,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Kelurahan') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Kelurahan ?? ''}}"
-                                    type="text" id="Kelurahan" name="Kelurahan" aria-describedby="info-Kelurahan" required>
+                                <input class="form-control" value="{{ $siswa->Kelurahan ?? '' }}" type="text"
+                                    id="Kelurahan" name="Kelurahan" aria-describedby="info-Kelurahan" required>
                             </div>
                         </div>
                     </div>
@@ -304,8 +308,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Kecamatan') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Kecamatan ?? ''}}"
-                                    type="text" id="Kecamatan" name="Kecamatan" aria-describedby="info-Kecamatan" required>
+                                <input class="form-control" value="{{ $siswa->Kecamatan ?? '' }}" type="text"
+                                    id="Kecamatan" name="Kecamatan" aria-describedby="info-Kecamatan" required>
                             </div>
                         </div>
                     </div>
@@ -315,8 +319,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Kab/Kota') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->KabKota ?? ''}}"
-                                    type="text" id="KabKota" name="KabKota" aria-describedby="info-KabKota" required>
+                                <input class="form-control" value="{{ $siswa->KabKota ?? '' }}" type="text"
+                                    id="KabKota" name="KabKota" aria-describedby="info-KabKota" required>
                             </div>
                         </div>
                     </div>
@@ -329,8 +333,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Provinsi') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Provinsi ?? '' }}"
-                                    type="text" id="Provinsi" name="Provinsi" aria-describedby="info-Provinsi" required>
+                                <input class="form-control" value="{{ $siswa->Provinsi ?? '' }}" type="text"
+                                    id="Provinsi" name="Provinsi" aria-describedby="info-Provinsi" required>
                             </div>
                         </div>
                     </div>
@@ -340,8 +344,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Kode Pos') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->KodePos ?? '' }}"
-                                    type="text" id="KodePos" name="KodePos" aria-describedby="info-KodePos" required>
+                                <input class="form-control" value="{{ $siswa->KodePos ?? '' }}" type="text"
+                                    id="KodePos" name="KodePos" aria-describedby="info-KodePos" required>
                             </div>
                         </div>
                     </div>
@@ -353,8 +357,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Email') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Email ?? '' }}"
-                                    type="email" id="Email" name="Email" aria-describedby="info-Email" required>
+                                <input class="form-control" value="{{ $siswa->Email ?? '' }}" type="email"
+                                    id="Email" name="Email" aria-describedby="info-Email" required>
                             </div>
                         </div>
                     </div>
@@ -365,7 +369,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephone ?? '' }}"
-                                    type="phone" id="NomorTelephone" name="NomorTelephone" aria-describedby="info-NomorTelephone" required>
+                                    type="phone" id="NomorTelephone" name="NomorTelephone"
+                                    aria-describedby="info-NomorTelephone" required>
                             </div>
                         </div>
                     </div>
@@ -378,7 +383,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->Kewarganegaraan ?? '' }}"
-                                    type="text" id="Kewarganegaraan" name="Kewarganegaraan" aria-describedby="info-Kewarganegaraan" required>
+                                    type="text" id="Kewarganegaraan" name="Kewarganegaraan"
+                                    aria-describedby="info-Kewarganegaraan" required>
                             </div>
                         </div>
                     </div>
@@ -388,8 +394,8 @@
                                 <i class="fas fa-lock"></i> {{ __('NIK') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NIK ?? '' }}"
-                                    type="text" id="NIK" name="NIK" aria-describedby="info-NIK" required>
+                                <input class="form-control" value="{{ $siswa->NIK ?? '' }}" type="text"
+                                    id="NIK" name="NIK" aria-describedby="info-NIK" required>
                             </div>
                         </div>
                     </div>
@@ -397,13 +403,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                             <label for="GolDarah" class="form-control-label"><i class="fas fa-lock"></i>
+                            <label for="GolDarah" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Gol Darah') }}</label>
 
                             <div class="@error('GolDarah') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="GolDarah" id="GolDarah" required>
                                     <option value="" disabled selected>{{ __('Pilih') }}</option>
-                                    @foreach (['A+', 'A-', 'A', 'B+', 'B-', 'B','AB+','AB-','AB','O+','O-','O'] as $GolDarah)
+                                    @foreach (['A+', 'A-', 'A', 'B+', 'B-', 'B', 'AB+', 'AB-', 'AB', 'O+', 'O-', 'O'] as $GolDarah)
                                         <option value="{{ e($GolDarah) }}"
                                             {{ $siswa->GolDarah == $GolDarah ? 'selected' : '' }}>
                                             {{ e($GolDarah) }}
@@ -423,8 +429,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Tinggal Dengan') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TinggalDengan ?? '' }}"
-                                    type="text" id="TinggalDengan" name="TinggalDengan" aria-describedby="info-TinggalDengan" required>
+                                <input class="form-control" value="{{ $siswa->TinggalDengan ?? '' }}" type="text"
+                                    id="TinggalDengan" name="TinggalDengan" aria-describedby="info-TinggalDengan"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -460,7 +467,7 @@
                             <div class="@error('AnakKe') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="AnakKe" id="AnakKe" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4','5'] as $AnakKe)
+                                    @foreach (['1', '2', '3', '4', '5'] as $AnakKe)
                                         <option value="{{ e($AnakKe) }}"
                                             {{ $siswa->AnakKe == $AnakKe ? 'selected' : '' }}>
                                             {{ e($AnakKe) }}
@@ -483,7 +490,7 @@
                             <div class="@error('SaudaraKandung') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="SaudaraKandung" id="SaudaraKandung" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4','5'] as $SaudaraKandung)
+                                    @foreach (['1', '2', '3', '4', '5'] as $SaudaraKandung)
                                         <option value="{{ e($SaudaraKandung) }}"
                                             {{ $siswa->SaudaraKandung == $SaudaraKandung ? 'selected' : '' }}>
                                             {{ e($SaudaraKandung) }}
@@ -504,7 +511,7 @@
                             <div class="@error('SaudaraTiri') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="SaudaraTiri" id="SaudaraTiri" required>
                                     <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4','5'] as $SaudaraTiri)
+                                    @foreach (['1', '2', '3', '4', '5'] as $SaudaraTiri)
                                         <option value="{{ e($SaudaraTiri) }}"
                                             {{ $siswa->SaudaraTiri == $SaudaraTiri ? 'selected' : '' }}>
                                             {{ e($SaudaraTiri) }}
@@ -525,8 +532,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Tinggi (cm)') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Tinggicm ?? '' }}"
-                                    type="text" id="Tinggicm" name="Tinggicm" aria-describedby="info-Tinggicm" required>
+                                <input class="form-control" value="{{ $siswa->Tinggicm ?? '' }}" type="text"
+                                    id="Tinggicm" name="Tinggicm" aria-describedby="info-Tinggicm" required>
                             </div>
                         </div>
                     </div>
@@ -536,8 +543,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Berat (kg)') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Beratkg ?? '' }}"
-                                    type="text" id="Beratkg" name="Beratkg" aria-describedby="info-Beratkg" required>
+                                <input class="form-control" value="{{ $siswa->Beratkg ?? '' }}" type="text"
+                                    id="Beratkg" name="Beratkg" aria-describedby="info-Beratkg" required>
                             </div>
                         </div>
                     </div>
@@ -549,8 +556,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Riwayat Penyakit') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->RiwayatPenyakit ?? ''}}"
-                                    type="text" id="RiwayatPenyakit" name="RiwayatPenyakit" aria-describedby="info-RiwayatPenyakit" required>
+                                <input class="form-control" value="{{ $siswa->RiwayatPenyakit ?? '' }}"
+                                    type="text" id="RiwayatPenyakit" name="RiwayatPenyakit"
+                                    aria-describedby="info-RiwayatPenyakit" required>
                             </div>
                         </div>
                     </div>
@@ -560,8 +568,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Asal SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AsalSD ?? ''}}"
-                                    type="text" id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" required>
+                                <input class="form-control" value="{{ $siswa->AsalSD ?? '' }}" type="text"
+                                    id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" required>
                             </div>
                         </div>
                     </div>
@@ -573,8 +581,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatSD ?? ''}}"
-                                    type="text" id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" required>
+                                <input class="form-control" value="{{ $siswa->AlamatSD ?? '' }}" type="text"
+                                    id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" required>
                             </div>
                         </div>
                     </div>
@@ -584,8 +592,8 @@
                                 <i class="fas fa-lock"></i> {{ __('NPSN SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NPSNSD ?? ''}}"
-                                    type="text" id="NPSNSD" name="NPSNSD" aria-describedby="info-NPSNSD" required>
+                                <input class="form-control" value="{{ $siswa->NPSNSD ?? '' }}" type="text"
+                                    id="NPSNSD" name="NPSNSD" aria-describedby="info-NPSNSD" required>
                             </div>
                         </div>
                     </div>
@@ -597,8 +605,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Kab/Kota SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->KabKotaSD ?? ''}}"
-                                    type="text" id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" required>
+                                <input class="form-control" value="{{ $siswa->KabKotaSD ?? '' }}" type="text"
+                                    id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" required>
                             </div>
                         </div>
                     </div>
@@ -608,8 +616,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Provinsi SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->ProvinsiSD ?? ''}}"
-                                    type="text" id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" required>
+                                <input class="form-control" value="{{ $siswa->ProvinsiSD ?? '' }}" type="text"
+                                    id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" required>
                             </div>
                         </div>
                     </div>
@@ -621,8 +629,8 @@
                                 <i class="fas fa-lock"></i> {{ __('No Ijasah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NoIjasah ?? ''}}"
-                                    type="text" id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" required>
+                                <input class="form-control" value="{{ $siswa->NoIjasah ?? '' }}" type="text"
+                                    id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" required>
                             </div>
                         </div>
                     </div>
@@ -632,8 +640,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Diterima Tanggal') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->DiterimaTanggal ?? ''}}"
-                                    type="date" id="DiterimaTanggal" name="DiterimaTanggal" aria-describedby="info-DiterimaTanggal" required>
+                                <input class="form-control" value="{{ $siswa->DiterimaTanggal ?? '' }}"
+                                    type="date" id="DiterimaTanggal" name="DiterimaTanggal"
+                                    aria-describedby="info-DiterimaTanggal" required>
                             </div>
                         </div>
                     </div>
@@ -690,8 +699,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Mutasi Asal SMP') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->MutasiAsalSMP ?? ''}}"
-                                    type="text" id="MutasiAsalSMP" name="MutasiAsalSMP" aria-describedby="info-MutasiAsalSMP" required>
+                                <input class="form-control" value="{{ $siswa->MutasiAsalSMP ?? '' }}"
+                                    type="text" id="MutasiAsalSMP" name="MutasiAsalSMP"
+                                    aria-describedby="info-MutasiAsalSMP" required>
                             </div>
                         </div>
                     </div>
@@ -701,8 +711,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Alasan Pindah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlasanPindah ?? ''}}"
-                                    type="text" id="AlasanPindah" name="AlasanPindah" aria-describedby="info-AlasanPindah" required>
+                                <input class="form-control" value="{{ $siswa->AlasanPindah ?? '' }}" type="text"
+                                    id="AlasanPindah" name="AlasanPindah" aria-describedby="info-AlasanPindah"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -714,8 +725,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Tanggal Ijasah SD') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TglIjasahSD ?? ''}}"
-                                    type="date" id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" required>
+                                <input class="form-control" value="{{ $siswa->TglIjasahSD ?? '' }}" type="date"
+                                    id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" required>
                             </div>
                         </div>
                     </div>
@@ -725,8 +736,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Orang Tua Pada Ijasah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaOrangTuaPadaIjasah ?? ''}}"
-                                    type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah" aria-describedby="info-NamaOrangTuaPadaIjasah" required>
+                                <input class="form-control" value="{{ $siswa->NamaOrangTuaPadaIjasah ?? '' }}"
+                                    type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah"
+                                    aria-describedby="info-NamaOrangTuaPadaIjasah" required>
                             </div>
                         </div>
                     </div>
@@ -738,8 +750,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaAyah ?? '' }}"
-                                    type="text" id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" required>
+                                <input class="form-control" value="{{ $siswa->NamaAyah ?? '' }}" type="text"
+                                    id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" required>
                             </div>
                         </div>
                     </div>
@@ -750,7 +762,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunLahirAyah ?? '' }}"
-                                    type="number" id="TahunLahirAyah" name="TahunLahirAyah" aria-describedby="info-TahunLahirAyah" required>
+                                    type="number" id="TahunLahirAyah" name="TahunLahirAyah"
+                                    aria-describedby="info-TahunLahirAyah" required>
                             </div>
                         </div>
                     </div>
@@ -762,8 +775,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatAyah ?? '' }}"
-                                    type="text" id="AlamatAyah" name="AlamatAyah" aria-describedby="info-AlamatAyah" required>
+                                <input class="form-control" value="{{ $siswa->AlamatAyah ?? '' }}" type="text"
+                                    id="AlamatAyah" name="AlamatAyah" aria-describedby="info-AlamatAyah" required>
                             </div>
                         </div>
                     </div>
@@ -774,7 +787,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneAyah ?? '' }}"
-                                    type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah" aria-describedby="info-NomorTelephoneAyah" required>
+                                    type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah"
+                                    aria-describedby="info-NomorTelephoneAyah" required>
                             </div>
                         </div>
                     </div>
@@ -809,7 +823,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PendidikanTerakhirAyah ?? '' }}"
-                                    type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah" aria-describedby="info-PendidikanTerakhirAyah" required>
+                                    type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah"
+                                    aria-describedby="info-PendidikanTerakhirAyah" required>
                             </div>
                         </div>
                     </div>
@@ -822,7 +837,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PekerjaanAyah ?? '' }}"
-                                    type="text" id="PekerjaanAyah" name="PekerjaanAyah" aria-describedby="info-PekerjaanAyah" required>
+                                    type="text" id="PekerjaanAyah" name="PekerjaanAyah"
+                                    aria-describedby="info-PekerjaanAyah" required>
                             </div>
                         </div>
                     </div>
@@ -833,7 +849,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->PenghasilanAyah ?? '' }}"
-                                    type="text" id="PenghasilanAyah" name="PenghasilanAyah" aria-describedby="info-PenghasilanAyah" required>
+                                    type="text" id="PenghasilanAyah" name="PenghasilanAyah"
+                                    aria-describedby="info-PenghasilanAyah" required>
                             </div>
                         </div>
                     </div>
@@ -845,8 +862,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaIbu ?? '' }}"
-                                    type="text" id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
+                                <input class="form-control" value="{{ $siswa->NamaIbu ?? '' }}" type="text"
+                                    id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
                             </div>
                         </div>
                     </div>
@@ -857,7 +874,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunLahirIbu ?? '' }}"
-                                    type="number" id="TahunLahirIbu" name="TahunLahirIbu" aria-describedby="info-TahunLahirIbu" required>
+                                    type="number" id="TahunLahirIbu" name="TahunLahirIbu"
+                                    aria-describedby="info-TahunLahirIbu" required>
                             </div>
                         </div>
                     </div>
@@ -869,8 +887,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatIbu ?? '' }}"
-                                    type="text" id="AlamatIbu" name="AlamatIbu" aria-describedby="info-AlamatIbu" required>
+                                <input class="form-control" value="{{ $siswa->AlamatIbu ?? '' }}" type="text"
+                                    id="AlamatIbu" name="AlamatIbu" aria-describedby="info-AlamatIbu" required>
                             </div>
                         </div>
                     </div>
@@ -881,7 +899,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneIbu ?? '' }}"
-                                    type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu" aria-describedby="info-NomorTelephoneIbu" required>
+                                    type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu"
+                                    aria-describedby="info-NomorTelephoneIbu" required>
                             </div>
                         </div>
                     </div>
@@ -914,8 +933,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? ''}}"
-                                    type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu" aria-describedby="info-PendidikanTerakhirIbu" required>
+                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? '' }}"
+                                    type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu"
+                                    aria-describedby="info-PendidikanTerakhirIbu" required>
                             </div>
                         </div>
                     </div>
@@ -927,8 +947,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Pekerjaan Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PekerjaanIbu ?? ''}}"
-                                    type="text" id="PekerjaanIbu" name="PekerjaanIbu" aria-describedby="info-PekerjaanIbu" required>
+                                <input class="form-control" value="{{ $siswa->PekerjaanIbu ?? '' }}" type="text"
+                                    id="PekerjaanIbu" name="PekerjaanIbu" aria-describedby="info-PekerjaanIbu"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -938,8 +959,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PenghasilanIbu ?? ''}}"
-                                    type="text" id="PenghasilanIbu" name="PenghasilanIbu" aria-describedby="info-PenghasilanIbu" required>
+                                <input class="form-control" value="{{ $siswa->PenghasilanIbu ?? '' }}"
+                                    type="text" id="PenghasilanIbu" name="PenghasilanIbu"
+                                    aria-describedby="info-PenghasilanIbu" required>
                             </div>
                         </div>
                     </div>
@@ -951,8 +973,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaWali ?? ''}}"
-                                    type="text" id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
+                                <input class="form-control" value="{{ $siswa->NamaWali ?? '' }}" type="text"
+                                    id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
                             </div>
                         </div>
                     </div>
@@ -962,8 +984,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Tahun Lahir Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TahunLahirWali ?? ''}}"
-                                    type="number" id="TahunLahirWali" name="TahunLahirWali" aria-describedby="info-TahunLahirWali" required>
+                                <input class="form-control" value="{{ $siswa->TahunLahirWali ?? '' }}"
+                                    type="number" id="TahunLahirWali" name="TahunLahirWali"
+                                    aria-describedby="info-TahunLahirWali" required>
                             </div>
                         </div>
                     </div>
@@ -975,8 +998,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatWali ?? ''}}"
-                                    type="text" id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
+                                <input class="form-control" value="{{ $siswa->AlamatWali ?? '' }}" type="text"
+                                    id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
                             </div>
                         </div>
                     </div>
@@ -986,8 +1009,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Telephone Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorTelephoneWali ?? ''}}"
-                                    type="phone" id="NomorTelephoneWali" name="NomorTelephoneWali" aria-describedby="info-NomorTelephoneWali" required>
+                                <input class="form-control" value="{{ $siswa->NomorTelephoneWali ?? '' }}"
+                                    type="phone" id="NomorTelephoneWali" name="NomorTelephoneWali"
+                                    aria-describedby="info-NomorTelephoneWali" required>
                             </div>
                         </div>
                     </div>
@@ -1020,8 +1044,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirWali ?? ''}}"
-                                    type="text" id="PendidikanTerakhirWali" name="PendidikanTerakhirWali" aria-describedby="info-PendidikanTerakhirWali" required>
+                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirWali ?? '' }}"
+                                    type="text" id="PendidikanTerakhirWali" name="PendidikanTerakhirWali"
+                                    aria-describedby="info-PendidikanTerakhirWali" required>
                             </div>
                         </div>
                     </div>
@@ -1033,8 +1058,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Pekerjaan Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PekerjaanWali ?? ''}}"
-                                    type="text" id="PekerjaanWali" name="PekerjaanWali" aria-describedby="info-PekerjaanWali" required>
+                                <input class="form-control" value="{{ $siswa->PekerjaanWali ?? '' }}"
+                                    type="text" id="PekerjaanWali" name="PekerjaanWali"
+                                    aria-describedby="info-PekerjaanWali" required>
                             </div>
                         </div>
                     </div>
@@ -1044,8 +1070,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->WaliPenghasilan ?? ''}}"
-                                    type="text" id="WaliPenghasilan" name="WaliPenghasilan" aria-describedby="info-WaliPenghasilan" required>
+                                <input class="form-control" value="{{ $siswa->WaliPenghasilan ?? '' }}"
+                                    type="text" id="WaliPenghasilan" name="WaliPenghasilan"
+                                    aria-describedby="info-WaliPenghasilan" required>
                             </div>
                         </div>
                     </div>
@@ -1058,7 +1085,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->StatusHubunganWali ?? '' }}"
-                                    type="text" id="StatusHubunganWali" name="StatusHubunganWali" aria-describedby="info-StatusHubunganWali">
+                                    type="text" id="StatusHubunganWali" name="StatusHubunganWali"
+                                    aria-describedby="info-StatusHubunganWali">
                             </div>
                         </div>
                     </div>
@@ -1069,7 +1097,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->MenerimaBeasiswaDari ?? '' }}"
-                                    type="text" id="MenerimaBeasiswaDari" name="MenerimaBeasiswaDari" aria-describedby="info-MenerimaBeasiswaDari">
+                                    type="text" id="MenerimaBeasiswaDari" name="MenerimaBeasiswaDari"
+                                    aria-describedby="info-MenerimaBeasiswaDari">
                             </div>
                         </div>
                     </div>
@@ -1082,7 +1111,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TahunMeninggalkanSekolah ?? '' }}"
-                                    type="number" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah" aria-describedby="info-TahunMeninggalkanSekolah">
+                                    type="number" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah"
+                                    aria-describedby="info-TahunMeninggalkanSekolah">
                             </div>
                         </div>
                     </div>
@@ -1092,8 +1122,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Alasan Sebab') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlasanSebab ?? '' }}"
-                                    type="text" id="AlasanSebab" name="AlasanSebab" aria-describedby="info-AlasanSebab">
+                                <input class="form-control" value="{{ $siswa->AlasanSebab ?? '' }}" type="text"
+                                    id="AlasanSebab" name="AlasanSebab" aria-describedby="info-AlasanSebab">
                             </div>
                         </div>
                     </div>
@@ -1106,7 +1136,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->TamatBelajarTahun ?? '' }}"
-                                    type="date" id="TamatBelajarTahun" name="TamatBelajarTahun" aria-describedby="info-TamatBelajarTahun">
+                                    type="date" id="TamatBelajarTahun" name="TamatBelajarTahun"
+                                    aria-describedby="info-TamatBelajarTahun">
                             </div>
                         </div>
                     </div>
@@ -1117,7 +1148,8 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $siswa->InformasiLain ?? '' }}"
-                                    type="text" id="InformasiLain" name="InformasiLain" aria-describedby="info-InformasiLain">
+                                    type="text" id="InformasiLain" name="InformasiLain"
+                                    aria-describedby="info-InformasiLain">
                             </div>
                         </div>
                     </div>
@@ -1131,7 +1163,7 @@
                             <div class="@error('status') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="status" id="status" required>
                                     <option value="" disabled selected>{{ __('Pilih Status') }}</option>
-                                    @foreach (['Aktif', 'Tidak Aktif','Lulus','Alumni'] as $status)
+                                    @foreach (['Aktif', 'Tidak Aktif', 'Lulus', 'Alumni'] as $status)
                                         <option value="{{ e($status) }}"
                                             {{ $siswa->status == $status ? 'selected' : '' }}>
                                             {{ e($status) }}
@@ -1144,27 +1176,28 @@
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
 
-            <div class="alert alert-secondary mx-4" role="alert">
-                <span class="text-white">
-                    <strong>Keterangan</strong> <br>
-                </span>
-                <span class="text-white">-
-                    <strong class="fa fa-lock"></strong>
-                    <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
-                    <strong>- Upload file type JPEG</strong> <br>
-                    <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
+                <div class="alert alert-secondary mx-4" role="alert">
+                    <span class="text-white">
+                        <strong>Keterangan</strong> <br>
+                    </span>
+                    <span class="text-white">-
+                        <strong class="fa fa-lock"></strong>
+                        <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
+                        <strong>- Upload file type JPEG</strong> <br>
+                        <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
 
-                </span>
+                    </span>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit"
+                        class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
+                </div>
+                </form>
             </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Save Changes' }}</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 </div>
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

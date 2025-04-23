@@ -683,6 +683,8 @@ html, body {
         </a>
     </li>
     @endif
+    @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
+
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples4" role="button"
             aria-expanded="false" aria-controls="laravelExamples4">
@@ -723,6 +725,7 @@ html, body {
             </ul> --}}
         </div>
     </li>
+    @endif
     @if (Gate::allows('isAdmin')|| Gate::allows('isKepalaSekolah'))
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#laravelExamples10" role="button"

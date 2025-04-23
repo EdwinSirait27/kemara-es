@@ -38,6 +38,13 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hakakses === 'Admin';
         });
     
+        Gate::define('isValidator', function (User $user) {
+            return $user->hakakses === 'Validator';
+        });
+        Gate::define('isBerita', function (User $user) {
+            return $user->hakakses === 'Berita';
+        });
+    
         Gate::define('isGuru', function (User $user) {
             return $user->hakakses === 'Guru';
         });
@@ -60,7 +67,7 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($user->hakakses, $allowedRoles);
         });
         Gate::define('isKGSN', function (User $user) {
-            $allowedRoles = ['Guru', 'Kurikulum','Siswa','NonSiswa'];
+            $allowedRoles = ['Guru', 'Kurikulum','Siswa'];
             return in_array($user->hakakses, $allowedRoles);
         });
         Gate::define('isvoting', function (User $user) {

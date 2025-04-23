@@ -106,7 +106,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nama Lengkap Siswa</label>
+                                        <label><i class="fas fa-user"></i> Nama Lengkap Siswa Sesuai Ijasah</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaLengkap"
                                             id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
                                             maxlength="100" required
@@ -261,6 +261,7 @@
                                         @error('username')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror
+                                        <p class="text-muted text-xs mt-2">Contoh: edwin12345
                                     </div>
 
                                     <!-- Email -->
@@ -270,7 +271,7 @@
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password" placeholder="Masukkan Password"
                                                 id="password" name="password" maxlength="12"
-                                                oninput="this.value = this.value.replace(/<script.*?>.*?<\ /script>/gi, '')" required>
+                                                oninput="this.value = this.value.replace(/<script.*?>.*?<\/script>/gi, '').replace(/\s+/g, '')" required>
                                                         <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
                                                             onclick="togglePasswordVisibility('password')">
                                                             <i id="eye-icon-password" class="fas fa-eye"></i>
@@ -278,6 +279,7 @@
                                                         @error('password')
                                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                                         @enderror
+
                                                         <script>
                                                             function togglePasswordVisibility(inputId) {
                                                                 const input = document.getElementById(inputId);
@@ -293,7 +295,9 @@
                                                                 }
                                                             }
                                                         </script>
-                                        </div>
+
+</div>
+<p class="text-muted text-xs mt-2">Buat Password yang susah ya adik-adik Contoh: edwin@@132
                                     </div>
                                     
                                 </div>
@@ -330,6 +334,8 @@
                                                                     }
                                                                 </script>
                                         </div>
+<p class="text-muted text-xs mt-2">Masukkan password yang tadi untuk konfirmasi
+
                                     </div>
                                 </div>
 

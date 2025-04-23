@@ -6,6 +6,28 @@
         .text-center {
             text-align: center;
         }
+
+        /* Responsif untuk Tablet */
+        @media screen and (max-width: 768px) {
+            .modal-content {
+                width: 80%;
+                /* Lebih besar di tablet */
+            }
+        }
+
+        /* Responsif untuk HP */
+        @media screen and (max-width: 480px) {
+            .modal-content {
+                width: 90%;
+                /* Hampir full screen di HP */
+                padding: 15px;
+            }
+
+            .close {
+                font-size: 20px;
+                /* Ukuran tombol close lebih kecil */
+            }
+        }
     </style>
 
     <div class="row">
@@ -56,10 +78,10 @@
                             </thead>
 
                         </table>
-                        <button type="button" onclick="window.location='{{ route('Dataguruall.index') }}'" 
-                        class="btn btn-primary btn-sm">
-                        Lihat Detail
-                    </button>
+                        <button type="button" onclick="window.location='{{ route('Dataguruall.index') }}'"
+                            class="btn btn-primary btn-sm">
+                            Lihat Detail
+                        </button>
 
                     </div>
                 </div>
@@ -87,23 +109,21 @@
                             return meta.row + 1;
                         },
                     },
-                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
                     {
                         data: 'foto',
                         name: 'foto',
                         className: 'text-center',
                         render: function(data, type, full, meta) {
-                            if (data) {
-                                return '<img src="' + '{{ asset('storage/fotoguru') }}/' + data +
-                                    '" width="100" />';
-                            } else {
-                                return '<span>Foto tidak tersedia</span>';
-                                // return '<img src="' + '{{ asset('storage/fotoguru/we.jpg') }}' + '" width="100" />';
-                            }
-                        },
-
-
+                            let imageUrl = data ? '{{ asset('storage/fotoguru') }}/' + data :
+                                '{{ asset('storage/fotoguru/we.jpg') }}';
+                            return '<a href="#" class="open-image-modal" data-src="' + imageUrl +
+                                '">' +
+                                '<img src="' + imageUrl +
+                                '" width="100" style="cursor:pointer;" />' +
+                                '</a>';
+                        }
                     },
+
                     {
                         data: 'Nama',
                         name: 'Nama',
@@ -149,11 +169,9 @@
                 url: `/dataguru/${dataguruId}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    // Pastikan `response` memiliki data guru yang dibutuhkan
                     if (response.guru) {
                         let dataguru = response.guru;
 
-                        // Set nilai form di modal
                         $('#editUserModal').find('input[name="foto"]').val(dataguru.foto);
                         $('#editUserModal').find('input[name="Nama"]').val(dataguru.Nama);
                         $('#editUserModal').find('input[name="TempatLahir"]').val(dataguru.TempatLahir);
@@ -204,6 +222,18 @@
                     console.error('Error:', err);
                     alert('Terjadi kesalahan saat mengambil data guru.');
                 }
+            });
+        });
+
+        $(document).on('click', '.open-image-modal', function(e) {
+            e.preventDefault();
+            let imgSrc = $(this).data('src');
+            Swal.fire({
+                imageUrl: imgSrc,
+                imageAlt: 'Alumni Photo',
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: 'auto'
             });
         });
     </script>

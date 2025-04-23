@@ -85,11 +85,8 @@
                                     </label>
                                     <div>
                                         <input type="text" class="form-control" id="header" name="header"
-                                            value="{{ old('header', $berita->header) }}" required maxlength="255">
+                                            value="{{ old('header', $berita->header) }}" maxlength="255" required>
                                         <p class="text-muted text-xs mt-2">Contoh : masukkan header</p>
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -101,13 +98,13 @@
                                     </label>
                                     <div>
                                         <textarea 
-                                            class="form-control"
-                                            id="body" 
-                                            name="body" 
-                                            aria-describedby="info-body"
-                                              value="{{ old('body', $berita->body) }}"
-                                            required
-                                            style="resize: both; overflow: auto;"></textarea>
+                                        class="form-control"
+                                        id="body" 
+                                        name="body" 
+                                        aria-describedby="info-body"
+                                        required
+                                        style="resize: both; overflow: auto;">{{ old('body', $berita->body) }}</textarea>
+                                        <p class="text-muted text-xs mt-2">Contoh : masukkan body berita</p>
                                         @error('body')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                         @enderror

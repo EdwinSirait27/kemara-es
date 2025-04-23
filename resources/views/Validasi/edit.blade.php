@@ -149,24 +149,24 @@
                                 <label for="foto" class="form-control-label">
                                     <i class="fas fa-lock"></i> {{ __('Foto Bukti') }}
                                 </label>
-                                
+                        
                                 <div>
                                     @if ($pembayaran->foto)
-                                    <div class="mt-2">
-                                        {{-- <label>Foto Saat Ini:</label> --}}
-                                        <img src="{{ asset('storage/bukti_pembayaran/' . $pembayaran->foto) }}" alt="Foto Bukti"  style="max-width: 500px;">
-                    
-                                    </div>
-                           
-                            @error('foto')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                                        <div class="mt-2">
+                                            <img id="buktiFoto" src="{{ asset('storage/bukti_pembayaran/' . $pembayaran->foto) }}" 
+                                                 alt="Foto Bukti" style="max-width: 500px; cursor: pointer;">
+                                        </div>
+                                    @endif
+                        
+                                    @error('foto')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                 </div>
                 
-            @endif
+            
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -244,6 +244,24 @@
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('buktiFoto').addEventListener('click', function () {
+            Swal.fire({
+                title: 'Foto Bukti Pembayaran',
+                imageUrl: '{{ asset('storage/bukti_pembayaran/' . $pembayaran->foto) }}',
+                imageAlt: 'Foto Bukti',
+                showCloseButton: true,
+                showConfirmButton: false,
+                width: 'auto',
+                background: '#fff',
+                padding: '1em',
+                customClass: {
+                    popup: 'rounded'
+                }
+            });
+        });
+    </script>
+    
     <script>
         @if (session('success'))
             Swal.fire({

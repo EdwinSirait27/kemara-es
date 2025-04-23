@@ -15,17 +15,21 @@
     </div>
 </nav> --}}
 <nav class="navbar">
+
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{ route('Beranda.index') }}">BERANDA</a></li>
-            @if ($informasippdb)
+            {{-- @if ($informasippdb)
                 <li>
                     <a href="{{ route('Informasi.show', ['slug' => $informasippdb->slug]) }}">
                         INFORMASI PPDB
                      </a>
                 </li>
                 @else
-            @endif
+            @endif --}}
+           
+        
+
           
 
             <li>

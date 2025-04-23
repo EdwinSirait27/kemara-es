@@ -97,15 +97,9 @@ use Illuminate\Support\Facades\Route;
 // 	Route::post('/user-profile', [InfoUserController::class, 'store']);
 // });
 Route::group(['middleware' => 'guest'], function () {
-    // Route::get('/register', [RegisterController::class, 'create']);
-    // Route::post('/register', [RegisterController::class, 'store']);
-    // // Route::get('/login', [SessionsController::class, 'create']);
+ // // Route::get('/login', [SessionsController::class, 'create']);
     Route::post('/session', [SessionsController::class, 'store']);
-    // Route::get('/login/forgot-password', [ResetController::class, 'create']);
-    // Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-    // Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-    // Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
+   
 });
 // routes semua roles
 Route::middleware(['auth', 'can:isSemua', 'prevent.xss'])->group(function () {
@@ -225,8 +219,7 @@ Route::middleware(['auth', 'can:isAdminKepalaSekolah', 'prevent.xss'])->group(fu
     Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
     Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
     Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
-    // Route::post('/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
-// Route::post('/siswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('siswa.updateStatus');
+  
     Route::post('/datasiswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
 
     //siswa lulus
@@ -527,7 +520,6 @@ Route::middleware(['auth', 'can:isNonSiswa', 'prevent.xss'])->group(function () 
     Route::get('/pengumumannonsiswa/data', [DashboardControllerNonSiswa::class, 'getPengumuman'])->name('pengumumannonsiswa.data');
     Route::post('/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'store'])->name('dashboardNonSiswa.store');
     Route::get('/dashboardNonSiswa/dashboardNonSiswa', [DashboardControllerNonSiswa::class, 'getPembayaran'])->name('pembayaran.pembayaran');
-    // Route::get('/dashboard-nonsiswa/{id_hashed}/edit', [DashboardControllerNonSiswa::class, 'edit'])->name('dashboardNonSiswa.edit');
     Route::get('/dashboardNonSiswa/edit/{hashedId}', [DashboardControllerNonSiswa::class, 'edit'])->name('dashboardNonSiswa.edit');
 
     Route::put('/dashboardNonSiswa/{id_hashed}', [DashboardControllerNonSiswa::class, 'update'])->name('dashboardNonSiswa.update');
@@ -561,7 +553,7 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     });
 
     // Route tanpa throttle
-    Route::get('/Stella', [StellaController::class, 'index'])->name('Stella.index');
+    // Route::get('/Stella', [StellaController::class, 'index'])->name('Stella.index');
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
     Route::get('/navbar', [ProfileSekolahController::class, 'Beranda2'])->name('navbar');
