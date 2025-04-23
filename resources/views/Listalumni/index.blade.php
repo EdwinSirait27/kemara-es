@@ -798,83 +798,6 @@
 
 
 <script>
-    // $(document).ready(function() {
-    //     let table = $('#users-table').DataTable({
-    //         processing: true,
-    //         responsive: true,
-    //         serverSide: true,
-    //         ajax: {
-    //             url: '{{ route('alumni.alumni') }}',
-    //             data: function(d) {
-    //                 d.TahunMasuk = $('#filter-tahun').val();
-    //             }
-    //         },
-    //         lengthMenu: [
-    //             [10, 25, 50, 100, -1],
-    //             [10, 25, 50, 100, "All"]
-    //         ],
-    //         columns: [{
-    //                 data: 'id',
-    //                 name: 'id',
-    //                 className: 'text-center',
-    //                 render: function(data, type, row, meta) {
-    //                     return meta.row + 1;
-    //                 },
-    //             },
-    //             {
-    //                 data: 'foto',
-    //                 name: 'foto',
-    //                 className: 'text-center',
-    //                 render: function(data, type, full, meta) {
-    //                     let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` :
-    //                         `{{ asset('storage/alumni/we.jpg') }}`;
-    //                     return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
-    //                             <img src="${imageUrl}" width="100" style="cursor:pointer;" />
-    //                         </a>`;
-    //                 }
-    //             },
-    //             {
-    //                 data: 'NamaLengkap',
-    //                 name: 'NamaLengkap',
-    //                 className: 'text-center'
-    //             },
-    //             {
-    //                 data: 'TahunMasuk',
-    //                 name: 'TahunMasuk',
-    //                 className: 'text-center'
-    //             },
-    //             {
-    //                 data: 'TahunLulus',
-    //                 name: 'TahunLulus',
-    //                 className: 'text-center'
-    //             },
-    //             {
-    //                 data: 'Testimoni',
-    //                 name: 'Testimoni',
-    //                 className: 'text-center',
-                 
-    //             }
-
-
-    //         ]
-    //     });
-
-    //     $('#filter-tahun').change(function() {
-    //         table.ajax.reload();
-    //     });
-    //     $(document).on('click', '.open-image-modal', function(e) {
-    //         e.preventDefault();
-    //         let imgSrc = $(this).data('src');
-    //         Swal.fire({
-    //             imageUrl: imgSrc,
-    //             imageAlt: 'Alumni Photo',
-    //             showConfirmButton: false,
-    //             showCloseButton: true, 
-    //             width: 'auto'
-    //         });
-    //     });
-
-    // });
     $(document).ready(function() {
     let table = $('#users-table').DataTable({
         processing: true,
@@ -929,15 +852,11 @@
                 name: 'Testimoni',
                 className: 'text-center',
                 render: function(data, type, row) {
-                    // Pastikan data tidak null atau undefined
                     if (!data) return '';
                     
-                    // Mempersingkat testimoni menjadi 50 karakter
                     let shortText = data.length > 50 ? data.substring(0, 50) + '...' : data;
                     
-                    // Jika testimoni tidak kosong dan lebih panjang dari 50 karakter
                     if (data.length > 50) {
-                        // Menggunakan fungsi escape untuk menghindari masalah dengan karakter khusus
                         let escapedTestimoni = data.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
                         return '<span>' + shortText + '</span> ' +
                                '<a href="#" class="read-more-testimoni" data-testimoni="' + escapedTestimoni + '">' +
@@ -971,7 +890,7 @@
         e.preventDefault();
         let testimoni = $(this).data('testimoni');
         Swal.fire({
-            title: 'Testimoni Alumni' + NamaLengkap,
+            title: 'Testimoni Alumni',
             html: '<div style="text-align: left;">' + testimoni + '</div>',
             showConfirmButton: false,
             showCloseButton: true,

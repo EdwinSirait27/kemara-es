@@ -72,16 +72,6 @@ class BeritaController extends Controller
     $berita = Berita::findBySlug($slug);
     $berita->increment('views');
     $informasippdb = Informasippdb::where('status', 'Aktif')->first();
-  
-    // $informasippdb = Informasippdb::findBySlug($slug);
-        
-    // if (!$informasippdb) {
-    //         abort(404, 'informasippdb not found.');
-    // }
-    // $ppdb = Tombol::where('url', 'Ppdb')
-    // ->where('start_date', '<=', now())
-    // ->where('end_date', '>=', now())
-    // ->first();
     return view('Berita.show', compact('berita','informasippdb'));
 }
         public function update(Request $request, $hashedId)
