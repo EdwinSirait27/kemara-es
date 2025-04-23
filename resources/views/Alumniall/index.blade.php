@@ -132,19 +132,19 @@
                     },
                 },
                 {
-                    data: 'foto',
-                    name: 'foto',
-                    className: 'text-center',
-                    render: function(data, type, full, meta) {
-                        if (type === 'export') {
-                            return ''; // Exclude images from exports
+                        data: 'foto',
+                        name: 'foto',
+                        className: 'text-center',
+                        render: function(data, type, full, meta) {
+                            let imageUrl = data ? '{{ asset('storage/alumni') }}/' + data :
+                                '{{ asset('storage/alumni/we.jpg') }}';
+                            return '<a href="#" class="open-image-modal" data-src="' + imageUrl +
+                                '">' +
+                                '<img src="' + imageUrl +
+                                '" width="100" style="cursor:pointer;" />' +
+                                '</a>';
                         }
-                        let imageUrl = data ? `{{ asset('storage/alumni') }}/${data}` : `{{ asset('storage/alumni/we.jpg') }}`;
-                        return `<a href="#" class="open-image-modal" data-src="${imageUrl}">
-                                <img src="${imageUrl}" width="100" style="cursor:pointer;" />
-                            </a>`;
-                    }
-                },
+                    },
                 { data: 'NamaLengkap', name: 'NamaLengkap', className: 'text-center' },
                 { data: 'Alamat', name: 'Alamat', className: 'text-center' },
                 { data: 'Email', name: 'Email', className: 'text-center' },
