@@ -714,6 +714,7 @@
             /* Ukuran tombol close lebih kecil */
         }
     }
+
     #filter-tahun {
         width: 100%;
         max-width: 300px;
@@ -755,7 +756,6 @@
                 @endforeach
             </select>
         </div>
-      
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0"id="users-table">
                 <thead>
@@ -776,14 +776,9 @@
 
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                             Testimoni</th>
-
-
                     </tr>
                 </thead>
             </table>
-
-
-
         </div>
     </div>
 </div>
@@ -799,105 +794,108 @@
 
 <script>
     $(document).ready(function() {
-    let table = $('#users-table').DataTable({
-        processing: true,
-        responsive: true,
-        serverSide: true,
-        ajax: {
-            url: '{{ route("alumni.alumni") }}',
-            data: function(d) {
-                d.TahunMasuk = $('#filter-tahun').val();
-            }
-        },
-        lengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ],
-        columns: [{
-                data: 'id',
-                name: 'id',
-                className: 'text-center',
-                render: function(data, type, row, meta) {
-                    return meta.row + 1;
+        let table = $('#users-table').DataTable({
+            processing: true,
+            responsive: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route('alumni.alumni') }}',
+                data: function(d) {
+                    d.TahunMasuk = $('#filter-tahun').val();
                 }
             },
-            {
-                data: 'foto',
-                name: 'foto',
-                className: 'text-center',
-                render: function(data, type, full, meta) {
-                    let imageUrl = data ? '{{ asset("storage/alumni") }}/' + data : '{{ asset("storage/alumni/we.jpg") }}';
-                    return '<a href="#" class="open-image-modal" data-src="' + imageUrl + '">' +
-                           '<img src="' + imageUrl + '" width="100" style="cursor:pointer;" />' +
-                           '</a>';
-                }
-            },
-            {
-                data: 'NamaLengkap',
-                name: 'NamaLengkap',
-                className: 'text-center'
-            },
-            {
-                data: 'TahunMasuk',
-                name: 'TahunMasuk',
-                className: 'text-center'
-            },
-            {
-                data: 'TahunLulus',
-                name: 'TahunLulus',
-                className: 'text-center'
-            },
-            {
-                data: 'Testimoni',
-                name: 'Testimoni',
-                className: 'text-center',
-                render: function(data, type, row) {
-                    if (!data) return '';
-                    
-                    let shortText = data.length > 50 ? data.substring(0, 50) + '...' : data;
-                    
-                    if (data.length > 50) {
-                        let escapedTestimoni = data.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                        return '<span>' + shortText + '</span> ' +
-                               '<a href="#" class="read-more-testimoni" data-testimoni="' + escapedTestimoni + '">' +
-                               'Baca selengkapnya</a>';
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            columns: [{
+                    data: 'id',
+                    name: 'id',
+                    className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        return meta.row + 1;
                     }
-                    return shortText;
+                },
+                {
+                    data: 'foto',
+                    name: 'foto',
+                    className: 'text-center',
+                    render: function(data, type, full, meta) {
+                        let imageUrl = data ? '{{ asset('storage/alumni') }}/' + data :
+                            '{{ asset('storage/alumni/we.jpg') }}';
+                        return '<a href="#" class="open-image-modal" data-src="' + imageUrl +
+                            '">' +
+                            '<img src="' + imageUrl +
+                            '" width="100" style="cursor:pointer;" />' +
+                            '</a>';
+                    }
+                },
+                {
+                    data: 'NamaLengkap',
+                    name: 'NamaLengkap',
+                    className: 'text-center'
+                },
+                {
+                    data: 'TahunMasuk',
+                    name: 'TahunMasuk',
+                    className: 'text-center'
+                },
+                {
+                    data: 'TahunLulus',
+                    name: 'TahunLulus',
+                    className: 'text-center'
+                },
+                {
+                    data: 'Testimoni',
+                    name: 'Testimoni',
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (!data) return '';
+
+                        let shortText = data.length > 50 ? data.substring(0, 50) + '...' : data;
+
+                        if (data.length > 50) {
+                            let escapedTestimoni = data.replace(/"/g, '&quot;').replace(/'/g,
+                                '&#39;');
+                            return '<span>' + shortText + '</span> ' +
+                                '<a href="#" class="read-more-testimoni" data-testimoni="' +
+                                escapedTestimoni + '">' +
+                                'Baca selengkapnya</a>';
+                        }
+                        return shortText;
+                    }
                 }
-            }
-        ]
-    });
+            ]
+        });
 
-    $('#filter-tahun').change(function() {
-        table.ajax.reload();
-    });
-
-    // Handler untuk modal gambar
-    $(document).on('click', '.open-image-modal', function(e) {
-        e.preventDefault();
-        let imgSrc = $(this).data('src');
-        Swal.fire({
-            imageUrl: imgSrc,
-            imageAlt: 'Alumni Photo',
-            showConfirmButton: false,
-            showCloseButton: true,
-            width: 'auto'
+        $('#filter-tahun').change(function() {
+            table.ajax.reload();
+        });
+        // Handler untuk modal gambar
+        $(document).on('click', '.open-image-modal', function(e) {
+            e.preventDefault();
+            let imgSrc = $(this).data('src');
+            Swal.fire({
+                imageUrl: imgSrc,
+                imageAlt: 'Alumni Photo',
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: 'auto'
+            });
+        });
+        // Handler untuk modal testimoni
+        $(document).on('click', '.read-more-testimoni', function(e) {
+            e.preventDefault();
+            let testimoni = $(this).data('testimoni');
+            Swal.fire({
+                title: 'Testimoni Alumni',
+                html: '<div style="text-align: left;">' + testimoni + '</div>',
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: '600px'
+            });
         });
     });
-
-    // Handler untuk modal testimoni
-    $(document).on('click', '.read-more-testimoni', function(e) {
-        e.preventDefault();
-        let testimoni = $(this).data('testimoni');
-        Swal.fire({
-            title: 'Testimoni Alumni',
-            html: '<div style="text-align: left;">' + testimoni + '</div>',
-            showConfirmButton: false,
-            showCloseButton: true,
-            width: '600px'
-        });
-    });
-});
 </script>
 
 @endsection
