@@ -9,7 +9,7 @@
             </div>
             <div class="col-lg-2">
                 <strong>
-                    <a href="https://kesuma-go.my.id/about" target="_blank" style="text-decoration: none; color: inherit;">
+                    <a href="https://www.instagram.com/edwnsirait" target="_blank" style="text-decoration: none; color: inherit;">
                         ©Kemara-ES {{ date('Y') }}
                     </a>
                 </strong>
