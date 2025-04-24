@@ -218,7 +218,7 @@ Route::middleware(['auth', 'can:isAdminKepalaSekolah', 'prevent.xss'])->group(fu
     Route::get('/Datasiswa/edit/{hashedId}', [DatasiswaController::class, 'edit'])->name('Datasiswa.edit');
     Route::put('/Datasiswa/{hashedId}', [DatasiswaController::class, 'update'])->name('Datasiswa.update');
     Route::get('/Datasiswaall', [DatasiswaController::class, 'indexSiswaall'])->name('Datasiswaall.index');
-    Route::post('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
+    Route::get('/datasiswaall/datadatasiswaall', [DatasiswaController::class, 'getDatasiswaall'])->name('datasiswaall.datadatasiswaall');
   
     Route::post('/datasiswa/update-status', [DatasiswaController::class, 'updateStatus'])->name('Datasiswa.updateStatus');
 
