@@ -142,8 +142,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Lengkap') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaLengkap ?? '' }}" type="text"
-                                    id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" required>
+                                <input class="form-control" value="{{ old('NamaLengkap', $siswa->NamaLengkap ?? '') }}" type="text"
+                                    id="NamaLengkap" name="NamaLengkap" aria-describedby="info-NamaLengkap" placeholder="NamaLengkap" required>
+                                @error('NamaLengkap')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -153,12 +156,16 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Induk') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorInduk ?? '' }}" type="text"
-                                    id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" required>
+                                <input class="form-control" value="{{ old('NomorInduk', $siswa->NomorInduk ?? '') }}" type="text"
+                                    id="NomorInduk" name="NomorInduk" aria-describedby="info-NomorInduk" placeholder="NomorInduk" required>
+                                @error('NomorInduk')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -166,9 +173,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Panggilan') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaPanggilan ?? '' }}" type="text"
-                                    id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan"
-                                    required>
+                                <input class="form-control" value="{{ old('NamaPanggilan', $siswa->NamaPanggilan ?? '') }}" type="text"
+                                    id="NamaPanggilan" name="NamaPanggilan" aria-describedby="info-NamaPanggilan" required placeholder="NamaPanggilan">
+                                @error('NamaPanggilan')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -176,13 +185,13 @@
                         <div class="form-group">
                             <label for="JenisKelamin" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Jenis Kelamin') }}</label>
-
                             <div class="@error('JenisKelamin') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
-                                    <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
+                                    <option value="" disabled {{ old('JenisKelamin', $siswa->JenisKelamin ?? '') == '' ? 'selected' : '' }}>
+                                        {{ __('Pilih Jenis Kelamin') }}
+                                    </option>
                                     @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
-                                        <option value="{{ e($jenis) }}"
-                                            {{ $siswa->JenisKelamin == $jenis ? 'selected' : '' }}>
+                                        <option value="{{ e($jenis) }}" {{ old('JenisKelamin', $siswa->JenisKelamin ?? '') == $jenis ? 'selected' : '' }}>
                                             {{ e($jenis) }}
                                         </option>
                                     @endforeach
@@ -194,6 +203,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -201,8 +211,11 @@
                                 <i class="fas fa-lock"></i> {{ __('NISN') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NISN ?? '' }}" type="text"
-                                    id="NISN" name="NISN" aria-describedby="info-NISN" required>
+                                <input class="form-control" value="{{ old('NISN', $siswa->NISN ?? '') }}" type="text"
+                                    id="NISN" name="NISN" aria-describedby="info-NISN" placeholder="NISN" required>
+                                @error('NISN')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -212,12 +225,16 @@
                                 <i class="fas fa-lock"></i> {{ __('Tempat Lahir') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TempatLahir ?? '' }}" type="text"
-                                    id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" required>
+                                <input class="form-control" value="{{ old('TempatLahir', $siswa->TempatLahir ?? '') }}" type="text"
+                                    id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir" placeholder="Tempat Lahir" required>
+                                @error('TempatLahir')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -225,9 +242,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Tanggal Lahir') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TanggalLahir ?? '' }}" type="date"
-                                    id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir"
-                                    required>
+                                <input class="form-control" value="{{ old('TanggalLahir', $siswa->TanggalLahir ?? '') }}" type="date"
+                                    id="TanggalLahir" name="TanggalLahir" aria-describedby="info-TanggalLahir" placeholder="Tanggal Lahir" required>
+                                @error('TanggalLahir')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -235,13 +254,13 @@
                         <div class="form-group">
                             <label for="Agama" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Agama') }}</label>
-
                             <div class="@error('Agama') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="Agama" id="Agama" required>
-                                    <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
+                                    <option value="" disabled {{ old('Agama', $siswa->Agama ?? '') == '' ? 'selected' : '' }}>
+                                        {{ __('Pilih Agama') }}
+                                    </option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
-                                        <option value="{{ e($agama) }}"
-                                            {{ $siswa->Agama == $agama ? 'selected' : '' }}>
+                                        <option value="{{ e($agama) }}" {{ old('Agama', $siswa->Agama ?? '') == $agama ? 'selected' : '' }}>
                                             {{ e($agama) }}
                                         </option>
                                     @endforeach
@@ -253,6 +272,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -260,8 +280,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->Alamat ?? '' }}" type="text"
-                                    id="Alamat" name="Alamat" aria-describedby="info-Alamat" required>
+                                <input class="form-control" value="{{ old('Alamat', $siswa->Alamat ?? '') }}" type="text"
+                                    id="Alamat" name="Alamat" aria-describedby="info-Alamat" placeholder="Alamat" required>
+                                @error('Alamat')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -271,22 +294,26 @@
                                 <i class="fas fa-lock"></i> {{ __('RT') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->RT ?? '' }}" type="text"
-                                    id="RT" name="RT" aria-describedby="info-RT" required>
+                                <input class="form-control" value="{{ old('RT', $siswa->RT ?? '') }}" type="text"
+                                    id="RT" name="RT" aria-describedby="info-RT" placeholder="RT" required>
+                                @error('RT')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="RW" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('RW') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->RW ?? '' }}" type="text"
-                                    id="RW" name="RW" aria-describedby="info-RW" required>
-                            </div>
+                            <input class="form-control" type="text" id="RW" name="RW" value="{{ $siswa->RW ?? '' }}" placeholder="RW" required>
+                            @error('RW')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -294,23 +321,24 @@
                             <label for="Kelurahan" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Kelurahan') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Kelurahan ?? '' }}" type="text"
-                                    id="Kelurahan" name="Kelurahan" aria-describedby="info-Kelurahan" required>
-                            </div>
+                            <input class="form-control" type="text" id="Kelurahan" name="Kelurahan" value="{{ $siswa->Kelurahan ?? '' }}" placeholder="Kelurahan" required>
+                            @error('Kelurahan')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Kecamatan" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Kecamatan') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Kecamatan ?? '' }}" type="text"
-                                    id="Kecamatan" name="Kecamatan" aria-describedby="info-Kecamatan" required>
-                            </div>
+                            <input class="form-control" type="text" id="Kecamatan" name="Kecamatan" value="{{ $siswa->Kecamatan ?? '' }}" placeholder="Kecamatan" required>
+                            @error('Kecamatan')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -318,24 +346,24 @@
                             <label for="KabKota" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Kab/Kota') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->KabKota ?? '' }}" type="text"
-                                    id="KabKota" name="KabKota" aria-describedby="info-KabKota" required>
-                            </div>
+                            <input class="form-control" type="text" id="KabKota" name="KabKota" value="{{ $siswa->KabKota ?? '' }}" placeholder="Kabupaten Kota" required>
+                            @error('KabKota')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
-                {{-- disini --}}
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Provinsi" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Provinsi') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Provinsi ?? '' }}" type="text"
-                                    id="Provinsi" name="Provinsi" aria-describedby="info-Provinsi" required>
-                            </div>
+                            <input class="form-control" type="text" id="Provinsi" name="Provinsi" value="{{ $siswa->Provinsi ?? '' }}" placeholder="Provinsi" required>
+                            @error('Provinsi')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -343,23 +371,24 @@
                             <label for="KodePos" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Kode Pos') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->KodePos ?? '' }}" type="text"
-                                    id="KodePos" name="KodePos" aria-describedby="info-KodePos" required>
-                            </div>
+                            <input class="form-control" type="text" id="KodePos" name="KodePos" value="{{ $siswa->KodePos ?? '' }}" placeholder="Kode Pos" required>
+                            @error('KodePos')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Email" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Email') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Email ?? '' }}" type="email"
-                                    id="Email" name="Email" aria-describedby="info-Email" required>
-                            </div>
+                            <input class="form-control" type="email" id="Email" name="Email" value="{{ $siswa->Email ?? '' }}" placeholder="Email" required>
+                            @error('Email')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -367,369 +396,399 @@
                             <label for="NomorTelephone" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Nomor Telephone') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->NomorTelephone ?? '' }}"
-                                    type="phone" id="NomorTelephone" name="NomorTelephone"
-                                    aria-describedby="info-NomorTelephone" required>
-                            </div>
+                            <input class="form-control" type="tel" id="NomorTelephone" name="NomorTelephone" value="{{ $siswa->NomorTelephone ?? '' }}" placeholder="Nomor Telephone" required>
+                            @error('NomorTelephone')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Kewarganegaraan" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Kewarganegaraan') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Kewarganegaraan ?? '' }}"
-                                    type="text" id="Kewarganegaraan" name="Kewarganegaraan"
-                                    aria-describedby="info-Kewarganegaraan" required>
-                            </div>
+                            <input class="form-control" value="{{ old('Kewarganegaraan', $siswa->Kewarganegaraan ?? '') }}"
+                                type="text" id="Kewarganegaraan" name="Kewarganegaraan" placeholder="Kewarganegaraan" required>
+                            @error('Kewarganegaraan')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NIK" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('NIK') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->NIK ?? '' }}" type="text"
-                                    id="NIK" name="NIK" aria-describedby="info-NIK" required>
-                            </div>
+                            <input class="form-control" value="{{ old('NIK', $siswa->NIK ?? '') }}" type="text"
+                                id="NIK" name="NIK" placeholder="NIK" required>
+                            @error('NIK')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="GolDarah" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Gol Darah') }}</label>
-
-                            <div class="@error('GolDarah') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="GolDarah" id="GolDarah" required>
-                                    <option value="" disabled selected>{{ __('Pilih') }}</option>
-                                    @foreach (['A+', 'A-', 'A', 'B+', 'B-', 'B', 'AB+', 'AB-', 'AB', 'O+', 'O-', 'O'] as $GolDarah)
-                                        <option value="{{ e($GolDarah) }}"
-                                            {{ $siswa->GolDarah == $GolDarah ? 'selected' : '' }}>
-                                            {{ e($GolDarah) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('GolDarah')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-
-                            </div>
+                            <label for="GolDarah" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Gol Darah') }}
+                            </label>
+                            <select class="form-control @error('GolDarah') is-invalid @enderror" name="GolDarah" id="GolDarah" required>
+                                <option value="" disabled>{{ __('Pilih') }}</option>
+                                @foreach (['A+', 'A-', 'A', 'B+', 'B-', 'B', 'AB+', 'AB-', 'AB', 'O+', 'O-', 'O'] as $Gol)
+                                    <option value="{{ $Gol }}" {{ old('GolDarah', $siswa->GolDarah ?? '') == $Gol ? 'selected' : '' }}>
+                                        {{ $Gol }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('GolDarah')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TinggalDengan" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Tinggal Dengan') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->TinggalDengan ?? '' }}" type="text"
-                                    id="TinggalDengan" name="TinggalDengan" aria-describedby="info-TinggalDengan"
-                                    required>
-                            </div>
+                            <input class="form-control" value="{{ old('TinggalDengan', $siswa->TinggalDengan ?? '') }}" type="text"
+                                id="TinggalDengan" name="TinggalDengan" placeholder="Tinggal Dengan" required>
+                            @error('TinggalDengan')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="StatusSiswa" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Status Siswa') }}</label>
-
-                            <div class="@error('StatusSiswa') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="StatusSiswa" id="StatusSiswa" required>
-                                    <option value="" disabled selected>{{ __('Pilih Status Siswa') }}</option>
-                                    @foreach (['Lengkap', 'Yatim', 'Piatu', 'Yatim Piatu'] as $StatusSiswa)
-                                        <option value="{{ e($StatusSiswa) }}"
-                                            {{ $siswa->StatusSiswa == $StatusSiswa ? 'selected' : '' }}>
-                                            {{ e($StatusSiswa) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('StatusSiswa')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-
-                            </div>
+                            <label for="StatusSiswa" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Status Siswa') }}
+                            </label>
+                            <select class="form-control @error('StatusSiswa') is-invalid @enderror" name="StatusSiswa" id="StatusSiswa" required>
+                                <option value="" disabled>{{ __('Pilih Status Siswa') }}</option>
+                                @foreach (['Lengkap', 'Yatim', 'Piatu', 'Yatim Piatu'] as $status)
+                                    <option value="{{ $status }}" {{ old('StatusSiswa', $siswa->StatusSiswa ?? '') == $status ? 'selected' : '' }}>
+                                        {{ $status }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('StatusSiswa')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="AnakKe" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Anak Ke') }}</label>
-
-                            <div class="@error('AnakKe') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AnakKe" id="AnakKe" required>
-                                    <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4', '5'] as $AnakKe)
-                                        <option value="{{ e($AnakKe) }}"
-                                            {{ $siswa->AnakKe == $AnakKe ? 'selected' : '' }}>
-                                            {{ e($AnakKe) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('AnakKe')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            <label for="AnakKe" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Anak Ke') }}
+                            </label>
+                            <select class="form-control @error('AnakKe') is-invalid @enderror" name="AnakKe" id="AnakKe" required>
+                                <option value="" disabled>{{ __('Pilih') }}</option>
+                                @foreach (range(1, 5) as $anak)
+                                    <option value="{{ $anak }}" {{ old('AnakKe', $siswa->AnakKe ?? '') == $anak ? 'selected' : '' }}>
+                                        {{ $anak }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('AnakKe')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="SaudaraKandung" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Saudara Kandung') }}</label>
-
-                            <div class="@error('SaudaraKandung') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="SaudaraKandung" id="SaudaraKandung" required>
-                                    <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4', '5'] as $SaudaraKandung)
-                                        <option value="{{ e($SaudaraKandung) }}"
-                                            {{ $siswa->SaudaraKandung == $SaudaraKandung ? 'selected' : '' }}>
-                                            {{ e($SaudaraKandung) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('SaudaraKandung')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            <label for="SaudaraKandung" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Saudara Kandung') }}
+                            </label>
+                            <select class="form-control @error('SaudaraKandung') is-invalid @enderror" name="SaudaraKandung" id="SaudaraKandung" required>
+                                <option value="" disabled>{{ __('Pilih') }}</option>
+                                @foreach (range(1, 5) as $saudara)
+                                    <option value="{{ $saudara }}" {{ old('SaudaraKandung', $siswa->SaudaraKandung ?? '') == $saudara ? 'selected' : '' }}>
+                                        {{ $saudara }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('SaudaraKandung')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="SaudaraTiri" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Saudara Tiri') }}</label>
-
-                            <div class="@error('SaudaraTiri') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="SaudaraTiri" id="SaudaraTiri" required>
-                                    <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['1', '2', '3', '4', '5'] as $SaudaraTiri)
-                                        <option value="{{ e($SaudaraTiri) }}"
-                                            {{ $siswa->SaudaraTiri == $SaudaraTiri ? 'selected' : '' }}>
-                                            {{ e($SaudaraTiri) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('SaudaraTiri')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            <label for="SaudaraTiri" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Saudara Tiri') }}
+                            </label>
+                            <select class="form-control @error('SaudaraTiri') is-invalid @enderror" name="SaudaraTiri" id="SaudaraTiri" required>
+                                <option value="" disabled>{{ __('Pilih') }}</option>
+                                @foreach (range(1, 5) as $tiri)
+                                    <option value="{{ $tiri }}" {{ old('SaudaraTiri', $siswa->SaudaraTiri ?? '') == $tiri ? 'selected' : '' }}>
+                                        {{ $tiri }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('SaudaraTiri')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Tinggicm" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Tinggi (cm)') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Tinggicm ?? '' }}" type="text"
-                                    id="Tinggicm" name="Tinggicm" aria-describedby="info-Tinggicm" required>
-                            </div>
+                            <input class="form-control" value="{{ old('Tinggicm', $siswa->Tinggicm ?? '') }}" type="text"
+                                id="Tinggicm" name="Tinggicm" placeholder="Tinggi dalam cm" required>
+                            @error('Tinggicm')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="Beratkg" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Berat (kg)') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->Beratkg ?? '' }}" type="text"
-                                    id="Beratkg" name="Beratkg" aria-describedby="info-Beratkg" required>
-                            </div>
+                            <input class="form-control" value="{{ old('Beratkg', $siswa->Beratkg ?? '') }}" type="text"
+                                id="Beratkg" name="Beratkg" placeholder="Berat dalam kg" required>
+                            @error('Beratkg')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="RiwayatPenyakit" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Riwayat Penyakit') }}
                             </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->RiwayatPenyakit ?? '' }}"
-                                    type="text" id="RiwayatPenyakit" name="RiwayatPenyakit"
-                                    aria-describedby="info-RiwayatPenyakit" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="AsalSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Asal SD') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->AsalSD ?? '' }}" type="text"
-                                    id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" required>
-                            </div>
+                            <input class="form-control" value="{{ old('RiwayatPenyakit', $siswa->RiwayatPenyakit ?? '') }}"
+                                type="text" id="RiwayatPenyakit" name="RiwayatPenyakit" placeholder="Contoh: jantung, asma..." required>
+                            @error('RiwayatPenyakit')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="AlamatSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Alamat SD') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->AlamatSD ?? '' }}" type="text"
-                                    id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="NPSNSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('NPSN SD') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->NPSNSD ?? '' }}" type="text"
-                                    id="NPSNSD" name="NPSNSD" aria-describedby="info-NPSNSD" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="KabKotaSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Kab/Kota SD') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->KabKotaSD ?? '' }}" type="text"
-                                    id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="ProvinsiSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Provinsi SD') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->ProvinsiSD ?? '' }}" type="text"
-                                    id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="NoIjasah" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('No Ijasah') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->NoIjasah ?? '' }}" type="text"
-                                    id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="DiterimaTanggal" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Diterima Tanggal') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->DiterimaTanggal ?? '' }}"
-                                    type="date" id="DiterimaTanggal" name="DiterimaTanggal"
-                                    aria-describedby="info-DiterimaTanggal" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="DiterimaDiKelas" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Diterima Di Kelas') }}</label>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="AsalSD" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('Asal SMP') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('AsalSD', $siswa->AsalSD ?? '') }}" placeholder="Asal SMP" type="text"
+                    id="AsalSD" name="AsalSD" aria-describedby="info-AsalSD" required>
+                @error('AsalSD')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
 
-                            <div class="@error('DiterimaDiKelas') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="DiterimaDiKelas" id="DiterimaDiKelas" required>
-                                    <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['X', 'XI', 'XII'] as $DiterimaDiKelas)
-                                        <option value="{{ e($DiterimaDiKelas) }}"
-                                            {{ $siswa->DiterimaDiKelas == $DiterimaDiKelas ? 'selected' : '' }}>
-                                            {{ e($DiterimaDiKelas) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('DiterimaDiKelas')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="AlamatSD" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('Alamat SMP') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('AlamatSD', $siswa->AlamatSD ?? '') }}" type="text"
+                    id="AlamatSD" name="AlamatSD" aria-describedby="info-AlamatSD" placeholder="Alamat SMP" required>
+                @error('AlamatSD')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
 
-                            </div>
-                        </div>
-                    </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="NPSNSD" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('NPSN SMP') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('NPSNSD', $siswa->NPSNSD ?? '') }}" type="text"
+                    id="NPSNSD" name="NPSNSD" placeholder="NPSN SMP" aria-describedby="info-NPSNSD" required>
+                @error('NPSNSD')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="KabKotaSD" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('Kab/Kota SMP') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('KabKotaSD', $siswa->KabKotaSD ?? '') }}" type="text"
+                    id="KabKotaSD" name="KabKotaSD" aria-describedby="info-KabKotaSD" placeholder="Kabupaten/Kota SMP" required>
+                @error('KabKotaSD')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="ProvinsiSD" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('Provinsi SMP') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('ProvinsiSD', $siswa->ProvinsiSD ?? '') }}" type="text"
+                    id="ProvinsiSD" name="ProvinsiSD" aria-describedby="info-ProvinsiSD" placeholder="Provinsi SMP" required>
+                @error('ProvinsiSD')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="NoIjasah" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('No Ijasah') }}
+            </label>
+            <div>
+                <input class="form-control" placeholder="No Ijasah" value="{{ old('NoIjasah', $siswa->NoIjasah ?? '') }}" type="text"
+                    id="NoIjasah" name="NoIjasah" aria-describedby="info-NoIjasah" required>
+                @error('NoIjasah')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="DiterimaTanggal" class="form-control-label">
+                <i class="fas fa-lock"></i> {{ __('Diterima Tanggal') }}
+            </label>
+            <div>
+                <input class="form-control" value="{{ old('DiterimaTanggal', $siswa->DiterimaTanggal ?? '') }}"
+                    type="date" id="DiterimaTanggal" name="DiterimaTanggal"
+                    aria-describedby="info-DiterimaTanggal" placeholder="Diterima Tanggal" required>
+                @error('DiterimaTanggal')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="DiterimaDiKelas" class="form-control-label"><i class="fas fa-lock"></i>
+                {{ __('Diterima Di Kelas') }}</label>
+            <div class="@error('DiterimaDiKelas') border border-danger rounded-3 @enderror">
+                <select class="form-control" name="DiterimaDiKelas" id="DiterimaDiKelas" required>
+                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                    @foreach (['X', 'XI', 'XII'] as $kelas)
+                        <option value="{{ e($kelas) }}"
+                            {{ $siswa->DiterimaDiKelas == $kelas ? 'selected' : '' }}>
+                            {{ e($kelas) }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('DiterimaDiKelas')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="DiterimaSemester" class="form-control-label"><i class="fas fa-lock"></i>
+                {{ __('Diterima Semester') }}</label>
+            <div class="@error('DiterimaSemester') border border-danger rounded-3 @enderror">
+                <select class="form-control" name="DiterimaSemester" id="DiterimaSemester" required>
+                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                    @foreach (['Ganjil', 'Genap'] as $semester)
+                        <option value="{{ e($semester) }}"
+                            {{ $siswa->DiterimaSemester == $semester ? 'selected' : '' }}>
+                            {{ e($semester) }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('DiterimaSemester')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="DiterimaSemester" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Diterima Semester') }}</label>
-
-                            <div class="@error('DiterimaSemester') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="DiterimaSemester" id="DiterimaSemester" required>
-                                    <option value="" disabled selected>{{ __('Pilih ') }}</option>
-                                    @foreach (['Ganjil', 'Genap'] as $DiterimaSemester)
-                                        <option value="{{ e($DiterimaSemester) }}"
-                                            {{ $siswa->DiterimaSemester == $DiterimaSemester ? 'selected' : '' }}>
-                                            {{ e($DiterimaSemester) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('DiterimaSemester')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="MutasiAsalSMP" class="form-control-label">
+                            <label for="MutasiAsalSD" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Mutasi Asal SMP') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->MutasiAsalSMP ?? '' }}"
-                                    type="text" id="MutasiAsalSMP" name="MutasiAsalSMP"
-                                    aria-describedby="info-MutasiAsalSMP" required>
+                                <input class="form-control" value="{{ old('MutasiAsalSD', $siswa->MutasiAsalSD ?? '') }}"
+                                    type="text" id="MutasiAsalSD" name="MutasiAsalSD" placeholder="Mutasi Asal SMP"
+                                    aria-describedby="info-MutasiAsalSD">
                             </div>
                         </div>
+                        </div>
                     </div>
+<div class="row">
+                    
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlasanPindah" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Alasan Pindah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlasanPindah ?? '' }}" type="text"
-                                    id="AlasanPindah" name="AlasanPindah" aria-describedby="info-AlasanPindah"
+                                <input class="form-control" value="{{ old('AlasanPindah', $siswa->AlasanPindah ?? '') }}" type="text"
+                                    id="AlasanPindah"  placeholder="Alasan Pindah" name="AlasanPindah" aria-describedby="info-AlasanPindah"
                                     required>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TglIjasahSD" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Tanggal Ijasah SD') }}
+                                <i class="fas fa-lock"></i> {{ __('Tanggal Ijasah SMP') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TglIjasahSD ?? '' }}" type="date"
-                                    id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" required>
+                                <input class="form-control" value="{{ old('TglIjasahSD', $siswa->TglIjasahSD ?? '') }}" type="date"
+                                    id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" placeholder="Tgl Ijasah SMP " required>
                             </div>
                         </div>
+                        </div>
                     </div>
+
+                    
+                    <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NamaOrangTuaPadaIjasah" class="form-control-label">
@@ -739,11 +798,10 @@
                                 <input class="form-control" value="{{ $siswa->NamaOrangTuaPadaIjasah ?? '' }}"
                                     type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah"
                                     aria-describedby="info-NamaOrangTuaPadaIjasah" required>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NamaAyah" class="form-control-label">
@@ -754,7 +812,9 @@
                                     id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" required>
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TahunLahirAyah" class="form-control-label">
@@ -765,10 +825,8 @@
                                     type="number" id="TahunLahirAyah" name="TahunLahirAyah"
                                     aria-describedby="info-TahunLahirAyah" required>
                             </div>
-                        </div>
                     </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlamatAyah" class="form-control-label">
@@ -780,6 +838,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NomorTelephoneAyah" class="form-control-label">
@@ -789,11 +850,9 @@
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneAyah ?? '' }}"
                                     type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah"
                                     aria-describedby="info-NomorTelephoneAyah" required>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AgamaAyah" class="form-control-label"><i class="fas fa-lock"></i>
@@ -809,13 +868,12 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('AgamaAyah')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-
+                               
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PendidikanTerakhirAyah" class="form-control-label">
@@ -825,30 +883,37 @@
                                 <input class="form-control" value="{{ $siswa->PendidikanTerakhirAyah ?? '' }}"
                                     type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah"
                                     aria-describedby="info-PendidikanTerakhirAyah" required>
+                                    @error('PendidikanTerakhirAyah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
-                </div>
-                {{-- <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="PekerjaanAyah" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Pekerjaan Ayah') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->PekerjaanAyah ?? '' }}"
-                                    type="text" id="PekerjaanAyah" name="PekerjaanAyah"
-                                    aria-describedby="info-PekerjaanAyah" required>
+                            <label for="PekerjaanAyah" class="form-control-label"><i class="fas fa-lock"></i>
+                                {{ __('Pekerjaan Ayah') }}</label>
+
+                            <div class="@error('PekerjaanAyah') border border-danger rounded-3 @enderror">
+                                <select class="form-control" name="PekerjaanAyah" id="PekerjaanAyah" required>
+                                    <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                    @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN','PEGAWAI SWASTA','PETANI/NELAYAN'] as $PekerjaanAyah)
+
+                                        <option value="{{ e($PekerjaanAyah) }}"
+                                            {{ $siswa->PekerjaanAyah == $PekerjaanAyah ? 'selected' : '' }}>
+                                            {{ e($PekerjaanAyah) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                               
                             </div>
                         </div>
-                    </div> --}}
-                    <div class="row">
-                        <div class="col-md-6">
+                        </div>
+                    </div>
+                        {{-- <div class="col-md-6">
                             <div class="form-group">
                                 <label for="PekerjaanAyah" class="form-control-label"><i class="fas fa-lock"></i>
                                     {{ __('Pekerjaan Ayah') }}</label>
-                                    <div>
-    
                                 <div class="@error('PekerjaanAyah') border border-danger rounded-3 @enderror">
                                     <select class="form-control" name="PekerjaanAyah" id="PekerjaanAyah" required>
                                         <option value="" disabled selected>{{ __('Pilih') }}</option>
@@ -859,13 +924,13 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('PekerjaanAyah')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
-                    <div class="col-md-6">
+                        </div> --}}
+                        {{-- <div class="row">
+
+                        <div class="col-md-6">
                         <div class="form-group">
                             <label for="PenghasilanAyah" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Ayah') }}
@@ -884,11 +949,31 @@
                                     @error('PenghasilanAyah')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
+                        </div>
+                    </div>
+                </div> --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="PenghasilanAyah" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Penghasilan Ayah') }}
+                            </label>
+                                <div class="@error('PenghasilanAyah') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PenghasilanAyah" id="PenghasilanAyah" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanAyah)
+                                            <option value="{{ e($PenghasilanAyah) }}"
+                                                {{ $siswa->PenghasilanAyah == $PenghasilanAyah ? 'selected' : '' }}>
+                                                {{ e($PenghasilanAyah) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('PenghasilanAyah')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NamaIbu" class="form-control-label">
@@ -897,9 +982,12 @@
                             <div>
                                 <input class="form-control" value="{{ $siswa->NamaIbu ?? '' }}" type="text"
                                     id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
-                            </div>
-                        </div>
+                             </div>
+                         </div>
                     </div>
+                    </div>
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TahunLahirIbu" class="form-control-label">
@@ -911,9 +999,7 @@
                                     aria-describedby="info-TahunLahirIbu" required>
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlamatIbu" class="form-control-label">
@@ -925,6 +1011,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NomorTelephoneIbu" class="form-control-label">
@@ -934,52 +1023,72 @@
                                 <input class="form-control" value="{{ $siswa->NomorTelephoneIbu ?? '' }}"
                                     type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu"
                                     aria-describedby="info-NomorTelephoneIbu" required>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="AgamaIbu" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Agama Ibu') }}</label>
+  
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="AgamaIbu" class="form-control-label"><i class="fas fa-lock"></i>
+                            {{ __('Agama Ibu') }}</label>
 
-                            <div class="@error('AgamaIbu') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AgamaIbu" id="AgamaIbu" required>
-                                    <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
-                                    @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaIbu)
-                                        <option value="{{ e($AgamaIbu) }}"
-                                            {{ $siswa->AgamaIbu == $AgamaIbu ? 'selected' : '' }}>
-                                            {{ e($AgamaIbu) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('AgamaIbu')
-                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="@error('AgamaIbu') border border-danger rounded-3 @enderror">
+                            <select class="form-control" name="AgamaIbu" id="AgamaIbu" required>
+                                <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
+                                @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaIbu)
+                                    <option value="{{ e($AgamaIbu) }}"
+                                        {{ $siswa->AgamaIbu == $AgamaIbu ? 'selected' : '' }}>
+                                        {{ e($AgamaIbu) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                           
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="PendidikanTerakhirIbu" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Ibu') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? '' }}"
-                                    type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu"
-                                    aria-describedby="info-PendidikanTerakhirIbu" required>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PendidikanTerakhirIbu" class="form-control-label">
+                                    <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Ibu') }}
+                                </label>
+                                <div>
+                                    <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? '' }}"
+                                        type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu"
+                                        aria-describedby="info-PendidikanTerakhirIbu" required>
+                                        @error('PendidikanTerakhirIbu')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="PekerjaanIbu" class="form-control-label"><i class="fas fa-lock"></i>
+                                    {{ __('Pekerjaan Ibu') }}</label>
+    
+                                <div class="@error('PekerjaanIbu') border border-danger rounded-3 @enderror">
+                                    <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
+                                        <option value="" disabled selected>{{ __('Pilih') }}</option>
+                                        @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN','PEGAWAI SWASTA','PETANI/NELAYAN'] as $PekerjaanIbu)
+    
+                                            <option value="{{ e($PekerjaanIbu) }}"
+                                                {{ $siswa->PekerjaanIbu == $PekerjaanIbu ? 'selected' : '' }}>
+                                                {{ e($PekerjaanIbu) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                   
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {{-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="PekerjaanIbu" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Pekerjaan Ibu') }}
                             </label>
-                            <div>
                                 <div class="@error('PekerjaanIbu') border border-danger rounded-3 @enderror">
                                     <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
                                         <option value="" disabled selected>{{ __('Pilih') }}</option>
@@ -994,14 +1103,16 @@
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                             </div>
+                            </div>
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PenghasilanIbu" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Ibu') }}
                             </label>
-                            <div>
                                 <div class="@error('PenghasilanIbu') border border-danger rounded-3 @enderror">
                                     <select class="form-control" name="PenghasilanIbu" id="PenghasilanIbu" required>
                                         <option value="" disabled selected>{{ __('Pilih') }}</option>
@@ -1016,11 +1127,20 @@
                                     @error('PenghasilanIbu')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                    {{-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="NamaWali" class="form-control-label">
+                                <i class="fas fa-lock"></i> {{ __('Nama Wali') }}
+                            </label>
+                                <input class="form-control" value="{{ $siswa->NamaWali ?? '' }}" type="text"
+                                    id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
+                            </div>
+                        </div>
+                    </div>
+                    </div> --}}
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NamaWali" class="form-control-label">
@@ -1031,21 +1151,22 @@
                                     id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="TahunLahirWali" class="form-control-label">
-                                <i class="fas fa-lock"></i> {{ __('Tahun Lahir Wali') }}
-                            </label>
-                            <div>
-                                <input class="form-control" value="{{ $siswa->TahunLahirWali ?? '' }}"
-                                    type="number" id="TahunLahirWali" name="TahunLahirWali"
-                                    aria-describedby="info-TahunLahirWali" required>
-                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="TahunLahirWali" class="form-control-label">
+                                    <i class="fas fa-lock"></i> {{ __('Tahun Lahir Wali') }}
+                                </label>
+                                <div>
+                                    <input class="form-control" value="{{ $siswa->TahunLahirWali?? '' }}"
+                                        type="number" id="TahunLahirWali" name="TahunLahirWali"
+                                        aria-describedby="info-TahunLahirWali" required>
+                                </div>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlamatWali" class="form-control-label">
@@ -1056,7 +1177,9 @@
                                     id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="NomorTelephoneWali" class="form-control-label">
@@ -1069,13 +1192,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AgamaWali" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Agama Wali') }}</label>
-
+                                <div>
                             <div class="@error('AgamaWali') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="AgamaWali" id="AgamaWali" required>
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
@@ -1089,9 +1210,12 @@
                                 @error('AgamaWali')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
-                            </div>
                         </div>
                     </div>
+                    </div>
+                    </div>
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PendidikanTerakhirWali" class="form-control-label">
@@ -1104,8 +1228,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="PekerjaanWali" class="form-control-label">
@@ -1126,7 +1248,10 @@
                                 @enderror
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="WaliPenghasilan" class="form-control-label">
@@ -1138,9 +1263,7 @@
                                     aria-describedby="info-WaliPenghasilan" required>
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="StatusHubunganWali" class="form-control-label">
@@ -1161,7 +1284,10 @@
                                 @enderror
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
+  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="MenerimaBeasiswaDari" class="form-control-label">
@@ -1173,9 +1299,7 @@
                                     aria-describedby="info-MenerimaBeasiswaDari">
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TahunMeninggalkanSekolah" class="form-control-label">
@@ -1187,7 +1311,10 @@
                                     aria-describedby="info-TahunMeninggalkanSekolah">
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlasanSebab" class="form-control-label">
@@ -1198,9 +1325,7 @@
                                     id="AlasanSebab" name="AlasanSebab" aria-describedby="info-AlasanSebab">
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="TamatBelajarTahun" class="form-control-label">
@@ -1213,6 +1338,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div class="row">
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="InformasiLain" class="form-control-label">
@@ -1224,14 +1352,12 @@
                                     aria-describedby="info-InformasiLain">
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="status" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Status') }}</label>
-
+                                <div>
                             <div class="@error('status') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="status" id="status" required>
                                     <option value="" disabled selected>{{ __('Pilih Status') }}</option>
