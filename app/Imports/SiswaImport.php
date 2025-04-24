@@ -41,7 +41,6 @@ class SiswaImport implements ToModel
             'NamaWali' => $row[13],
             'PekerjaanWali' => ($row[14] == 'PNS' || $row[14] == 'TNI/POLRI' || $row[14] == 'WIRASWASTA' || $row[14] == 'BUMN' || $row[14] == 'PEGAWAI SWASTA' || $row[14] == 'PETANI/NELAYAN') ? $row[14] : null,
             'StatusHubunganWali' => ($row[15] == 'KAKEK/NENEK' || $row[15] == 'SAUDARA KANDUNG' || $row[15] == 'OM/TANTE/PAMAN/BIBI' || $row[15] == 'KELUARGA LAINNYA') ? $row[15] : null,
-            
             ]);
     }
 }

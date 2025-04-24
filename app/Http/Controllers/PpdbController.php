@@ -403,51 +403,97 @@ class PpdbController extends Controller
         return view('Siswabaru.edit', compact('user', 'hashedId', 'roles'));
     }
 
+    // public function getPpdbs()
+    // {
+    //     $users = User::with('Siswa.Pembayaran')
+    //         ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
+    //         ->where('hakakses', 'Nonsiswa') // Gunakan where, karena hanya satu nilai
+    //         ->get()
+    //         ->map(function ($user) {
+    //             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
+    //             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
+    //             $user->action = '
+    //         <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+    //             <i class="fas fa-user-edit text-secondary"></i>
+    //         </a>';
+    //             $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
+
+    //             // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
+    //             $pembayaran = optional($user->Siswa)->Pembayaran;
+    //             $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
+
+    //             $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
+    //             $user->Status = optional($pembayaran)->status ?? '-';
+    //             $user->Ket = optional($pembayaran)->ket ?? '-';
+
+    //             return $user;
+    //         });
+
+    //     return DataTables::of($users)
+    //         ->addColumn('created_at', function ($user) {
+    //             return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+    //         })
+    //         ->addColumn('Role', function ($user) {
+    //             return $user->Role;
+    //         })
+    //         ->addColumn('tanggalbukti', function ($user) {
+    //             return $user->Tanggal; // Pakai nilai yang sudah diproses di map()
+    //         })
+    //         ->addColumn('status', function ($user) {
+    //             return $user->Status; // Pakai nilai yang sudah diproses di map()
+    //         })
+    //         ->addColumn('ket', function ($user) {
+    //             return $user->Ket; // Pakai nilai yang sudah diproses di map()
+    //         })
+    //         ->rawColumns(['checkbox', 'action'])
+    //         ->make(true);
+    // }
     public function getPpdbs()
-    {
-        $users = User::with('Siswa.Pembayaran')
-            ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
-            ->where('hakakses', 'Nonsiswa') // Gunakan where, karena hanya satu nilai
-            ->get()
-            ->map(function ($user) {
-                $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-                $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
-                $user->action = '
-            <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                <i class="fas fa-user-edit text-secondary"></i>
-            </a>';
-                $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
+{
+    $users = User::with('Siswa.Pembayaran')
+        ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
+        ->where('hakakses', 'Nonsiswa')
+        ->orderByRaw('CAST(username AS UNSIGNED)') // Urutkan sebagai angka
+        ->get()
+        ->map(function ($user) {
+            $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
+            $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
+            $user->action = '
+        <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+            <i class="fas fa-user-edit text-secondary"></i>
+        </a>';
+            $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
 
-                // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
-                $pembayaran = optional($user->Siswa)->Pembayaran;
-                $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
+            // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
+            $pembayaran = optional($user->Siswa)->Pembayaran;
+            $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
 
-                $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
-                $user->Status = optional($pembayaran)->status ?? '-';
-                $user->Ket = optional($pembayaran)->ket ?? '-';
+            $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
+            $user->Status = optional($pembayaran)->status ?? '-';
+            $user->Ket = optional($pembayaran)->ket ?? '-';
 
-                return $user;
-            });
+            return $user;
+        });
 
-        return DataTables::of($users)
-            ->addColumn('created_at', function ($user) {
-                return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-            })
-            ->addColumn('Role', function ($user) {
-                return $user->Role;
-            })
-            ->addColumn('tanggalbukti', function ($user) {
-                return $user->Tanggal; // Pakai nilai yang sudah diproses di map()
-            })
-            ->addColumn('status', function ($user) {
-                return $user->Status; // Pakai nilai yang sudah diproses di map()
-            })
-            ->addColumn('ket', function ($user) {
-                return $user->Ket; // Pakai nilai yang sudah diproses di map()
-            })
-            ->rawColumns(['checkbox', 'action'])
-            ->make(true);
-    }
+    return DataTables::of($users)
+        ->addColumn('created_at', function ($user) {
+            return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
+        })
+        ->addColumn('Role', function ($user) {
+            return $user->Role;
+        })
+        ->addColumn('tanggalbukti', function ($user) {
+            return $user->Tanggal;
+        })
+        ->addColumn('status', function ($user) {
+            return $user->Status;
+        })
+        ->addColumn('ket', function ($user) {
+            return $user->Ket;
+        })
+        ->rawColumns(['checkbox', 'action'])
+        ->make(true);
+}
 
     public function indexppdb()
     {

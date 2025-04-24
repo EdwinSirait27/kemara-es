@@ -89,6 +89,7 @@ class Siswa extends Model
         'InformasiLain',
         'status',
         'nis',
+        'created_at',
     ];
     
     public function Guru()

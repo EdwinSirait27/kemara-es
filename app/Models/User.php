@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    public $timestamps = false;
 
     /**
      * Indikasi bahwa primary key menggunakan UUID.
@@ -67,6 +68,7 @@ class User extends Authenticatable
     protected $casts = [
         'id' => 'string', // Cast UUID sebagai string
         'email_verified_at' => 'datetime',
+        
         // 'Role' => 'array',
     ];
 
