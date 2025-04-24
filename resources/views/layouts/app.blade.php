@@ -36,7 +36,24 @@
 
   <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 
-
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      -webkit-overflow-scrolling: touch; /* Untuk scroll halus di iOS */
+      overscroll-behavior-y: contain;
+    }
+    
+    body.g-sidenav-show {
+      overflow: auto !important;
+    }
+    
+    .main-content {
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
