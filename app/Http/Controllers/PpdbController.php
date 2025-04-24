@@ -338,49 +338,66 @@ class PpdbController extends Controller
                 ->withInput();
         }
     }
-
     public function updateStatus(Request $request)
     {
         try {
             // Log request
             Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
-
+    
             // Validasi input
             $request->validate([
                 'ids' => ['required', 'array'],
                 'ids.*' => ['string', 'exists:users,id'],
             ]);
-
+    
             // Log siswa IDs
             Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
-
-            // Perbarui status user
-            $affectedRows = User::whereIn('id', $request->ids)
-                ->update(['hakakses' => 'Siswa', 'role' => 'Siswa']);
-
+    
+            // Perbarui status user dan siswa terkait
+            $affectedUserRows = User::whereIn('id', $request->ids)
+                ->update([
+                    'hakakses' => 'Siswa', 
+                    'role' => 'Siswa'
+                ]);
+    
+            // Perbarui status di model Siswa melalui relasi
+            $affectedSiswaRows = 0;
+            $users = User::with('Siswa')->whereIn('id', $request->ids)->get();
+            
+            foreach ($users as $user) {
+                if ($user->siswa) {
+                    $user->siswa->update(['status' => 'Aktif']);
+                    $affectedSiswaRows++;
+                }
+            }
+    
             // Log jumlah baris yang diperbarui
-            Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
-
+            Log::info('Jumlah baris yang diperbarui:', [
+                'affected_user_rows' => $affectedUserRows,
+                'affected_siswa_rows' => $affectedSiswaRows
+            ]);
+    
             // Response sukses
-            if ($affectedRows > 0) {
+            if ($affectedUserRows > 0 || $affectedSiswaRows > 0) {
                 return response()->json([
                     'message' => 'Status berhasil diperbarui!',
-                    'updated_rows' => $affectedRows,
+                    'updated_user_rows' => $affectedUserRows,
+                    'updated_siswa_rows' => $affectedSiswaRows,
                 ]);
             }
-
+    
             // Jika tidak ada baris yang diperbarui
             return response()->json([
                 'message' => 'Tidak ada perubahan yang diterapkan.',
             ], 400);
-
+    
         } catch (\Exception $e) {
             // Log error
             Log::error('Terjadi kesalahan saat update status:', [
                 'error_message' => $e->getMessage(),
                 'error_trace' => $e->getTraceAsString(),
             ]);
-
+    
             // Response error
             return response()->json([
                 'message' => 'Terjadi kesalahan saat memperbarui status!',
@@ -388,6 +405,56 @@ class PpdbController extends Controller
             ], 500);
         }
     }
+    // public function updateStatus(Request $request)
+    // {
+    //     try {
+    //         // Log request
+    //         Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
+
+    //         // Validasi input
+    //         $request->validate([
+    //             'ids' => ['required', 'array'],
+    //             'ids.*' => ['string', 'exists:users,id'],
+    //         ]);
+
+    //         // Log siswa IDs
+    //         Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
+
+    //         // Perbarui status user
+    //         $affectedRows = User::whereIn('id', $request->ids)
+    //             ->update(['hakakses' => 'Siswa', 'role' => 'Siswa']);
+
+    //         // Log jumlah baris yang diperbarui
+    //         Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
+
+    //         // Response sukses
+    //         if ($affectedRows > 0) {
+    //             return response()->json([
+    //                 'message' => 'Status berhasil diperbarui!',
+    //                 'updated_rows' => $affectedRows,
+    //             ]);
+    //         }
+
+    //         // Jika tidak ada baris yang diperbarui
+    //         return response()->json([
+    //             'message' => 'Tidak ada perubahan yang diterapkan.',
+    //         ], 400);
+
+    //     } catch (\Exception $e) {
+    //         // Log error
+    //         Log::error('Terjadi kesalahan saat update status:', [
+    //             'error_message' => $e->getMessage(),
+    //             'error_trace' => $e->getTraceAsString(),
+    //         ]);
+
+    //         // Response error
+    //         return response()->json([
+    //             'message' => 'Terjadi kesalahan saat memperbarui status!',
+    //             'error' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
+   
 
 
     public function edit($hashedId)
