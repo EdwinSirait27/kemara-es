@@ -351,28 +351,29 @@
                     [10, 25, 50, 100, -1],
                     [10, 25, 50, 100, "All"]
                 ],
-                dom: 'Bfrtip', // Tambahkan ini untuk mengaktifkan tombol
+                dom: '<"top"lBf>rt<"bottom"ip><"clear">', // Update dom untuk menampilkan "Show entries"
                 buttons: [
-    {
-        extend: 'copyHtml5', // Menambahkan tombol copy
-        text: 'Copy', // Teks pada tombol
-        className: 'btn btn-primary', // Kelas untuk styling
-        title: 'Data Siswa ', // Nama file untuk salinan
-        exportOptions: {
-            columns: ':visible' // Tentukan kolom yang akan dicopy
-        }
-    },
-    {
-        extend: 'excelHtml5', 
-        text: 'Export to Excel', 
-        className: 'btn btn-success', // Kelas untuk styling
-        title: 'Data Siswa', // Nama file Excel
-        exportOptions: {
-            columns: ':visible' // Tentukan kolom yang akan diekspor
-        }
-    }
-],
-                columns: [{
+                    {
+                        extend: 'copyHtml5',
+                        text: 'Copy',
+                        className: 'btn btn-primary',
+                        title: 'Data Siswa',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export to Excel',
+                        className: 'btn btn-success',
+                        title: 'Data Siswa',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ],
+                columns: [
+                    {
                         data: 'siswa_id',
                         name: 'siswa_id',
                         className: 'text-center',
