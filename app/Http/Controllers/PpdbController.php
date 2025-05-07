@@ -355,12 +355,7 @@ class PpdbController extends Controller
             Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
     
             // Perbarui status user dan siswa terkait
-            $affectedUserRows = User::whereIn('id', $request->ids)
-                ->update([
-                    'hakakses' => 'Siswa', 
-                    'role' => 'Siswa'
-                ]);
-    
+            
             // Perbarui status di model Siswa melalui relasi
             $affectedSiswaRows = 0;
             $users = User::with('Siswa')->whereIn('id', $request->ids)->get();
@@ -372,17 +367,14 @@ class PpdbController extends Controller
                 }
             }
     
-            // Log jumlah baris yang diperbarui
             Log::info('Jumlah baris yang diperbarui:', [
-                'affected_user_rows' => $affectedUserRows,
                 'affected_siswa_rows' => $affectedSiswaRows
             ]);
     
             // Response sukses
-            if ($affectedUserRows > 0 || $affectedSiswaRows > 0) {
+            if ($affectedSiswaRows > 0) {
                 return response()->json([
                     'message' => 'Status berhasil diperbarui!',
-                    'updated_user_rows' => $affectedUserRows,
                     'updated_siswa_rows' => $affectedSiswaRows,
                 ]);
             }
@@ -411,43 +403,61 @@ class PpdbController extends Controller
     //     try {
     //         // Log request
     //         Log::info('Request diterima untuk update status:', ['payload' => $request->all()]);
-
+    
     //         // Validasi input
     //         $request->validate([
     //             'ids' => ['required', 'array'],
     //             'ids.*' => ['string', 'exists:users,id'],
     //         ]);
-
+    
     //         // Log siswa IDs
     //         Log::info('Siswa IDs yang akan diperbarui:', ['ids' => $request->ids]);
-
-    //         // Perbarui status user
-    //         $affectedRows = User::whereIn('id', $request->ids)
-    //             ->update(['hakakses' => 'Siswa', 'role' => 'Siswa']);
-
-    //         // Log jumlah baris yang diperbarui
-    //         Log::info('Jumlah baris yang diperbarui:', ['affected_rows' => $affectedRows]);
-
+    
+    //         // Perbarui status user dan siswa terkait
+    //         $affectedUserRows = User::whereIn('id', $request->ids)
+    //             ->update([
+    //                 'hakakses' => 'Siswa', 
+    //                 'role' => 'Siswa'
+    //             ]);
+    
+    //         // Perbarui status di model Siswa melalui relasi
+    //         $affectedSiswaRows = 0;
+    //         $users = User::with('Siswa')->whereIn('id', $request->ids)->get();
+            
+    //         foreach ($users as $user) {
+    //             if ($user->siswa) {
+    //                 $user->siswa->update(['status' => 'Aktif']);
+    //                 $affectedSiswaRows++;
+    //             }
+    //         }
+    
+    //         Log jumlah baris yang diperbarui
+    //         Log::info('Jumlah baris yang diperbarui:', [
+    //             'affected_user_rows' => $affectedUserRows,
+    //             'affected_siswa_rows' => $affectedSiswaRows
+    //         ]);
+    
     //         // Response sukses
-    //         if ($affectedRows > 0) {
+    //         if ($affectedUserRows > 0 || $affectedSiswaRows > 0) {
     //             return response()->json([
     //                 'message' => 'Status berhasil diperbarui!',
-    //                 'updated_rows' => $affectedRows,
+    //                 'updated_user_rows' => $affectedUserRows,
+    //                 'updated_siswa_rows' => $affectedSiswaRows,
     //             ]);
     //         }
-
+    
     //         // Jika tidak ada baris yang diperbarui
     //         return response()->json([
     //             'message' => 'Tidak ada perubahan yang diterapkan.',
     //         ], 400);
-
+    
     //     } catch (\Exception $e) {
     //         // Log error
     //         Log::error('Terjadi kesalahan saat update status:', [
     //             'error_message' => $e->getMessage(),
     //             'error_trace' => $e->getTraceAsString(),
     //         ]);
-
+    
     //         // Response error
     //         return response()->json([
     //             'message' => 'Terjadi kesalahan saat memperbarui status!',
@@ -456,7 +466,6 @@ class PpdbController extends Controller
     //     }
     // }
    
-
 
     public function edit($hashedId)
     {
@@ -471,68 +480,59 @@ class PpdbController extends Controller
         return view('Siswabaru.edit', compact('user', 'hashedId', 'roles'));
     }
 
-    // public function getPpdbs()
-    // {
-    //     $users = User::with('Siswa.Pembayaran')
-    //         ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
-    //         ->where('hakakses', 'Nonsiswa') // Gunakan where, karena hanya satu nilai
-    //         ->get()
-    //         ->map(function ($user) {
-    //             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-    //             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
-    //             $user->action = '
-    //         <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-    //             <i class="fas fa-user-edit text-secondary"></i>
-    //         </a>';
-    //             $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
+   
+//     public function getPpdbs()
+// {
+//     $users = User::with('Siswa.Pembayaran')
+//         ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
+//         ->where('hakakses', 'Nonsiswa')
+//         ->orderByRaw('CAST(username AS UNSIGNED)') // Urutkan sebagai angka
+//         ->get()
+//         ->map(function ($user) {
+//             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
+//             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
+//             $user->action = '
+//         <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+//             <i class="fas fa-user-edit text-secondary"></i>
+//         </a>';
+//             $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
 
-    //             // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
-    //             $pembayaran = optional($user->Siswa)->Pembayaran;
-    //             $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
+//             // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
+//             $pembayaran = optional($user->Siswa)->Pembayaran;
+//             $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
 
-    //             $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
-    //             $user->Status = optional($pembayaran)->status ?? '-';
-    //             $user->Ket = optional($pembayaran)->ket ?? '-';
+//             $user->Tanggal = optional($pembayaran)->tanggalbukti ?? '-';
+//             $user->Status = optional($pembayaran)->status ?? '-';
+//             $user->Ket = optional($pembayaran)->ket ?? '-';
 
-    //             return $user;
-    //         });
-
-    //     return DataTables::of($users)
-    //         ->addColumn('created_at', function ($user) {
-    //             return Carbon::parse($user->created_at)->format('d-m-Y H:i:s');
-    //         })
-    //         ->addColumn('Role', function ($user) {
-    //             return $user->Role;
-    //         })
-    //         ->addColumn('tanggalbukti', function ($user) {
-    //             return $user->Tanggal; // Pakai nilai yang sudah diproses di map()
-    //         })
-    //         ->addColumn('status', function ($user) {
-    //             return $user->Status; // Pakai nilai yang sudah diproses di map()
-    //         })
-    //         ->addColumn('ket', function ($user) {
-    //             return $user->Ket; // Pakai nilai yang sudah diproses di map()
-    //         })
-    //         ->rawColumns(['checkbox', 'action'])
-    //         ->make(true);
-    // }
-    public function getPpdbs()
+//             return $user;
+//         });
+public function getPpdbs()
 {
-    $users = User::with('Siswa.Pembayaran')
+    $filterYear = request()->get('year'); // Tangkap input tahun, misal ?year=2024
+
+    $usersQuery = User::with('Siswa.Pembayaran')
         ->select(['id', 'siswa_id', 'username', 'hakakses', 'Role', 'created_at'])
-        ->where('hakakses', 'Nonsiswa')
-        ->orderByRaw('CAST(username AS UNSIGNED)') // Urutkan sebagai angka
+        ->where('hakakses', 'Nonsiswa');
+
+    // Tambahkan filter berdasarkan tahun created_at jika tersedia
+    if ($filterYear) {
+        $usersQuery->whereYear('created_at', $filterYear);
+    }
+
+    $users = $usersQuery
+        ->orderByRaw('CAST(username AS UNSIGNED)')
         ->get()
         ->map(function ($user) {
             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
             $user->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $user->id_hashed . '">';
             $user->action = '
-        <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-            <i class="fas fa-user-edit text-secondary"></i>
-        </a>';
+            <a href="' . route('Siswabaru.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                <i class="fas fa-user-edit text-secondary"></i>
+            </a>';
+
             $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
 
-            // Pastikan Pembayaran tersedia dan ambil data pertama jika merupakan koleksi
             $pembayaran = optional($user->Siswa)->Pembayaran;
             $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;
 
@@ -565,7 +565,13 @@ class PpdbController extends Controller
 
     public function indexppdb()
     {
-        return view('Siswabaru.Siswabaru');
+        $years = DB::table('users')
+        ->selectRaw('YEAR(created_at) as year')
+        ->where('hakakses', 'Nonsiswa')
+        ->distinct()
+        ->orderBy('year', 'desc')
+        ->pluck('year'); // menghasilkan array: [2025, 2024, 2023, ...]
+        return view('Siswabaru.Siswabaru', compact('years'));
 
     }
     public function deletesiswabaru(Request $request)

@@ -18,33 +18,66 @@ class ValidasiController extends Controller
         return view('Validasi.index');
 
     }
+    // public function getValidasi()
+    // {
+    //     $pembayaran = Pembayaran::with('Siswa')
+    //         ->select(['id', 'siswa_id', 'status', 'foto','tanggalbukti', 'ket','created_at'])
+    //         ->get()
+    //         ->map(function ($user) {
+    //             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
+    //             // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y'); $user->Role = implode(', ', explode(',', $user->Role));
+    //             $user->action = '
+    //         <a href="' . route('Validasi.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+    //             <i class="fas fa-user-edit text-secondary"></i>
+    //         </a>';
+    //             $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
+    //             return $user;
+    //         });
+    //     return DataTables::of($pembayaran)
+    //     ->addColumn('NamaLengkap', function ($pembayaran) {
+    //         return $pembayaran->Siswa ? $pembayaran->Siswa->NamaLengkap : '-';
+    //     })
+        
+    //     ->addColumn('foto', function ($pembayaran) {
+    //         return $pembayaran->foto;
+    //     })
+    //         ->rawColumns([ 'action'])
+    //         ->make(true);
+
+    // }   
     public function getValidasi()
-    {
-        $pembayaran = Pembayaran::with('Siswa')
-            ->select(['id', 'siswa_id', 'status', 'tanggalbukti', 'ket','created_at'])
-            ->get()
-            ->map(function ($user) {
-                $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-                // $user->created_at = Carbon::parse($user->created_at)->format('d-m-Y'); $user->Role = implode(', ', explode(',', $user->Role));
+{
+    $pembayaran = Pembayaran::with('Siswa')
+        ->select(['id', 'siswa_id', 'status', 'foto','tanggalbukti', 'ket','created_at'])
+        ->get()
+        ->map(function ($user) {
+            $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
+
+            // Tambahkan kondisi untuk menampilkan tombol edit hanya jika foto tidak NULL
+            if (!is_null($user->foto)) {
                 $user->action = '
-            <a href="' . route('Validasi.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                <i class="fas fa-user-edit text-secondary"></i>
-            </a>';
-                $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
-                return $user;
-            });
-        return DataTables::of($pembayaran)
+                <a href="' . route('Validasi.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                    <i class="fas fa-user-edit text-secondary"></i>
+                </a>';
+            } else {
+                $user->action = '<i class="text-muted">Menunggu Foto</i>';
+            }
+
+            $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
+            return $user;
+        });
+
+    return DataTables::of($pembayaran)
         ->addColumn('NamaLengkap', function ($pembayaran) {
             return $pembayaran->Siswa ? $pembayaran->Siswa->NamaLengkap : '-';
         })
-        
         ->addColumn('foto', function ($pembayaran) {
             return $pembayaran->foto;
         })
-            ->rawColumns([ 'action'])
-            ->make(true);
+        ->rawColumns(['action']) // pastikan 'action' termasuk dalam rawColumns
+        ->make(true);
+}
 
-    }   
     public function edit($hashedId)
 {
     $pembayaran = Pembayaran::with('Siswa')->get()->first(function ($u) use ($hashedId) {
