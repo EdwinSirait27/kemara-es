@@ -184,9 +184,7 @@ class DatasiswaController extends Controller
             'AlasanSebab' => ['required', 'string', 'max:50', new NoXSSInput()],
             'TamatBelajarTahun' => ['required', 'date', new NoXSSInput()],
             'InformasiLain' => ['required', 'string', 'max:50', new NoXSSInput()],
-            
             'status' => ['required', 'in:Aktif,Tidak Aktif,Alumni,Lulus', new NoXSSInput()],
-            
         ]);
         $siswa = Siswa::get()->first(function ($u) use ($hashedId) {
             $expectedHash = substr(hash('sha256', $u->siswa_id . env('APP_KEY')), 0, 8);

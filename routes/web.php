@@ -524,31 +524,12 @@ Route::middleware(['auth', 'can:isNonSiswa', 'prevent.xss'])->group(function () 
 
     Route::put('/dashboardNonSiswa/{id_hashed}', [DashboardControllerNonSiswa::class, 'update'])->name('dashboardNonSiswa.update');
 });
-
-// Route::middleware(['guest', 'prevent.xss', 'throttle:10,1'])->group(function () {
-//     Route::get('/login', [SessionsController::class, 'create'])->name('login');
-//     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
-//     Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
-
-//     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
-//     Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
-//     Route::get('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
-//     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
-//     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
-//     Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
-
-//     Route::get('/', function () {
-//         return redirect()->route('Beranda.index');
-//     });
-// });
 Route::middleware(['guest', 'prevent.xss'])->group(function () {
     // Halaman login dengan throttle (karena rentan brute force)
     Route::middleware(['throttle:10,1'])->group(function () {
         Route::get('/login', [SessionsController::class, 'create'])->name('login');
-        Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store'); 
+        Route::post('/Ppdb', [PpdbController::class, 'store'])->name('Ppdb.store');
         Route::post('/Alumni', [AlumniController::class, 'store'])->name('Alumni.store');
-
-
         // Pastikan ini adalah POST, bukan GET
     });
 
@@ -557,33 +538,22 @@ Route::middleware(['guest', 'prevent.xss'])->group(function () {
     Route::get('/Ppdb', [PpdbController::class, 'index'])->name('Ppdb.index');
     Route::get('/Beranda', [ProfileSekolahController::class, 'Beranda'])->name('Beranda.index');
     Route::get('/navbar', [ProfileSekolahController::class, 'Beranda2'])->name('navbar');
-
     Route::get('/Alumni', [AlumniController::class, 'Alumni'])->name('Alumni.index');
     Route::get('/Berita/show/{slug}', [BeritaController::class, 'show'])->name('Berita.show');
     Route::get('/Profile/show/{slug}', [ProfileController::class, 'show'])->name('Profile.show');
     Route::get('/Informasi/{slug}', [InformasippdbController::class, 'show'])->name('Informasi.show');
     Route::get('/Listalumni', [AlumniController::class, 'index'])->name('Listalumni.index');
     Route::get('/alumni/alumni', [AlumniController::class, 'getAlumni'])->name('alumni.alumni');
-    Route::get('/', function () {
-        return redirect()->route('Beranda.index');
-    });
-});
 
+    // Perbaikan untuk menghindari redirect loop - langsung panggil controller untuk halaman utama
+    Route::get('/', [ProfileSekolahController::class, 'Beranda'])->name('home');
+});
+// Fallback route untuk menangani 404 tanpa redirect
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
 
 Route::match(['GET', 'POST'], '/logout', [SessionsController::class, 'destroy'])
     ->name('logout')
     ->middleware('auth');
-
-
-
-
-
-// Guru
-
-// Siswa
-// Route::get('dashboardSiswa', function () {
-//     return view('dashboardSiswa');  // Halaman untuk Siswa
-// })->middleware('can:isSiswa');
-
-// Calon Siswa

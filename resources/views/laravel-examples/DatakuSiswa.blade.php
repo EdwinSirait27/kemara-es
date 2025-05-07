@@ -1,19 +1,15 @@
 @extends('layouts.user_type.auth')
 @section('content')
 @section('title', 'Kemara-ES | Dataku')
-
     <style>
         .avatar {
             position: relative;
         }
-
         .iframe-container {
             position: relative;
             overflow: hidden;
-            padding-top: 56.25%;
-            
+            padding-top: 56.25%;   
         }
-
         .iframe-container iframe {
             position: absolute;
             top: 0;

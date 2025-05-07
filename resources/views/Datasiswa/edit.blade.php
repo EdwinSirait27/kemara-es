@@ -5,7 +5,7 @@
 <style>
     .avatar {
         position: relative;
-    }
+    }   
 
     .iframe-container {
         position: relative;
@@ -700,8 +700,30 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-6">
+        <div class="form-group">
+            <label for="DiterimaDiKelas" class="form-control-label"><i class="fas fa-lock"></i>
+                {{ __('Diterima Di Kelas') }}</label>
+            <div class="@error('DiterimaDiKelas') border border-danger rounded-3 @enderror">
+                <select class="form-control" name="DiterimaDiKelas" id="DiterimaDiKelas" required>
+                    <option value="" disabled {{ old('DiterimaDiKelas', $siswa->DiterimaDiKelas ?? '') == '' ? 'selected' : '' }}>
+                        {{ __('Pilih') }}
+                    </option>
+                    @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $DiterimaDiKelas)
+
+                        <option value="{{ e($DiterimaDiKelas) }}" {{ old('DiterimaDiKelas', $siswa->DiterimaDiKelas ?? '') == $DiterimaDiKelas ? 'selected' : '' }}>
+                            {{ e($DiterimaDiKelas) }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('DiterimaDiKelas')
+                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+    </div>
+</div>
+    {{-- <div class="col-md-6">
         <div class="form-group">
             <label for="DiterimaDiKelas" class="form-control-label"><i class="fas fa-lock"></i>
                 {{ __('Diterima Di Kelas') }}</label>
@@ -721,7 +743,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="row">
     <div class="col-md-6">
@@ -730,11 +752,13 @@
                 {{ __('Diterima Semester') }}</label>
             <div class="@error('DiterimaSemester') border border-danger rounded-3 @enderror">
                 <select class="form-control" name="DiterimaSemester" id="DiterimaSemester" required>
-                    <option value="" disabled selected>{{ __('Pilih') }}</option>
-                    @foreach (['Ganjil', 'Genap'] as $semester)
-                        <option value="{{ e($semester) }}"
-                            {{ $siswa->DiterimaSemester == $semester ? 'selected' : '' }}>
-                            {{ e($semester) }}
+                    <option value="" disabled {{ old('DiterimaSemester', $siswa->DiterimaSemester ?? '') == '' ? 'selected' : '' }}>
+                        {{ __('Pilih') }}
+                    </option>
+                    @foreach (['Ganjil', 'Genap'] as $DiterimaSemester)
+
+                        <option value="{{ e($DiterimaSemester) }}" {{ old('DiterimaSemester', $siswa->DiterimaSemester ?? '') == $DiterimaSemester ? 'selected' : '' }}>
+                            {{ e($DiterimaSemester) }}
                         </option>
                     @endforeach
                 </select>
@@ -754,6 +778,9 @@
                                 <input class="form-control" value="{{ old('MutasiAsalSD', $siswa->MutasiAsalSD ?? '') }}"
                                     type="text" id="MutasiAsalSD" name="MutasiAsalSD" placeholder="Mutasi Asal SMP"
                                     aria-describedby="info-MutasiAsalSD">
+                                    @error('MutasiAsalSD')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         </div>
@@ -769,6 +796,9 @@
                                 <input class="form-control" value="{{ old('AlasanPindah', $siswa->AlasanPindah ?? '') }}" type="text"
                                     id="AlasanPindah"  placeholder="Alasan Pindah" name="AlasanPindah" aria-describedby="info-AlasanPindah"
                                     required>
+                                    @error('AlasanPindah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     
@@ -781,6 +811,9 @@
                             <div>
                                 <input class="form-control" value="{{ old('TglIjasahSD', $siswa->TglIjasahSD ?? '') }}" type="date"
                                     id="TglIjasahSD" name="TglIjasahSD" aria-describedby="info-TglIjasahSD" placeholder="Tgl Ijasah SMP " required>
+                                    @error('TglIjasahSD')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         </div>
@@ -795,9 +828,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Orang Tua Pada Ijasah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaOrangTuaPadaIjasah ?? '' }}"
+                                <input class="form-control" value="{{ old('NamaOrangTuaPadaIjasah', $siswa->NamaOrangTuaPadaIjasah ?? '') }}"
                                     type="text" id="NamaOrangTuaPadaIjasah" name="NamaOrangTuaPadaIjasah"
-                                    aria-describedby="info-NamaOrangTuaPadaIjasah" required>
+                                    aria-describedby="info-NamaOrangTuaPadaIjasah" placeholder="Nama Orang Tua Pada Ijasah" required>
+                                    @error('NamaOrangTuaPadaIjasah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                         </div>
                     </div>
                 </div>
@@ -808,8 +844,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaAyah ?? '' }}" type="text"
-                                    id="NamaAyah" name="NamaAyah" aria-describedby="info-NamaAyah" required>
+                                <input class="form-control" value="{{ old('NamaAyah', $siswa->NamaAyah ?? '') }}" type="text"
+                                    id="NamaAyah" name="NamaAyah" placeholder="Nama Ayah" aria-describedby="info-NamaAyah" required>
+                                    @error('NamaAyah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         </div>
@@ -821,20 +860,27 @@
                                 <i class="fas fa-lock"></i> {{ __('Tahun Lahir Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TahunLahirAyah ?? '' }}"
+                                <input class="form-control" placeholder="Tahun Lahir Ayah" value="{{ old('TahunLahirAyah', $siswa->TahunLahirAyah ?? '') }}"
                                     type="number" id="TahunLahirAyah" name="TahunLahirAyah"
                                     aria-describedby="info-TahunLahirAyah" required>
+                                    @error('TahunLahirAyah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                     </div>
                 </div>
+                {{-- darisini kurang error input sama placeholder --}}
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="AlamatAyah" class="form-control-label">
                                 <i class="fas fa-lock"></i> {{ __('Alamat Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatAyah ?? '' }}" type="text"
-                                    id="AlamatAyah" name="AlamatAyah" aria-describedby="info-AlamatAyah" required>
+                                <input class="form-control" value="{{ old('AlamatAyah', $siswa->AlamatAyah ?? '') }}" type="text"
+                                    id="AlamatAyah" name="AlamatAyah" placeholder="Alamat Ayah" aria-describedby="info-AlamatAyah" required>
+                                    @error('AlamatAyah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -847,32 +893,37 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Telephone Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorTelephoneAyah ?? '' }}"
-                                    type="number" id="NomorTelephoneAyah" name="NomorTelephoneAyah"
+                                <input class="form-control" value="{{ old('NomorTelephoneAyah', $siswa->NomorTelephoneAyah ?? '') }}"
+                                    type="number" placeholder="Nomor Telephone Ayah" id="NomorTelephoneAyah" name="NomorTelephoneAyah"
                                     aria-describedby="info-NomorTelephoneAyah" required>
+                                    @error('NomorTelephoneAyah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                         </div>
                     </div>
                 </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="AgamaAyah" class="form-control-label"><i class="fas fa-lock"></i>
-                                {{ __('Agama Ayah') }}</label>
-
-                            <div class="@error('AgamaAyah') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="AgamaAyah" id="AgamaAyah" required>
-                                    <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
-                                    @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaAyah)
-                                        <option value="{{ e($AgamaAyah) }}"
-                                            {{ $siswa->AgamaAyah == $AgamaAyah ? 'selected' : '' }}>
-                                            {{ e($AgamaAyah) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                               
-                            </div>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="AgamaAyah" class="form-control-label"><i class="fas fa-lock"></i>
+                            {{ __('Agama Ayah') }}</label>
+                        <div class="@error('AgamaAyah') border border-danger rounded-3 @enderror">
+                            <select class="form-control" name="AgamaAyah" id="AgamaAyah" required>
+                                <option value="" disabled {{ old('AgamaAyah', $siswa->AgamaAyah ?? '') == '' ? 'selected' : '' }}>
+                                    {{ __('Pilih Agama') }}
+                                </option>
+                                @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaAyah)
+                                    <option value="{{ e($AgamaAyah) }}" {{ old('AgamaAyah', $siswa->AgamaAyah ?? '') == $AgamaAyah ? 'selected' : '' }}>
+                                        {{ e($AgamaAyah) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('AgamaAyah')
+                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
+                </div>
+            </div>
                     <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -880,9 +931,9 @@
                                 <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Ayah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirAyah ?? '' }}"
+                                <input class="form-control" value="{{ old('PendidikanTerakhirAyah', $siswa->PendidikanTerakhirAyah ?? '') }}"
                                     type="text" id="PendidikanTerakhirAyah" name="PendidikanTerakhirAyah"
-                                    aria-describedby="info-PendidikanTerakhirAyah" required>
+                                    aria-describedby="info-PendidikanTerakhirAyah" placeholder="Pendidikan Terakhir Ayah" required>
                                     @error('PendidikanTerakhirAyah')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -980,8 +1031,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaIbu ?? '' }}" type="text"
-                                    id="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
+                                <input class="form-control" value="{{ old('NamaIbu', $siswa->NamaIbu ?? '') }}" type="text"
+                                    id="NamaIbu" placeholder="NamaIbu" name="NamaIbu" aria-describedby="info-NamaIbu" required>
+                                    @error('NamaIbu')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                              </div>
                          </div>
                     </div>
@@ -994,9 +1048,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Tahun Lahir Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TahunLahirIbu ?? '' }}"
+                                <input class="form-control" value="{{ old('TahunLahirIbu', $siswa->TahunLahirIbu ?? '') }}"
                                     type="number" id="TahunLahirIbu" name="TahunLahirIbu"
-                                    aria-describedby="info-TahunLahirIbu" required>
+                                    aria-describedby="info-TahunLahirIbu" placeholder="Tahun Lahir Ibu" required>
+                                    @error('TahunLahirIbu')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                 </div>
@@ -1006,8 +1063,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatIbu ?? '' }}" type="text"
-                                    id="AlamatIbu" name="AlamatIbu" aria-describedby="info-AlamatIbu" required>
+                                <input class="form-control"  value="{{ old('AlamatIbu', $siswa->AlamatIbu ?? '') }}" type="text"
+                                    id="AlamatIbu" placeholder="Alamat Ibu" name="AlamatIbu" aria-describedby="info-AlamatIbu" required>
+                                    @error('AlamatIbu')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -1020,9 +1080,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Telephone Ibu') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorTelephoneIbu ?? '' }}"
-                                    type="number" id="NomorTelephoneIbu" name="NomorTelephoneIbu"
+                                <input class="form-control" value="{{ old('NomorTelephoneIbu', $siswa->NomorTelephoneIbu ?? '') }}"
+                                    type="number" id="NomorTelephoneIbu" placeholder="Nomor Telephone Ibu" name="NomorTelephoneIbu"
                                     aria-describedby="info-NomorTelephoneIbu" required>
+                                    @error('NomorTelephoneIbu')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                         </div>
                     </div>
                 </div>
@@ -1054,8 +1117,8 @@
                                     <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Ibu') }}
                                 </label>
                                 <div>
-                                    <input class="form-control" value="{{ $siswa->PendidikanTerakhirIbu ?? '' }}"
-                                        type="text" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu"
+                                    <input class="form-control" value="{{ old('PendidikanTerakhirIbu', $siswa->PendidikanTerakhirIbu ?? '') }}"
+                                        type="text" placeholder="Pendidikan Terakhir Ibu" id="PendidikanTerakhirIbu" name="PendidikanTerakhirIbu"
                                         aria-describedby="info-PendidikanTerakhirIbu" required>
                                         @error('PendidikanTerakhirIbu')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -1147,8 +1210,8 @@
                                 <i class="fas fa-lock"></i> {{ __('Nama Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NamaWali ?? '' }}" type="text"
-                                    id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" required>
+                                <input class="form-control" value="{{ old('NamaWali', $siswa->NamaWali ?? '') }}" type="text"
+                                    id="NamaWali" name="NamaWali" aria-describedby="info-NamaWali" placeholder="Nama Wali" required>
                             </div>
                         </div>
                         </div>
@@ -1161,9 +1224,12 @@
                                     <i class="fas fa-lock"></i> {{ __('Tahun Lahir Wali') }}
                                 </label>
                                 <div>
-                                    <input class="form-control" value="{{ $siswa->TahunLahirWali?? '' }}"
+                                    <input class="form-control" value="{{ old('TahunLahirWali', $siswa->TahunLahirWali ?? '') }}"
                                         type="number" id="TahunLahirWali" name="TahunLahirWali"
-                                        aria-describedby="info-TahunLahirWali" required>
+                                        aria-describedby="info-TahunLahirWali" placeholder="Tahun Lahir Wali" required>
+                                        @error('TahunLahirWali')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                         </div>
                     </div>
@@ -1173,8 +1239,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Alamat Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlamatWali ?? '' }}" type="text"
-                                    id="AlamatWali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
+                                <input class="form-control" value="{{ old('AlamatWali', $siswa->AlamatWali ?? '') }}" type="text"
+                                    id="AlamatWali" placeholder="Alamat Wali" name="AlamatWali" aria-describedby="info-AlamatWali" required>
+                                    @error('AlamatWali')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         </div>
@@ -1186,9 +1255,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Nomor Telephone Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->NomorTelephoneWali ?? '' }}"
-                                    type="phone" id="NomorTelephoneWali" name="NomorTelephoneWali"
+                                <input class="form-control" value="{{ old('NomorTelephoneWali', $siswa->NomorTelephoneWali ?? '') }}" 
+                                    type="phone" id="NomorTelephoneWali" placeholder="Nomor NomorTelephone Wali" name="NomorTelephoneWali"
                                     aria-describedby="info-NomorTelephoneWali" required>
+                                    @error('NomorTelephoneWali')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -1196,13 +1268,13 @@
                         <div class="form-group">
                             <label for="AgamaWali" class="form-control-label"><i class="fas fa-lock"></i>
                                 {{ __('Agama Wali') }}</label>
-                                <div>
                             <div class="@error('AgamaWali') border border-danger rounded-3 @enderror">
                                 <select class="form-control" name="AgamaWali" id="AgamaWali" required>
-                                    <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
+                                    <option value="" disabled {{ old('AgamaWali', $siswa->AgamaWali ?? '') == '' ? 'selected' : '' }}>
+                                        {{ __('Pilih Agama') }}
+                                    </option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $AgamaWali)
-                                        <option value="{{ e($AgamaWali) }}"
-                                            {{ $siswa->AgamaWali == $AgamaWali ? 'selected' : '' }}>
+                                        <option value="{{ e($AgamaWali) }}" {{ old('AgamaWali', $siswa->AgamaWali ?? '') == $AgamaWali ? 'selected' : '' }}>
                                             {{ e($AgamaWali) }}
                                         </option>
                                     @endforeach
@@ -1210,10 +1282,10 @@
                                 @error('AgamaWali')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    </div>
+                </div>
                     <div class="row">
   
                     <div class="col-md-6">
@@ -1222,9 +1294,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Pendidikan Terakhir Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->PendidikanTerakhirWali ?? '' }}"
-                                    type="text" id="PendidikanTerakhirWali" name="PendidikanTerakhirWali"
+                                <input class="form-control" value="{{ old('PendidikanTerakhirWali', $siswa->PendidikanTerakhirWali ?? '') }}"
+                                    type="text" id="PendidikanTerakhirWali" placeholder="Pendidikan Terakhir Wali" name="PendidikanTerakhirWali"
                                     aria-describedby="info-PendidikanTerakhirWali" required>
+                                    @error('PendidikanTerakhirWali')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -1258,9 +1333,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Penghasilan Wali') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->WaliPenghasilan ?? '' }}"
+                                <input class="form-control" value="{{ old('WaliPenghasilan', $siswa->WaliPenghasilan ?? '') }}"
                                     type="text" id="WaliPenghasilan" name="WaliPenghasilan"
-                                    aria-describedby="info-WaliPenghasilan" required>
+                                    aria-describedby="info-WaliPenghasilan" placeholder="Penghasilan Wali" required>
+                                    @error('WaliPenghasilan')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                 </div>
@@ -1294,9 +1372,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Menerima Beasiswa Dari') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->MenerimaBeasiswaDari ?? '' }}"
-                                    type="text" id="MenerimaBeasiswaDari" name="MenerimaBeasiswaDari"
+                                <input class="form-control" value="{{ old('MenerimaBeasiswaDari', $siswa->MenerimaBeasiswaDari ?? '') }}"
+                                    type="text" id="MenerimaBeasiswaDari" placeholder="Menerima Beasiswa Dari" name="MenerimaBeasiswaDari"
                                     aria-describedby="info-MenerimaBeasiswaDari">
+                                    @error('MenerimaBeasiswaDari')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                 </div>
@@ -1306,9 +1387,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Tahun Meninggalkan Sekolah') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TahunMeninggalkanSekolah ?? '' }}"
-                                    type="number" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah"
+                                <input class="form-control" value="{{ old('TahunMeninggalkanSekolah', $siswa->TahunMeninggalkanSekolah ?? '') }}"
+                                    type="number" placeholder="Tahun Meningggalkan Sekolah" id="TahunMeninggalkanSekolah" name="TahunMeninggalkanSekolah"
                                     aria-describedby="info-TahunMeninggalkanSekolah">
+                                    @error('TahunMeninggalkanSekolah')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         </div>
@@ -1321,8 +1405,11 @@
                                 <i class="fas fa-lock"></i> {{ __('Alasan Sebab') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->AlasanSebab ?? '' }}" type="text"
-                                    id="AlasanSebab" name="AlasanSebab" aria-describedby="info-AlasanSebab">
+                                <input class="form-control" value="{{ old('AlasanSebab', $siswa->AlasanSebab ?? '') }}" type="text"
+                                    id="AlasanSebab" name="AlasanSebab" placeholder="Alasan atau sebab" aria-describedby="info-AlasanSebab">
+                                    @error('AlasanSebab')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                 </div>
@@ -1332,9 +1419,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Tamat Belajar Tahun') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->TamatBelajarTahun ?? '' }}"
-                                    type="date" id="TamatBelajarTahun" name="TamatBelajarTahun"
+                                <input class="form-control" value="{{ old('TamatBelajarTahun', $siswa->TamatBelajarTahun ?? '') }}"
+                                    type="date" id="TamatBelajarTahun" placeholder="Tamat Belajar Tahun" name="TamatBelajarTahun"
                                     aria-describedby="info-TamatBelajarTahun">
+                                    @error('TamatBelajarTahun')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -1347,9 +1437,12 @@
                                 <i class="fas fa-lock"></i> {{ __('Informasi Lain') }}
                             </label>
                             <div>
-                                <input class="form-control" value="{{ $siswa->InformasiLain ?? '' }}"
-                                    type="text" id="InformasiLain" name="InformasiLain"
+                                <input class="form-control" value="{{ old('InformasiLain', $siswa->InformasiLain ?? '') }}"
+                                    type="text" id="InformasiLain" placeholder="Informasi lain" name="InformasiLain"
                                     aria-describedby="info-InformasiLain">
+                                    @error('InformasiLain')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                 </div>
@@ -1382,7 +1475,7 @@
                     </span>
                     <span class="text-white">-
                         <strong class="fa fa-lock"></strong>
-                        <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
+                        <strong> Diisi - jika tidak tahu informasi siswa</strong> <br>
                         <strong>- Upload file type JPEG</strong> <br>
                         <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
 

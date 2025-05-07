@@ -394,7 +394,7 @@
                                 <input class="form-control"
                                     value="{{ $alumni->NamaPerusahaan ?? '' }}" type="text"
                                     id="NamaPerusahaan" name="NamaPerusahaan" aria-describedby="info-NamaPerusahaan"
-                                     maxlength="255" required>
+                                     maxlength="255" placeholder="Nama Perusahaan">
                                 @error('NamaPerusahaan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -427,7 +427,7 @@
                                 <input class="form-control"
                                     value="{{ $alumni->Linkedin ?? '' }}"
                                     type="text" id="Linkedin" name="Linkedin"
-                                    aria-describedby="info-Linkedin" maxlength="255" required>
+                                    aria-describedby="info-Linkedin" maxlength="255" placeholder="LinkedIn">
                                 @error('Linkedin')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -441,7 +441,7 @@
                                 <input class="form-control"
                                     value="{{ $alumni->Facebook ?? '' }}"
                                     type="text" id="Facebook" name="Facebook"
-                                    aria-describedby="info-Facebook" maxlength="255" required>
+                                    aria-describedby="info-Facebook" maxlength="255" placeholder="Facebook">
                                 @error('Facebook')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -466,14 +466,13 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
             <div class="alert alert-secondary mx-4" role="alert">
                 <span class="text-white">
                     <strong>Keterangan</strong> <br>
                 </span>
                 <span class="text-white">-
-                    <strong class="fa fa-lock"></strong>
-                    <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
                     <strong>- Upload file type JPEG</strong> <br>
                     <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
                     <strong>- Tolong diisi semua.</strong> <br>

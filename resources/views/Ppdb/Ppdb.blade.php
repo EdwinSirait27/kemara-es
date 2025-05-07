@@ -228,10 +228,7 @@
                                         @enderror
                                         <p class="text-muted text-xs mt-2">Contoh: SMPK Kesuma Mataram atau SMPN 2 Mataram
                                         </p>
-
                                     </div>
-
-
                                 </div>
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
@@ -284,7 +281,7 @@
                                         <select class="form-control" name="PenghasilanAyah" id="PenghasilanAyah"
                                             required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
-                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanAyah)
+                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DI ATAS 4 Jt'] as $PenghasilanAyah)
                                                 <option value="{{ e($PenghasilanAyah) }}"
                                                     {{ old('PenghasilanAyah') == $PenghasilanAyah ? 'selected' : '' }}>
                                                     {{ $PenghasilanAyah }}
@@ -313,7 +310,7 @@
                                         <label><i class="fas fa-user"></i> Pekerjaan Ibu</label>
                                         <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
-                                            @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanIbu)
+                                            @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN','IBU RUMAH TANGGA'] as $PekerjaanIbu)
                                                 <option value="{{ e($PekerjaanIbu) }}"
                                                     {{ old('PekerjaanIbu') == $PekerjaanIbu ? 'selected' : '' }}>
                                                     {{ $PekerjaanIbu }}
@@ -347,7 +344,7 @@
                                         <label><i class="fas fa-user"></i> Nama Lengkap Wali</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaWali"
                                             id="NamaWali" placeholder="Nama Lengkap Wali" aria-label="NamaWali"
-                                            maxlength="100" required
+                                            maxlength="100" 
                                             oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
                                             value="{{ old('NamaWali') }}">
 
@@ -358,7 +355,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label><i class="fas fa-user"></i> Pekerjaan Wali</label>
-                                        <select class="form-control" name="PekerjaanWali" id="PekerjaanWali" required>
+                                        <select class="form-control" name="PekerjaanWali" id="PekerjaanWali" >
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
                                             @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanWali)
                                                 <option value="{{ e($PekerjaanWali) }}"
@@ -377,7 +374,7 @@
 
                                         <label><i class="fas fa-user"></i>StatusHubunganWali</label>
                                         <select class="form-control" name="StatusHubunganWali" id="StatusHubunganWali"
-                                            required>
+                                            >
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
                                             {{-- @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $StatusHubunganWali) --}}
                                             @foreach (['KAKEK/NENEK', 'SAUDARA KANDUNG', 'OM/TANTE/PAMAN/BIBI', 'KELUARGA LAINNYA'] as $StatusHubunganWali)
@@ -479,26 +476,6 @@
 
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                         <!-- Submit -->
                                         <div class="text-center">
                                             <!-- Tombol Daftar -->
@@ -525,6 +502,7 @@
                                     sampai 12 karakter contoh password : edwin12345@!. </strong> <br>
                                 <strong>- untuk konfirmasi password silahkan masukkan password yang baru saya dibuat dan
                                     harus sama dengan password yang baru dibuat.</strong> <br>
+                                <strong>- tolong diingat username dan password anda ya.</strong> <br>
 
                             </span>
                         </div>
@@ -540,7 +518,7 @@
                 e.preventDefault(); // Mencegah pengiriman form langsung
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
-                    text: "Pastikan data yang Anda masukkan sudah benar!",
+                    text: "Pastikan data yang Anda masukkan sudah benar!, tolong diingat username dan password anda, kalau ragu bisa di ss terlebih dahulu untuk username dan password",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

@@ -552,9 +552,8 @@
                         <strong>Keterangan</strong> <br>
                     </span>
                     <span class="text-white">-
-                        <strong class="fa fa-lock"></strong>
-                        <strong> Icon Data Tidak Dapat Dirubah</strong> <br>
-                        <strong>- Upload file type JPEG</strong> <br>
+                      
+                        <strong>- Upload file foto type JPEG,PNG</strong> <br>
                         <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
                         <strong>- Tolong diisi semua.</strong> <br>
                         <strong>- Data NULL harap diisi.</strong> <br>

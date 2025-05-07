@@ -60,14 +60,15 @@ class PpdbController extends Controller
                 'max:12',
                 'confirmed'
             ],
-            'NamaLengkap' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[a-zA-Z\s]+$/',
-
-
-            ],
+          'NamaLengkap' => [
+    'required',
+    'string',
+    'max:255',
+    'regex:/^[a-zA-Z\s]+$/',
+    Rule::unique('nama_tabel')->where(function ($query) {
+        return $query->whereRaw('LOWER(NamaLengkap) = LOWER(?)', [request('NamaLengkap')]);
+    }),
+],
             'NamaAyah' => [
                 'required',
                 'string',
