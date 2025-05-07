@@ -178,7 +178,7 @@
                     let table = $('#users-table').DataTable({
                         processing: true,
                         serverSide: true,
-                        dom: 'Bfrtip', // aktifkan tombol export
+                        dom: 'Blfrtip', // aktifkan tombol export
                         buttons: [
                             'copyHtml5',
                             {
