@@ -532,6 +532,21 @@ public function getPpdbs()
             </a>';
 
             $user->Siswa_Nama = optional($user->Siswa)->NamaLengkap ?? '-';
+            $user->Tempat_Lahir = optional($user->Siswa)->TempatLahir ?? '-';
+            $user->Tanggal_Lahir = optional($user->Siswa)->TanggalLahir ?? '-';
+            $user->Jenis_Kelamin = optional($user->Siswa)->JenisKelamin ?? '-';
+            $user->Alamat_ = optional($user->Siswa)->Alamat ?? '-';
+            $user->Nomor_Telephone = optional($user->Siswa)->NomorTelephone ?? '-';
+            $user->Asal_SD = optional($user->Siswa)->AsalSD ?? '-';
+            $user->Nama_Ayah = optional($user->Siswa)->NamaAyah ?? '-';
+            $user->Pekerjaan_Ayah = optional($user->Siswa)->PekerjaanAyah ?? '-';
+            $user->Penghasilan_Ayah = optional($user->Siswa)->PenghasilanAyah?? '-';
+            $user->Nama_Wali = optional($user->Siswa)->NamaWali ?? '-';
+            $user->Pekerjaan_Wali = optional($user->Siswa)->PekerjaanWali ?? '-';
+            $user->Status_Hubungan_Wali = optional($user->Siswa)->StatusHubunganWali ?? '-';
+            $user->Nama_Ibu = optional($user->Siswa)->NamaIbu ?? '-';
+            $user->Pekerjaan_Ibu = optional($user->Siswa)->PekerjaanIbu ?? '-';
+            $user->Penghasilan_Ibu = optional($user->Siswa)->Penghasilan_Ibu ?? '-';
 
             $pembayaran = optional($user->Siswa)->Pembayaran;
             $pembayaran = is_iterable($pembayaran) ? collect($pembayaran)->first() : $pembayaran;

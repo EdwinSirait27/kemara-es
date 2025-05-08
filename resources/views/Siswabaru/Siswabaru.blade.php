@@ -33,11 +33,54 @@
                                         No.</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Nama Siswa</th>
-                                    {{-- <th
+                                        Nama Lengkap Sesuai Ijazah</th>
+                                    
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Nama</th> --}}
-
+                                        Tempat Lahir</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tanggal Lahir</th>
+                                        
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Jenis Kelamin</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Alamat</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Nomor Telephone</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Asal SMP</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Nama Lengkap Ayah Kandung</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Pekerjaan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Penghasilan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Nama Lengkap Ibu Kandung</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                       Pekerjaan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                       Penghasilan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                       Nama Lengkap Wali</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Pekerjaan</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Staus Hubungan</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Username</th>
@@ -93,86 +136,6 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            let table = $('#users-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('siswabaru.siswabaru') }}',
-                lengthMenu: [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "All"]
-                ],
-                columns: [{
-                        data: null, // Kolom indeks
-                        name: 'id',
-                        className: 'text-center',
-                        render: function(data, type, row, meta) {
-                            return meta.row + 1;
-                        },
-                    },
-                    // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
-                    {
-                        data: 'Siswa_Nama',
-                        name: 'Siswa_Nama',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'username',
-                        name: 'username',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'hakakses',
-                        name: 'hakakses',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Role',
-                        name: 'Role',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Tanggal',
-                        name: 'Tanggal',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Status',
-                        name: 'Status',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'Ket',
-                        name: 'Ket',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'id',
-                        name: 'checkbox',
-                        orderable: false,
-                        searchable: false,
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            return `<input type="checkbox" class="user-checkbox" value="${row.id}">`;
-                        }
-                    }
-                ]
-            }); --}}
             <script>
                 $(document).ready(function() {
                     let table = $('#users-table').DataTable({
@@ -206,6 +169,21 @@
                                 },
                             },
                             { data: 'Siswa_Nama', name: 'Siswa_Nama', className: 'text-center' },
+                            { data: 'Tempat_Lahir', name: 'Tempat_Lahir', className: 'text-center' },
+                            { data: 'Tanggal_Lahir', name: 'Tanggal_Lahir', className: 'text-center' },
+                            { data: 'Jenis_Kelamin', name: 'Jenis_Kelamin', className: 'text-center' },
+                            { data: 'Alamat_', name: 'Alamat_', className: 'text-center' },
+                            { data: 'Nomor_Telephone', name: 'Nomor_Telephone', className: 'text-center' },
+                            { data: 'Asal_SD', name: 'Asal_SD', className: 'text-center' },
+                            { data: 'Nama_Ayah', name: 'Nama_Ayah', className: 'text-center' },
+                            { data: 'Pekerjaan_Ayah', name: 'Pekerjaan_Ayah', className: 'text-center' },
+                            { data: 'Penghasilan_Ayah', name: 'Penghasilan_Ayah', className: 'text-center' },
+                            { data: 'Nama_Ibu', name: 'Nama_Ibu', className: 'text-center' },
+                            { data: 'Pekerjaan_Ibu', name: 'Pekerjaan_Ibu', className: 'text-center' },
+                            { data: 'Penghasilan_Ibu', name: 'Penghasilan_Ibu', className: 'text-center' },
+                            { data: 'Nama_Wali', name: 'Nama_Wali', className: 'text-center' },
+                            { data: 'Pekerjaan_Wali', name: 'Pekerjaan_Wali', className: 'text-center' },
+                            { data: 'Status_Hubungan_Wali', name: 'Status_Hubungan_Wali', className: 'text-center' },
                             { data: 'username', name: 'username', className: 'text-center' },
                             { data: 'hakakses', name: 'hakakses', className: 'text-center' },
                             { data: 'Role', name: 'Role', className: 'text-center' },
