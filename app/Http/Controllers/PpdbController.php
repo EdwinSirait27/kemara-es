@@ -148,7 +148,7 @@ class PpdbController extends Controller
             'Agama' => [
                 'required',
                 'string',
-                'in:Katolik,Kristen Protestan,Islam,Hindu,Buddha,Konghucu',
+                
             ],
             'status' => [
                 'nullable',
