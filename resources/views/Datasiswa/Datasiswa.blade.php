@@ -52,9 +52,7 @@
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Alamat</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email</th>
+                                 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Status</th>
@@ -102,6 +100,10 @@
                         d.status = $('#filter-status').val(); // Tambahkan parameter hari
                     }
                 },
+                lengthMenu: [
+                            [10, 25, 50, 100, -1],
+                            [10, 25, 50, 100, "All"]
+                        ],
                 columns: [{
                         data: 'siswa_id', // Kolom indeks
                         name: 'siswa_id',
@@ -144,11 +146,7 @@
                         name: 'Alamat',
                         className: 'text-center'
                     },
-                    {
-                        data: 'Email',
-                        name: 'Email',
-                        className: 'text-center'
-                    },
+                  
                     {
                         data: 'status',
                         name: 'status',

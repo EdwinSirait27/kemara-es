@@ -106,7 +106,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nama Lengkap Siswa Sesuai Ijasah</label>
+                                        <label><i class="fa fa-lock"></i> Nama Lengkap Siswa Sesuai Ijasah</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaLengkap"
                                             id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
                                             maxlength="100" required
@@ -120,7 +120,7 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Nama Panggilan Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Nama Panggilan Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaPanggilan"
                                             id="NamaPanggilan" placeholder="NamaPanggilan" maxlength="20"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"value="{{ old('NamaPanggilan') }}"
@@ -132,7 +132,7 @@
 
                                     <!-- Username -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tempat Lahir Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Tempat Lahir Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="TempatLahir"
                                             id="TempatLahir" placeholder="TempatLahir" aria-label="TempatLahir"
                                             aria-describedby="TempatLahir-addon" maxlength="50"
@@ -147,7 +147,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Tanggal Lahir Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Tanggal Lahir Siswa</label>
                                         <input type="date" class="form-control form-control-sm" name="TanggalLahir"
                                             id="TanggalLahir" aria-label="TanggalLahir"
                                             value="{{ old('TanggalLahir') }}"required>
@@ -158,7 +158,7 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"> </i> Jenis Kelamin Siswa</label>
+                                        <label><i class="fa fa-lock"> </i> Jenis Kelamin Siswa</label>
                                         <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
                                             <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}
                                             </option>
@@ -176,7 +176,7 @@
 
                                     <!-- Username -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i>Agama Siswa</label>
+                                        <label><i class="fa fa-lock"></i>Agama Siswa</label>
                                         <select class="form-control" name="Agama" id="Agama"
                                             value="{{ old('Agama') }}"required>
                                             <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
@@ -196,7 +196,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Alamat Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Alamat Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="Alamat"
                                             id="Alamat" placeholder="Alamat" aria-label="Alamat" maxlength="100"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s.,]/g, '')"value="{{ old('Alamat') }}"
@@ -208,7 +208,7 @@
 
                                     <!-- Email -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Nomor Telephone Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Nomor Telephone Siswa</label>
                                         <input type="phone" class="form-control form-control-sm" name="NomorTelephone"
                                             id="NomorTelephone" placeholder="NomorTelephone" maxlength="13"
                                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"value="{{ old('NomorTelephone') }}"
@@ -218,7 +218,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Asal SMP</label>
+                                        <label><i class="fa fa-lock"></i> Asal SMP</label>
                                         <input type="text" class="form-control form-control-sm" name="AsalSD"
                                             id="AsalSD" placeholder="Asal SMP" aria-label="AsalSD"
                                             aria-describedby="AsalSD-addon" maxlength="255"
@@ -233,7 +233,7 @@
                                 <div class="row mb-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nama Lengkap Ayah</label>
+                                        <label><i class="fa fa-lock"></i> Nama Lengkap Ayah Kandung</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaAyah"
                                             id="NamaAyah" placeholder="Nama Lengkap Ayah" aria-label="NamaAyah"
                                             maxlength="100" required
@@ -246,7 +246,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Nomor Telephone Ayah/Ibu</label>
+                                        <label><i class="fa fa-lock"></i> Nomor Telephone Ayah/Ibu</label>
                                         <input type="phone" class="form-control form-control-sm"
                                             name="NomorTelephoneAyah" id="NomorTelephoneAyah"
                                             placeholder="NomorTelephoneAyah" aria-label="NomorTelephoneAyah"
@@ -258,7 +258,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Pekerjaan Ayah</label>
+                                        <label><i class="fa fa-lock"></i> Pekerjaan Ayah</label>
                                         <select class="form-control" name="PekerjaanAyah" id="PekerjaanAyah" required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
                                             @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN'] as $PekerjaanAyah)
@@ -277,7 +277,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-4">
 
-                                        <label><i class="fas fa-user"></i> Penghasilan Ayah</label>
+                                        <label><i class="fa fa-lock"></i> Penghasilan Ayah</label>
                                         <select class="form-control" name="PenghasilanAyah" id="PenghasilanAyah"
                                             required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
@@ -294,7 +294,7 @@
                                     </div>
                                     <div class="col-md-4">
 
-                                        <label><i class="fas fa-user"></i> Nama Lengkap Ibu</label>
+                                        <label><i class="fa fa-lock"></i> Nama Lengkap Ibu Kandung</label>
                                         <input type="text" class="form-control form-control-sm" name="NamaIbu"
                                             id="NamaIbu" placeholder="Nama Lengkap Ibu" aria-label="NamaIbu"
                                             maxlength="100" required
@@ -307,7 +307,7 @@
 
                                     </div>
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Pekerjaan Ibu</label>
+                                        <label><i class="fa fa-lock"></i> Pekerjaan Ibu</label>
                                         <select class="form-control" name="PekerjaanIbu" id="PekerjaanIbu" required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
                                             @foreach (['PNS', 'TNI/POLRI', 'WIRASWASTA', 'BUMN', 'PEGAWAI SWASTA', 'PETANI/NELAYAN','IBU RUMAH TANGGA'] as $PekerjaanIbu)
@@ -325,7 +325,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-4">
 
-                                        <label><i class="fas fa-user"></i> Penghasilan Ibu</label>
+                                        <label><i class="fa fa-lock"></i> Penghasilan Ibu</label>
                                         <select class="form-control" name="PenghasilanIbu" id="PenghasilanIbu" required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
                                             @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanIbu)
@@ -389,7 +389,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-user"></i> Username Siswa</label>
+                                        <label><i class="fa fa-lock"></i> Username Siswa</label>
                                         <input type="text" class="form-control form-control-sm" name="username"
                                             id="username"
                                             oninput="this.value = this.value.replace(/[^a-zA-Z0-9_-]/g, '')"
@@ -403,7 +403,7 @@
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label><i class="fas fa-envelope"></i> Password</label>
+                                        <label><i class="fa fa-lock"></i> Password</label>
                                         <div
                                             class="@error('password') border border-danger rounded-3 @enderror position-relative">
                                             <input class="form-control" type="password" placeholder="Masukkan Password"
@@ -441,7 +441,7 @@
                                     <div class="row
                                                 mb-3">
                                         <div class="col-md-4">
-                                            <label><i class="fas fa-user"></i> Konfirmasi Password</label>
+                                            <label><i class="fa fa-lock"></i> Konfirmasi Password</label>
                                             <div
                                                 class="@error('password_confirmation') border border-danger rounded-3 @enderror position-relative">
                                                 <input class="form-control" type="password"
@@ -495,14 +495,14 @@
                             </span>
                             <span class="text-white">-
                                 <strong class="fa fa-lock"></strong>
-                                <strong> Silahkan diisi semua formnya ya</strong> <br>
+                                <strong> Untuk icon wajib diisi</strong> <br>
                                 <strong>- Untuk pengisian username itu bebas tetapi tidak boleh spasi dan simbol, minimal 7
                                     karakter sampai 12 karakter, contoh username: edwin1234567</strong> <br>
                                 <strong>- untuk password huruf, angka, dan simbol, tetapi tidak boleh ada spasi, minimal 7
                                     sampai 12 karakter contoh password : edwin12345@!. </strong> <br>
                                 <strong>- untuk konfirmasi password silahkan masukkan password yang baru saya dibuat dan
                                     harus sama dengan password yang baru dibuat.</strong> <br>
-                                <strong>- tolong diingat username dan password anda ya.</strong> <br>
+                                <strong>- tolong diingat username dan password yang baru saja dibuat.</strong> <br>
 
                             </span>
                         </div>

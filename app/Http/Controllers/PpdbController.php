@@ -86,7 +86,7 @@ class PpdbController extends Controller
 
             ],
             'NamaWali' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
                 'regex:/^[a-zA-Z\s]+$/',
@@ -116,11 +116,11 @@ class PpdbController extends Controller
                 'string',
             ],
             'PekerjaanWali' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'StatusHubunganWali' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'PenghasilanAyah' => [
@@ -253,9 +253,9 @@ class PpdbController extends Controller
             'Alamat.string' => 'Alamat harus berupa teks.',
             'Alamat.max' => 'Alamat maksimal terdiri dari 255 karakter.',
 
-            'AsalSD.required' => 'Asal SD wajib diisi.',
-            'AsalSD.string' => 'Asal SD harus berupa teks.',
-            'AsalSD.max' => 'Asal SD maksimal terdiri dari 255 karakter.',
+            'AsalSD.required' => 'Asal SMP wajib diisi.',
+            'AsalSD.string' => 'Asal SMP harus berupa teks.',
+            'AsalSD.max' => 'Asal SMP maksimal terdiri dari 255 karakter.',
 
             'NomorTelephone.required' => 'Nomor telepon wajib diisi.',
             'NomorTelephone.string' => 'Nomor telepon harus berupa teks.',
