@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use App\Rules\NoXSSInput;
+use Carbon\Carbon;
 class DataguruController extends Controller
 {
     public function __construct()
@@ -147,11 +148,35 @@ class DataguruController extends Controller
         if (!$guru) {
             return redirect()->route('Dataguru.index')->with('error', 'ID tidak valid.');
         }
+        $tanggalLahir = null;
+        if (!empty($validatedData['TanggalLahir'])) {
+            $tanggalLahir = Carbon::createFromFormat('Y-m-d', $validatedData['TanggalLahir'])->format('Y-m-d');
+        }
+        $tahunSertifikasi = null;
+        if (!empty($validatedData['TahunSertifikasi'])) {
+            $tahunSertifikasi = Carbon::createFromFormat('Y-m-d', $validatedData['TahunSertifikasi'])->format('Y-m-d');
+        }
+        $jadwalkenaikanGaji = null;
+        if (!empty($validatedData['jadwalkenaikangaji'])) {
+            $jadwalkenaikanGaji = Carbon::createFromFormat('Y-m-d', $validatedData['jadwalkenaikangaji'])->format('Y-m-d');
+        }
+        $tahunTamat = null;
+        if (!empty($validatedData['TahunTamat'])) {
+            $tahunTamat = Carbon::createFromFormat('Y-m-d', $validatedData['TahunTamat'])->format('Y-m-d');
+        }
+        $tahunPensiun = null;
+        if (!empty($validatedData['TahunPensiun'])) {
+            $tahunPensiun = Carbon::createFromFormat('Y-m-d', $validatedData['TahunPensiun'])->format('Y-m-d');
+        }
+        $jadwalkenaikanPangkat = null;
+        if (!empty($validatedData['jadwalkenaikanpangkat'])) {
+            $jadwalkenaikanPangkat = Carbon::createFromFormat('Y-m-d', $validatedData['jadwalkenaikanpangkat'])->format('Y-m-d');
+        }
         $guruData = [
             'foto' => $filePath,
             'Nama' => $validatedData['Nama'],
             'TempatLahir' => $validatedData['TempatLahir'],
-            'TanggalLahir' => $validatedData['TanggalLahir'],
+            'TanggalLahir' => $tanggalLahir,
             'Agama' => $validatedData['Agama'],
             'JenisKelamin' => $validatedData['JenisKelamin'],
             'StatusPegawai' => $validatedData['StatusPegawai'],
@@ -160,15 +185,15 @@ class DataguruController extends Controller
             'Nik' => $validatedData['Nik'],
             'Npwp' => $validatedData['Npwp'],
             'NomorSertifikatPendidik' => $validatedData['NomorSertifikatPendidik'],
-            'TahunSertifikasi' => $validatedData['TahunSertifikasi'],
-            'jadwalkenaikangaji' => $validatedData['jadwalkenaikangaji'],
+            'TahunSertifikasi' => $tahunSertifikasi,
+            'jadwalkenaikangaji' => $jadwalkenaikanGaji,
             'PendidikanAkhir' => $validatedData['PendidikanAkhir'],
-            'TahunTamat' => $validatedData['TahunTamat'],
+            'TahunTamat' => $tahunTamat,
             'Jurusan' => $validatedData['Jurusan'],
             'TugasMengajar' => $validatedData['TugasMengajar'],
-            'TahunPensiun' => $validatedData['TahunPensiun'],
+            'TahunPensiun' => $tahunPensiun,
             'Pangkat' => $validatedData['Pangkat'],
-            'jadwalkenaikanpangkat' => $validatedData['jadwalkenaikanpangkat'],
+            'jadwalkenaikanpangkat' => $jadwalkenaikanPangkat,
             'Jabatan' => $validatedData['Jabatan'],
             'NomorTelephone' => $validatedData['NomorTelephone'],
             'Alamat' => $validatedData['Alamat'],
