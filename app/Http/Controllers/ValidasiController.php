@@ -58,7 +58,7 @@ class ValidasiController extends Controller
         $statusFilter = request()->get('status'); // Ambil nilai filter status dari request
     
         $query = Pembayaran::with('Siswa')
-            ->select(['id', 'siswa_id', 'status', 'tanggalbukti', 'ket', 'created_at']);
+            ->select(['id', 'siswa_id', 'foto','status', 'tanggalbukti', 'ket', 'created_at']);
     
         // Terapkan filter status jika ada
         if (!empty($statusFilter)) {
