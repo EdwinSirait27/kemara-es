@@ -35,48 +35,54 @@ class DataguruController extends Controller
         return DataTables::of($guru)
             ->make(true);
     }
-    // public function getDataguru()
+   
+    // public function getDataguru(Request $request)
     // {
-    //     $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
+    //       $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
     //         ->get()
     //         ->map(function ($guru) {
-    //             $guru->id_hashed = substr(hash('sha256', $guru->guru_id . env('APP_KEY')), 0, 8);
-    //             $guru->action = '
-    //         <a href="' . route('Dataguru.edit', $guru->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-    //             <i class="fas fa-user-edit text-secondary"></i>
-    //         </a>';
+    //         $guru->id_hashed = substr(hash('sha256', $guru->guru_id . env('APP_KEY')), 0, 8);
+    //         $guru->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $guru->id_hashed . '">';
+    //         $guru->action = '
+    //             <a href="' . route('Dataguru.edit', $guru->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+    //                 <i class="fas fa-user-edit text-secondary"></i>
+    //             </a>';
     //             $guru->foto = $guru->foto ? $guru->foto : 'we.jpg';
-    //             return $guru;
-    //         });
+    //                         return $guru;
+    //     });
+    
     //     return DataTables::of($guru)
-    //         ->addColumn('foto', function ($guru) {
-    //             return $guru->foto;
-    //         })
-    //         ->rawColumns(['action'])
+    //                 ->addColumn('foto', function ($guru) {
+    //                 return $guru->foto;
+    //             })
+    //         ->rawColumns([ 'action'])
     //         ->make(true);
     // }
     public function getDataguru(Request $request)
-    {
-          $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
-            ->get()
-            ->map(function ($guru) {
+{
+    $guru = Guru::select(['guru_id', 'foto', 'Nama', 'TugasMengajar', 'NomorTelephone', 'Alamat', 'Email'])
+        ->where('Nama', '!=', 'Christopher Edwin Sirait, S.Kom.') // Filter untuk mengabaikan baris dengan nama tersebut
+        ->get()
+        ->map(function ($guru) {
             $guru->id_hashed = substr(hash('sha256', $guru->guru_id . env('APP_KEY')), 0, 8);
             $guru->checkbox = '<input type="checkbox" class="user-checkbox" value="' . $guru->id_hashed . '">';
             $guru->action = '
                 <a href="' . route('Dataguru.edit', $guru->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                     <i class="fas fa-user-edit text-secondary"></i>
                 </a>';
-                $guru->foto = $guru->foto ? $guru->foto : 'we.jpg';
-                            return $guru;
+            $guru->foto = $guru->foto ? $guru->foto : 'we.jpg';
+
+            return $guru;
         });
-    
-        return DataTables::of($guru)
-                    ->addColumn('foto', function ($guru) {
-                    return $guru->foto;
-                })
-            ->rawColumns([ 'action'])
-            ->make(true);
-    }
+
+    return DataTables::of($guru)
+        ->addColumn('foto', function ($guru) {
+            return $guru->foto;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+}
+
 
     public function edit($hashedId)
     {
