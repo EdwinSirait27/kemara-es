@@ -117,7 +117,7 @@ class DataguruController extends Controller
             'NomorTelephone' => ['nullable', 'string', 'max:13', new NoXSSInput()],
             'Alamat' => ['nullable', 'string', 'max:100', new NoXSSInput()],
             'Email' => ['nullable', 'string', 'max:100', new NoXSSInput()],
-            'status' => ['nullable', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
+            'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
             'foto' => ['nullable','image','mimes:jpeg,png,jpg','max:512'],
         
         ],
@@ -125,6 +125,7 @@ class DataguruController extends Controller
         'foto.mimes' => 'harus bertipe jpeg,png,jpg',
         'foto.max' => 'foto harus kurang dari 512 kb',
         'foto.image' => 'harus berupa gambar',
+        'status.required' => 'harus diisi ya untuk status',
             
         ]);
         $guru = Guru::get()->first(function ($u) use ($hashedId) {
