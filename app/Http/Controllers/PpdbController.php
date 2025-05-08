@@ -117,7 +117,6 @@ class PpdbController extends Controller
             ],
             'PekerjaanWali' => [
                 'nullable',
-                'string',
             ],
             'StatusHubunganWali' => [
                 'nullable',
