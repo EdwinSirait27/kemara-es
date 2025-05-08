@@ -180,9 +180,9 @@
                                         <select class="form-control" name="Agama" id="Agama"
                                             value="{{ old('Agama') }}"required>
                                             <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
-                                            @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
-                                                <option value="{{ e($agama) }}"
-                                                    {{ old('Agama') == $agama ? 'selected' : '' }}>{{ $agama }}
+                                            @foreach (['Katolik', 'Kristen Protestan', 'Islam', 'Hindu', 'Buddha', 'Konghucu'] as $Agama)
+                                                <option value="{{ e($Agama) }}"
+                                                    {{ old('Agama') == $Agama ? 'selected' : '' }}>{{ $Agama }}
                                                 </option>
 
                                                 {{-- <option value="{{ e($agama) }}">{{ $agama }}</option> --}}
