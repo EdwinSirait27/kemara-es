@@ -221,10 +221,11 @@ html, body {
                                     href="{{ url('user-profileSiswa') }}">
                                     <span class="nav-link-text ms-1">Edit Profile</span>
                                 </a>
-                                {{-- <a class="nav-link {{ Request::is('DatakuSiswa') ? 'active' : '' }}"
+                                <a class="nav-link {{ Request::is('DatakuSiswa') ? 'active' : '' }}"
                                 href="{{ url('DatakuSiswa') }}">
                                 <span class="nav-link-text ms-1">Data-Ku</span>
                             </a>
+                                {{-- 
                                 <a class="nav-link {{ Request::is('Ekstra-ku') ? 'active' : '' }}"
                                     href="{{ url('Ekstra-ku') }}">
                                     <span class="nav-link-text ms-1">Ekstrakulikuler-ku</span>

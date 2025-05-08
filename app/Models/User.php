@@ -48,6 +48,8 @@ class User extends Authenticatable
         'Role',
         'guru_id',
         'siswa_id',
+        'created_at',
+
     ];
 
     /**

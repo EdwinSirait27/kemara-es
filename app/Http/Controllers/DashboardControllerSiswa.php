@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Pengumuman;
+use App\Models\User;
+use App\Models\Siswa;
+
 class DashboardControllerSiswa extends Controller
 {
     public function __construct()
@@ -12,9 +16,35 @@ class DashboardControllerSiswa extends Controller
 }
     public function index()
     {
-        return view('dashboardSiswa.dashboardSiswa');
+        $pengumuman = Pengumuman::all();
+        $totaluser = User::count();
+        $totallaki = User::whereHas('Siswa', function ($query) {
+            $query->where('JenisKelamin', 'Laki-Laki');
+        })->count();
+        $totalperempuan = User::whereHas('Siswa', function ($query) {
+            $query->where('JenisKelamin', 'Perempuan');
+        })->count();
+        $totalguru = User::whereIn('hakakses', ['SU', 'Guru', 'Admin', 'KepalaSekolah', 'Kurikulum'])
+            ->count();
+        $katolik = Siswa::whereIn('Agama', ['Katolik'])
+            ->count();
+        $kristen = Siswa::whereIn('Agama', ['Kristen Protestan'])
+            ->count();
+        $islam = Siswa::whereIn('Agama', ['Islam'])
+            ->count();
+        $hindu = Siswa::whereIn('Agama', ['Hindu'])
+            ->count();
+        $buddha = Siswa::whereIn('Agama', ['Buddha'])
+            ->count();
+        $kong = Siswa::whereIn('Agama', ['Konghucu'])
+            ->count();
 
+        return view('dashboardSiswa.dashboardSiswa', compact('totaluser', 'totallaki', 'totalperempuan', 'totalguru', 'katolik', 'kristen', 'islam', 'hindu', 'buddha', 'kong','pengumuman'));
     }
+        // return view('dashboardSiswa.dashboardSiswa');
+
+    
+    
     public function create()
     {
         return view('dashboardSiswa.create');
