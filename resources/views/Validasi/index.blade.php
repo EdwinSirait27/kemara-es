@@ -16,6 +16,17 @@
                     <h6><i class="fas fa-user-shield"></i> Data Validasi</h6>
 
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="filter-status">Filter Status:</label>
+                        <select id="filter-status" class="form-select">
+                            <option value="">-- Semua Status --</option>
+                            @foreach ($statusList as $status)
+                                <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0"id="users-table">
@@ -62,19 +73,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+  
+{{-- <script>
     $(document).ready(function() {
-    let table = $('#users-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('validasi.validasi') }}',
-        lengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ],
-        columns: [
-          {
-            data: 'id', // Kolom indeks
+        var table = $('#users-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("validasi.validasi") }}',
+                data: function (d) {
+                    d.status = $('#filter-status').val();
+                }
+            },
+            columns: [
+                {
+            data: 'id', 
             name: 'id',
             className: 'text-center',
             render: function (data, type, row, meta) {
@@ -83,7 +96,6 @@
         },
         { data: 'Siswa_Nama', name: 'Siswa_Nama', className: 'text-center' },
           { data: 'status', name: 'status', className: 'text-center' },
-          // { data: 'Guru->Nama', name: 'Guru->Nama', className: 'text-center' },
           { data: 'tanggalbukti', name: 'tanggalbukti', className: 'text-center' },
           { data: 'created_at', name: 'created_at', className: 'text-center' },
           { data: 'ket', name: 'ket', className: 'text-center' },
@@ -94,15 +106,54 @@
                 searchable: false,
                 className: 'text-center'
               }
-        ]
+            ]
+        });
+    
+        $('#filter-status').on('change', function () {
+            table.ajax.reload();
+        });
     });
-    
-    // Delete Selected Users
-    
-    
-});
-
-</script>
+    </script> --}}
+    <script>
+        $(document).ready(function () {
+            var table = $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route("validasi.validasi") }}',
+                    data: function (d) {
+                        d.status = $('#filter-status').val();
+                    }
+                },
+                columns: [
+                    {
+            data: 'id', 
+            name: 'id',
+            className: 'text-center',
+            render: function (data, type, row, meta) {
+                return meta.row + 1; 
+            },
+        },
+        { data: 'Siswa_Nama', name: 'Siswa_Nama', className: 'text-center' },
+          { data: 'status', name: 'status', className: 'text-center' },
+          { data: 'tanggalbukti', name: 'tanggalbukti', className: 'text-center' },
+          { data: 'created_at', name: 'created_at', className: 'text-center' },
+          { data: 'ket', name: 'ket', className: 'text-center' },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                className: 'text-center'
+              },
+                ]
+            });
+        
+            $('#filter-status').change(function () {
+                table.ajax.reload();
+            });
+        });
+        </script>
 @if(session('warning'))
 <script>
     Swal.fire({

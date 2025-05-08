@@ -13,11 +13,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class ValidasiController extends Controller
 {
-    public function index()
-    {
-        return view('Validasi.index');
+    // public function index()
+    // {
+    //     return view('Validasi.index');
 
-    }
+        
+    // }
+    public function index()
+{
+    // Kirim daftar status ke view untuk isi dropdown filter
+    $statusList = ['Dalam Antrian', 'Lunas', 'Menunggu Pembayaran','Menyicil'];
+    return view('Validasi.index', compact('statusList'));
+}
+
     // public function getValidasi()
     // {
     //     $pembayaran = Pembayaran::with('Siswa')
@@ -46,14 +54,20 @@ class ValidasiController extends Controller
 
     // }   
     public function getValidasi()
-{
-    $pembayaran = Pembayaran::with('Siswa')
-        ->select(['id', 'siswa_id', 'status', 'foto','tanggalbukti', 'ket','created_at'])
-        ->get()
-        ->map(function ($user) {
+    {
+        $statusFilter = request()->get('status'); // Ambil nilai filter status dari request
+    
+        $query = Pembayaran::with('Siswa')
+            ->select(['id', 'siswa_id', 'status', 'tanggalbukti', 'ket', 'created_at']);
+    
+        // Terapkan filter status jika ada
+        if (!empty($statusFilter)) {
+            $query->where('status', $statusFilter);
+        }
+    
+        $pembayaran = $query->get()->map(function ($user) {
             $user->id_hashed = substr(hash('sha256', $user->id . env('APP_KEY')), 0, 8);
-
-            // Tambahkan kondisi untuk menampilkan tombol edit hanya jika foto tidak NULL
+    
             if (!is_null($user->foto)) {
                 $user->action = '
                 <a href="' . route('Validasi.edit', $user->id_hashed) . '" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
@@ -62,21 +76,19 @@ class ValidasiController extends Controller
             } else {
                 $user->action = '<i class="text-muted">Menunggu Foto</i>';
             }
-
+    
             $user->Siswa_Nama = $user->Siswa ? $user->Siswa->NamaLengkap : '-';
             return $user;
         });
-
-    return DataTables::of($pembayaran)
-        ->addColumn('NamaLengkap', function ($pembayaran) {
-            return $pembayaran->Siswa ? $pembayaran->Siswa->NamaLengkap : '-';
-        })
-        ->addColumn('foto', function ($pembayaran) {
-            return $pembayaran->foto;
-        })
-        ->rawColumns(['action']) // pastikan 'action' termasuk dalam rawColumns
-        ->make(true);
-}
+    
+        return DataTables::of($pembayaran)
+            ->addColumn('NamaLengkap', function ($pembayaran) {
+                return $pembayaran->Siswa ? $pembayaran->Siswa->NamaLengkap : '-';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    
 
     public function edit($hashedId)
 {
