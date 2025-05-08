@@ -309,7 +309,7 @@ class PpdbController extends Controller
                 'PenghasilanIbu' => $validatedData['PenghasilanIbu'],
                 'PekerjaanIbu' => $validatedData['PekerjaanIbu'],
                 'PekerjaanWali' => $validatedData['PekerjaanWali'] ?? null,
-                'StatusHubunganWali' => $validatedData['StatusHubunganWali'],
+                'StatusHubunganWali' => $validatedData['StatusHubunganWali'] ?? null,
 
             ]);
 
