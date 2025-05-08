@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    public $timestamps = false;
+    // public $timestamps = false;
 
     /**
      * Indikasi bahwa primary key menggunakan UUID.
@@ -48,7 +48,6 @@ class User extends Authenticatable
         'Role',
         'guru_id',
         'siswa_id',
-        'created_at',
 
     ];
 
