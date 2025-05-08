@@ -536,6 +536,7 @@ public function getPpdbs()
             $user->Tanggal_Lahir = optional($user->Siswa)->TanggalLahir ?? '-';
             $user->Jenis_Kelamin = optional($user->Siswa)->JenisKelamin ?? '-';
             $user->Alamat_ = optional($user->Siswa)->Alamat ?? '-';
+            $user->Agama_ = optional($user->Siswa)->Agama ?? '-';
             $user->Nomor_Telephone = optional($user->Siswa)->NomorTelephone ?? '-';
             $user->Asal_SD = optional($user->Siswa)->AsalSD ?? '-';
             $user->Nama_Ayah = optional($user->Siswa)->NamaAyah ?? '-';

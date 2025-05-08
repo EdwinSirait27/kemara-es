@@ -47,6 +47,9 @@
                                         Jenis Kelamin</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Agama</th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Alamat</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -172,6 +175,7 @@
                             { data: 'Tempat_Lahir', name: 'Tempat_Lahir', className: 'text-center' },
                             { data: 'Tanggal_Lahir', name: 'Tanggal_Lahir', className: 'text-center' },
                             { data: 'Jenis_Kelamin', name: 'Jenis_Kelamin', className: 'text-center' },
+                            { data: 'Agama_', name: 'Agama_', className: 'text-center' },
                             { data: 'Alamat_', name: 'Alamat_', className: 'text-center' },
                             { data: 'Nomor_Telephone', name: 'Nomor_Telephone', className: 'text-center' },
                             { data: 'Asal_SD', name: 'Asal_SD', className: 'text-center' },
