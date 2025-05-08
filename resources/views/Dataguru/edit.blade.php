@@ -509,7 +509,7 @@
                             <label for="Email" class="form-control-label">{{ __('Email') }}</label>
                             <div class="@error('Email')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Email ?? '' }}" type="email"
-                                    id="Email" name="Email" aria-describedby="info-Email" maxlength="50">
+                                    id="Email" name="Email" aria-describedby="info-Email" maxlength="50"required>
                                 @error('Email')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -552,9 +552,9 @@
                     </span>
                     <span class="text-white">-
                       
-                        <strong>- Upload file foto type JPEG,PNG</strong> <br>
+                        <strong>- Upload file foto type JPEG,PNG,JPG</strong> <br>
                         <strong>- Upload Foto Ukuran Kurang Dari 512 KB.</strong> <br>
-                        <strong>- Tolong diisi semua.</strong> <br>
+                        <strong>- untuk status dan email wajib diiji.</strong> <br>
                         <strong>- Data NULL harap diisi.</strong> <br>
 
                     </span>

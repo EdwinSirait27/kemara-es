@@ -116,7 +116,7 @@ class DataguruController extends Controller
             'Jabatan' => ['nullable', 'string', 'max:50', new NoXSSInput()],
             'NomorTelephone' => ['nullable', 'string', 'max:13', new NoXSSInput()],
             'Alamat' => ['nullable', 'string', 'max:100', new NoXSSInput()],
-            'Email' => ['nullable', 'string', 'max:100', new NoXSSInput()],
+            'Email' => ['required', 'string', 'max:100', new NoXSSInput()],
             'status' => ['required', 'in:Aktif,Tidak Aktif', new NoXSSInput()],
             'foto' => ['nullable','image','mimes:jpeg,png,jpg','max:512'],
         
