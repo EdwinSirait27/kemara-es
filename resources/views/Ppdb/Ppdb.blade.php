@@ -107,11 +107,34 @@
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-4">
                                         <label><i class="fa fa-lock"></i> Nama Lengkap Siswa Sesuai Ijasah</label>
-                                        <input type="text" class="form-control form-control-sm" name="NamaLengkap"
+                                        {{-- <input type="text" class="form-control form-control-sm" name="NamaLengkap"
                                             id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
                                             maxlength="100" required
                                             oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')"
+                                            value="{{ old('NamaLengkap') }}"> --}}
+                                            <input type="text" class="form-control form-control-sm" name="NamaLengkap"
+                                            id="NamaLengkap" placeholder="Nama Lengkap" aria-label="NamaLengkap"
+                                            maxlength="100" required
+                                            oninput="
+                                                let val = this.value;
+                                        
+                                                // Hapus karakter selain huruf dan spasi
+                                                val = val.replace(/[^a-zA-Z\s]/g, '');
+                                        
+                                                // Simpan apakah diakhiri spasi
+                                                let endsWithSpace = val.endsWith(' ');
+                                        
+                                                // Normalisasi dan kapitalisasi
+                                                val = val.trim().split(/\s+/)
+                                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                                                    .join(' ');
+                                        
+                                                this.value = endsWithSpace ? val + ' ' : val;
+                                            "
                                             value="{{ old('NamaLengkap') }}">
+                                        
+                                        
+
 
                                         @error('NamaLengkap')
                                             <p class="text-danger text-xs mt-2">{{ $message }}</p>

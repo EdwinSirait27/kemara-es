@@ -48,14 +48,14 @@
                         id="imagePopup">
                     
                             
-                            <a href="javascript:;"
+                            {{-- <a href="javascript:;"
                                class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2"
                                id="uploadBtn">
                                 <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top"
                                    title="Upload Gambar"></i>
                             </a>
                             <input type="file" id="foto" name="foto" style="display: none;"
-                                   class="form-control" accept="image/*">
+                                   class="form-control" accept="image/*"> --}}
                    
                         </div>
                     </div>
