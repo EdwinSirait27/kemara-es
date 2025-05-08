@@ -41,9 +41,7 @@ class DashboardControllerAdmin extends Controller
         return redirect()->route('dashboardAdmin.index');
     } else {
         $this->validate($request, [
-            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg', 'max:5120', new NoXSSInput()],
-
-          
+            'pengumuman' => ['required', 'mimes:doc,docx,pdf,xls,xlsx,ppt,pptx,png,jpeg,txt', 'max:5120', new NoXSSInput()],
         ]);
         $pengumuman = $request->file('pengumuman');
         $nama_pengumuman = $pengumuman->getClientOriginalName();
@@ -55,12 +53,8 @@ class DashboardControllerAdmin extends Controller
         $data->save();
         session()->flash('success', 'Dokumen berhasil diunggah.');
         return redirect()->route('dashboardAdmin.index');
-    
     }
     }
-    
-    
-    
     public function deletePengumuman(Request $request)
     {
         $request->validate([

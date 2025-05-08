@@ -132,7 +132,7 @@
                             </label>
                             <div>
                                 <input class="form-control" value="{{ $guru->Nama ?? '' }}" type="text"
-                                    id="Nama" name="Nama" aria-describedby="info-Nama" required>
+                                    id="Nama" name="Nama" aria-describedby="info-Nama" >
 
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                                 <input class="form-control" value="{{ $guru->TempatLahir ?? '' }}" type="text"
                                     id="TempatLahir" name="TempatLahir" aria-describedby="info-TempatLahir"
                                     oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');"maxlength="30"
-                                    required>
+                                    >
                                 @error('TempatLahir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -163,7 +163,7 @@
                             {{-- <label for="TanggalLahir" class="form-control-label">{{ __('Tanggal Lahir') }}</label> --}}
                             <div class="@error('TanggalLahir') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->TanggalLahir }}" type="date"
-                                    placeholder="TanggalLahir" id="TanggalLahir" name="TanggalLahir" required>
+                                    placeholder="TanggalLahir" id="TanggalLahir" name="TanggalLahir" >
                                 @error('TanggalLahir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -177,7 +177,7 @@
                                 {{ __('Agama') }}</label>
 
                             <div class="@error('Agama') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="Agama" id="Agama" required>
+                                <select class="form-control" name="Agama" id="Agama" >
                                     <option value="" disabled selected>{{ __('Pilih Agama') }}</option>
                                     @foreach (['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $agama)
                                         <option value="{{ e($agama) }}"
@@ -202,7 +202,7 @@
 
                             {{-- <label for="JenisKelamin" class="form-control-label">{{ __('Jenis Kelamin') }}</label> --}}
                             <div class="@error('JenisKelamin') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="JenisKelamin" id="JenisKelamin" required>
+                                <select class="form-control" name="JenisKelamin" id="JenisKelamin" >
                                     <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
                                     @foreach (['Laki-Laki', 'Perempuan'] as $jenis)
                                         <option value="{{ e($jenis) }}"
@@ -224,7 +224,7 @@
 
                             {{-- <label for="StatusPegawai" class="form-control-label">{{ __('Status Pegawai') }}</label> --}}
                             <div class="@error('StatusPegawai') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="StatusPegawai" id="StatusPegawai" required>
+                                <select class="form-control" name="StatusPegawai" id="StatusPegawai" >
                                     <option value="" disabled selected>{{ __('Pilih Status Pegawai') }}</option>
                                     @foreach (['GT', 'PNS YDP', 'GTT', 'Honorer', 'PT', 'PTT'] as $pegawai)
                                         <option value="{{ e($pegawai) }}"
@@ -249,7 +249,7 @@
                             <div class="@error('NipNips')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->NipNips ?? '' }}" type="text"
                                     id="NipNips" name="NipNips" aria-describedby="info-NipNips"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" >
                                 @error('NipNips')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -263,7 +263,7 @@
                             <div class="@error('Nuptk')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Nuptk ?? '' }}" type="text"
                                     id="Nuptk" name="Nuptk" aria-describedby="info-Nuptk"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" >
                                 @error('Nuptk')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -278,7 +278,7 @@
                             <div class="@error('Nik')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Nik ?? '' }}" type="text"
                                     id="Nik" name="Nik" aria-describedby="info-Nik"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" >
                                 @error('Nik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -291,7 +291,7 @@
                             <div class="@error('Npwp')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Npwp ?? '' }}" type="text"
                                     id="Npwp" name="Npwp" aria-describedby="info-Npwp"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" >
                                 @error('Npwp')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -308,7 +308,7 @@
                                 <input class="form-control" value="{{ $guru->NomorSertifikatPendidik ?? '' }}"
                                     type="text" id="NomorSertifikatPendidik" name="NomorSertifikatPendidik"
                                     aria-describedby="info-NomorSertifikatPendidik"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" required>
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16" >
                                 @error('NomorSertifikatPendidik')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -322,7 +322,7 @@
                             <div class="@error('TahunSertifikasi') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->TahunSertifikasi }}" type="date"
                                     placeholder="TahunSertifikasi" id="TahunSertifikasi" name="TahunSertifikasi"
-                                    required>
+                                    >
                                 @error('TahunSertifikasi')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -340,7 +340,7 @@
                             <div class="@error('jadwalkenaikangaji') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->jadwalkenaikangaji }}" type="date"
                                     placeholder="jadwalkenaikangaji" id="jadwalkenaikangaji"
-                                    name="jadwalkenaikangaji" required>
+                                    name="jadwalkenaikangaji" >
                                 @error('jadwalkenaikangaji')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -356,7 +356,7 @@
                             <div class="@error('PendidikanAkhir')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->PendidikanAkhir ?? '' }}"
                                     type="text" id="PendidikanAkhir" name="PendidikanAkhir"
-                                    aria-describedby="info-PendidikanAkhir" maxlength="30" required>
+                                    aria-describedby="info-PendidikanAkhir" maxlength="30" >
                                 @error('PendidikanAkhir')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -371,7 +371,7 @@
                             <label for="TahunTamat" class="form-control-label">{{ __('Tahun Tamat') }}</label>
                             <div class="@error('TahunTamat') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->TahunTamat }}" type="date"
-                                    placeholder="TahunTamat" id="TahunTamat" name="TahunTamat" required>
+                                    placeholder="TahunTamat" id="TahunTamat" name="TahunTamat" >
                                 @error('TahunTamat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -386,7 +386,7 @@
                             <div class="@error('Jurusan')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Jurusan ?? '' }}" type="text"
                                     id="Jurusan" name="Jurusan" aria-describedby="info-Jurusan" maxlength="30"
-                                    required>
+                                    >
                                 @error('Jurusan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -402,7 +402,7 @@
                             <div class="@error('TugasMengajar')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->TugasMengajar ?? '' }}" type="text"
                                     id="TugasMengajar" name="TugasMengajar" aria-describedby="info-TugasMengajar"
-                                    maxlength="50" required>
+                                    maxlength="50" >
                                 @error('TugasMengajar')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -415,7 +415,7 @@
                                 {{ __('Tahun Pensiun') }}</label>
                             <div class="@error('TahunPensiun') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->TahunPensiun }}" type="date"
-                                    placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun" required>
+                                    placeholder="TahunPensiun" id="TahunPensiun" name="TahunPensiun" >
                                 @error('TahunPensiun')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -432,7 +432,7 @@
                             <div class="@error('Pangkat')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Pangkat ?? '' }}" type="text"
                                     id="Pangkat" name="Pangkat" aria-describedby="info-Pangkat" maxlength="50"
-                                    required>
+                                    >
                                 @error('Pangkat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -447,7 +447,7 @@
                             <div class="@error('jadwalkenaikanpangkat') border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->jadwalkenaikanpangkat }}"
                                     type="date" placeholder="jadwalkenaikanpangkat" id="jadwalkenaikanpangkat"
-                                    name="jadwalkenaikanpangkat" required>
+                                    name="jadwalkenaikanpangkat" >
                                 @error('jadwalkenaikanpangkat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -465,7 +465,7 @@
                             <div class="@error('Jabatan')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Jabatan ?? '' }}" type="text"
                                     id="Jabatan" name="Jabatan" aria-describedby="info-Jabatan" maxlength="30"
-                                    required>
+                                    >
                                 @error('Jabatan')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -479,7 +479,7 @@
                             <div class="@error('NomorTelephone')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->NomorTelephone ?? '' }}" type="phone"
                                     id="NomorTelephone" name="NomorTelephone" aria-describedby="info-NomorTelephone"
-                                    maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                                    maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');" >
                                 @error('NomorTelephone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -495,7 +495,7 @@
                             <div class="@error('Alamat')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Alamat ?? '' }}" type="text"
                                     id="Alamat" name="Alamat" aria-describedby="info-Alamat" maxlength="50"
-                                    required>
+                                    >
                                 @error('Alamat')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -510,7 +510,7 @@
                             <div class="@error('Email')border border-danger rounded-3 @enderror">
                                 <input class="form-control" value="{{ $guru->Email ?? '' }}" type="email"
                                     id="Email" name="Email" aria-describedby="info-Email" maxlength="50"
-                                    required>
+                                    >
                                 @error('Email')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                 @enderror
@@ -527,7 +527,7 @@
                                 {{ __('Status') }}</label>
 
                             <div class="@error('status') border border-danger rounded-3 @enderror">
-                                <select class="form-control" name="status" id="status" required>
+                                <select class="form-control" name="status" id="status" >
                                     <option value="" disabled selected>{{ __('Pilih status') }}</option>
                                     @foreach (['Aktif', 'Tidak Aktif'] as $status)
                                         <option value="{{ e($status) }}"
