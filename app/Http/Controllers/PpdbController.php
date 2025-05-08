@@ -65,7 +65,7 @@ class PpdbController extends Controller
     'string',
     'max:255',
     'regex:/^[a-zA-Z\s]+$/',
-    Rule::unique('nama_tabel')->where(function ($query) {
+    Rule::unique('tb_siswa')->where(function ($query) {
         return $query->whereRaw('LOWER(NamaLengkap) = LOWER(?)', [request('NamaLengkap')]);
     }),
 ],
