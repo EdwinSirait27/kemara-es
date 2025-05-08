@@ -117,6 +117,7 @@ class PpdbController extends Controller
             ],
             'PekerjaanWali' => [
                 'nullable',
+                'string',
             ],
             'StatusHubunganWali' => [
                 'nullable',
@@ -286,7 +287,7 @@ class PpdbController extends Controller
             if (!empty($validatedData['TanggalLahir'])) {
                 $tanggalLahir = Carbon::createFromFormat('Y-m-d', $validatedData['TanggalLahir'])->format('Y-m-d');
             }
-
+         
             $siswa = Siswa::create([
                 'NamaLengkap' => $validatedData['NamaLengkap'],
                 'NamaPanggilan' => $validatedData['NamaPanggilan'],
@@ -307,7 +308,7 @@ class PpdbController extends Controller
                 'PenghasilanAyah' => $validatedData['PenghasilanAyah'],
                 'PenghasilanIbu' => $validatedData['PenghasilanIbu'],
                 'PekerjaanIbu' => $validatedData['PekerjaanIbu'],
-                'PekerjaanWali' => $validatedData['PekerjaanWali'],
+                'PekerjaanWali' => $validatedData['PekerjaanWali'] ?? null,
                 'StatusHubunganWali' => $validatedData['StatusHubunganWali'],
 
             ]);
