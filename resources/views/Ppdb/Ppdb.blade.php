@@ -351,7 +351,7 @@
                                         <label><i class="fa fa-lock"></i> Penghasilan Ibu</label>
                                         <select class="form-control" name="PenghasilanIbu" id="PenghasilanIbu" required>
                                             <option value="" disabled selected>{{ __('Pilih') }}</option>
-                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DIATAS 4 Jt'] as $PenghasilanIbu)
+                                            @foreach (['DIBAWAH 1 JT', '1 Jt s/d 2,5 Jt', '2,5 Jt s/d 4 Jt', 'DI ATAS 4 Jt'] as $PenghasilanIbu)
                                                 <option value="{{ e($PenghasilanIbu) }}"
                                                     {{ old('PenghasilanIbu') == $PenghasilanIbu ? 'selected' : '' }}>
                                                     {{ $PenghasilanIbu }}

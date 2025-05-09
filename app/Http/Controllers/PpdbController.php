@@ -43,8 +43,6 @@ class PpdbController extends Controller
                 'string',
                 'in:NonSiswa',
 
-
-
             ],
             'Role' => [
                 'nullable',
